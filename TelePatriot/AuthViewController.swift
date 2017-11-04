@@ -40,8 +40,8 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
     func login() {
         let authUI = FUIAuth.init(uiWith: Auth.auth())
         let options = FirebaseApp.app()?.options
-        let clientId = options?.clientID
-        let googleProvider = FUIGoogleAuth(scopes: [clientId!])
+        //let clientId = options?.clientID
+        let googleProvider = FUIGoogleAuth(scopes: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"])
         let facebookProvider = FUIFacebookAuth.init(permissions: ["public_profile", "email"])
         authUI?.delegate = self
         authUI?.providers = [googleProvider, facebookProvider]
