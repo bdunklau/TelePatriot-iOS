@@ -113,10 +113,20 @@
                                     <action selector="logoutPressed:" destination="YHE-l2-3ov" eventType="touchUpInside" id="fZK-XH-YwW"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgp-bv-xf2">
+                                <rect key="frame" x="63" y="140" width="249" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="m1T-16-HDw"/>
                     </view>
+                    <connections>
+                        <outlet property="name" destination="fgp-bv-xf2" id="Jk5-8L-7PF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lTy-aS-cOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

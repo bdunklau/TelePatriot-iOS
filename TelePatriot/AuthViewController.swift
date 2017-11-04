@@ -13,13 +13,14 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
     //var db = FIRDatabaseReference.init()
     var kFacebookAppID = "111804472843925"
     
+    @IBOutlet weak var name: UILabel!
+    
     @IBAction func logoutPressed(_ sender: Any) {
         try! Auth.auth().signOut()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //FIRApp.configure()  // this is done in the AppDelegate
         checkLoggedIn()
     }
     
@@ -27,6 +28,7 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
                 // User is signed in.
+                self.name.text = user?.displayName
             } else {
                 // No user is signed in.
                 self.login()
@@ -39,7 +41,7 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
     // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
     func login() {
         let authUI = FUIAuth.init(uiWith: Auth.auth())
-        let options = FirebaseApp.app()?.options
+        //let options = FirebaseApp.app()?.options
         //let clientId = options?.clientID
         let googleProvider = FUIGoogleAuth(scopes: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"])
         let facebookProvider = FUIFacebookAuth.init(permissions: ["public_profile", "email"])
@@ -53,9 +55,11 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
         if error != nil {
             //Problem signing in
             login()
-        }else {
+        } else {
             //User is in! Here is where we code after signing in
-            
+            // how do we get the name of the user?
+            print("User: "+user!.displayName!)
+            name.text = user!.displayName!
         }
     }
     
