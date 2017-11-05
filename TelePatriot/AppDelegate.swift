@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // https://stackoverflow.com/a/32555911
         // https://github.com/hackiftekhar/IQKeyboardManager
+        // Automatically moves input fields up when the keyboard is present to the input isn't hidden
         IQKeyboardManager.sharedManager().enable = true
         
         // https://www.youtube.com/watch?v=jH2LdL-PsHI
