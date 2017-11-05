@@ -13,7 +13,7 @@
         <!--Directors-->
         <scene sceneID="3Bc-CL-Gdn">
             <objects>
-                <viewController title="Directors" id="IYO-VY-Uif" sceneMemberID="viewController">
+                <viewController title="Directors" id="IYO-VY-Uif" customClass="DirectorViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e2C-Vi-VyS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,26 +108,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pLm-ir-IMB">
-                                <rect key="frame" x="93" y="167" width="188" height="30"/>
+                                <rect key="frame" x="16" y="86" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NuQ-Pv-7im">
-                                <rect key="frame" x="28" y="334" width="317" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="URL of Spreadsheet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LN1-43-j2k">
-                                <rect key="frame" x="28" y="280" width="154" height="30"/>
+                                <rect key="frame" x="16" y="147" width="154" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xy-ls-R38">
+                                <rect key="frame" x="329" y="147" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="OK"/>
+                                <connections>
+                                    <segue destination="V7W-6I-EAw" kind="show" id="aB8-Tx-hTB"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NuQ-Pv-7im">
+                                <rect key="frame" x="16" y="185" width="343" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="Y20-Fc-grp"/>
@@ -141,10 +149,10 @@
             </objects>
             <point key="canvasLocation" x="428" y="11.244377811094454"/>
         </scene>
-        <!--View Controller-->
+        <!--My Active Missions-->
         <scene sceneID="4sl-gc-l2t">
             <objects>
-                <viewController id="r5f-Kp-GsM" sceneMemberID="viewController">
+                <viewController title="My Active Missions" id="r5f-Kp-GsM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M76-n9-FX5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,10 +164,10 @@
             </objects>
             <point key="canvasLocation" x="534" y="100"/>
         </scene>
-        <!--View Controller-->
+        <!--All Active Missions-->
         <scene sceneID="K1J-yI-Kji">
             <objects>
-                <viewController id="nTg-dA-bFY" sceneMemberID="viewController">
+                <viewController title="All Active Missions" id="nTg-dA-bFY" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hv2-iC-sQF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -171,10 +179,10 @@
             </objects>
             <point key="canvasLocation" x="674" y="200"/>
         </scene>
-        <!--View Controller-->
+        <!--All My Missions-->
         <scene sceneID="Xwx-lz-qSy">
             <objects>
-                <viewController id="V7W-6I-EAw" sceneMemberID="viewController">
+                <viewController title="All My Missions" id="V7W-6I-EAw" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jti-Os-rSv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,12 +192,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Trj-22-KeM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="809" y="323"/>
+            <point key="canvasLocation" x="1718" y="11"/>
         </scene>
-        <!--View Controller-->
+        <!--All Missions-->
         <scene sceneID="jwq-nR-EYt">
             <objects>
-                <viewController id="96h-gO-pd9" sceneMemberID="viewController">
+                <viewController title="All Missions" id="96h-gO-pd9" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FQh-qo-gBi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -201,10 +209,10 @@
             </objects>
             <point key="canvasLocation" x="982" y="435"/>
         </scene>
-        <!--View Controller-->
+        <!--All Activity-->
         <scene sceneID="wUw-bl-lfu">
             <objects>
-                <viewController id="z7C-y5-wiW" sceneMemberID="viewController">
+                <viewController title="All Activity" id="z7C-y5-wiW" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9LY-MF-Iv5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -219,7 +227,7 @@
         <!--Admin-->
         <scene sceneID="ldd-4F-2fa">
             <objects>
-                <viewController title="Admin" id="Ynr-wG-CpB" sceneMemberID="viewController">
+                <viewController title="Admin" id="Ynr-wG-CpB" customClass="AdminViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kvS-ji-sjE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -234,7 +242,7 @@
         <!--Volunteers-->
         <scene sceneID="7ZF-MT-ZzL">
             <objects>
-                <viewController title="Volunteers" id="6fr-4k-rKP" sceneMemberID="viewController">
+                <viewController title="Volunteers" id="6fr-4k-rKP" customClass="VolunteerViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CZ0-kX-l11">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -325,4 +333,7 @@
             <point key="canvasLocation" x="-1252" y="-482"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="K9z-ta-hFs"/>
+    </inferredMetricsTieBreakers>
 </document>

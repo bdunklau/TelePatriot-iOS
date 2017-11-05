@@ -8,7 +8,7 @@ import FirebaseFacebookAuthUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class AuthViewController: UIViewController, FUIAuthDelegate {
+class AuthViewController: BaseViewController, FUIAuthDelegate {
     
     //var db = FIRDatabaseReference.init()
     var kFacebookAppID = "111804472843925"
@@ -21,16 +21,6 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let imageName = "usflag.png"
-        //let image = UIImage(named: imageName)
-        //let imageView = UIImageView(image: image!)
-        
-        
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named: "usflag")?.draw(in: self.view.bounds)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        self.view.backgroundColor = UIColor(patternImage: image)
         
         checkLoggedIn()
     }

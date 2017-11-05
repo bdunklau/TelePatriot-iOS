@@ -1,5 +1,5 @@
 //
-//  NewPhoneCampaignVC.swift
+//  DirectorViewController.swift
 //  TelePatriot
 //
 //  Created by Brent Dunklau on 11/5/17.
@@ -8,21 +8,12 @@
 
 import UIKit
 
-class NewPhoneCampaignVC: BaseViewController {
+class DirectorViewController: BaseViewController {
 
-    @IBOutlet weak var missionTitleField: UITextField!
-    @IBOutlet weak var spreadsheetUrlField: UITextView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
-        spreadsheetUrlField.layer.borderWidth = 0.5
-        spreadsheetUrlField.layer.borderColor = borderColor.cgColor
-        spreadsheetUrlField.layer.cornerRadius = 5.0
-        
-        missionTitleField.placeholder = "Mission Title"
     }
 
     override func didReceiveMemoryWarning() {
