@@ -21,6 +21,17 @@ class AuthViewController: UIViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //let imageName = "usflag.png"
+        //let image = UIImage(named: imageName)
+        //let imageView = UIImageView(image: image!)
+        
+        
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        UIImage(named: "usflag")?.draw(in: self.view.bounds)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        self.view.backgroundColor = UIColor(patternImage: image)
+        
         checkLoggedIn()
     }
     

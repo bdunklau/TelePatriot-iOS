@@ -17,6 +17,10 @@ import FirebaseAuth
 import GoogleSignIn
 import FBSDKLoginKit
 
+// https://stackoverflow.com/a/32555911
+// https://github.com/hackiftekhar/IQKeyboardManager
+import IQKeyboardManagerSwift
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        // https://stackoverflow.com/a/32555911
+        // https://github.com/hackiftekhar/IQKeyboardManager
+        IQKeyboardManager.sharedManager().enable = true
         
         // https://www.youtube.com/watch?v=jH2LdL-PsHI
         // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
