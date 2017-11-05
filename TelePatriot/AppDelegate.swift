@@ -27,6 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    override init() {
+        // https://www.youtube.com/watch?v=jH2LdL-PsHI
+        // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
+        //***// IMPORTANT!!!!!!!!!
+        FirebaseApp.configure()
+        
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -37,10 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Automatically moves input fields up when the keyboard is present to the input isn't hidden
         IQKeyboardManager.sharedManager().enable = true
         
-        // https://www.youtube.com/watch?v=jH2LdL-PsHI
-        // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
-        //***// IMPORTANT!!!!!!!!!
-        FirebaseApp.configure()
         
         return true
     }

@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class NewPhoneCampaignVC: BaseViewController {
 
     @IBOutlet weak var missionTitleField: UITextField!
     @IBOutlet weak var spreadsheetUrlField: UITextView!
+    
+    // https://www.youtube.com/watch?v=joVi3thZOqc
+    let rootRef = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +27,31 @@ class NewPhoneCampaignVC: BaseViewController {
         spreadsheetUrlField.layer.cornerRadius = 5.0
         
         missionTitleField.placeholder = "Mission Title"
+    }
+    
+    @IBAction func okPressed(_ sender: Any) {
+        
+        let key = rootRef.child("missions").childByAutoId().key
+        let uid : String = Auth.auth().currentUser!.uid
+        let name : String = Auth.auth().currentUser!.displayName!
+        let url : String = spreadsheetUrlField.text
+        let mission_name : String = missionTitleField.text!
+        let uid_and_active : String = Auth.auth().currentUser!.uid + "_false"
+        
+        let missionVals: [String:Any] = ["uid": uid,
+                    "name": name,
+                    "url": url,
+                    "mission_name": mission_name,
+                    "active": false,
+                    "mission_type": "Phone Campaign",
+                    "uid_and_active": uid_and_active]
+        
+        let mission = ["/missions/\(key)": missionVals]
+        rootRef.updateChildValues(mission)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {

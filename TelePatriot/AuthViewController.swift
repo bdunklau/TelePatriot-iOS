@@ -59,8 +59,8 @@ class AuthViewController: BaseViewController, FUIAuthDelegate {
         } else {
             //User is in! Here is where we code after signing in
             // how do we get the name of the user?
-            print("User: "+user!.displayName!)
-            name.text = user!.displayName!
+            //print("User: "+user!.displayName!)
+            //name.text = user!.displayName!
         }
     }
     
