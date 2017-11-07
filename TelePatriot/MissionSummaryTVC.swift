@@ -74,8 +74,8 @@ class MissionSummaryTVC: UITableViewController {
         
         
         let mission = missions[indexPath.row]
-        cell.textLabel?.text = mission.name
-        //cell.detailTextLabel?.text = (smaller text under main text)
+        cell.textLabel?.text = mission.mission_name
+        cell.detailTextLabel?.text = "Created by "+mission.name!
         
         return cell
     }
