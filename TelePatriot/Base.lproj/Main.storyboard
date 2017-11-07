@@ -34,10 +34,6 @@
                                 <rect key="frame" x="134" y="291" width="127" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cml-b5-PVX">
-                                <rect key="frame" x="147" y="367" width="106" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pza-W4-Irm">
                                 <rect key="frame" x="151" y="445" width="81" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -63,7 +59,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="All My Missions"/>
                                 <connections>
-                                    <segue destination="V7W-6I-EAw" kind="show" id="K9z-ta-hFs"/>
+                                    <segue destination="RGM-ld-bJj" kind="show" id="IjA-nM-Asx"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N20-Lq-qHv">
@@ -127,7 +123,7 @@
                                 <state key="normal" title="OK"/>
                                 <connections>
                                     <action selector="okPressed:" destination="d22-7f-9sb" eventType="touchUpInside" id="lUb-iR-ABs"/>
-                                    <segue destination="V7W-6I-EAw" kind="show" id="aB8-Tx-hTB"/>
+                                    <segue destination="RGM-ld-bJj" kind="show" id="bkH-ME-CC6"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NuQ-Pv-7im">
@@ -187,20 +183,37 @@
             </objects>
             <point key="canvasLocation" x="674" y="200"/>
         </scene>
-        <!--All My Missions-->
-        <scene sceneID="Xwx-lz-qSy">
+        <!--Mission SummaryTVC-->
+        <scene sceneID="w6b-im-h8Q">
             <objects>
-                <viewController title="All My Missions" id="V7W-6I-EAw" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Jti-Os-rSv">
+                <tableViewController id="RGM-ld-bJj" customClass="MissionSummaryTVC" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="abN-bX-V54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="OuL-UJ-Jbn"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Trj-22-KeM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Cmk-Yz-acx">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cmk-Yz-acx" id="C4O-1M-q0I">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="RGM-ld-bJj" id="qCA-Xn-aLY"/>
+                            <outlet property="delegate" destination="RGM-ld-bJj" id="c3t-Is-kV3"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="missionSummaryTableView" destination="abN-bX-V54" id="cG9-6f-iNA"/>
+                        <outlet property="tableView" destination="abN-bX-V54" id="ycP-dv-lpu"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jvb-to-WaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1718" y="11"/>
+            <point key="canvasLocation" x="1593" y="-239"/>
         </scene>
         <!--All Missions-->
         <scene sceneID="jwq-nR-EYt">
@@ -342,6 +355,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aB8-Tx-hTB"/>
+        <segue reference="bkH-ME-CC6"/>
     </inferredMetricsTieBreakers>
 </document>

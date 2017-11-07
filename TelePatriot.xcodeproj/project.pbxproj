@@ -19,7 +19,10 @@
 		A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */; };
 		A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB401FAF78F5003DE424 /* DirectorViewController.swift */; };
 		A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB421FAF7902003DE424 /* AdminViewController.swift */; };
-		A12CDB4B1FAFAC57003DE424 /* AllMyMissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB4A1FAFAC57003DE424 /* AllMyMissionsViewController.swift */; };
+		A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB4C1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift */; };
+		A12CDB4F1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12CDB4D1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib */; };
+		A12CDB591FB01BF7003DE424 /* MissionSummaryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */; };
+		A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
 		A17C7FB21FAC308D00430C05 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17C7FB11FAC308D00430C05 /* AuthViewController.swift */; };
@@ -43,7 +46,10 @@
 		A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolunteerViewController.swift; sourceTree = "<group>"; };
 		A12CDB401FAF78F5003DE424 /* DirectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewController.swift; sourceTree = "<group>"; };
 		A12CDB421FAF7902003DE424 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
-		A12CDB4A1FAFAC57003DE424 /* AllMyMissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMyMissionsViewController.swift; sourceTree = "<group>"; };
+		A12CDB4C1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummaryCellTableViewCell.swift; sourceTree = "<group>"; };
+		A12CDB4D1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MissionSummaryCellTableViewCell.xib; sourceTree = "<group>"; };
+		A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummaryTVC.swift; sourceTree = "<group>"; };
+		A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummary.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TelePatriot-Bridging-Header.h"; sourceTree = "<group>"; };
 		A15D84631FA92976007EE77C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = TelePatriot/SWRevealViewController.h; sourceTree = SOURCE_ROOT; };
@@ -114,7 +120,10 @@
 				A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */,
 				A12CDB401FAF78F5003DE424 /* DirectorViewController.swift */,
 				A12CDB421FAF7902003DE424 /* AdminViewController.swift */,
-				A12CDB4A1FAFAC57003DE424 /* AllMyMissionsViewController.swift */,
+				A12CDB4C1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift */,
+				A12CDB4D1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib */,
+				A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */,
+				A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -194,6 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A12CDB4F1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib in Resources */,
 				A126AE1E1F8B1D860096714B /* LaunchScreen.storyboard in Resources */,
 				A126AE281F8B25B40096714B /* GoogleService-Info.plist in Resources */,
 				A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */,
@@ -302,16 +312,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A12CDB4B1FAFAC57003DE424 /* AllMyMissionsViewController.swift in Sources */,
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
 				A17C7FB21FAC308D00430C05 /* AuthViewController.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
 				A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
+				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */,
+				A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */,
 				A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */,
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
+				A12CDB591FB01BF7003DE424 /* MissionSummaryTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
