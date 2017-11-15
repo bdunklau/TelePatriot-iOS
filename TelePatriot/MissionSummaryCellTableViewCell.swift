@@ -32,4 +32,11 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func commonInit(missionSummary: MissionSummary) {
+        missionName.text = missionSummary.mission_name
+        missionType.text = missionSummary.mission_type
+        missionCreatedOn.text = missionSummary.mission_create_date
+        missionCreatedBy.text = missionSummary.name
+    }
+    
 }

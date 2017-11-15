@@ -23,7 +23,11 @@ class MissionSummaryTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(MissionSummaryCell.self, forCellReuseIdentifier: cellId)
+        //tableView.register(MissionSummaryCell.self, forCellReuseIdentifier: cellId)
+        
+        let nibName = UINib(nibName: "MissionSummaryCellTableViewCell", bundle: nil)
+        tableView.register(nibName, forCellReuseIdentifier: cellId)
+        
         fetchMissions()
     }
     
@@ -65,7 +69,7 @@ class MissionSummaryTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId",
-                                                 for: indexPath as IndexPath)
+                                                 for: indexPath as IndexPath) as! MissionSummaryCellTableViewCell
         
         
         
@@ -74,10 +78,15 @@ class MissionSummaryTVC: UITableViewController {
         
         
         let mission = missions[indexPath.row]
-        cell.textLabel?.text = mission.mission_name
-        cell.detailTextLabel?.text = "Created by "+mission.name!
+        //cell.textLabel?.text = mission.mission_name
+        //cell.detailTextLabel?.text = "Created by "+mission.name!
+        cell.commonInit(missionSummary: mission)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
     }
     
 }

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -278,7 +279,7 @@
         <!--Home-->
         <scene sceneID="6Ug-3f-2M2">
             <objects>
-                <viewController id="YHE-l2-3ov" customClass="AuthViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YHE-l2-3ov" customClass="HomeViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="piw-A6-AG2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -329,11 +330,62 @@
                     <navigationItem key="navigationItem" title="Home" id="gon-4l-KVv"/>
                     <connections>
                         <outlet property="name" destination="fgp-bv-xf2" id="Jk5-8L-7PF"/>
+                        <segue destination="WBY-Kl-5hN" kind="presentation" identifier="ShowLimboScreen" id="eaL-Ya-6fQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lTy-aS-cOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1252" y="245.12743628185908"/>
+        </scene>
+        <!--Limbo View Controller-->
+        <scene sceneID="zrL-qw-V02">
+            <objects>
+                <viewController id="WBY-Kl-5hN" customClass="LimboViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cMh-3e-F7t">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Account Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQB-bz-8iZ">
+                                <rect key="frame" x="16" y="191" width="117" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text=", welcome to TelePatriot. Because you are a new user, an admin has been notified to assign you to the appropriate group." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-Ac-EXy">
+                                <rect key="frame" x="16" y="52" width="343" height="79"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="VYa-GO-4lJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJC-g6-Gmg">
+                                <rect key="frame" x="149" y="139" width="77" height="30"/>
+                                <state key="normal" title="Chat / Help"/>
+                                <connections>
+                                    <action selector="chatHelpPressed:" destination="WBY-Kl-5hN" eventType="touchUpInside" id="REc-AM-0ug"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FJC-g6-Gmg" firstAttribute="top" secondItem="GjP-Ac-EXy" secondAttribute="bottom" constant="8" symbolic="YES" id="BLm-aY-bkl"/>
+                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="trailing" secondItem="cMh-3e-F7t" secondAttribute="trailingMargin" id="JR8-A4-b1U"/>
+                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="leading" secondItem="cMh-3e-F7t" secondAttribute="leadingMargin" id="hBy-g7-bhu"/>
+                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="centerX" secondItem="FJC-g6-Gmg" secondAttribute="centerX" id="xsE-cK-8aA"/>
+                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="top" secondItem="Vn4-WI-jHM" secondAttribute="top" constant="32" id="yzF-Mp-b6T"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Vn4-WI-jHM"/>
+                    </view>
+                    <connections>
+                        <outlet property="limboExplanation" destination="GjP-Ac-EXy" id="mQz-uO-nVK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2vZ-xb-FTm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2330.4000000000001" y="-501.49925037481262"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OLT-Px-JYl">

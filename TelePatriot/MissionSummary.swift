@@ -18,6 +18,7 @@ class MissionSummary : NSObject {
     var uid : String?
     var uid_and_active : String?
     var url : String?
+    var mission_type : String?
     
     /*****
     init(snap: DataSnapshot) {

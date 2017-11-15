@@ -8,7 +8,7 @@ import FirebaseFacebookAuthUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class AuthViewController: BaseViewController, FUIAuthDelegate {
+class HomeViewController: BaseViewController, FUIAuthDelegate {
     
     //var db = FIRDatabaseReference.init()
     var kFacebookAppID = "111804472843925"
@@ -59,8 +59,23 @@ class AuthViewController: BaseViewController, FUIAuthDelegate {
         } else {
             //User is in! Here is where we code after signing in
             // how do we get the name of the user?
+            
             //print("User: "+user!.displayName!)
             //name.text = user!.displayName!
+            
+            /**
+             Now find out if user has any roles yet, or if he has to be sent to the "limbo" screen
+             **/
+            let u = TPUser.sharedInstance
+            u.setUser(u: user)
+            // now see if the user has any roles.  If he does, send him on to whatever the main/home screen is
+            // If he doesn't, send him to the "limbo" screen where he has to sit and wait to be let in.
+            if u.hasAnyRole() {
+                // let them in  ...which really means do nothing, because this screen/controller is where they need to be
+            } else {
+                // send them to the "limbo" screen
+                self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
+            }
         }
     }
     

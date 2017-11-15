@@ -25,7 +25,9 @@
 		A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
-		A17C7FB21FAC308D00430C05 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17C7FB11FAC308D00430C05 /* AuthViewController.swift */; };
+		A17C7FB21FAC308D00430C05 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17C7FB11FAC308D00430C05 /* HomeViewController.swift */; };
+		A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A185658F1FBAB5B2009EE57F /* TPUser.swift */; };
+		A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565911FBC0523009EE57F /* LimboViewController.swift */; };
 		BDD7F2035B27F329A7F2E797 /* Pods_TelePatriot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +58,9 @@
 		A15D84641FA92976007EE77C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		A17C7FAD1FAC1B6700430C05 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		A17C7FAF1FAC1B8200430C05 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		A17C7FB11FAC308D00430C05 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		A17C7FB11FAC308D00430C05 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A185658F1FBAB5B2009EE57F /* TPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUser.swift; sourceTree = "<group>"; };
+		A18565911FBC0523009EE57F /* LimboViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimboViewController.swift; sourceTree = "<group>"; };
 		F60D7E18A8FEAD8059C42035 /* Pods-TelePatriot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +114,7 @@
 				A126AE1A1F8B1D860096714B /* Assets.xcassets */,
 				A126AE1C1F8B1D860096714B /* LaunchScreen.storyboard */,
 				A15D84631FA92976007EE77C /* SWRevealViewController.h */,
-				A17C7FB11FAC308D00430C05 /* AuthViewController.swift */,
+				A17C7FB11FAC308D00430C05 /* HomeViewController.swift */,
 				A15D84641FA92976007EE77C /* SWRevealViewController.m */,
 				A15D845C1FA8D04D007EE77C /* ViewController.swift */,
 				A126AE1F1F8B1D860096714B /* Info.plist */,
@@ -124,6 +128,8 @@
 				A12CDB4D1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib */,
 				A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */,
 				A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */,
+				A185658F1FBAB5B2009EE57F /* TPUser.swift */,
+				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -203,11 +209,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A12CDB4F1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib in Resources */,
 				A126AE1E1F8B1D860096714B /* LaunchScreen.storyboard in Resources */,
 				A126AE281F8B25B40096714B /* GoogleService-Info.plist in Resources */,
 				A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */,
 				A126AE191F8B1D860096714B /* Main.storyboard in Resources */,
+				A12CDB4F1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,13 +319,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
-				A17C7FB21FAC308D00430C05 /* AuthViewController.swift in Sources */,
+				A17C7FB21FAC308D00430C05 /* HomeViewController.swift in Sources */,
+				A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
 				A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */,
 				A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */,
+				A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */,
 				A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */,
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
