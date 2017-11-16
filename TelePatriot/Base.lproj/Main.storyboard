@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -167,7 +166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FoB-yx-aOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="534" y="100"/>
+            <point key="canvasLocation" x="556" y="87"/>
         </scene>
         <!--All Active Missions-->
         <scene sceneID="K1J-yI-Kji">
@@ -345,15 +344,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Account Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQB-bz-8iZ">
-                                <rect key="frame" x="16" y="191" width="117" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text=", welcome to TelePatriot. Because you are a new user, an admin has been notified to assign you to the appropriate group." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-Ac-EXy">
-                                <rect key="frame" x="16" y="52" width="343" height="79"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text=", welcome to TelePatriot. Because you are a new user, an admin has been notified to assign you to the appropriate group." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-Ac-EXy">
+                                <rect key="frame" x="16" y="52" width="343" height="90"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="VYa-GO-4lJ"/>
@@ -361,26 +353,43 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJC-g6-Gmg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJC-g6-Gmg">
                                 <rect key="frame" x="149" y="139" width="77" height="30"/>
                                 <state key="normal" title="Chat / Help"/>
                                 <connections>
                                     <action selector="chatHelpPressed:" destination="WBY-Kl-5hN" eventType="touchUpInside" id="REc-AM-0ug"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oGn-mc-dfe">
+                                <rect key="frame" x="0.0" y="217" width="375" height="430"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQB-bz-8iZ">
+                                <rect key="frame" x="16" y="188" width="117" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="FJC-g6-Gmg" firstAttribute="top" secondItem="GjP-Ac-EXy" secondAttribute="bottom" constant="8" symbolic="YES" id="BLm-aY-bkl"/>
-                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="trailing" secondItem="cMh-3e-F7t" secondAttribute="trailingMargin" id="JR8-A4-b1U"/>
-                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="leading" secondItem="cMh-3e-F7t" secondAttribute="leadingMargin" id="hBy-g7-bhu"/>
-                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="centerX" secondItem="FJC-g6-Gmg" secondAttribute="centerX" id="xsE-cK-8aA"/>
-                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="top" secondItem="Vn4-WI-jHM" secondAttribute="top" constant="32" id="yzF-Mp-b6T"/>
+                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="leading" secondItem="Vn4-WI-jHM" secondAttribute="leading" constant="16" id="0zQ-cO-2Yg"/>
+                            <constraint firstAttribute="bottom" secondItem="oGn-mc-dfe" secondAttribute="bottom" constant="20" symbolic="YES" id="4Su-Ih-AqW"/>
+                            <constraint firstItem="FJC-g6-Gmg" firstAttribute="top" secondItem="Vn4-WI-jHM" secondAttribute="top" constant="119" id="5RX-Jr-t34"/>
+                            <constraint firstItem="Vn4-WI-jHM" firstAttribute="trailing" secondItem="GjP-Ac-EXy" secondAttribute="trailing" constant="16" id="7lV-LU-YDe"/>
+                            <constraint firstItem="rQB-bz-8iZ" firstAttribute="top" secondItem="Vn4-WI-jHM" secondAttribute="top" constant="168" id="9Fy-Zx-bG6"/>
+                            <constraint firstItem="rQB-bz-8iZ" firstAttribute="leading" secondItem="Vn4-WI-jHM" secondAttribute="leading" constant="16" id="GPP-R3-Q3W"/>
+                            <constraint firstItem="GjP-Ac-EXy" firstAttribute="top" secondItem="Vn4-WI-jHM" secondAttribute="top" constant="32" id="eOM-nz-EsY"/>
+                            <constraint firstItem="FJC-g6-Gmg" firstAttribute="centerX" secondItem="Vn4-WI-jHM" secondAttribute="centerX" id="f8O-x9-CBs"/>
+                            <constraint firstItem="oGn-mc-dfe" firstAttribute="top" secondItem="rQB-bz-8iZ" secondAttribute="bottom" constant="8" symbolic="YES" id="jsI-qn-BCD"/>
+                            <constraint firstItem="oGn-mc-dfe" firstAttribute="leading" secondItem="cMh-3e-F7t" secondAttribute="leading" id="uW0-Xg-3Wo"/>
+                            <constraint firstItem="oGn-mc-dfe" firstAttribute="centerX" secondItem="FJC-g6-Gmg" secondAttribute="centerX" id="y8A-8y-qkT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Vn4-WI-jHM"/>
                     </view>
                     <connections>
                         <outlet property="limboExplanation" destination="GjP-Ac-EXy" id="mQz-uO-nVK"/>
+                        <outlet property="tableViewAccountStatusEvents" destination="oGn-mc-dfe" id="wed-xd-8ej"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2vZ-xb-FTm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -407,6 +416,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bkH-ME-CC6"/>
+        <segue reference="IjA-nM-Asx"/>
     </inferredMetricsTieBreakers>
 </document>
