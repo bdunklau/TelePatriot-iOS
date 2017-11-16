@@ -28,6 +28,11 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // https://stackoverflow.com/a/44403725
+        // Hide the back button on this screen.  Don't want the user to be able to go anywhere
+        // until they are assigned to a group
+        self.navigationItem.hidesBackButton = true
 
         // Do any additional setup after loading the view.
         limboExplanation.text = TPUser.sharedInstance.getName() /*"Brent Dunklau"*/ + limboExplanation.text
