@@ -19,7 +19,7 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableViewAccountStatusEvents: UITableView! {
         didSet {
             self.tableViewAccountStatusEvents.dataSource = self
-            self.tableViewAccountStatusEvents.rowHeight = 75
+            self.tableViewAccountStatusEvents.rowHeight = 90
         }
     }
     
@@ -85,6 +85,12 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.accountStatusEvents.append(accountStatusEvent)
             DispatchQueue.main.async{
                 self.tableViewAccountStatusEvents.reloadData()
+            
+                // this is what automatically scrolls the list to the bottom row when the admin takes action
+                // on this new person's account.  There aren't usually enough rows to matter in this case (admins reviewing
+                // and approving new people) but we'll end up using this code in other areas.
+                let index = IndexPath(row: self.accountStatusEvents.count-1, section: 0) // use your index number or Indexpath
+                self.tableViewAccountStatusEvents.scrollToRow(at: index, at: .bottom, animated: true)
             }
             
         }, withCancel: nil)

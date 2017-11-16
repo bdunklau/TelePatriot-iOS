@@ -11,9 +11,8 @@ import UIKit
 class AccountStatusEventTableViewCell: UITableViewCell {
     
     
+    @IBOutlet weak var event: UITextView!
     @IBOutlet weak var date: UILabel!
-    
-    @IBOutlet weak var event: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
