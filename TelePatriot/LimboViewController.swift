@@ -9,9 +9,9 @@
 import UIKit
 import Firebase
 
-class LimboViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LimboViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AccountStatusEventListener {
     
-    
+    var isBrandNewUser : Bool?
     var accountStatusEvents = [AccountStatusEvent]()
 
     @IBOutlet weak var limboExplanation: UITextView!
@@ -28,6 +28,18 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Is this going to work?  We should never come to this view except on brand new users
+        isBrandNewUser = true
+        
+        // The user object fires roleAssigned() which calls all listeners
+        // This call makes this class one of those listeners
+        // See also roleAssigned() in this class
+        if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
+            || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "LimboViewController" })) {
+            print("LimboViewController: adding self to list of accountStatusEventListeners")
+            TPUser.sharedInstance.accountStatusEventListeners.append(self)
+        } else { print("LimboViewController: NOT adding self to list of accountStatusEventListeners") }
         
         // https://stackoverflow.com/a/44403725
         // Hide the back button on this screen.  Don't want the user to be able to go anywhere
@@ -99,6 +111,26 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             
         }, withCancel: nil)
+    }
+    
+    
+    // required by AccountStatusEventListener
+    func roleAssigned(role: String) {
+        guard let isNewUser = isBrandNewUser else { return }
+        
+        if(!isNewUser) { return }
+        
+        isBrandNewUser = false // so that the stuff below never gets called again
+        
+        // we only care on the very first role assigned
+        let byPassLogin = true
+        self.performSegue(withIdentifier: "HomeViewController", sender: byPassLogin)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! HomeViewController
+        vc.byPassLogin = true
     }
 
 }

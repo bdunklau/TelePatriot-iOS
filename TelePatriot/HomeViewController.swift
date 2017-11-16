@@ -13,6 +13,8 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
     //var db = FIRDatabaseReference.init()
     var kFacebookAppID = "111804472843925"
     
+    var byPassLogin : Bool = false
+    
     @IBOutlet weak var name: UILabel!
     
     @IBAction func logoutPressed(_ sender: Any) {
@@ -21,8 +23,19 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        checkLoggedIn()
+     
+        // LimboViewController sets this in prepareForSegue
+        if(!byPassLogin) {
+            checkLoggedIn()
+        }
+        else {
+            // If we're bypassing the login logic, it's because we are coming back to this
+            // screen from LimboViewController.  In that case, we don't want to show the back
+            // button here.  We don't want the user to be able to go back to that screen.
+            
+            // https://stackoverflow.com/a/44403725
+            self.navigationItem.hidesBackButton = true
+        }
     }
     
     func checkLoggedIn() {
@@ -30,6 +43,15 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
             if user != nil {
                 // User is signed in.
                 self.name.text = user?.displayName
+                
+                // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
+                let u = TPUser.sharedInstance
+                print("HomeViewController.checkLoggedIn() -----------------")
+                u.setUser(u: user)
+                if(!u.hasAnyRole()) {
+                    self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
+                }
+                
             } else {
                 // No user is signed in.
                 self.login()

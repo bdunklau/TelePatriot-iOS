@@ -17,18 +17,23 @@ class TPUser {
     var isAdmin = false
     var isDirector = false
     var isVolunteer = false
-    /****
-    var name : String
-    var email : String
-    var uid : String
-   ****/
+    var accountStatusEventListeners = [AccountStatusEventListener]()
+    var ref : DatabaseReference?
+    var rolesAlreadyFetched = false
     
     private init() {
+        ref = Database.database().reference().child("users")
     }
     
     func setUser(u: User?) {
-        user = u
-        fetchRoles(uid: getUid())
+        // only set the user object if it's not set already
+        // If you want to logout/login as someone else, we need to UN-set this user first
+        //  ...just my rule
+        guard let usr = user else {
+            user = u
+            fetchRoles(uid: getUid())
+            return
+        }
     }
     
     func getName() -> String {
@@ -65,23 +70,54 @@ class TPUser {
     
     
     func fetchRoles(uid: String) {
-        Database.database().reference().child("users").child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
+        if(rolesAlreadyFetched) { return }
+        
+        rolesAlreadyFetched = true
+        
+        guard let theref = ref else { return }
+        theref.child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
             
-            if let dictionary = snapshot.value as? [String : String] {
-                // ref:  https://stackoverflow.com/a/28129484
-                if let adm = dictionary["Admin"] {
-                    // now adm is not nil and the Optional has been unwrapped, so use it
-                    if adm.lowercased() == "true" { self.isAdmin = true }
+            print("==============================")
+            print("snapshot is...")
+            print(snapshot)
+            print("snapshot.value is...")
+            print(snapshot.value)
+            
+            print("check for success 1")
+            if let role = snapshot.key as? String {
+                print("success 1")
+                let val = snapshot.value as? String
+                if (role == "Admin" && val?.lowercased() == "true") {
+                    self.isAdmin = true
+                    self.roleAssigned(role: "Admin")
                 }
-                else if let dir = dictionary["Director"] {
-                    if dir.lowercased() == "true" { self.isDirector = true }
+                
+                if (role == "Director" && val?.lowercased() == "true") {
+                    self.isDirector = true
+                    self.roleAssigned(role: "Director")
                 }
-                else if let vol = dictionary["Volunteer"] {
-                    if vol.lowercased() == "true" { self.isVolunteer = true }
+                
+                if (role == "Volunteer" && val?.lowercased() == "true") {
+                    self.isVolunteer = true
+                    self.roleAssigned(role: "Volunteer")
                 }
+            
             }
+            print("did we see success")
+            
+            
+            
+            
             
         }, withCancel: nil) // not sure what withCancel:nil does.  I know it's saying "no callback".  But when would we cancel this action?
+    }
+    
+    func roleAssigned(role: String) {
+        // tell all the listeners that a role was assigned.  This is for LimboViewController, to tell it that
+        // we can now send the user back to HomeViewController
+        for l in accountStatusEventListeners {
+            l.roleAssigned(role: role)
+        }
     }
     
     /**

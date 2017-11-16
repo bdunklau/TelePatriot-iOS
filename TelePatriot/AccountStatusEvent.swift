@@ -16,3 +16,7 @@ class AccountStatusEvent {
         self.event = event
     }
 }
+
+protocol AccountStatusEventListener {
+    func roleAssigned(role: String)
+}
