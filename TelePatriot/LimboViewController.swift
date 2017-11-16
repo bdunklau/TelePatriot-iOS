@@ -19,7 +19,7 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableViewAccountStatusEvents: UITableView! {
         didSet {
             self.tableViewAccountStatusEvents.dataSource = self
-            self.tableViewAccountStatusEvents.rowHeight = 100
+            self.tableViewAccountStatusEvents.rowHeight = 75
         }
     }
     
