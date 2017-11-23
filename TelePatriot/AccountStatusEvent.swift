@@ -19,4 +19,6 @@ class AccountStatusEvent {
 
 protocol AccountStatusEventListener {
     func roleAssigned(role: String)
+    
+    func roleRemoved(role: String)
 }

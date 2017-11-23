@@ -328,7 +328,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="gon-4l-KVv"/>
                     <connections>
+                        <outlet property="adminButton" destination="XJS-gi-rOa" id="fZV-WZ-iM0"/>
+                        <outlet property="directorButton" destination="Pry-D4-9Ox" id="4z5-0h-ruN"/>
                         <outlet property="name" destination="fgp-bv-xf2" id="Jk5-8L-7PF"/>
+                        <outlet property="volunteerButton" destination="QMd-n1-bgP" id="NkD-Hd-nEW"/>
                         <segue destination="WBY-Kl-5hN" kind="show" identifier="ShowLimboScreen" id="eaL-Ya-6fQ"/>
                     </connections>
                 </viewController>
@@ -345,7 +348,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text=", welcome to TelePatriot. Because you are a new user, an admin has been notified to assign you to the appropriate group." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjP-Ac-EXy">
-                                <rect key="frame" x="16" y="52" width="343" height="90"/>
+                                <rect key="frame" x="16" y="96" width="343" height="90"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="VYa-GO-4lJ"/>
@@ -354,18 +357,18 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJC-g6-Gmg">
-                                <rect key="frame" x="149" y="139" width="77" height="30"/>
+                                <rect key="frame" x="149" y="183" width="77" height="30"/>
                                 <state key="normal" title="Chat / Help"/>
                                 <connections>
                                     <action selector="chatHelpPressed:" destination="WBY-Kl-5hN" eventType="touchUpInside" id="REc-AM-0ug"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oGn-mc-dfe">
-                                <rect key="frame" x="0.0" y="217" width="375" height="430"/>
+                                <rect key="frame" x="0.0" y="261" width="375" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQB-bz-8iZ">
-                                <rect key="frame" x="16" y="188" width="117" height="21"/>
+                                <rect key="frame" x="16" y="232" width="117" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -415,9 +418,54 @@
             </objects>
             <point key="canvasLocation" x="-1252" y="-482"/>
         </scene>
+        <!--Center View Controller-->
+        <scene sceneID="XPt-hv-Zin">
+            <objects>
+                <viewController storyboardIdentifier="CenterViewController" id="yLa-02-pob" customClass="CenterViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dYI-Kz-RO9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="Mb9-GN-hIV"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oUr-go-5yD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-431" y="-1217"/>
+        </scene>
+        <!--Side Panel View Controller-->
+        <scene sceneID="SmW-mo-gNM">
+            <objects>
+                <viewController storyboardIdentifier="RightViewController" id="MYP-sd-4AW" customClass="SidePanelViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FTX-wS-Qrw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="NvQ-Gk-HDr"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zxx-Ep-H4B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="270" y="-1218"/>
+        </scene>
+        <!--Side Panel View Controller-->
+        <scene sceneID="B9T-6h-OZz">
+            <objects>
+                <viewController storyboardIdentifier="LeftViewController" id="PMY-Vu-JBR" customClass="SidePanelViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i9q-v8-c0G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="NQo-fa-sqd"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hcq-Aw-7Ju" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1129" y="-1218"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="HzE-EZ-tvQ"/>
+        <segue reference="QXx-Ok-7be"/>
         <segue reference="IjA-nM-Asx"/>
     </inferredMetricsTieBreakers>
 </document>

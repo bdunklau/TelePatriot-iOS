@@ -26,7 +26,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.377732711004-s68av3cb5ud0ibqu6hdfjgaqlcbjukor</string>
-                <string>fb111804472843925</string>
+				<string>fb111804472843925</string>
 			</array>
 		</dict>
 		<dict/>
@@ -48,8 +48,6 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

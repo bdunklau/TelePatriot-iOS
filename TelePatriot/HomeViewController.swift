@@ -8,14 +8,53 @@ import FirebaseFacebookAuthUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class HomeViewController: BaseViewController, FUIAuthDelegate {
+class HomeViewController: BaseViewController, FUIAuthDelegate, AccountStatusEventListener {
     
     //var db = FIRDatabaseReference.init()
     var kFacebookAppID = "111804472843925"
     
+    var delegate : CenterViewControllerDelegate?
+    
+    //@IBOutlet weak var volunteerButton: UIButton!
+    let volunteerButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("My Mission", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(myMission), for: .touchUpInside)
+        return button
+    }()
+    
+    //@IBOutlet weak var directorButton: UIButton!
+    let directorButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Directors", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(directors), for: .touchUpInside)
+        return button
+    }()
+    
+    //@IBOutlet weak var adminButton: UIButton!
+    let adminButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Admins", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(admins), for: .touchUpInside)
+        return button
+    }()
+    
+    let menuButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Menu", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(slideMenu), for: .touchUpInside)
+        return button
+    }()
+    
+    
     var byPassLogin : Bool = false
     
-    @IBOutlet weak var name: UILabel!
+    //@IBOutlet weak var name: UILabel!
+    var name = UILabel()
     
     @IBAction func logoutPressed(_ sender: Any) {
         try! Auth.auth().signOut()
@@ -23,6 +62,10 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupView()
+        
+        listenForAccountStatusEvents()
      
         // LimboViewController sets this in prepareForSegue
         if(!byPassLogin) {
@@ -38,18 +81,69 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
         }
     }
     
+    func setupView() {
+        
+        navigationItem.title = "Home"
+        
+        let item2 = UIBarButtonItem(customView: menuButton)
+        self.navigationItem.setLeftBarButtonItems([item2], animated: true)
+        
+        self.view.addSubview(volunteerButton)
+        self.view.addSubview(directorButton)
+        self.view.addSubview(adminButton)
+        
+        /******
+        volunteerButton.addTarget(self, action: #selector(myMission), for: .touchUpInside)
+        directorButton.addTarget(self, action: #selector(directors), for: .touchUpInside)
+        adminButton.addTarget(self, action: #selector(admins), for: .touchUpInside)
+        *******/
+        
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-24-[v0]-24-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": volunteerButton]))
+        
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-24-[v0]-24-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": directorButton]))
+        
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-24-[v0]-24-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": adminButton]))
+        
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-24-[v0]-10-[v1]-50-[v2]-300-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": volunteerButton, "v1": directorButton, "v2": adminButton]))
+    }
+    
+    @objc func myMission() {
+        self.present(VolunteerViewController(), animated: true, completion: nil)
+    }
+    
+    @objc func directors() {
+        self.present(DirectorViewController(), animated: true, completion: nil)
+    }
+    
+    @objc func admins() {
+        self.present(AdminViewController(), animated: true, completion: nil)
+    }
+    
+    @objc func slideMenu() {
+        delegate?.toggleLeftPanel?()
+    }
+    
     func checkLoggedIn() {
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
-                // User is signed in.
+                // User is signed in
+                print(user?.displayName)
+                print(user?.email)
                 self.name.text = user?.displayName
                 
                 // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
                 let u = TPUser.sharedInstance
                 print("HomeViewController.checkLoggedIn() -----------------")
                 u.setUser(u: user)
+                // TODO This is not right (above and below). We see a temporary black screen because we are fetching
+                // user roles asynchronously (of course) but we are checking synchronously on the very next line to see
+                // if the user has any roles.  The stuff below ought to be in a callback.
                 if(!u.hasAnyRole()) {
-                    self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
+                    
+                    // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
+                    // With it commented out, you'll always be sent to the Home screen where you can logout.
+                    self.navigationController?.pushViewController(LimboViewController(), animated: false)
+                    //self.present(LimboViewController(), animated: true, completion: nil)
                 }
                 
             } else {
@@ -96,7 +190,8 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
                 // let them in  ...which really means do nothing, because this screen/controller is where they need to be
             } else {
                 // send them to the "limbo" screen
-                self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
+                //self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
+                self.present(LimboViewController(), animated: true, completion: nil)
             }
         }
     }
@@ -107,5 +202,57 @@ class HomeViewController: BaseViewController, FUIAuthDelegate {
     }
     
     
+    // required by AccountStatusEventListener
+    func roleAssigned(role: String) {
+        if( role == "Volunteer" ) {
+            volunteerButton.isHidden = false
+            //volunteerButton.setTitle("My Mission", for: .normal)//.titleLabel = "My Mission"
+        }
+        if( role == "Director" ) {
+            directorButton.isHidden = false
+            //directorButton.setTitle("Directors", for: .normal)
+        }
+        if( role == "Admin" ) {
+            adminButton.isHidden = false
+            //adminButton.setTitle("Admins", for: .normal)
+        }
+    }
+    
+    // required by AccountStatusEventListener
+    func roleRemoved(role: String) {
+        if( role == "Volunteer" ) {
+            volunteerButton.isHidden = true
+            //volunteerButton.setTitle("", for: .normal)
+        }
+        if( role == "Director" ) {
+            directorButton.isHidden = true
+            //directorButton.setTitle("", for: .normal)
+        }
+        if( role == "Admin" ) {
+            adminButton.isHidden = true
+            //adminButton.setTitle("", for: .normal)
+        }
+    }
+    
+    func listenForAccountStatusEvents() {
+        if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
+            || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "HomeViewController" })) {
+            print("HomeViewController: adding self to list of accountStatusEventListeners")
+            TPUser.sharedInstance.accountStatusEventListeners.append(self)
+        } else { print("HomeViewController: NOT adding self to list of accountStatusEventListeners") }
+    }
+    
+}
+
+extension HomeViewController: SidePanelViewControllerDelegate {
+    
+    func didSelectSomething(menuItem: MenuItem) {
+        /*********
+        imageView.image = animal.image
+        titleLabel.text = animal.title
+        creatorLabel.text = animal.creator
+        ********/
+        delegate?.collapseSidePanels?()
+    }
 }
 

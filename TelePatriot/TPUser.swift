@@ -77,46 +77,80 @@ class TPUser {
         guard let theref = ref else { return }
         theref.child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
             
+            if let role = snapshot.key as? String {
+                let val = snapshot.value as? String
+                if (role == "Admin" && val?.lowercased() == "true") {
+                    self.isAdmin = true
+                    self.roleAssigned(role: role)
+                }
+                
+                if (role == "Director" && val?.lowercased() == "true") {
+                    self.isDirector = true
+                    self.roleAssigned(role: role)
+                }
+                
+                if (role == "Volunteer" && val?.lowercased() == "true") {
+                    self.isVolunteer = true
+                    self.roleAssigned(role: role)
+                }
+            }
+            
+        }, withCancel: nil) // not sure what withCancel:nil does.  I know it's saying "no callback".  But when would we cancel this action?
+        
+        
+        // To remove a permission, we don't set Admin=false or Director=false, etc
+        // Instead, we remove the node altogether
+        theref.child(uid).child("roles").observe(.childRemoved, with: {(snapshot) in
+            
             print("==============================")
             print("snapshot is...")
             print(snapshot)
             print("snapshot.value is...")
             print(snapshot.value)
             
-            print("check for success 1")
             if let role = snapshot.key as? String {
                 print("success 1")
-                let val = snapshot.value as? String
-                if (role == "Admin" && val?.lowercased() == "true") {
-                    self.isAdmin = true
-                    self.roleAssigned(role: "Admin")
+                if (role == "Admin") {
+                    self.isAdmin = false
+                    self.roleRemoved(role: role)
                 }
                 
-                if (role == "Director" && val?.lowercased() == "true") {
-                    self.isDirector = true
-                    self.roleAssigned(role: "Director")
+                if (role == "Director") {
+                    self.isDirector = false
+                    self.roleRemoved(role: role)
                 }
                 
-                if (role == "Volunteer" && val?.lowercased() == "true") {
-                    self.isVolunteer = true
-                    self.roleAssigned(role: "Volunteer")
+                if (role == "Volunteer") {
+                    self.isVolunteer = false
+                    self.roleRemoved(role: role)
                 }
-            
+                
             }
             print("did we see success")
             
-            
-            
-            
-            
-        }, withCancel: nil) // not sure what withCancel:nil does.  I know it's saying "no callback".  But when would we cancel this action?
+        }, withCancel: nil)
+        
+        
+        
+        
+        
+        
     }
     
     func roleAssigned(role: String) {
         // tell all the listeners that a role was assigned.  This is for LimboViewController, to tell it that
-        // we can now send the user back to HomeViewController
+        // we can now send the user back to HomeViewController.  Also now for HomeViewController because on
+        // that screen we have Volunteer, Director and Admin labels that we need to conditional show/hide
         for l in accountStatusEventListeners {
             l.roleAssigned(role: role)
+        }
+    }
+    
+    func roleRemoved(role: String) {
+        // tell all the listeners that a role was remove.  This is for HomeViewController, to tell it that
+        // we can now hide whatever role label corresponds to the role that was just removed
+        for l in accountStatusEventListeners {
+            l.roleRemoved(role: role)
         }
     }
     

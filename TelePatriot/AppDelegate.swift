@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
         //***// IMPORTANT!!!!!!!!!
         FirebaseApp.configure()
-        
     }
     
 
@@ -45,6 +44,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Automatically moves input fields up when the keyboard is present to the input isn't hidden
         IQKeyboardManager.sharedManager().enable = true
         
+        
+        /**********************************
+         The stuff below is for developing apps without the storyboard
+         which is really the way to go
+        
+        // Create a new window for the window property that
+        // comes standard on the AppDelegate class. The UIWindow
+        // is where all view controllers and views appear.
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        //
+        // Set the initial View Controller to our instance of ViewController
+        window?.rootViewController = UINavigationController(rootViewController: ContainerViewControlle())
+        //
+        // Present the window
+        window?.makeKeyAndVisible()
+         **********************************/
+        
+        
+        
+        
+        
+        
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let containerViewController = ContainerViewController()
+        
+        window!.rootViewController = containerViewController
+        window!.makeKeyAndVisible()
         
         return true
     }

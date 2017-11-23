@@ -14,14 +14,18 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
     var isBrandNewUser : Bool?
     var accountStatusEvents = [AccountStatusEvent]()
 
-    @IBOutlet weak var limboExplanation: UITextView!
+    //@IBOutlet weak var limboExplanation: UITextView!
+    var limboExplanation = UITextView()
     
+    /******
     @IBOutlet weak var tableViewAccountStatusEvents: UITableView! {
         didSet {
             self.tableViewAccountStatusEvents.dataSource = self
             self.tableViewAccountStatusEvents.rowHeight = 90
         }
     }
+    ********/
+    var tableViewAccountStatusEvents = UITableView()
     
     @IBAction func chatHelpPressed(_ sender: Any) {
     }
@@ -31,6 +35,9 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         // Is this going to work?  We should never come to this view except on brand new users
         isBrandNewUser = true
+        
+        self.tableViewAccountStatusEvents.dataSource = self
+        self.tableViewAccountStatusEvents.rowHeight = 90
         
         // The user object fires roleAssigned() which calls all listeners
         // This call makes this class one of those listeners
@@ -123,14 +130,23 @@ class LimboViewController: UIViewController, UITableViewDataSource, UITableViewD
         isBrandNewUser = false // so that the stuff below never gets called again
         
         // we only care on the very first role assigned
-        let byPassLogin = true
-        self.performSegue(withIdentifier: "HomeViewController", sender: byPassLogin)
-        
+        //let byPassLogin = true
+        //self.performSegue(withIdentifier: "HomeViewController", sender: byPassLogin)
+        let home = HomeViewController()
+        home.byPassLogin = true
+        self.navigationController?.pushViewController(home, animated: true)
     }
     
+    // required by AccountStatusEventListener
+    func roleRemoved(role: String) {
+        // do nothing
+    }
+    
+    /***** not using storyboards anymore
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! HomeViewController
         vc.byPassLogin = true
     }
+    ******/
 
 }
