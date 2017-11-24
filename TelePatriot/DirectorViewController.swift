@@ -9,19 +9,20 @@
 import UIKit
 
 class DirectorViewController: BaseViewController {
-
+    
+    var tableView: UITableView?
+    var delegate: DirectorActionTableViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let l = UILabel()
-        l.text = "Directors"
-        view.addSubview(l)
         
+        tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        l.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        l.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        l.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.1).isActive = true
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        //tableView?.reloadData()
+        tableView?.register(MenuCell.self, forCellReuseIdentifier: "thecell")
+        self.view.addSubview(tableView!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,3 +42,48 @@ class DirectorViewController: BaseViewController {
     */
 
 }
+
+
+// MARK: Table View Data Source
+
+extension DirectorViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let ct = MenuItem.directorItems()[section].count
+        return ct
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "thecell", for: indexPath) as! MenuCell
+        let sec = indexPath.section
+        let row = indexPath.row
+        cell.configureCell(MenuItem.directorItems()[sec][row])
+        //cell.backgroundColor = .red
+        //cell.textLabel?.textColor = .black
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   titleForHeaderInSection section: Int) -> String? {
+        return "" //self.sections[section]
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        // #warning Incomplete implementation, return the number of sections
+        //let ct = self.sections.count
+        return 1 // ct
+        
+    }
+}
+
+// Mark: Table View Delegate
+
+extension DirectorViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let menuItem = MenuItem.directorItems()[indexPath.section][indexPath.row]
+        delegate?.didSelectSomething(menuItem: menuItem)
+    }
+}
+

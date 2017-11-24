@@ -18,20 +18,25 @@ struct MenuItem {
         //self.image = image
     }
     
+    static func directorItems() -> Array<Array<MenuItem>> {
+        let section1 = [
+            MenuItem(title: "New Phone Campaign"),
+            MenuItem(title: "My Active Missions"),
+            MenuItem(title: "All My Missions"),
+            MenuItem(title: "All Active Missions"),
+            MenuItem(title: "All Missions"),
+            MenuItem(title: "All Activity")
+        ]
+        
+        return [section1]
+    }
+    
     static func leftSections() -> [String] {
         return ["Act", "Communicate", "My Account"]
     }
     
     static func rightSections() -> [String] {
         return [""]
-    }
-    
-    static func leftItems_orig() -> Array<MenuItem> {
-        return [
-            MenuItem(title: "My Mission"),
-            MenuItem(title: "Directors"),
-            MenuItem(title: "Admins")
-        ]
     }
     
     static func leftItems() -> Array<Array<MenuItem>> {
@@ -50,12 +55,6 @@ struct MenuItem {
             MenuItem(title: "Sign Out")
         ]
         return [section1, section2, section3]
-    }
-    
-    static func rightItems_orig() -> Array<MenuItem> {
-        return [
-            MenuItem(title: "stuff")
-        ]
     }
     
     static func rightItems() -> Array<Array<MenuItem>> {

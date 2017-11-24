@@ -17,6 +17,8 @@
 		A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */; };
 		A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */; };
 		A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */; };
+		A109E8BB1FC7E1F60005517A /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8BA1FC7E1F60005517A /* BaseButton.swift */; };
+		A109E8C11FC7FA000005517A /* DirectorActionTableViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8C01FC7FA000005517A /* DirectorActionTableViewControllerDelegate.swift */; };
 		A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A126AE131F8B1D860096714B /* AppDelegate.swift */; };
 		A126AE191F8B1D860096714B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A126AE171F8B1D860096714B /* Main.storyboard */; };
 		A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A126AE1A1F8B1D860096714B /* Assets.xcassets */; };
@@ -57,6 +59,8 @@
 		A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMissionViewController.swift; sourceTree = "<group>"; };
 		A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePetitionViewController.swift; sourceTree = "<group>"; };
 		A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHelpViewController.swift; sourceTree = "<group>"; };
+		A109E8BA1FC7E1F60005517A /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		A109E8C01FC7FA000005517A /* DirectorActionTableViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorActionTableViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A126AE101F8B1D860096714B /* TelePatriot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelePatriot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A126AE131F8B1D860096714B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A126AE181F8B1D860096714B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 				A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */,
 				A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */,
 				A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */,
+				A109E8BA1FC7E1F60005517A /* BaseButton.swift */,
+				A109E8C01FC7FA000005517A /* DirectorActionTableViewControllerDelegate.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -365,6 +371,7 @@
 				A109E8A31FC55F090005517A /* SidePanelViewControllerDelegate.swift in Sources */,
 				A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
+				A109E8C11FC7FA000005517A /* DirectorActionTableViewControllerDelegate.swift in Sources */,
 				A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */,
 				A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */,
 				A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */,
@@ -377,6 +384,7 @@
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
 				A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */,
+				A109E8BB1FC7E1F60005517A /* BaseButton.swift in Sources */,
 				A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */,
 				A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */,
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,

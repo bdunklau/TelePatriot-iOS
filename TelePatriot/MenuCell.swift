@@ -13,7 +13,7 @@ class MenuCell: UITableViewCell {
     //var menuItemImageView = UIImageView()
     var label = UILabel()
     
-    func configureForMenuItem(_ menuItem: MenuItem) {
+    func configureCell(_ menuItem: MenuItem) {
         //menuItemImageView.image = menuItem.image
         label.text = menuItem.title
         

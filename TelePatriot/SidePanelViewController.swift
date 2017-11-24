@@ -52,8 +52,7 @@ class SidePanelViewController: UIViewController {
 extension SidePanelViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let ct = self.menuItems[section].count //menuItems.count
-        print("rows in section \(section) = \(ct)")
+        let ct = self.menuItems[section].count 
         return ct
     }
     
@@ -61,7 +60,7 @@ extension SidePanelViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "thecell", for: indexPath) as! MenuCell
         let sec = indexPath.section
         let row = indexPath.row
-        cell.configureForMenuItem(menuItems[sec][row])
+        cell.configureCell(menuItems[sec][row])
         //cell.backgroundColor = .red
         //cell.textLabel?.textColor = .black
         return cell
