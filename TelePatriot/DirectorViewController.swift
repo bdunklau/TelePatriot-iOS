@@ -12,8 +12,16 @@ class DirectorViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let l = UILabel()
+        l.text = "Directors"
+        view.addSubview(l)
+        
+        
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        l.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        l.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        l.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.1).isActive = true
     }
 
     override func didReceiveMemoryWarning() {

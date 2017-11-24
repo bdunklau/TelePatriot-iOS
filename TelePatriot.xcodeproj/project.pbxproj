@@ -14,6 +14,9 @@
 		A109E8AB1FC564A50005517A /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8AA1FC564A50005517A /* CenterViewController.swift */; };
 		A109E8AD1FC565E60005517A /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8AC1FC565E60005517A /* MenuItem.swift */; };
 		A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8AE1FC6233F0005517A /* ContainerViewController.swift */; };
+		A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */; };
+		A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */; };
+		A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */; };
 		A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A126AE131F8B1D860096714B /* AppDelegate.swift */; };
 		A126AE191F8B1D860096714B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A126AE171F8B1D860096714B /* Main.storyboard */; };
 		A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A126AE1A1F8B1D860096714B /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		A109E8AA1FC564A50005517A /* CenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		A109E8AC1FC565E60005517A /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		A109E8AE1FC6233F0005517A /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMissionViewController.swift; sourceTree = "<group>"; };
+		A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePetitionViewController.swift; sourceTree = "<group>"; };
+		A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHelpViewController.swift; sourceTree = "<group>"; };
 		A126AE101F8B1D860096714B /* TelePatriot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelePatriot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A126AE131F8B1D860096714B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A126AE181F8B1D860096714B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -160,6 +166,9 @@
 				A109E8AA1FC564A50005517A /* CenterViewController.swift */,
 				A109E8AC1FC565E60005517A /* MenuItem.swift */,
 				A109E8AE1FC6233F0005517A /* ContainerViewController.swift */,
+				A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */,
+				A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */,
+				A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -362,8 +371,10 @@
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,
+				A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */,
 				A109E8A71FC561370005517A /* SidePanelViewController.swift in Sources */,
 				A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */,
+				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
 				A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */,
 				A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */,
@@ -371,6 +382,7 @@
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,
 				A109E8AB1FC564A50005517A /* CenterViewController.swift in Sources */,
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
+				A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */,
 				A12CDB591FB01BF7003DE424 /* MissionSummaryTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

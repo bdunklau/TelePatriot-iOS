@@ -1,19 +1,19 @@
 //
-//  AdminViewController.swift
+//  SharePetitionViewController.swift
 //  TelePatriot
 //
-//  Created by Brent Dunklau on 11/5/17.
+//  Created by Brent Dunklau on 11/23/17.
 //  Copyright © 2017 Brent Dunklau. All rights reserved.
 //
 
 import UIKit
 
-class AdminViewController: BaseViewController {
+class SharePetitionViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let l = UILabel()
-        l.text = "Admins"
+        l.text = "Share Petition"
         view.addSubview(l)
         
         

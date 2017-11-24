@@ -63,7 +63,7 @@ extension SidePanelViewController: UITableViewDataSource {
         let row = indexPath.row
         cell.configureForMenuItem(menuItems[sec][row])
         //cell.backgroundColor = .red
-        cell.textLabel?.textColor = .black
+        //cell.textLabel?.textColor = .black
         return cell
     }
     
