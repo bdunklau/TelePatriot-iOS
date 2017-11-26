@@ -35,13 +35,8 @@ class SidePanelViewController: UIViewController {
         
         tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         
-        
-        //let nibName = UINib(nibName: "MenuCell", bundle: nil)
-        //tableView?.register(nibName, forCellReuseIdentifier: "thecell")
-        
         tableView?.delegate = self
         tableView?.dataSource = self
-        //tableView?.reloadData()
         tableView?.register(MenuCell.self, forCellReuseIdentifier: "thecell")
         self.view.addSubview(tableView!)
     }

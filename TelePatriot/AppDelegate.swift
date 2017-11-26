@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    // https://www.raywenderlich.com/150015/callkit-tutorial-ios
+    //lazy var providerDelegate: ProviderDelegate = ProviderDelegate(callManager: self.callManager)
+    
     override init() {
         // https://www.youtube.com/watch?v=jH2LdL-PsHI
         // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
@@ -156,6 +159,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    
+    // https://www.raywenderlich.com/150015/callkit-tutorial-ios
+    func displayIncomingCall(uuid: UUID, handle: String, hasVideo: Bool = false, completion: ((NSError?) -> Void)?) {
+        //providerDelegate.reportIncomingCall(uuid: uuid, handle: handle, hasVideo: hasVideo, completion: completion)
     }
 
 }

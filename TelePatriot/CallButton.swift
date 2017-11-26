@@ -1,20 +1,18 @@
 //
-//  BaseLabel.swift
+//  CallButton.swift
 //  TelePatriot
 //
-//  Created by Brent Dunklau on 11/23/17.
+//  Created by Brent Dunklau on 11/25/17.
 //  Copyright © 2017 Brent Dunklau. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class BaseButton: UIButton {
+class CallButton : BaseButton {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+    var phone : String?
     
-    init(text: String) {
+    override init(text: String) {
         super.init(frame: CGRect.init())
         //self.backgroundColor = UIColor.blue
         setTitle(text, for: .normal)
@@ -28,11 +26,10 @@ class BaseButton: UIButton {
     }
     
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
 }

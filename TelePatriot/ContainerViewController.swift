@@ -142,8 +142,8 @@ extension ContainerViewController: CenterViewControllerDelegate {
         guard leftViewController == nil else { return }
         
         if let vc = UIStoryboard.leftViewController() {
-            vc.menuItems = MenuItem.leftItems()
-            vc.sections = MenuItem.leftSections()
+            vc.menuItems = MenuItems.sharedInstance.mainMenu
+            vc.sections = MenuItems.sharedInstance.mainSections
             addChildSidePanelController(vc)
             leftViewController = vc
         }

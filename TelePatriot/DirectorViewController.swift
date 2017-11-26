@@ -49,7 +49,7 @@ class DirectorViewController: BaseViewController {
 extension DirectorViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let ct = MenuItem.directorItems()[section].count
+        let ct = MenuItems.sharedInstance.directorItems[section].count
         return ct
     }
     
@@ -57,7 +57,7 @@ extension DirectorViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "thecell", for: indexPath) as! MenuCell
         let sec = indexPath.section
         let row = indexPath.row
-        cell.configureCell(MenuItem.directorItems()[sec][row])
+        cell.configureCell(MenuItems.sharedInstance.directorItems[sec][row])
         //cell.backgroundColor = .red
         //cell.textLabel?.textColor = .black
         return cell
@@ -82,7 +82,7 @@ extension DirectorViewController: UITableViewDataSource {
 extension DirectorViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let menuItem = MenuItem.directorItems()[indexPath.section][indexPath.row]
+        let menuItem = MenuItems.sharedInstance.directorItems[indexPath.section][indexPath.row]
         delegate?.didSelectSomething(menuItem: menuItem)
     }
 }

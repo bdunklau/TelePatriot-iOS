@@ -10,7 +10,7 @@ import UIKit
 
 struct MenuItem {
     
-    let title: String
+    var title: String
     //let image: UIImage?
     
     init(title: String) { //}, image: UIImage?) {
@@ -18,6 +18,7 @@ struct MenuItem {
         //self.image = image
     }
     
+    /**********
     static func directorItems() -> Array<Array<MenuItem>> {
         let section1 = [
             MenuItem(title: "New Phone Campaign"),
@@ -30,15 +31,19 @@ struct MenuItem {
         
         return [section1]
     }
+ *******/
     
+    /********
     static func leftSections() -> [String] {
         return ["Act", "Communicate", "My Account"]
     }
+ ******/
     
     static func rightSections() -> [String] {
         return [""]
     }
     
+    /********
     static func leftItems() -> Array<Array<MenuItem>> {
         let section1 = [
             MenuItem(title: "My Mission"),
@@ -56,6 +61,7 @@ struct MenuItem {
         ]
         return [section1, section2, section3]
     }
+ ********/
     
     static func rightItems() -> Array<Array<MenuItem>> {
         let section1 = [
