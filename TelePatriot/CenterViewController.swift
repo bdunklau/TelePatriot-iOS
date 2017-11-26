@@ -29,6 +29,9 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
     
     var byPassLogin : Bool = false
     
+    // set by MyMissionViewController
+    var mission_item_id : String?
+    
     // MARK: Button actions
     
     @IBAction func leftMenuTapped(_ sender: Any) {
@@ -158,12 +161,15 @@ extension CenterViewController: SidePanelViewControllerDelegate {
             doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Directors") {
+            unassignMissionItem(missionItemId: self.mission_item_id)
             doView(vc: DirectorViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Admins") {
+            unassignMissionItem(missionItemId: self.mission_item_id)
             doView(vc: AdminViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Share Petition") {
+            unassignMissionItem(missionItemId: self.mission_item_id)
             doView(vc: SharePetitionViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Chat/Help") {
@@ -188,8 +194,26 @@ extension CenterViewController: SidePanelViewControllerDelegate {
             self.view.addSubview(vc.view)
             return
         }
+        if let myMissionVc = viewController as? MyMissionViewController {
+            myMissionVc.myResumeFunction()
+        }
         self.view.bringSubview(toFront: viewController.view)
         
+    }
+    
+    func unassignMissionItem(missionItemId: String?) {
+        guard let mission_item_id = missionItemId else {
+            return
+        }
+        Database.database().reference().child("mission_items/"+mission_item_id+"/accomplished").setValue("new")
+        Database.database().reference().child("mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
+        //self.mission_item_id = nil
+        self.mission_item_id = nil
+    }
+    
+    // called by MyMissionViewController.viewWillDisappear()
+    func unassignMissionItem() {
+        unassignMissionItem(missionItemId: self.mission_item_id)
     }
 }
 

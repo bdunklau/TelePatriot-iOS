@@ -100,7 +100,21 @@ class MyMissionViewController : BaseViewController {
         // might also want to look into this: https://stackoverflow.com/a/31428932
         // to try to get elements positioned relative to the nav bar at the top
         
-        fetchMission()
+        fetchMission(parent: self.parent)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("MyMissionViewController: viewWillAppear")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let centerVc = parent as? CenterViewController {
+            centerVc.unassignMissionItem()
+        }
+    }
+    
+    func myResumeFunction() {
+        fetchMission(parent: self.parent)
     }
     
     
@@ -111,7 +125,7 @@ class MyMissionViewController : BaseViewController {
     }
     
 
-    func fetchMission() {
+    func fetchMission(parent: UIViewController?) {
         
         Database.database().reference()
             .child("mission_items")
@@ -137,8 +151,19 @@ class MyMissionViewController : BaseViewController {
                         let phone1 = mission_item_elements["phone"] as? String,
                         let name1 = mission_item_elements["name"] as? String else { return }
         
-                    let button1Text = name1 + " " + phone1
-                    self.callButton1.setTitle(button1Text, for: .normal)
+                    // viewWillDisappear() doesn't get called because of the way we just add subviews to the CenterViewController
+                    // so we need some other way to tell when this view goes visible/invisible.  This is what I came up with:
+                    // Pass the mission_item_id to the parent view controller.  Then, in that controller (CenterViewController),
+                    // we handle switching views, and it's there that we can un-assign this mission
+                    // See CenterViewController.didSelectSomething()
+                    if let centerVc = parent as? CenterViewController {
+                        centerVc.mission_item_id = mission_item_id
+                    }
+                    
+                    //let button1Text = name1 + " " + phone1
+                    DispatchQueue.main.async {
+                        self.callButton1.setTitle(name1 + " " + phone1, for: .normal)
+                    }
                     self.callButton1.phone = phone1
         
                     self.descriptionTextView.text = description
