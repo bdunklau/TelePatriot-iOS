@@ -10,7 +10,7 @@ import UIKit
 
 // instance class so we can listen for AccountStatusEvent's
 // The static methods in MenuItem made it so we couldn't listen for these events
-class MenuItems : AccountStatusEventListener {
+class MenuItems {
     
     var myMission = MenuItem(title: "My Mission")
     var directors = MenuItem(title: "Directors")
@@ -24,22 +24,21 @@ class MenuItems : AccountStatusEventListener {
     private init() {
         mainSection0 = [myMission, directors, admins]
         mainMenu = [mainSection0,
-                    [MenuItem(title: "Share Petition"),
-                     MenuItem(title: "Chat/Help") ],
+                    [MenuItem(title: "Share Petition (coming soon)"),
+                     MenuItem(title: "Chat/Help (coming soon)") ],
                     [MenuItem(title: "Sign Out")]
                 ]
         directorItems = [
                  [
                     MenuItem(title: "New Phone Campaign"),
-                    MenuItem(title: "My Active Missions"),
-                    MenuItem(title: "All My Missions"),
-                    MenuItem(title: "All Active Missions"),
-                    MenuItem(title: "All Missions"),
-                    MenuItem(title: "All Activity")
+                    MenuItem(title: "My Active Missions (coming soon)"),
+                    MenuItem(title: "All My Missions (coming soon)"),
+                    MenuItem(title: "All Active Missions (coming soon)"),
+                    MenuItem(title: "All Missions (coming soon)"),
+                    MenuItem(title: "All Activity (coming soon)")
                  ]
             ]
         
-        listenForAccountStatusEvents()
     }
     
     var mainSections : [String] = ["Act", "Communicate", "My Account"]
@@ -73,68 +72,4 @@ class MenuItems : AccountStatusEventListener {
      ********/
     
     
-    
-    func listenForAccountStatusEvents() {
-        if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
-            || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "MenuItems" })) {
-            TPUser.sharedInstance.accountStatusEventListeners.append(self)
-        }
-    }
-    
-    // required by AccountStatusEventListener
-    func roleAssigned(role: String) {
-        if( role == "Volunteer" ) {
-            doRoleAdded(role: role, menuText: "My Mission", index: 0, items: mainSection0)
-        }
-        if( role == "Director" ) {
-            doRoleAdded(role: role, menuText: "Directors", index: 1, items: mainSection0)
-        }
-        if( role == "Admin" ) {
-            doRoleAdded(role: role, menuText: "Admins", index: 2, items: mainSection0)
-        }
-    }
-    
-    // required by AccountStatusEventListener
-    func roleRemoved(role: String) {
-        if( role == "Volunteer" ) {
-            doRoleRemoved(role: role, menuText: "My Mission", items: mainSection0)
-        }
-        if( role == "Director" ) {
-            doRoleRemoved(role: role, menuText: "Directors", items: mainSection0)
-        }
-        if( role == "Admin" ) {
-            doRoleRemoved(role: role, menuText: "Admins", items: mainSection0)
-        }
-    }
-    
-    private func doRoleAdded(role: String, menuText: String, index: Int, items: Array<MenuItem>) {
-        let itemText = menuText
-        var alreadyGranted = false
-        let loop = items
-        for mi in loop {
-            if(mi.title == itemText) {
-                alreadyGranted = true
-            }
-        }
-        if(!alreadyGranted) {
-            let volItem = MenuItem(title: itemText)
-            //mainMenu[0].insert(volItem, at: index)
-            mainMenu[0][index].title = menuText
-        }
-        
-    }
-    
-    private func doRoleRemoved(role: String, menuText: String, items: Array<MenuItem>) {
-        var i = 0
-        var found = -1
-        for mi in items {
-            if(mi.title == menuText) {
-                found = i
-                break
-            }
-            i = i + 1
-        }
-        //mainMenu[0].remove(at: found)
-        mainMenu[0][found].title = ""
-    }
 }

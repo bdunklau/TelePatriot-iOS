@@ -64,9 +64,11 @@ struct MenuItem {
  ********/
     
     static func rightItems() -> Array<Array<MenuItem>> {
-        let section1 = [
+        let section1 : Array<MenuItem> = [
+            /************
             MenuItem(title: "stuff here"),
             MenuItem(title: "more stuff")
+             ************/
         ]
         
         return [section1]

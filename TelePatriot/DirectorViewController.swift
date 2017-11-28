@@ -11,7 +11,9 @@ import UIKit
 class DirectorViewController: BaseViewController {
     
     var tableView: UITableView?
-    var delegate: DirectorActionTableViewControllerDelegate?
+    //var delegate: DirectorActionTableViewControllerDelegate?
+    //var delegate: SidePanelViewControllerDelegate?
+    var delegate: DirectorViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

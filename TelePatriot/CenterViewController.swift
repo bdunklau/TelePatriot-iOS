@@ -32,6 +32,20 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
     // set by MyMissionViewController
     var mission_item_id : String?
     
+    let logo : UIImageView = {
+        let img = UIImage(named: "logo_round.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    let getStartedButton : BaseButton = {
+        let button = BaseButton(text: "Get Started")
+        button.addTarget(self, action: #selector(toggleMainMenu), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: Button actions
     
     @IBAction func leftMenuTapped(_ sender: Any) {
@@ -42,9 +56,32 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
         delegate?.toggleRightPanel?()
     }
     
+    @objc func toggleMainMenu(_ sender: Any) {
+        delegate?.toggleLeftPanel?()
+    }
+    
     override func viewDidLoad() {
         
-        self.navigationItem.title = "CenterVC"
+        self.navigationItem.title = "TelePatriot" // what the user sees (across the top) when they first login
+        
+        //logo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        //logo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        //logo.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        //logo.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
+        
+        view.addSubview(logo)
+        view.addSubview(getStartedButton)
+        
+        
+        logo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        logo.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 75).isActive = true
+        logo.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.75).isActive = true
+        logo.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
+        
+        getStartedButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        getStartedButton.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 30).isActive = true
+        getStartedButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        getStartedButton.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
         
         // LimboViewController sets this in prepareForSegue
         if(!byPassLogin) {
@@ -72,6 +109,11 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
                 let u = TPUser.sharedInstance
                 print("CenterViewController.checkLoggedIn() -----------------")
                 u.setUser(u: user)
+                
+                // for starters, just leave the user here and show the logo and maybe a "Get Started" button
+                // that slides out the left menu
+                
+                
                 // TODO This is not right (above and below). We see a temporary black screen because we are fetching
                 // user roles asynchronously (of course) but we are checking synchronously on the very next line to see
                 // if the user has any roles.  The stuff below ought to be in a callback.
@@ -140,7 +182,7 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
     }
 }
 
-extension CenterViewController: SidePanelViewControllerDelegate {
+extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewControllerDelegate {
     
     func didSelectSomething(menuItem: MenuItem) {
         /*******
@@ -162,7 +204,10 @@ extension CenterViewController: SidePanelViewControllerDelegate {
         }
         else if(menuItem.title == "Directors") {
             unassignMissionItem(missionItemId: self.mission_item_id)
-            doView(vc: DirectorViewController(), viewControllers: self.childViewControllers)
+            // don't instantiate here.  Get from ContainerViewController  ...but how?
+            if let directorViewController = delegate?.getDirectorViewController() {
+                doView(vc: directorViewController, viewControllers: self.childViewControllers)
+            }
         }
         else if(menuItem.title == "Admins") {
             unassignMissionItem(missionItemId: self.mission_item_id)
@@ -174,6 +219,25 @@ extension CenterViewController: SidePanelViewControllerDelegate {
         }
         else if(menuItem.title == "Chat/Help") {
             doView(vc: ChatHelpViewController(), viewControllers: self.childViewControllers)
+        }
+        // Director screen...
+        else if(menuItem.title == "New Phone Campaign") {
+            doView(vc: NewPhoneCampaignVC(), viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title == "My Active Missions") {
+            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title == "All Active Missions") {
+            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title == "All My Missions") {
+            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title == "All Missions") {
+            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title == "All Activity") {
+            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
         }
         
     }

@@ -11,25 +11,87 @@ import Firebase
 
 class NewPhoneCampaignVC: BaseViewController {
 
-    @IBOutlet weak var missionTitleField: UITextField!
-    @IBOutlet weak var spreadsheetUrlField: UITextView!
+    //@IBOutlet weak var missionTitleField: UITextField!
+    //@IBOutlet weak var spreadsheetUrlField: UITextView!
+    
+    let missionTitleField : UITextField = {
+        let field = UITextField()
+        let backgroundColor : UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
+        field.backgroundColor = backgroundColor
+        field.layer.borderWidth = 0.5
+        //field.layer.borderColor = borderColor.cgColor
+        field.layer.cornerRadius = 5.0
+        field.placeholder = "Mission Title"
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    let urlLabel : UILabel = {
+        let l = UILabel()
+        l.text = "Spreadsheet URL"
+        l.translatesAutoresizingMaskIntoConstraints = false
+        return l
+    }()
+    
+    let spreadsheetUrlField : UITextView = {
+        let v = UITextView()
+        //let borderColor : UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
+        v.layer.borderWidth = 0.5
+        //v.layer.borderColor = borderColor.cgColor
+        v.layer.cornerRadius = 5.0
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }()
+    
+    let submitButton : BaseButton = {
+        let b = BaseButton(text: "Submit")
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.addTarget(self, action: #selector(okPressed), for: .touchUpInside)
+        return b
+    }()
+    
     
     // https://www.youtube.com/watch?v=joVi3thZOqc
     let rootRef = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        let borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
-        spreadsheetUrlField.layer.borderWidth = 0.5
-        spreadsheetUrlField.layer.borderColor = borderColor.cgColor
-        spreadsheetUrlField.layer.cornerRadius = 5.0
         
-        missionTitleField.placeholder = "Mission Title"
+        view.addSubview(missionTitleField)
+        view.addSubview(urlLabel)
+        view.addSubview(spreadsheetUrlField)
+        view.addSubview(submitButton)
+
+        
+        missionTitleField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+        missionTitleField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 16).isActive = true
+        missionTitleField.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 90).isActive = true
+        missionTitleField.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
+        missionTitleField.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.06).isActive = true
+        
+        urlLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+        urlLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 8).isActive = true
+        urlLabel.topAnchor.constraint(equalTo: missionTitleField.bottomAnchor, constant: 8).isActive = true
+        urlLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        urlLabel.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.1).isActive = true
+        
+        spreadsheetUrlField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+        spreadsheetUrlField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 16).isActive = true
+        spreadsheetUrlField.topAnchor.constraint(equalTo: urlLabel.bottomAnchor, constant: 0).isActive = true
+        spreadsheetUrlField.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
+        spreadsheetUrlField.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
+        
+        
+        submitButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        //submitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+        //submitButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 16).isActive = true
+        submitButton.topAnchor.constraint(equalTo: spreadsheetUrlField.bottomAnchor, constant: 16).isActive = true
+        submitButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        submitButton.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
+
     }
     
-    @IBAction func okPressed(_ sender: Any) {
+    /*@IBAction*/ @objc func okPressed(_ sender: Any) {
         
         let key = rootRef.child("missions").childByAutoId().key
         let uid : String = Auth.auth().currentUser!.uid
@@ -47,7 +109,11 @@ class NewPhoneCampaignVC: BaseViewController {
                     "uid_and_active": uid_and_active]
         
         let mission = ["/missions/\(key)": missionVals]
-        rootRef.updateChildValues(mission)
+        rootRef.updateChildValues(mission, withCompletionBlock: { (error:NSError?, ref:DatabaseReference) in
+                // not sure how to handle the NSError yet
+                // just handle success for now
+                
+            } as! (Error?, DatabaseReference) -> Void)
     }
     
     override func viewDidAppear(_ animated: Bool) {

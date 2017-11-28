@@ -13,4 +13,5 @@ protocol CenterViewControllerDelegate {
     @objc optional func toggleLeftPanel()
     @objc optional func toggleRightPanel()
     @objc optional func collapseSidePanels()
+    func getDirectorViewController() -> DirectorViewController?
 }

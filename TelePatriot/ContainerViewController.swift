@@ -34,6 +34,7 @@ class ContainerViewController: UIViewController {
     
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
+    var directorViewController: DirectorViewController!
     
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -52,10 +53,15 @@ class ContainerViewController: UIViewController {
         let item2 = UIBarButtonItem(customView: menuButton)
         navigationItem.setLeftBarButtonItems([item2], animated: true)
         
-        self.navigationItem.title = "ContainerVC"
+        //self.navigationItem.title = "ContainerVC"
         
         centerViewController = UIStoryboard.centerViewController()
         centerViewController.delegate = self
+        
+        // modeled after the centerViewController stuff above
+        directorViewController = getDirectorViewController()
+        directorViewController.delegate = centerViewController
+        
         
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
@@ -100,11 +106,25 @@ private extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "CenterViewController") as? CenterViewController
     }
     
-    // experimenting...
-    //class func centerViewController(
+    class func directorViewController() -> DirectorViewController? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "DirectorViewController") as? DirectorViewController
+    }
+    
 }
 
 extension ContainerViewController: CenterViewControllerDelegate {
+    
+    func getDirectorViewController() -> DirectorViewController? {
+        if directorViewController == nil {
+            directorViewController = UIStoryboard.directorViewController()
+            if directorViewController == nil {
+                return nil
+            }
+            directorViewController.delegate = centerViewController
+        }
+        
+        return directorViewController
+    }
     
     func toggleLeftPanel() {
         let notAlreadyExpanded = (currentState != .leftPanelExpanded)
@@ -150,7 +170,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func addRightPanelViewController() {
-        
         guard rightViewController == nil else { return }
         
         if let vc = UIStoryboard.rightViewController() {
@@ -162,7 +181,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func animateRightPanel(shouldExpand: Bool) {
-        
         if shouldExpand {
             currentState = .rightPanelExpanded
             animateCenterPanelXPosition(targetPosition: -centerNavigationController.view.frame.width + centerPanelExpandedOffset)
@@ -212,7 +230,6 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
-        
         switch recognizer.state {
             
         case .began:
@@ -239,7 +256,8 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
                 let hasMovedGreaterThanHalfway = rview.center.x > view.bounds.size.width
                 animateLeftPanel(shouldExpand: hasMovedGreaterThanHalfway)
                 
-            } else if let _ = rightViewController,
+            }
+            else if let _ = rightViewController,
                 let rview = recognizer.view {
                 let hasMovedGreaterThanHalfway = rview.center.x < 0
                 animateRightPanel(shouldExpand: hasMovedGreaterThanHalfway)
