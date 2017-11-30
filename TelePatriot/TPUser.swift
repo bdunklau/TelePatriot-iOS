@@ -20,9 +20,10 @@ class TPUser {
     var accountStatusEventListeners = [AccountStatusEventListener]()
     var ref : DatabaseReference?
     var rolesAlreadyFetched = false
+    var noRoleAssignedDelegate : NoRoleAssignedDelegate?
     
     private init() {
-        ref = Database.database().reference().child("users")
+        ref = Database.database().reference()
     }
     
     func setUser(u: User?) {
@@ -73,11 +74,23 @@ class TPUser {
         if(rolesAlreadyFetched) { return }
         
         rolesAlreadyFetched = true
-        
+    
         guard let theref = ref else { return }
-        theref.child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
+        
+        theref.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
+            guard let val = snapshot.value as? [String: Any], let name = val["name"] as! String? else {
+                return
+            }
+            // If we get past the guard, it means there IS a node under /no_roles corresponding to
+            // the current user.  So in this case, we want to send them to the Limbo screen...
+            print("name = \(name)") // <--- just FYI
+            self.noRoleAssignedDelegate?.theUserHasNoRoles()
+        })
+        
+        theref.child("users").child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
             
             if let role = snapshot.key as? String {
+                print(snapshot)
                 let val = snapshot.value as? String
                 if (role == "Admin" && val?.lowercased() == "true") {
                     self.isAdmin = true
@@ -100,7 +113,7 @@ class TPUser {
         
         // To remove a permission, we don't set Admin=false or Director=false, etc
         // Instead, we remove the node altogether
-        theref.child(uid).child("roles").observe(.childRemoved, with: {(snapshot) in
+        theref.child("users").child(uid).child("roles").observe(.childRemoved, with: {(snapshot) in
             
             print("==============================")
             print("snapshot is...")

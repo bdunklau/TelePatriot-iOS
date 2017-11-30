@@ -33,8 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override init() {
         // https://www.youtube.com/watch?v=jH2LdL-PsHI
         // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
+        
+        
+        // Load a named file for switching between dev and prod firebase instances
+        // see https://firebase.google.com/docs/configure/
+        //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
+            else { assert(false, "Couldn't load config file") }
         //***// IMPORTANT!!!!!!!!!
-        FirebaseApp.configure()
+        FirebaseApp.configure(options: fileopts)
     }
     
 
@@ -46,30 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // https://github.com/hackiftekhar/IQKeyboardManager
         // Automatically moves input fields up when the keyboard is present to the input isn't hidden
         IQKeyboardManager.sharedManager().enable = true
-        
-        
-        /**********************************
-         The stuff below is for developing apps without the storyboard
-         which is really the way to go
-        
-        // Create a new window for the window property that
-        // comes standard on the AppDelegate class. The UIWindow
-        // is where all view controllers and views appear.
-        window = UIWindow(frame: UIScreen.main.bounds)
-        
-        //
-        // Set the initial View Controller to our instance of ViewController
-        window?.rootViewController = UINavigationController(rootViewController: ContainerViewControlle())
-        //
-        // Present the window
-        window?.makeKeyAndVisible()
-         **********************************/
-        
-        
-        
-        
-        
-        
         
         window = UIWindow(frame: UIScreen.main.bounds)
         

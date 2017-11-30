@@ -16,7 +16,7 @@ import FirebaseFacebookAuthUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class CenterViewController: UIViewController, FUIAuthDelegate {
+class CenterViewController: BaseViewController, FUIAuthDelegate {
     
     
     /********
@@ -42,6 +42,7 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
     
     let getStartedButton : BaseButton = {
         let button = BaseButton(text: "Get Started")
+        button.titleLabel?.font = button.titleLabel?.font.withSize(28)
         button.addTarget(self, action: #selector(toggleMainMenu), for: .touchUpInside)
         return button
     }()
@@ -107,6 +108,7 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
                 
                 // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
                 let u = TPUser.sharedInstance
+                u.noRoleAssignedDelegate = self
                 print("CenterViewController.checkLoggedIn() -----------------")
                 u.setUser(u: user)
                 
@@ -114,18 +116,16 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
                 // that slides out the left menu
                 
                 
-                // TODO This is not right (above and below). We see a temporary black screen because we are fetching
-                // user roles asynchronously (of course) but we are checking synchronously on the very next line to see
-                // if the user has any roles.  The stuff below ought to be in a callback.
+                // TODO Figure out why LimboViewController is just a black screen
                 /***********************
-                 This is the wrong thing to look at anyway.  We need to look at the /no_roles node to determine
-                 if the user should go to the limbo screen
+                 All the stuff below is replaced by the line above:  u.noRoleAssignedDelegate = self
                 if(!u.hasAnyRole()) {
                     
                     // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
                     // With it commented out, you'll always be sent to the Home screen where you can logout.
-                    self.view.window?.rootViewController?.navigationController?.pushViewController(LimboViewController(), animated: false)
-                    //self.present(LimboViewController(), animated: true, completion: nil)
+                    let limboViewController = LimboViewController()
+                    let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
+                    self.present(navViewController, animated: true, completion: nil)
                 }
                  *********************/
                 
@@ -168,16 +168,27 @@ class CenterViewController: UIViewController, FUIAuthDelegate {
              Now find out if user has any roles yet, or if he has to be sent to the "limbo" screen
              **/
             let u = TPUser.sharedInstance
+            u.noRoleAssignedDelegate = self
             u.setUser(u: user)
+            
+            /******************************
+             All the stuff below is replaced by the line above:  u.noRoleAssignedDelegate = self
+             
             // now see if the user has any roles.  If he does, send him on to whatever the main/home screen is
             // If he doesn't, send him to the "limbo" screen where he has to sit and wait to be let in.
             if u.hasAnyRole() {
                 // let them in  ...which really means do nothing, because this screen/controller is where they need to be
+                var temp = "remove"
             } else {
                 // send them to the "limbo" screen
                 //self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
-                self.present(LimboViewController(), animated: true, completion: nil)
+                //self.present(LimboViewController(), animated: true, completion: nil) // <--- this is the black screen
+                
+                let limboViewController = LimboViewController()
+                let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
+                self.present(navViewController, animated: true, completion: nil)
             }
+             **************************/
         }
     }
 }
@@ -281,3 +292,12 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
     }
 }
 
+extension CenterViewController : NoRoleAssignedDelegate {
+    func theUserHasNoRoles() {
+        // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
+        // With it commented out, you'll always be sent to the Home screen where you can logout.
+        let limboViewController = LimboViewController()
+        let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
+        self.present(navViewController, animated: true, completion: nil)
+    }
+}

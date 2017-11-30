@@ -44,7 +44,7 @@ class HomeViewController: BaseViewController, FUIAuthDelegate, AccountStatusEven
     
     let menuButton : UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Menu", for: .normal)
+        button.setTitle("HomeVC", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(slideMenu), for: .touchUpInside)
         return button

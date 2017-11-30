@@ -18,6 +18,7 @@ class ContainerViewController: UIViewController {
     
     var delegate : CenterViewControllerDelegate?
     
+    /*************
     let menuButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Menu", for: .normal)
@@ -25,6 +26,7 @@ class ContainerViewController: UIViewController {
         button.addTarget(self, action: #selector(slideMenu), for: .touchUpInside)
         return button
     }()
+     *********/
     
     enum SlideOutState {
         case bothCollapsed
@@ -50,10 +52,20 @@ class ContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /*************
+         This puts "Menu" in the upper left of the navigation bar.  And we COULD do this
+         but there isn't a need right now because we display a "Get Started" button on the
+         default CenterViewController screen and "Get Started" slides out the menu, so users
+         will see right away that there is a slide-out menu
+         
         let item2 = UIBarButtonItem(customView: menuButton)
         navigationItem.setLeftBarButtonItems([item2], animated: true)
+         *************/
         
         //self.navigationItem.title = "ContainerVC"
+        
+        // does this hide the back button on all screens?
+        self.navigationItem.hidesBackButton = true
         
         centerViewController = UIStoryboard.centerViewController()
         centerViewController.delegate = self
@@ -84,10 +96,12 @@ class ContainerViewController: UIViewController {
         }
     }
     
-    
+    /****************
+     This would work, but we would have to set delegate = CenterViewController
     @objc func slideMenu() {
         delegate?.toggleLeftPanel?()
     }
+     **************/
 }
 
 private extension UIStoryboard {

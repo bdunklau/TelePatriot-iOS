@@ -40,15 +40,16 @@
 		A12CDB4F1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A12CDB4D1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib */; };
 		A12CDB591FB01BF7003DE424 /* MissionSummaryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */; };
 		A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */; };
+		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
 		A17C7FB21FAC308D00430C05 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17C7FB11FAC308D00430C05 /* HomeViewController.swift */; };
 		A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A185658F1FBAB5B2009EE57F /* TPUser.swift */; };
 		A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565911FBC0523009EE57F /* LimboViewController.swift */; };
 		A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */; };
-		A18565961FBC19A3009EE57F /* AccountStatusEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A18565941FBC19A3009EE57F /* AccountStatusEventTableViewCell.xib */; };
 		A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
+		A1EA20421FCE135100FF0ABB /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */; };
 		BDD7F2035B27F329A7F2E797 /* Pods_TelePatriot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		A12CDB4D1FAFF537003DE424 /* MissionSummaryCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MissionSummaryCellTableViewCell.xib; sourceTree = "<group>"; };
 		A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummaryTVC.swift; sourceTree = "<group>"; };
 		A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummary.swift; sourceTree = "<group>"; };
+		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TelePatriot-Bridging-Header.h"; sourceTree = "<group>"; };
 		A15D84631FA92976007EE77C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = TelePatriot/SWRevealViewController.h; sourceTree = SOURCE_ROOT; };
@@ -100,9 +102,9 @@
 		A185658F1FBAB5B2009EE57F /* TPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUser.swift; sourceTree = "<group>"; };
 		A18565911FBC0523009EE57F /* LimboViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimboViewController.swift; sourceTree = "<group>"; };
 		A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEventTableViewCell.swift; sourceTree = "<group>"; };
-		A18565941FBC19A3009EE57F /* AccountStatusEventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountStatusEventTableViewCell.xib; sourceTree = "<group>"; };
 		A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEvent.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
+		A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F60D7E18A8FEAD8059C42035 /* Pods-TelePatriot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				A126AE271F8B25B40096714B /* GoogleService-Info.plist */,
+				A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */,
 				A126AE131F8B1D860096714B /* AppDelegate.swift */,
 				A126AE171F8B1D860096714B /* Main.storyboard */,
 				A126AE1A1F8B1D860096714B /* Assets.xcassets */,
@@ -173,7 +176,6 @@
 				A185658F1FBAB5B2009EE57F /* TPUser.swift */,
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 				A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */,
-				A18565941FBC19A3009EE57F /* AccountStatusEventTableViewCell.xib */,
 				A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */,
 				A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */,
 				A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */,
@@ -193,6 +195,7 @@
 				A1217E321FCA1A070007ABF8 /* CallsViewController.swift */,
 				A1217E341FCA24150007ABF8 /* CallButton.swift */,
 				A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */,
+				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -272,7 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A18565961FBC19A3009EE57F /* AccountStatusEventTableViewCell.xib in Resources */,
+				A1EA20421FCE135100FF0ABB /* GoogleService-Info-Dev.plist in Resources */,
 				A126AE1E1F8B1D860096714B /* LaunchScreen.storyboard in Resources */,
 				A126AE281F8B25B40096714B /* GoogleService-Info.plist in Resources */,
 				A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */,
@@ -412,6 +415,7 @@
 				A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */,
 				A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */,
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,
+				A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */,
 				A109E8AB1FC564A50005517A /* CenterViewController.swift in Sources */,
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
 				A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */,

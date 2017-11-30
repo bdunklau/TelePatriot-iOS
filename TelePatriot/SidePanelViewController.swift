@@ -41,16 +41,38 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         // in listenForAccountStatusEvents(), the listener is
         // registered too late for the initial creation of the menu
         // So manually go through the roles here and turn menu items on/off
+
+        // But you can't just assume that 'menuItems' has a certain number of items
+        // or what item is in a particular position in the array.  The 0th element
+        // might not be "My Mission" - it could be "Directors" or "Admins"
         if(!TPUser.sharedInstance.isVolunteer) {
-            menuItems[0].remove(at: 0)
+            removeItem(items: &menuItems[0], text: "My Mission")
+            //menuItems[0].remove(at: 0)
         }
         
         if(!TPUser.sharedInstance.isDirector) {
-            menuItems[0].remove(at: 1)
+            removeItem(items: &menuItems[0], text: "Directors")
+            //menuItems[0].remove(at: 1)
         }
         
         if(!TPUser.sharedInstance.isAdmin) {
-            menuItems[0].remove(at: 2)
+            removeItem(items: &menuItems[0], text: "Admins")
+            //menuItems[0].remove(at: 2)
+        }
+    }
+    
+    private func removeItem(items: inout [MenuItem], text: String) {
+        var i = 0
+        var found = -1
+        for item in items {
+            if item.title == text {
+                found = i
+                break
+            }
+            i = i + 1
+        }
+        if found != -1 {
+            items.remove(at: found)
         }
     }
     
