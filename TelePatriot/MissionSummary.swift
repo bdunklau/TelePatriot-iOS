@@ -9,6 +9,7 @@
 import Firebase
 
 class MissionSummary : NSObject {
+    var mission_id : String?
     var active : Bool?
     var descrip : String?  // can't use description  AHHHHHHHHHH !
     var mission_create_date : String?

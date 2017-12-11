@@ -37,6 +37,9 @@ class ContainerViewController: UIViewController {
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
     var directorViewController: DirectorViewController!
+    var newPhoneCampaignVC: NewPhoneCampaignVC!
+    var missionSummaryTVC: MissionSummaryTVC!
+    var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
     
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -70,9 +73,24 @@ class ContainerViewController: UIViewController {
         centerViewController = UIStoryboard.centerViewController()
         centerViewController.delegate = self
         
+        // actually, would be a lot better if I instantiated ALL viewcontrollers INSIDE AppDelegate
+        // Then I think I could get rid of the storyboard completely
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.myDelegate = centerViewController
+        
+        // creation and assignment of all these delegates should be more consistent
+        appDelegate?.wrapUpCallViewController?.delegate = centerViewController
+        
+        
         // modeled after the centerViewController stuff above
         directorViewController = getDirectorViewController()
         directorViewController.delegate = centerViewController
+        
+        newPhoneCampaignVC = getNewPhoneCampaignVC()
+        newPhoneCampaignVC?.submitHandler = centerViewController
+        
+        chooseSpreadsheetTypeVC = getChooseSpreadsheetTypeVC()
+        chooseSpreadsheetTypeVC?.delegate = centerViewController
         
         
         // wrap the centerViewController in a navigation controller, so we can push views to it
@@ -124,6 +142,18 @@ private extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "DirectorViewController") as? DirectorViewController
     }
     
+    class func newPhoneCampaignVC() -> NewPhoneCampaignVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "NewPhoneCampaignVC") as? NewPhoneCampaignVC
+    }
+    
+    class func missionSummaryTVC() -> MissionSummaryTVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "MissionSummaryTVC") as? MissionSummaryTVC
+    }
+    
+    class func chooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "ChooseSpreadsheetTypeVC") as? ChooseSpreadsheetTypeVC
+    }
+    
 }
 
 extension ContainerViewController: CenterViewControllerDelegate {
@@ -134,10 +164,48 @@ extension ContainerViewController: CenterViewControllerDelegate {
             if directorViewController == nil {
                 return nil
             }
-            directorViewController.delegate = centerViewController
+            directorViewController.delegate = centerViewController // we do this above - what's up?
         }
         
         return directorViewController
+    }
+    
+    func getNewPhoneCampaignVC() -> NewPhoneCampaignVC? {
+        if newPhoneCampaignVC == nil {
+            newPhoneCampaignVC = UIStoryboard.newPhoneCampaignVC()
+            if newPhoneCampaignVC == nil {
+                return nil
+            }
+            newPhoneCampaignVC?.submitHandler = centerViewController // we do this above - what's up?
+        }
+        
+        return newPhoneCampaignVC
+    }
+    
+    func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
+        if chooseSpreadsheetTypeVC == nil {
+            chooseSpreadsheetTypeVC = UIStoryboard.chooseSpreadsheetTypeVC()
+            if chooseSpreadsheetTypeVC == nil {
+                return nil
+            }
+            chooseSpreadsheetTypeVC?.delegate = centerViewController // we do this above - what's up?
+        }
+        
+        return chooseSpreadsheetTypeVC
+    }
+    
+    func getMissionSummaryTVC() -> MissionSummaryTVC? {
+        if missionSummaryTVC == nil {
+            missionSummaryTVC = UIStoryboard.missionSummaryTVC()
+            if missionSummaryTVC == nil {
+                return nil
+            }
+            
+            // do this?
+            //newPhoneCampaignVC?.submitHandler = centerViewController // we do this above - what's up?
+        }
+        
+        return missionSummaryTVC
     }
     
     func toggleLeftPanel() {

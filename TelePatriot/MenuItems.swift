@@ -34,7 +34,7 @@ class MenuItems {
                     MenuItem(title: "My Active Missions (coming soon)"),
                     MenuItem(title: "All My Missions (coming soon)"),
                     MenuItem(title: "All Active Missions (coming soon)"),
-                    MenuItem(title: "All Missions (coming soon)"),
+                    MenuItem(title: "All Missions"),
                     MenuItem(title: "All Activity (coming soon)")
                  ]
             ]

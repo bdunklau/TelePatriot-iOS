@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class MissionSummaryTVC: UITableViewController {
+class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
     // your firebase reference as a property
     //var rootRef: DatabaseReference!
     //var ref: DatabaseReference!
@@ -19,26 +19,34 @@ class MissionSummaryTVC: UITableViewController {
     
     let cellId = "cellId"
     
-    @IBOutlet var missionSummaryTableView: UITableView!
+    var missionSummaryTableView: UITableView?
+    
+    var ref : DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.register(MissionSummaryCell.self, forCellReuseIdentifier: cellId)
         
-        let nibName = UINib(nibName: "MissionSummaryCellTableViewCell", bundle: nil)
-        tableView.register(nibName, forCellReuseIdentifier: cellId)
+        ref = Database.database().reference().child("missions")
         
-        fetchMissions()
+        missionSummaryTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
+        missionSummaryTableView?.dataSource = self
+        missionSummaryTableView?.register(MissionSummaryCellTableViewCell.self, forCellReuseIdentifier: "cellId")
+        missionSummaryTableView?.rowHeight = 150
+        view.addSubview(missionSummaryTableView!)
+        
+        fetchMissions() // <-- need to figure something out here because viewDidLoad() doesn't get
+        // called each time we come to this screen.  That's because we add this viewcontroller to the
+        // CenterViewController once, and then after that, the view doesn't need to be loaded
     }
     
     func fetchMissions() {
-        Database.database().reference().child("missions").observe(.childAdded, with: {(snapshot) in
+        ref?.observe(.childAdded, with: {(snapshot) in
             
             if let dictionary = snapshot.value as? [String : Any] {
                 let mission = MissionSummary()  //(snap: snapshot)
                 print(dictionary)
                 //mission.setValuesForKeys(dictionary)
-                
+                mission.mission_id = snapshot.key
                 mission.active = dictionary["active"] as? Bool
                 mission.descrip = dictionary["description"] as? String
                 mission.mission_create_date = dictionary["mission_create_date"] as? String
@@ -53,7 +61,7 @@ class MissionSummaryTVC: UITableViewController {
                 /****/
                 self.missions.append(mission)
                 DispatchQueue.main.async{
-                    self.tableView.reloadData()
+                    self.missionSummaryTableView?.reloadData()
                 }
                 /****/
             }
@@ -62,35 +70,31 @@ class MissionSummaryTVC: UITableViewController {
         }, withCancel: nil)
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return missions.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId",
+        let cell = missionSummaryTableView?.dequeueReusableCell(withIdentifier: "cellId",
                                                  for: indexPath as IndexPath) as! MissionSummaryCellTableViewCell
         
         
-        
-        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
-        
-        
-        
         let mission = missions[indexPath.row]
-        //cell.textLabel?.text = mission.mission_name
-        //cell.detailTextLabel?.text = "Created by "+mission.name!
-        cell.commonInit(missionSummary: mission)
+        cell.commonInit(missionSummary: mission, ref: ref!)
         
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    /********
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+     *********/
     
 }
 
+/********************* think this can be deleted
 class MissionSummaryCell : UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -100,3 +104,4 @@ class MissionSummaryCell : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+**********************/

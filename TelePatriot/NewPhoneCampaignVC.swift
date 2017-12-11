@@ -10,9 +10,9 @@ import UIKit
 import Firebase
 
 class NewPhoneCampaignVC: BaseViewController {
-
-    //@IBOutlet weak var missionTitleField: UITextField!
-    //@IBOutlet weak var spreadsheetUrlField: UITextView!
+    
+    // following the delegate pattern...
+    var submitHandler : NewPhoneCampaignSubmittedHandler?
     
     let missionTitleField : UITextField = {
         let field = UITextField()
@@ -109,11 +109,15 @@ class NewPhoneCampaignVC: BaseViewController {
                     "uid_and_active": uid_and_active]
         
         let mission = ["/missions/\(key)": missionVals]
-        rootRef.updateChildValues(mission, withCompletionBlock: { (error:NSError?, ref:DatabaseReference) in
+        rootRef.updateChildValues(mission, withCompletionBlock: { (error:Error?, ref:DatabaseReference) in
                 // not sure how to handle the NSError yet
                 // just handle success for now
-                
-            } as! (Error?, DatabaseReference) -> Void)
+            
+                // On success, send the user to "All My Missions"
+                // See ContainerViewController.  That's where we assign submitHandler to CenterViewController
+                self.submitHandler?.newPhoneCampaignSubmitted()
+            
+            }) //as! (Error?, DatabaseReference) -> Void)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -137,3 +141,12 @@ class NewPhoneCampaignVC: BaseViewController {
     */
 
 }
+
+/**********/
+ 
+ protocol NewPhoneCampaignSubmittedHandler {
+     func newPhoneCampaignSubmitted()
+ }
+
+ /********/
+

@@ -42,13 +42,14 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     
     let getStartedButton : BaseButton = {
         let button = BaseButton(text: "Get Started")
-        button.titleLabel?.font = button.titleLabel?.font.withSize(28)
+        button.titleLabel?.font = button.titleLabel?.font.withSize(24)
         button.addTarget(self, action: #selector(toggleMainMenu), for: .touchUpInside)
         return button
     }()
     
     // MARK: Button actions
     
+    /************
     @IBAction func leftMenuTapped(_ sender: Any) {
         delegate?.toggleLeftPanel?()
     }
@@ -56,6 +57,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     @IBAction func rightMenuTapped(_ sender: Any) {
         delegate?.toggleRightPanel?()
     }
+     ***********/
     
     @objc func toggleMainMenu(_ sender: Any) {
         delegate?.toggleLeftPanel?()
@@ -142,6 +144,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
     func login() {
         let authUI = FUIAuth.init(uiWith: Auth.auth())
+        authUI?.isSignInWithEmailHidden = true
         //let options = FirebaseApp.app()?.options
         //let clientId = options?.clientID
         let googleProvider = FUIGoogleAuth(scopes: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"])
@@ -193,6 +196,12 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     }
 }
 
+extension CenterViewController : AppDelegateDelegate {
+    func show(viewController: UIViewController) {
+        doView(vc: viewController, viewControllers: self.childViewControllers)
+    }
+}
+
 extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewControllerDelegate {
     
     func didSelectSomething(menuItem: MenuItem) {
@@ -233,7 +242,9 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         // Director screen...
         else if(menuItem.title == "New Phone Campaign") {
-            doView(vc: NewPhoneCampaignVC(), viewControllers: self.childViewControllers)
+            //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
+            guard let vc = delegate?.getChooseSpreadsheetTypeVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "My Active Missions") {
             //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
@@ -245,7 +256,8 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "All Missions") {
-            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
+            guard let vc = delegate?.getMissionSummaryTVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "All Activity") {
             //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
@@ -299,5 +311,25 @@ extension CenterViewController : NoRoleAssignedDelegate {
         let limboViewController = LimboViewController()
         let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
         self.present(navViewController, animated: true, completion: nil)
+    }
+}
+
+extension CenterViewController : NewPhoneCampaignSubmittedHandler {
+    func newPhoneCampaignSubmitted() {
+        doView(vc: MissionSummaryTVC(), viewControllers: self.childViewControllers)
+    }
+}
+
+// CenterViewController is assigned in ContainerViewController.viewDidLoad()
+extension CenterViewController : WrapUpViewControllerDelegate {
+    func missionAccomplished() {
+        doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
+    }
+}
+
+extension CenterViewController : ChooseSpreadsheetTypeDelegate {
+    func spreadsheetTypeChosen(spreadsheetType: String) {
+        // need to send the spreadsheet type to NewPhoneCampaignVC
+        doView(vc: NewPhoneCampaignVC(), viewControllers: self.childViewControllers)
     }
 }

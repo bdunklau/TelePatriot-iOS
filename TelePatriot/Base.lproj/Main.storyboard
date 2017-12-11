@@ -42,9 +42,6 @@
                                 <rect key="frame" x="111" y="128" width="152" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="New Phone Campaign"/>
-                                <connections>
-                                    <segue destination="d22-7f-9sb" kind="show" id="TZR-Xp-696"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17z-ga-0X3">
                                 <rect key="frame" x="122" y="197" width="131" height="30"/>
@@ -58,9 +55,6 @@
                                 <rect key="frame" x="134" y="342" width="106" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="All My Missions"/>
-                                <connections>
-                                    <segue destination="RGM-ld-bJj" kind="show" id="IjA-nM-Asx"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N20-Lq-qHv">
                                 <rect key="frame" x="124" y="273" width="127" height="30"/>
@@ -95,64 +89,6 @@
             </objects>
             <point key="canvasLocation" x="-406" y="245"/>
         </scene>
-        <!--New Phone Campaign-->
-        <scene sceneID="9ZI-FW-RFo">
-            <objects>
-                <viewController title="New Phone Campaign" id="d22-7f-9sb" customClass="NewPhoneCampaignVC" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QgK-aA-3Cy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pLm-ir-IMB">
-                                <rect key="frame" x="16" y="189" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="URL of Spreadsheet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LN1-43-j2k">
-                                <rect key="frame" x="16" y="239" width="154" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xy-ls-R38">
-                                <rect key="frame" x="329" y="239" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="OK"/>
-                                <connections>
-                                    <action selector="okPressed:" destination="d22-7f-9sb" eventType="touchUpInside" id="lUb-iR-ABs"/>
-                                    <segue destination="RGM-ld-bJj" kind="show" id="bkH-ME-CC6"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NuQ-Pv-7im">
-                                <rect key="frame" x="16" y="269" width="343" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter the URL of a Google Spreadsheet containing names and phone numbers" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsX-5X-ul6">
-                                <rect key="frame" x="16" y="78" width="343" height="61"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="Y20-Fc-grp"/>
-                    </view>
-                    <connections>
-                        <outlet property="missionTitleField" destination="pLm-ir-IMB" id="sQR-1e-ENK"/>
-                        <outlet property="spreadsheetUrlField" destination="NuQ-Pv-7im" id="YVR-9K-UkN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aLs-At-xdk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="428" y="11.244377811094454"/>
-        </scene>
         <!--My Active Missions-->
         <scene sceneID="4sl-gc-l2t">
             <objects>
@@ -183,37 +119,65 @@
             </objects>
             <point key="canvasLocation" x="674" y="200"/>
         </scene>
-        <!--Mission SummaryTVC-->
-        <scene sceneID="w6b-im-h8Q">
+        <!--New Phone CampaignVC-->
+        <scene sceneID="c9B-8t-5uK">
             <objects>
-                <tableViewController id="RGM-ld-bJj" customClass="MissionSummaryTVC" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="abN-bX-V54">
+                <viewController storyboardIdentifier="NewPhoneCampaignVC" id="Kve-TJ-bCO" customClass="NewPhoneCampaignVC" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1Wh-Lu-9WN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Cmk-Yz-acx">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cmk-Yz-acx" id="C4O-1M-q0I">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="RGM-ld-bJj" id="qCA-Xn-aLY"/>
-                            <outlet property="delegate" destination="RGM-ld-bJj" id="c3t-Is-kV3"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <outlet property="missionSummaryTableView" destination="abN-bX-V54" id="cG9-6f-iNA"/>
-                        <outlet property="tableView" destination="abN-bX-V54" id="ycP-dv-lpu"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jvb-to-WaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ieI-4r-YqP"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xl1-Lh-oZa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1593" y="-239"/>
+            <point key="canvasLocation" x="1658" y="-1218"/>
+        </scene>
+        <!--Mission SummaryTVC-->
+        <scene sceneID="Pcx-ag-WIV">
+            <objects>
+                <viewController storyboardIdentifier="MissionSummaryTVC" id="i8e-Dt-Kex" customClass="MissionSummaryTVC" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4N9-vt-cQC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="OBm-SB-Rix"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="up8-pY-9uL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2362" y="-1218"/>
+        </scene>
+        <!--Wrap Up View Controller-->
+        <scene sceneID="IdL-NH-leB">
+            <objects>
+                <viewController storyboardIdentifier="WrapUpViewController" id="wKd-2J-6oe" customClass="WrapUpViewController" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="r60-Eb-67C">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2KM-GD-OZO"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ldq-Bh-36E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3073" y="-1218"/>
+        </scene>
+        <!--Choose Spreadsheet TypeVC-->
+        <scene sceneID="jYX-Ut-vGn">
+            <objects>
+                <viewController storyboardIdentifier="ChooseSpreadsheetTypeVC" id="pfE-r8-u0y" customClass="ChooseSpreadsheetTypeVC" customModule="TelePatriot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aUF-4r-lwn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="A3W-bb-oiG"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D4E-4P-oek" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1657" y="-543"/>
         </scene>
         <!--All Missions-->
         <scene sceneID="jwq-nR-EYt">
@@ -476,8 +440,18 @@
             </objects>
             <point key="canvasLocation" x="-1129" y="-1218"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="dFx-q1-GJk">
+            <objects>
+                <viewController id="2pM-Np-2TD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="E92-i2-ecg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="93m-bg-IYW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="IjA-nM-Asx"/>
-    </inferredMetricsTieBreakers>
 </document>

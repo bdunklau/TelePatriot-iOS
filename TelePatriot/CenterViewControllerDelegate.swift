@@ -10,8 +10,13 @@ import UIKit
 
 @objc
 protocol CenterViewControllerDelegate {
+    
+    // See ContainerViewController - that is (probably) the implementation of this protocol
     @objc optional func toggleLeftPanel()
     @objc optional func toggleRightPanel()
     @objc optional func collapseSidePanels()
     func getDirectorViewController() -> DirectorViewController?
+    func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
+    func getMissionSummaryTVC() -> MissionSummaryTVC?
+    func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC?
 }

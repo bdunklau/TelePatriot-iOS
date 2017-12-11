@@ -58,8 +58,83 @@ class MyMissionViewController : BaseViewController {
         return textView
     }()
     
+    /*******
+    let scrollView : UIScrollView = {
+        let s = UIScrollView()
+        s.backgroundColor = UIColor.black
+        return s
+    }()
+     *******/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 50, width: self.view.frame.width, height: self.view.frame.height))
+        scrollView.contentSize = CGSize(width: 250, height: 1450)
+        //scrollView.backgroundColor = UIColor.red
+        
+
+        scrollView.addSubview(descriptionHeaderLabel)
+        scrollView.addSubview(descriptionTextView)
+        /************
+         // see the TODO down in fetchMission for explanation why we aren't including these elements
+         scriptHeaderLabel.text = "Script"
+        scrollView.addSubview(scriptHeaderLabel)
+        scrollView.addSubview(scriptTextView)
+        ***********/
+        scrollView.addSubview(callButton1)
+        
+        view.addSubview(scrollView)
+        
+         /***********
+         scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+         scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 55).isActive = true
+         scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+         scrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
+        ***********/
+        
+        
+        descriptionHeaderLabel.text = "Mission Description"
+        descriptionHeaderLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        descriptionHeaderLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 35).isActive = true
+        descriptionHeaderLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
+        //descriptionHeaderLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1).isActive = true
+        
+        descriptionTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        descriptionTextView.topAnchor.constraint(equalTo: descriptionHeaderLabel.bottomAnchor).isActive = true
+        descriptionTextView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
+        //descriptionTextView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor, multiplier: 0.25).isActive = true
+        
+        /************
+         // see the TODO down in fetchMission for explanation why we aren't including these elements
+        scriptHeaderLabel.text = "Script"
+        scriptHeaderLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scriptHeaderLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 8).isActive = true
+        scriptHeaderLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
+        //scriptHeaderLabel.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor, multiplier: 0.25).isActive = true
+        
+        scriptTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scriptTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 16).isActive = true
+        scriptTextView.topAnchor.constraint(equalTo: scriptHeaderLabel.bottomAnchor, constant: 8).isActive = true
+        scriptTextView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
+        //scriptTextView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1).isActive = true
+        ************/
+         
+        callButton1.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        callButton1.topAnchor.constraint(equalTo: descriptionTextView
+            .bottomAnchor, constant: 8).isActive = true
+        callButton1.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
+        callButton1.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
+        
+        
+        
+        
+        
+        
+        /****************
+        
         
         descriptionHeaderLabel.text = "Mission Description"
         scriptHeaderLabel.text = "Script"
@@ -95,6 +170,7 @@ class MyMissionViewController : BaseViewController {
         callButton1.topAnchor.constraint(equalTo: scriptTextView.bottomAnchor, constant: 8).isActive = true
         callButton1.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         callButton1.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
+        *****************/
         
         
         // might also want to look into this: https://stackoverflow.com/a/31428932
@@ -149,7 +225,8 @@ class MyMissionViewController : BaseViewController {
                     guard let description = mission_item_elements["description"] as? String,
                         let script = mission_item_elements["script"] as? String,
                         let phone1 = mission_item_elements["phone"] as? String,
-                        let name1 = mission_item_elements["name"] as? String else { return }
+                        let name1 = mission_item_elements["name"] as? String,
+                        let uid = mission_item_elements["uid"] as? String else { return }
         
                     // viewWillDisappear() doesn't get called because of the way we just add subviews to the CenterViewController
                     // so we need some other way to tell when this view goes visible/invisible.  This is what I came up with:
@@ -166,8 +243,11 @@ class MyMissionViewController : BaseViewController {
                     }
                     self.callButton1.phone = phone1
         
-                    self.descriptionTextView.text = description
-                    self.scriptTextView.text = script
+                    // TODO boy this is ugly.  Had a bitch of a time getting scrolling to work on the "My Mission"
+                    // screen.  It would scroll until I added the second UITextView for the script.  So I am re-purposing
+                    // the description field to also contain the script
+                    self.descriptionTextView.text = description + "\n\n\n\nScript\n\n" + script
+                    //self.scriptTextView.text = script
         
                     if let phone2 = mission_item_elements["phone2"] as? String, let name2 = mission_item_elements["name2"] as? String {
                             let button2Text = name2 + " " + phone2
@@ -181,43 +261,15 @@ class MyMissionViewController : BaseViewController {
                     Database.database().reference()
                         .child("mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_in progress")
                     
+                    let mi = MissionItem(mission_item_id: mission_item_id, phone: phone1, name: name1, uid: uid)
+                    TPUser.sharedInstance.currentMissionItem = mi
+                    
                 } // end for
                     
             
         }, withCancel: nil)
     }
     
-    
-    /**********
-    func temp() {
-        
-        missionItemId = child.getKey();
-        
-        missionDetail = child.getValue(MissionDetail.class);
-        if(missionDetail == null)
-        return; // we should indicate no missions available for the user
-        
-        User.getInstance().setCurrentMissionItem(missionItemId, missionDetail);
-        
-        String missionName = missionDetail.getMission_name();
-        String missionDescription = missionDetail.getDescription();
-        String missionScript = missionDetail.getScript();
-        
-        mission_name.setText(missionName);
-        mission_description.setText(missionDescription);
-        mission_script.setText(missionScript);
-        button_call_person1.setVisibility(View.VISIBLE);
-        button_call_person1.setText(missionDetail.getName()+" "+missionDetail.getPhone());
-        wireUp(button_call_person1, missionDetail);
-        
-        prepareFor3WayCallIfNecessary(missionDetail, button_call_person2);
-        
-        missionDetail.setAccomplished("in progress");
-        missionDetail.setActive_and_accomplished("true_in progress");
-        
-        dataSnapshot.getRef().child(missionItemId).setValue(missionDetail);
-    }
- *******/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

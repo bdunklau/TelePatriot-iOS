@@ -21,6 +21,7 @@ class TPUser {
     var ref : DatabaseReference?
     var rolesAlreadyFetched = false
     var noRoleAssignedDelegate : NoRoleAssignedDelegate?
+    var currentMissionItem : MissionItem?
     
     private init() {
         ref = Database.database().reference()
@@ -78,12 +79,16 @@ class TPUser {
         guard let theref = ref else { return }
         
         theref.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
-            guard let val = snapshot.value as? [String: Any], let name = val["name"] as! String? else {
+            guard let val = snapshot.value as? [String: Any] else {
+                return
+            }
+            guard let name = val["name"] as! String? else {
                 return
             }
             // If we get past the guard, it means there IS a node under /no_roles corresponding to
             // the current user.  So in this case, we want to send them to the Limbo screen...
             print("name = \(name)") // <--- just FYI
+            print("val = \(val)")
             self.noRoleAssignedDelegate?.theUserHasNoRoles()
         })
         

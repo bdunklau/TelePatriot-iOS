@@ -67,10 +67,7 @@ class LimboViewController: BaseViewController, UITableViewDelegate, UITableViewD
         accountStatusHeaderLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         
         
-        tableViewAccountStatusEvents = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
-        
-        
-        tableViewAccountStatusEvents = UITableView(frame: CGRect(x: 10, y: 200, width: 350, height: 400), style: .plain)
+        tableViewAccountStatusEvents = UITableView(frame: CGRect(x: 10, y: 200, width: 350, height: 400), style: .plain) // <--- this turned out to be key
         tableViewAccountStatusEvents?.dataSource = self
         tableViewAccountStatusEvents?.register(AccountStatusEventTableViewCell.self, forCellReuseIdentifier: "cellId")
         tableViewAccountStatusEvents?.rowHeight = 110

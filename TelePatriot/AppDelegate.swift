@@ -21,14 +21,20 @@ import FBSDKLoginKit
 // https://github.com/hackiftekhar/IQKeyboardManager
 import IQKeyboardManagerSwift
 
+import CallKit
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var callObserver : CXCallObserver?
+    var wrapUpCallViewController : WrapUpViewController?
+    var myDelegate : AppDelegateDelegate?
     var window: UIWindow?
     
     // https://www.raywenderlich.com/150015/callkit-tutorial-ios
     //lazy var providerDelegate: ProviderDelegate = ProviderDelegate(callManager: self.callManager)
+    
     
     override init() {
         // https://www.youtube.com/watch?v=jH2LdL-PsHI
@@ -40,9 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
         let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
-            else { assert(false, "Couldn't load config file") }
+            else { assert(false, "Couldn't load config file")
+                return
+        }
         //***// IMPORTANT!!!!!!!!!
         FirebaseApp.configure(options: fileopts)
+        
+        wrapUpCallViewController = WrapUpViewController()
     }
     
 
@@ -62,29 +72,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
+        print("AppDelegate: didFinishLaunchingWithOptions: ")
+        
+        
+        // ref:  https://stackoverflow.com/a/42754882
+        // in applicationDidFinishLaunching...
+        callObserver = CXCallObserver()
+        callObserver?.setDelegate(self, queue: nil) // nil queue means main thread
+        
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        print("AppDelegate: applicationWillResignActive")
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        print("AppDelegate: applicationDidEnterBackground")
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        print("AppDelegate: applicationWillEnterForeground")
     }
 
+    
+    /**********
+     This is what gets called when the user returns from a phone call
+     We need to figure out how to send the user to the "Wrap Up" screen
+     **********/
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("AppDelegate: applicationDidBecomeActive")
+        
+        
+        
+        /********************
+         This shows the screen we want but not in the context of the CenterViewController
+         AND because there's no conditional logic here yet, this screen launches every time the app comes up
+        // source: https://stackoverflow.com/a/42454462
+        if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WrapUpViewController") as? WrapUpViewController {
+            if let window = self.window, let rootViewController = window.rootViewController {
+                var currentController = rootViewController
+                while let presentedController = currentController.presentedViewController {
+                    currentController = presentedController
+                }
+                currentController.present(controller, animated: true, completion: nil)
+            }
+        }
+         ********************/
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        print("AppDelegate: applicationWillTerminate")
     }
 
     
@@ -145,11 +190,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    
+    // I don't think we need this...
     // https://www.raywenderlich.com/150015/callkit-tutorial-ios
     func displayIncomingCall(uuid: UUID, handle: String, hasVideo: Bool = false, completion: ((NSError?) -> Void)?) {
         //providerDelegate.reportIncomingCall(uuid: uuid, handle: handle, hasVideo: hasVideo, completion: completion)
     }
 
+    
+    func onCallEnded() {
+        // set in MyMissionViewController
+        // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
+        // so they can enter some notes on the call.
+        if let missionItem = TPUser.sharedInstance.currentMissionItem, let vc = wrapUpCallViewController {
+            
+            // myDelegate is assigned in ContainerViewController.viewDidLoad()
+            myDelegate?.show(viewController: vc)
+        }
+    }
+}
+
+
+// ref:  https://stackoverflow.com/a/42754882
+var callObserver: CXCallObserver! // add property
+
+// ref:  https://stackoverflow.com/a/42754882
+extension AppDelegate: CXCallObserverDelegate {
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        if call.hasEnded == true {
+            print("Disconnected")
+            onCallEnded()
+        }
+        if call.isOutgoing == true && call.hasConnected == false {
+            print("Dialing")
+        }
+        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false {
+            print("Incoming")
+        }
+        
+        if call.hasConnected == true && call.hasEnded == false {
+            print("Connected")
+        }
+    }
+    
 }
 
