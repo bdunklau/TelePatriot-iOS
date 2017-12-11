@@ -177,12 +177,8 @@
 				A15D84641FA92976007EE77C /* SWRevealViewController.m */,
 				A126AE1F1F8B1D860096714B /* Info.plist */,
 				A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */,
-				A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */,
-				A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */,
 				A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */,
 				A1217E2C1FCA15C70007ABF8 /* ProviderDelegate.swift */,
-				A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */,
-				A17B6EFB1FD36C8A00A3325C /* WrapUpViewControllerDelegate.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -249,7 +245,11 @@
 		A1FD73361FDF237B00A1B383 /* Volunteer */ = {
 			isa = PBXGroup;
 			children = (
+				A109E8B41FC7DEFC0005517A /* MyMissionViewController.swift */,
 				A109E8B61FC7DFB80005517A /* SharePetitionViewController.swift */,
+				A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */,
+				A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */,
+				A17B6EFB1FD36C8A00A3325C /* WrapUpViewControllerDelegate.swift */,
 			);
 			path = Volunteer;
 			sourceTree = "<group>";
