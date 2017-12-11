@@ -161,6 +161,7 @@
 		A126AE121F8B1D860096714B /* TelePatriot */ = {
 			isa = PBXGroup;
 			children = (
+				A13B4C501FDF1FBF00D5527E /* misc */,
 				A17B6EFD1FD3928700A3325C /* TelePatriot.entitlements */,
 				A126AE271F8B25B40096714B /* GoogleService-Info.plist */,
 				A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */,
@@ -199,7 +200,6 @@
 				A109E8BA1FC7E1F60005517A /* BaseButton.swift */,
 				A109E8C21FC86DFC0005517A /* MenuItems.swift */,
 				A1217E2C1FCA15C70007ABF8 /* ProviderDelegate.swift */,
-				A1217E2E1FCA19300007ABF8 /* CallManager.swift */,
 				A1217E301FCA199A0007ABF8 /* Call.swift */,
 				A1217E321FCA1A070007ABF8 /* CallsViewController.swift */,
 				A1217E341FCA24150007ABF8 /* CallButton.swift */,
@@ -212,6 +212,14 @@
 				A17B6EFE1FDDE44300A3325C /* ChooseSpreadsheetTypeVC.swift */,
 			);
 			path = TelePatriot;
+			sourceTree = "<group>";
+		};
+		A13B4C501FDF1FBF00D5527E /* misc */ = {
+			isa = PBXGroup;
+			children = (
+				A1217E2E1FCA19300007ABF8 /* CallManager.swift */,
+			);
+			path = misc;
 			sourceTree = "<group>";
 		};
 		BC6D4A42EB8157281A4D9794 /* Frameworks */ = {
@@ -314,11 +322,11 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot-resources.sh",
 				"${PODS_ROOT}/FirebaseInvites/Resources/GINInviteResources.bundle",
 				"${PODS_ROOT}/FirebaseInvites/Resources/GPPACLPickerResources.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseFacebookAuthUI.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseGoogleAuthUI.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseTwitterAuthUI.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseFacebookAuthUI.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseGoogleAuthUI.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseTwitterAuthUI.bundle,
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle",
 			);
