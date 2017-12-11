@@ -6,11 +6,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "534697208.680775"
+            timestampString = "534698579.029614"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "534697208.681148"
+            timestampString = "534698579.029988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -38,11 +38,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "534697208.681464"
+            timestampString = "534698579.030306"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
@@ -65,6 +65,68 @@
             endingLineNumber = "143"
             landmarkName = "application(_:open:options:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.AppDelegate.init() -&gt; TelePatriot.AppDelegate"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.056207"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "508">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.057663"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "152">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; __ObjC.NSPersistentContainer in TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.059085"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.AppDelegate.persistentContainer.setter : __ObjC.NSPersistentContainer"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.060498"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "120">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -81,6 +143,68 @@
             endingLineNumber = "145"
             landmarkName = "application(_:open:options:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.AppDelegate.init() -&gt; TelePatriot.AppDelegate"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.065297"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "508">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.066824"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "152">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; __ObjC.NSPersistentContainer in TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.068223"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.AppDelegate.persistentContainer.setter : __ObjC.NSPersistentContainer"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
+                  timestampString = "534716458.069641"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "120">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
