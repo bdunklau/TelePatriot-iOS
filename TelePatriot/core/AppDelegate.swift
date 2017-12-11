@@ -28,7 +28,11 @@ import CallKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var callObserver : CXCallObserver?
+    
+    // all viewcontrollers declared here
+    var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
     var wrapUpCallViewController : WrapUpViewController?
+    
     var myDelegate : AppDelegateDelegate?
     var window: UIWindow?
     
@@ -52,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //***// IMPORTANT!!!!!!!!!
         FirebaseApp.configure(options: fileopts)
         
+        chooseSpreadsheetTypeVC = ChooseSpreadsheetTypeVC()
         wrapUpCallViewController = WrapUpViewController()
     }
     

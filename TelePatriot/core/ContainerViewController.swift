@@ -150,13 +150,16 @@ private extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "MissionSummaryTVC") as? MissionSummaryTVC
     }
     
+    /***********
     class func chooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "ChooseSpreadsheetTypeVC") as? ChooseSpreadsheetTypeVC
     }
+     ***********/
     
 }
 
 extension ContainerViewController: CenterViewControllerDelegate {
+    
     
     func getDirectorViewController() -> DirectorViewController? {
         if directorViewController == nil {
@@ -183,6 +186,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
+        /*********
         if chooseSpreadsheetTypeVC == nil {
             chooseSpreadsheetTypeVC = UIStoryboard.chooseSpreadsheetTypeVC()
             if chooseSpreadsheetTypeVC == nil {
@@ -190,8 +194,10 @@ extension ContainerViewController: CenterViewControllerDelegate {
             }
             chooseSpreadsheetTypeVC?.delegate = centerViewController // we do this above - what's up?
         }
+         ********/
         
-        return chooseSpreadsheetTypeVC
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.chooseSpreadsheetTypeVC
     }
     
     func getMissionSummaryTVC() -> MissionSummaryTVC? {

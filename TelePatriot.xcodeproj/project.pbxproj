@@ -161,10 +161,10 @@
 		A126AE121F8B1D860096714B /* TelePatriot */ = {
 			isa = PBXGroup;
 			children = (
-				A13B4C521FDF220800D5527E /* Admin */,
 				A13B4C511FDF20EB00D5527E /* core */,
-				A13B4C531FDF225D00D5527E /* Director */,
 				A13B4C501FDF1FBF00D5527E /* misc */,
+				A13B4C521FDF220800D5527E /* Admin */,
+				A13B4C531FDF225D00D5527E /* Director */,
 				A1FD73361FDF237B00A1B383 /* Volunteer */,
 				A126AE271F8B25B40096714B /* GoogleService-Info.plist */,
 				A17B6EFD1FD3928700A3325C /* TelePatriot.entitlements */,
