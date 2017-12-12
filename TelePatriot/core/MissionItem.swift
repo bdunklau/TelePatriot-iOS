@@ -29,12 +29,14 @@ class MissionItem {
          uid_and_active
          url
     **/
+    var mission_id : String
     var mission_item_id : String
     var phone : String
     var name : String
     var uid : String
     
-    init(mission_item_id: String, phone: String, name: String, uid: String) {
+    init(mission_id: String, mission_item_id: String, phone: String, name: String, uid: String) {
+        self.mission_id = mission_id
         self.mission_item_id = mission_item_id
         self.phone = phone
         self.name = name

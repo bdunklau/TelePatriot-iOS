@@ -328,8 +328,11 @@ extension CenterViewController : WrapUpViewControllerDelegate {
 }
 
 extension CenterViewController : ChooseSpreadsheetTypeDelegate {
-    func spreadsheetTypeChosen(spreadsheetType: String) {
+    func spreadsheetTypeChosen(missionNode: String) {
         // need to send the spreadsheet type to NewPhoneCampaignVC
-        doView(vc: NewPhoneCampaignVC(), viewControllers: self.childViewControllers)
+        guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
+        vc.missionNode = missionNode
+        vc.clearFields()
+        doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }

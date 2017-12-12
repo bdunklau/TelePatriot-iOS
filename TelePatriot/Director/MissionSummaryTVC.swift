@@ -26,7 +26,9 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ref = Database.database().reference().child("missions")
+        // TODO won't always be this...
+        var team = "The Cavalry"
+        ref = Database.database().reference().child("teams/\(team)/missions")
         
         missionSummaryTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         missionSummaryTableView?.dataSource = self
@@ -44,7 +46,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
             
             if let dictionary = snapshot.value as? [String : Any] {
                 let mission = MissionSummary()  //(snap: snapshot)
-                print(dictionary)
+                //print(dictionary)
                 //mission.setValuesForKeys(dictionary)
                 mission.mission_id = snapshot.key
                 mission.active = dictionary["active"] as? Bool

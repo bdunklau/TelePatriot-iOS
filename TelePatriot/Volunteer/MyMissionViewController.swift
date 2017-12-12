@@ -203,10 +203,13 @@ class MyMissionViewController : BaseViewController {
 
     func fetchMission(parent: UIViewController?) {
         
+        // TODO won't always be this...
+        let team = "The Cavalry"
+        
         Database.database().reference()
-            .child("mission_items")
-            .queryOrdered(byChild: "active_and_accomplished")
-            .queryEqual(toValue: "true_new").queryLimited(toFirst: 1)
+            .child("teams/\(team)/mission_items")
+            .queryOrdered(byChild: "group_number")
+            .queryLimited(toFirst: 1)
             .observeSingleEvent(of: .value, with: {(snapshot) in
                 
                 guard let entries = snapshot.value as? [String:[String:AnyObject]] else {
@@ -223,6 +226,7 @@ class MyMissionViewController : BaseViewController {
                    **************/
         
                     guard let description = mission_item_elements["description"] as? String,
+                        let mission_id = mission_item_elements["mission_id"] as? String,
                         let script = mission_item_elements["script"] as? String,
                         let phone1 = mission_item_elements["phone"] as? String,
                         let name1 = mission_item_elements["name"] as? String,
@@ -256,12 +260,12 @@ class MyMissionViewController : BaseViewController {
                     }
                     
                     Database.database().reference()
-                        .child("mission_items/"+mission_item_id+"/accomplished").setValue("in progress")
+                        .child("teams/\(team)/mission_items/\(mission_item_id)/accomplished").setValue("in progress")
                     
                     Database.database().reference()
-                        .child("mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_in progress")
+                        .child("teams/\(team)/mission_items/\(mission_item_id)/active_and_accomplished").setValue("true_in progress")
                     
-                    let mi = MissionItem(mission_item_id: mission_item_id, phone: phone1, name: name1, uid: uid)
+                    let mi = MissionItem(mission_id: mission_id, mission_item_id: mission_item_id, phone: phone1, name: name1, uid: uid)
                     TPUser.sharedInstance.currentMissionItem = mi
                     
                 } // end for

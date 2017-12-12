@@ -98,9 +98,15 @@ class ChooseSpreadsheetTypeVC: BaseViewController {
     
     
     @objc func buttonPressed(_ sender: Any) {
-        var button = sender as! BaseButton
-        var text = button.titleLabel
-        var dbug = button.titleLabel
+        let button = sender as! BaseButton
+        var text = button.titleLabel?.text
+        
+        guard let thetype = text, let button2Text = button2.titleLabel?.text else { return }
+        var missionNode = "missions"
+        if text == button2Text { missionNode = "master_missions" }
+        
+        // delegate is CenterViewController
+        delegate?.spreadsheetTypeChosen(missionNode: missionNode)
     }
     
 
@@ -124,7 +130,7 @@ class ChooseSpreadsheetTypeVC: BaseViewController {
 
 
 protocol ChooseSpreadsheetTypeDelegate {
-    func spreadsheetTypeChosen(spreadsheetType: String) 
+    func spreadsheetTypeChosen(missionNode: String) 
 }
 
 

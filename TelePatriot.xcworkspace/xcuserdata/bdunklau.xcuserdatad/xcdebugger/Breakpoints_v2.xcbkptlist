@@ -10,11 +10,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "534721344.26145"
+            timestampString = "534753456.089409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "AppDelegate"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "534753456.089519"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "application(_:open:options:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,29 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "534721344.261606"
+            timestampString = "534753456.089583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "application(_:open:options:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "534721344.261736"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "application(_:open:options:)"
-            landmarkType = "7">
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "persistentContainer"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -65,68 +65,6 @@
             endingLineNumber = "143"
             landmarkName = "application(_:open:options:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.AppDelegate.init() -&gt; TelePatriot.AppDelegate"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.056207"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "508">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.057663"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "152">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; __ObjC.NSPersistentContainer in TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.059085"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "157"
-                  endingLineNumber = "157"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.AppDelegate.persistentContainer.setter : __ObjC.NSPersistentContainer"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.060498"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "120">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -143,68 +81,166 @@
             endingLineNumber = "145"
             landmarkName = "application(_:open:options:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Director/ChooseSpreadsheetTypeVC.swift"
+            timestampString = "534753456.089706"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "buttonPressed(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/CenterViewController.swift"
+            timestampString = "534753456.089775"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "spreadsheetTypeChosen(missionNode:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/CenterViewController.swift"
+            timestampString = "534753456.089834"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
+            landmarkName = "spreadsheetTypeChosen(missionNode:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Director/NewPhoneCampaignVC.swift"
+            timestampString = "534753456.089892"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "okPressed(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Director/NewPhoneCampaignVC.swift"
+            timestampString = "534753456.089944"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "okPressed(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Director/NewPhoneCampaignVC.swift"
+            timestampString = "534753456.089992"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "okPressed(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.AppDelegate.init() -&gt; TelePatriot.AppDelegate"
+                  symbolName = "TelePatriot.NewPhoneCampaignVC.okPressed(Any) -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.065297"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/Director/NewPhoneCampaignVC.swift"
+                  timestampString = "534750091.486888"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "508">
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "3980">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;, __ObjC.DatabaseReference) -&gt; () in TelePatriot.NewPhoneCampaignVC.okPressed(Any) -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.066824"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/Director/NewPhoneCampaignVC.swift"
+                  timestampString = "534750091.488407"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "152">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; __ObjC.NSPersistentContainer in TelePatriot.AppDelegate.persistentContainer.getter : __ObjC.NSPersistentContainer"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.068223"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "157"
-                  endingLineNumber = "157"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.AppDelegate.persistentContainer.setter : __ObjC.NSPersistentContainer"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/AppDelegate.swift"
-                  timestampString = "534716458.069641"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "120">
+                  startingLineNumber = "130"
+                  endingLineNumber = "130"
+                  offsetFromSymbolStart = "36">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/ContainerViewController.swift"
+            timestampString = "534753456.090043"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Director/NewPhoneCampaignVC.swift"
+            timestampString = "534753456.09009"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "okPressed(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -50,6 +50,8 @@ class NewPhoneCampaignVC: BaseViewController {
         return b
     }()
     
+    var missionNode : String = "missions" // ChooseSpreadsheetTypeVC could change this to "master_missions"
+    
     
     // https://www.youtube.com/watch?v=joVi3thZOqc
     let rootRef = Database.database().reference()
@@ -91,9 +93,19 @@ class NewPhoneCampaignVC: BaseViewController {
 
     }
     
+    
+    func clearFields() {
+        missionTitleField.text = ""
+        spreadsheetUrlField.text = ""
+    }
+    
+    
     /*@IBAction*/ @objc func okPressed(_ sender: Any) {
         
-        let key = rootRef.child("missions").childByAutoId().key
+        
+        // TODO won't always be this...
+        let team = "The Cavalry"
+        let key = rootRef.child("teams/\(team)/\(missionNode)").childByAutoId().key
         let uid : String = Auth.auth().currentUser!.uid
         let name : String = Auth.auth().currentUser!.displayName!
         let url : String = spreadsheetUrlField.text
@@ -108,7 +120,7 @@ class NewPhoneCampaignVC: BaseViewController {
                     "mission_type": "Phone Campaign",
                     "uid_and_active": uid_and_active]
         
-        let mission = ["/missions/\(key)": missionVals]
+        let mission = ["teams/\(team)/\(missionNode)/\(key)": missionVals]
         rootRef.updateChildValues(mission, withCompletionBlock: { (error:Error?, ref:DatabaseReference) in
                 // not sure how to handle the NSError yet
                 // just handle success for now

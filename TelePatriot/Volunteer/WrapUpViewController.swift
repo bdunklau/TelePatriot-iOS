@@ -122,51 +122,29 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         outcome = pickerData[0]
         picker.selectRow(0, inComponent: 0, animated: false)
         
-        print("wrap up for:  mission_item_id = \(missionItem)")
-        let ref = Database.database().reference().child("mission_items").child(missionItem.mission_item_id)
-        
-        
-        /****
-         Multi-path updates would be better but I think the nodes have to exist in the first place,
-         and some of these don't.  When I tested this on 12/2/17, not even the existing nodes were being updated
-         I think could be because some of the nodes didn't exist, and maybe it's an all-or-nothing transaction
-         let missionRef = ref.child(missionItem.mission_item_id)
-         let missionData = ["outcome": outcome,
-                             "notes": notesField.text,
-                             "completed_by_uid": TPUser.sharedInstance.getUid(),
-                             "completed_by_name": TPUser.sharedInstance.getName(),
-                             "accomplished": "completed",
-                             "active_and_accomplished": "true_completed"] as [String : Any]
-         
-         missionRef.updateChildValues(missionData)
-         **********/
-        
+        // TODO won't always be this...
+        let team = "The Cavalry";
+        Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
+        let ref = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)/mission_items/\(missionItem.mission_item_id)")
+        ref.child("accomplished").setValue("complete")
+        ref.child("active").setValue(false)
+        ref.child("active_and_accomplished").setValue("false_complete")
         ref.child("outcome").setValue(outcome)
         ref.child("notes").setValue(notesField.text)
         ref.child("completed_by_uid").setValue(TPUser.sharedInstance.getUid())
         ref.child("completed_by_name").setValue(TPUser.sharedInstance.getName())
-        ref.child("accomplished").setValue("completed")
-        ref.child("active_and_accomplished").setValue("true_completed")
+        
+        let date : Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy h:mm a z"
+        let mission_complete_date = dateFormatter.string(from: date)
+        ref.child("mission_complete_date").setValue(mission_complete_date)
+        ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
+        
         TPUser.sharedInstance.currentMissionItem = nil
         
         // Now, just send the user to another mission
-        delegate?.missionAccomplished()
-        
-        
-        // In Android, this is User.java: submitWrapUp()
-        /*************
-        public void submitWrapUp(String outcome, String notes) {
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("mission_items/"+missionItemId);
-            ref.child("outcome").setValue(outcome);
-            ref.child("notes").setValue(notes);
-            ref.child("completed_by_uid").setValue(getUid());
-            ref.child("completed_by_name").setValue(getName());
-            missionItemId = null;
-            missionItem = null;
-        }
-         ************/
-        
-        
+        delegate?.missionAccomplished()        
         
     }
     

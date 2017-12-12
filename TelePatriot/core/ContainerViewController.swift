@@ -142,9 +142,11 @@ private extension UIStoryboard {
         return mainStoryboard().instantiateViewController(withIdentifier: "DirectorViewController") as? DirectorViewController
     }
     
+    /**********
     class func newPhoneCampaignVC() -> NewPhoneCampaignVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "NewPhoneCampaignVC") as? NewPhoneCampaignVC
     }
+     **********/
     
     class func missionSummaryTVC() -> MissionSummaryTVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "MissionSummaryTVC") as? MissionSummaryTVC
@@ -174,6 +176,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC? {
+        /**********
         if newPhoneCampaignVC == nil {
             newPhoneCampaignVC = UIStoryboard.newPhoneCampaignVC()
             if newPhoneCampaignVC == nil {
@@ -183,6 +186,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
         }
         
         return newPhoneCampaignVC
+         ************/
+        
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.newPhoneCampaignVC
     }
     
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
