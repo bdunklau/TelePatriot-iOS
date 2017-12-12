@@ -54,6 +54,7 @@
 		A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
 		A1EA20421FCE135100FF0ABB /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */; };
+		A1FD73381FE0725100A1B383 /* MissionItemEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */; };
 		BDD7F2035B27F329A7F2E797 /* Pods_TelePatriot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 		A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEvent.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionItemEvent.swift; sourceTree = "<group>"; };
 		F60D7E18A8FEAD8059C42035 /* Pods-TelePatriot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,10 +206,11 @@
 				A109E8AA1FC564A50005517A /* CenterViewController.swift */,
 				A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */,
 				A109E8AE1FC6233F0005517A /* ContainerViewController.swift */,
-				A109E8C21FC86DFC0005517A /* MenuItems.swift */,
 				A109E8A81FC5623E0005517A /* MenuCell.swift */,
 				A109E8AC1FC565E60005517A /* MenuItem.swift */,
+				A109E8C21FC86DFC0005517A /* MenuItems.swift */,
 				A17B6ED51FD1EA7100A3325C /* MissionItem.swift */,
+				A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */,
 				A109E8A61FC561370005517A /* SidePanelViewController.swift */,
 				A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */,
 				A185658F1FBAB5B2009EE57F /* TPUser.swift */,
@@ -467,6 +470,7 @@
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
 				A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */,
+				A1FD73381FE0725100A1B383 /* MissionItemEvent.swift in Sources */,
 				A109E8BB1FC7E1F60005517A /* BaseButton.swift in Sources */,
 				A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */,
 				A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */,

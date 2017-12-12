@@ -10,14 +10,13 @@ import Foundation
 
 class MissionItem {
     /**
-    These are the attributes in /mission_items...
+     These are the attributes in /teams/{team}/mission_items...
      
      mission_item_id
          accomplished
          active
          active_and_accomplished
          description
-         email
          mission_create_date
          mission_id
          mission_name
@@ -29,17 +28,57 @@ class MissionItem {
          uid_and_active
          url
     **/
-    var mission_id : String
     var mission_item_id : String
-    var phone : String
+    var accomplished : String
+    var active : Bool
+    var active_and_accomplished : String
+    var description : String
+    //var email : String
+    var mission_create_date : String
+    var mission_id : String
+    var mission_name : String
+    var mission_type : String
     var name : String
+    var phone : String
+    var script : String
     var uid : String
+    var uid_and_active : String
+    var url : String
     
-    init(mission_id: String, mission_item_id: String, phone: String, name: String, uid: String) {
-        self.mission_id = mission_id
+    
+    init(mission_item_id : String,
+         accomplished : String,
+         active : Bool,
+         active_and_accomplished : String,
+         description : String,
+         //email : String,
+         mission_create_date : String,
+         mission_id : String,
+         mission_name : String,
+         mission_type : String,
+         name : String,
+         phone : String,
+         script : String,
+         uid : String,
+         uid_and_active : String,
+         url : String) {
+        
         self.mission_item_id = mission_item_id
-        self.phone = phone
+        self.accomplished = accomplished
+        self.active = active
+        self.active_and_accomplished = active_and_accomplished
+        self.description = description
+        //self.email = email
+        self.mission_create_date = mission_create_date
+        self.mission_id = mission_id
+        self.mission_name = mission_name
+        self.mission_type = mission_type
         self.name = name
+        self.phone = phone
+        self.script = script
         self.uid = uid
+        self.uid_and_active = uid_and_active
+        self.url = url
+        
     }
 }

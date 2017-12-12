@@ -292,8 +292,10 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         guard let mission_item_id = missionItemId else {
             return
         }
-        Database.database().reference().child("mission_items/"+mission_item_id+"/accomplished").setValue("new")
-        Database.database().reference().child("mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
+        // TODO won't always be this...
+        let team = "The Cavalry"
+        Database.database().reference().child("teams/\(team)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
+        Database.database().reference().child("teams/\(team)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
         //self.mission_item_id = nil
         self.mission_item_id = nil
     }

@@ -129,50 +129,6 @@ class MyMissionViewController : BaseViewController {
         callButton1.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
         
         
-        
-        
-        
-        
-        /****************
-        
-        
-        descriptionHeaderLabel.text = "Mission Description"
-        scriptHeaderLabel.text = "Script"
-        
-        view.addSubview(descriptionHeaderLabel)
-        view.addSubview(descriptionTextView)
-        view.addSubview(scriptHeaderLabel)
-        view.addSubview(scriptTextView)
-        view.addSubview(callButton1)
-        
-        descriptionHeaderLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        descriptionHeaderLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 55).isActive = true
-        descriptionHeaderLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        descriptionHeaderLabel.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.1).isActive = true
-        
-        descriptionTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        descriptionTextView.topAnchor.constraint(equalTo: descriptionHeaderLabel.bottomAnchor).isActive = true
-        descriptionTextView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
-        //descriptionTextView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.25).isActive = true
-        
-        scriptHeaderLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        scriptHeaderLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 8).isActive = true
-        scriptHeaderLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        //scriptHeaderLabel.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.25).isActive = true
-        
-        scriptTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        scriptTextView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 16).isActive = true
-        scriptTextView.topAnchor.constraint(equalTo: scriptHeaderLabel.bottomAnchor, constant: 8).isActive = true
-        scriptTextView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
-        //scriptTextView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.25).isActive = true
-        
-        callButton1.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        callButton1.topAnchor.constraint(equalTo: scriptTextView.bottomAnchor, constant: 8).isActive = true
-        callButton1.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        callButton1.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
-        *****************/
-        
-        
         // might also want to look into this: https://stackoverflow.com/a/31428932
         // to try to get elements positioned relative to the nav bar at the top
         
@@ -194,11 +150,41 @@ class MyMissionViewController : BaseViewController {
     }
     
     
+    // call end is recorded in AppDelegate.onCallEnded()
     @objc func makeCall(_ sender: CallButton) {
         guard let ph = sender.phone else { return }
         guard let number = URL(string: "tel://"+ph) else { return }
+        guard let mission_name = TPUser.sharedInstance.currentMissionItem?.mission_name else { return }
+        guard let supporter_name = TPUser.sharedInstance.currentMissionItem?.name else { return }
+        
+        // In Android, MyMissionFragment.call() creates a MissionItemEvent
+        // Here's what we have to save:  event_date, event_type, mission_name, phone, supporter_phone, volunteer_name, volunteer_phone, volunteer_uid
+        let m = MissionItemEvent(event_type: "is calling",
+                                  volunteer_uid: TPUser.sharedInstance.getUid(),
+                                  volunteer_name: TPUser.sharedInstance.getName(),
+                                  mission_name: mission_name,
+                                  phone: ph,
+                                  volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
+                                  supporter_name: supporter_name,
+                                  event_date: getDateString())
+        
+        // TODO won't always be this...
+        let team = "The Cavalry"
+        let ref = Database.database().reference().child("teams/\(team)/activity")
+        ref.child("all").childByAutoId().setValue(m.dictionary())
+        ref.child("by_phone_number").child(ph).childByAutoId().setValue(m.dictionary())
+        
+        // now do the call
         UIApplication.shared.open(number)
     }
+    
+    func getDateString() -> String {
+        let date : Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM d, h:mm:ss a z yyyy"
+        return dateFormatter.string(from: date)
+    }
+    
     
 
     func fetchMission(parent: UIViewController?) {
@@ -226,11 +212,21 @@ class MyMissionViewController : BaseViewController {
                    **************/
         
                     guard let description = mission_item_elements["description"] as? String,
+                        let accomplished = mission_item_elements["accomplished"] as? String,
+                        let active = mission_item_elements["active"] as? Bool,
+                        let active_and_accomplished = mission_item_elements["active_and_accomplished"] as? String,
+                        //let email = mission_item_elements["email"] as? String,
+                        let mission_create_date = mission_item_elements["mission_create_date"] as? String,
                         let mission_id = mission_item_elements["mission_id"] as? String,
-                        let script = mission_item_elements["script"] as? String,
-                        let phone1 = mission_item_elements["phone"] as? String,
+                        let mission_name = mission_item_elements["mission_name"] as? String,
+                        let mission_type = mission_item_elements["mission_type"] as? String,
                         let name1 = mission_item_elements["name"] as? String,
-                        let uid = mission_item_elements["uid"] as? String else { return }
+                        let phone1 = mission_item_elements["phone"] as? String,
+                        let script = mission_item_elements["script"] as? String,
+                        let uid = mission_item_elements["uid"] as? String,
+                        let uid_and_active = mission_item_elements["uid_and_active"] as? String,
+                        let url = mission_item_elements["url"] as? String
+                        else { return }
         
                     // viewWillDisappear() doesn't get called because of the way we just add subviews to the CenterViewController
                     // so we need some other way to tell when this view goes visible/invisible.  This is what I came up with:
@@ -265,7 +261,23 @@ class MyMissionViewController : BaseViewController {
                     Database.database().reference()
                         .child("teams/\(team)/mission_items/\(mission_item_id)/active_and_accomplished").setValue("true_in progress")
                     
-                    let mi = MissionItem(mission_id: mission_id, mission_item_id: mission_item_id, phone: phone1, name: name1, uid: uid)
+                    let mi = MissionItem(mission_item_id: mission_item_id,
+                                         accomplished: accomplished,
+                                         active: active,
+                                         active_and_accomplished: active_and_accomplished,
+                                         description: description,
+                                         //email: email,
+                                         mission_create_date: mission_create_date,
+                                         mission_id: mission_id,
+                                         mission_name: mission_name,
+                                         mission_type: mission_type,
+                                         name: name1,
+                                         phone: phone1,
+                                         script: script,
+                                         uid: uid,
+                                         uid_and_active: uid_and_active,
+                                         url: url)
+                    
                     TPUser.sharedInstance.currentMissionItem = mi
                     
                 } // end for

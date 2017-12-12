@@ -203,17 +203,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //providerDelegate.reportIncomingCall(uuid: uuid, handle: handle, hasVideo: hasVideo, completion: completion)
     }
 
-    
+    // call begin is recorded in MyMissionViewController.makeCall()
     func onCallEnded() {
         // set in MyMissionViewController
         // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
         // so they can enter some notes on the call.
         if let missionItem = TPUser.sharedInstance.currentMissionItem, let vc = wrapUpCallViewController {
             
+            guard let mission_name = TPUser.sharedInstance.currentMissionItem?.mission_name else { return }
+            guard let supporter_name = TPUser.sharedInstance.currentMissionItem?.name else { return }
+            guard let phone = TPUser.sharedInstance.currentMissionItem?.phone else { return }
+            
+            // just like User.completeMissionItem() in Android
+            let m = MissionItemEvent(event_type: "ended call to",
+                                     volunteer_uid: TPUser.sharedInstance.getUid(),
+                                     volunteer_name: TPUser.sharedInstance.getName(),
+                                     mission_name: mission_name,
+                                     phone: phone,
+                                     volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
+                                     supporter_name: supporter_name,
+                                     event_date: getDateString())
+            
+            
+            // TODO won't always be this...
+            let team = "The Cavalry"
+            let ref = Database.database().reference().child("teams/\(team)/activity")
+            ref.child("all").childByAutoId().setValue(m.dictionary())
+            ref.child("by_phone_number").child(phone).childByAutoId().setValue(m.dictionary())
+            
             // myDelegate is assigned in ContainerViewController.viewDidLoad()
             myDelegate?.show(viewController: vc)
         }
     }
+    
+    
+    func getDateString() -> String {
+        let date : Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM d, h:mm:ss a z yyyy"
+        return dateFormatter.string(from: date)
+    }
+    
 }
 
 

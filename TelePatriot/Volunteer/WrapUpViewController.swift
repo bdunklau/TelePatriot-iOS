@@ -51,9 +51,17 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     
     // need button to submit
     let submitButton : BaseButton = {
-        let btn = BaseButton(text: "Save")
+        let btn = BaseButton(text: "Submit and Get Another Mission")
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(submitWrapUp(_:)), for: .touchUpInside)
+        return btn
+    }()
+    
+    // need button to submit
+    let submitAndQuitButton : BaseButton = {
+        let btn = BaseButton(text: "Submit and Quit")
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(submitWrapUpAndQuit(_:)), for: .touchUpInside)
         return btn
     }()
     
@@ -80,7 +88,7 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         /****/
         view.addSubview(whatHappenedLabel)
         whatHappenedLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        whatHappenedLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24).isActive = true
+        whatHappenedLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8).isActive = true
         whatHappenedLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         whatHappenedLabel.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.25).isActive = true
         /****/
@@ -89,7 +97,7 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         //pickerViewContainer.view.addSubview(picker)
         //view.addSubview(pickerViewContainer.view)
         //pickerViewContainer.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        picker.topAnchor.constraint(equalTo: whatHappenedLabel.bottomAnchor, constant: 16).isActive = true
+        picker.topAnchor.constraint(equalTo: whatHappenedLabel.bottomAnchor, constant: 64).isActive = true
         //picker.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 135).isActive = true
         picker.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         picker.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
@@ -110,6 +118,11 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         submitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
         submitButton.topAnchor.constraint(equalTo: notesField.bottomAnchor, constant: 8).isActive = true
         submitButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        
+        view.addSubview(submitAndQuitButton)
+        submitAndQuitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+        submitAndQuitButton.topAnchor.constraint(equalTo: submitButton.bottomAnchor, constant: 8).isActive = true
+        submitAndQuitButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         
     }
     
@@ -146,6 +159,17 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         // Now, just send the user to another mission
         delegate?.missionAccomplished()        
         
+    }
+    
+    
+    @objc func submitWrapUpAndQuit(_ sender: BaseButton) {
+        submitWrapUp(sender)
+        logout()
+    }
+    
+    func logout() {
+        try! Auth.auth().signOut()
+        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
     }
     
     
