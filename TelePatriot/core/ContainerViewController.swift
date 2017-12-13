@@ -193,6 +193,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
         return appDelegate?.newPhoneCampaignVC
     }
     
+    func getAllActivityVC() -> AllActivityVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.allActivityVC
+    }
+    
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
         /*********
         if chooseSpreadsheetTypeVC == nil {

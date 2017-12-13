@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var callObserver : CXCallObserver?
     
     // all viewcontrollers declared here
+    var allActivityVC : AllActivityVC?
     var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
     var newPhoneCampaignVC : NewPhoneCampaignVC?
     var wrapUpCallViewController : WrapUpViewController?
@@ -57,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //***// IMPORTANT!!!!!!!!!
         FirebaseApp.configure(options: fileopts)
         
+        allActivityVC = AllActivityVC()
         chooseSpreadsheetTypeVC = ChooseSpreadsheetTypeVC()
         newPhoneCampaignVC = NewPhoneCampaignVC()
         wrapUpCallViewController = WrapUpViewController()

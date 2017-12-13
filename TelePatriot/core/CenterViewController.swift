@@ -260,7 +260,8 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "All Activity") {
-            //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
+            guard let vc = delegate?.getAllActivityVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
         }
         
     }

@@ -15,6 +15,7 @@ protocol CenterViewControllerDelegate {
     @objc optional func toggleLeftPanel()
     @objc optional func toggleRightPanel()
     @objc optional func collapseSidePanels()
+    func getAllActivityVC() -> AllActivityVC?
     func getDirectorViewController() -> DirectorViewController?
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
     func getMissionSummaryTVC() -> MissionSummaryTVC?
