@@ -18,7 +18,12 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     // see ContainerViewController.addChildSidePanelController()
     var delegate: SidePanelViewControllerDelegate?
     
-    
+    let cos_logo : UIImageView = {
+        let image = UIImage(named: "coslogo")!
+        let imageView = UIImageView(image: image)
+        //imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     enum CellIdentifiers {
         static let thecell = "thecell"
@@ -30,6 +35,14 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         listenForAccountStatusEvents()
         
         tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
+        
+        var headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        //var imageView: UIImageView = UIImageView(frame: frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        headerView.addSubview(cos_logo)
+        var labelView: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        headerView.addSubview(labelView)
+        tableView?.tableHeaderView = headerView
+        tableView?.tableHeaderView?.frame.size.height = cos_logo.frame.size.height
         
         tableView?.delegate = self
         tableView?.dataSource = self
