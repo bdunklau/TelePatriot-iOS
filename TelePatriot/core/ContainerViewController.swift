@@ -18,6 +18,8 @@ class ContainerViewController: UIViewController {
     
     var delegate : CenterViewControllerDelegate?
     
+    var allowPanningFromRightToLeft = false
+    
     /*************
     let menuButton : UIButton = {
         let button = UIButton(type: .system)
@@ -162,6 +164,9 @@ private extension UIStoryboard {
 
 extension ContainerViewController: CenterViewControllerDelegate {
     
+    func viewChosen() {
+        allowPanningFromRightToLeft = false // see CenterViewController.doView()
+    }
     
     func getDirectorViewController() -> DirectorViewController? {
         if directorViewController == nil {
@@ -176,19 +181,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC? {
-        /**********
-        if newPhoneCampaignVC == nil {
-            newPhoneCampaignVC = UIStoryboard.newPhoneCampaignVC()
-            if newPhoneCampaignVC == nil {
-                return nil
-            }
-            newPhoneCampaignVC?.submitHandler = centerViewController // we do this above - what's up?
-        }
-        
-        return newPhoneCampaignVC
-         ************/
-        
-        
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.newPhoneCampaignVC
     }
@@ -199,16 +191,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
-        /*********
-        if chooseSpreadsheetTypeVC == nil {
-            chooseSpreadsheetTypeVC = UIStoryboard.chooseSpreadsheetTypeVC()
-            if chooseSpreadsheetTypeVC == nil {
-                return nil
-            }
-            chooseSpreadsheetTypeVC?.delegate = centerViewController // we do this above - what's up?
-        }
-         ********/
-        
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.chooseSpreadsheetTypeVC
     }
@@ -232,11 +214,13 @@ extension ContainerViewController: CenterViewControllerDelegate {
         
         if notAlreadyExpanded {
             addLeftPanelViewController()
+            allowPanningFromRightToLeft = true
         }
         
         animateLeftPanel(shouldExpand: notAlreadyExpanded)
     }
     
+    /*********/
     func toggleRightPanel() {
         let notAlreadyExpanded = (currentState != .rightPanelExpanded)
         
@@ -246,7 +230,9 @@ extension ContainerViewController: CenterViewControllerDelegate {
         
         animateRightPanel(shouldExpand: notAlreadyExpanded)
     }
+     /*********/
     
+    /**********/ // doesn't look like this is even called anywhere
     func collapseSidePanels() {
         
         switch currentState {
@@ -258,9 +244,12 @@ extension ContainerViewController: CenterViewControllerDelegate {
             break
         }
     }
+     /***********/
     
     func addLeftPanelViewController() {
-        guard leftViewController == nil else { return }
+        guard leftViewController == nil else {
+            return
+        }
         
         if let vc = UIStoryboard.leftViewController() {
             vc.menuItems = MenuItems.sharedInstance.mainMenu
@@ -296,6 +285,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
         }
     }
     
+    
     func addChildSidePanelController(_ sidePanelController: SidePanelViewController) {
         
         sidePanelController.delegate = centerViewController
@@ -320,7 +310,6 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func animateCenterPanelXPosition(targetPosition: CGFloat, completion: ((Bool) -> Void)? = nil) {
-        
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.centerNavigationController.view.frame.origin.x = targetPosition
         }, completion: completion)
@@ -330,14 +319,25 @@ extension ContainerViewController: CenterViewControllerDelegate {
 extension ContainerViewController: UIGestureRecognizerDelegate {
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+        
         let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
+        let gestureIsDraggingFromRightToLeft = !gestureIsDraggingFromLeftToRight
+        
+        var panAllowed = (gestureIsDraggingFromRightToLeft && allowPanningFromRightToLeft) || (gestureIsDraggingFromLeftToRight)
+        
+        if !panAllowed {
+            return
+        }
+        
+        
         switch recognizer.state {
             
         case .began:
             if currentState == .bothCollapsed {
                 if gestureIsDraggingFromLeftToRight {
                     addLeftPanelViewController()
-                } else {
+                }
+                else {
                     addRightPanelViewController()
                 }
                 
@@ -351,6 +351,14 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
             }
             
         case .ended:
+            // this seems backwards, but this is the way it works (this is how we prevent swiping from right to left when it doesn't make sense)
+            if currentState == .bothCollapsed {
+                allowPanningFromRightToLeft = true
+            }
+            else {
+                allowPanningFromRightToLeft = false
+            }
+            
             if let _ = leftViewController,
                 let rview = recognizer.view {
                 // animate the side panel open or closed based on whether the view has moved more or less than halfway

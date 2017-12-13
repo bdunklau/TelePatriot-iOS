@@ -21,8 +21,28 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     let cos_logo : UIImageView = {
         let image = UIImage(named: "coslogo")!
         let imageView = UIImageView(image: image)
-        //imageView.translatesAutoresizingMaskIntoConstraints = false
+        //imageView.translatesAutoresizingMaskIntoConstraints = false // this is the one time we don't need this.  Makes it so the image fills the table header
         return imageView
+    }()
+    
+    let profilePic : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let usernameLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let emailLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     enum CellIdentifiers {
@@ -35,10 +55,30 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         listenForAccountStatusEvents()
         
         tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
+        tableView?.separatorStyle = UITableViewCellSeparatorStyle.none // I didn't like the gray separators lines in the slide-out menu
         
         var headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         //var imageView: UIImageView = UIImageView(frame: frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         headerView.addSubview(cos_logo)
+        
+        headerView.addSubview(profilePic)
+        let picUrl = TPUser.sharedInstance.getPhotoURL().absoluteString
+        profilePic.image(fromUrl: picUrl)
+        profilePic.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 8).isActive = true
+        profilePic.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8).isActive = true
+        
+        emailLabel.text = TPUser.sharedInstance.getEmail()
+        headerView.addSubview(emailLabel)
+        emailLabel.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: 8).isActive = true
+        emailLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8).isActive = true
+        
+        usernameLabel.text = TPUser.sharedInstance.getName()
+        headerView.addSubview(usernameLabel)
+        usernameLabel.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: 8).isActive = true
+        usernameLabel.bottomAnchor.constraint(equalTo: emailLabel.topAnchor, constant: 0).isActive = true
+        
+        
+        
         var labelView: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         headerView.addSubview(labelView)
         tableView?.tableHeaderView = headerView
@@ -90,6 +130,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     }
     
     func insert(item: MenuItem, at: Int) {
+        guard menuItems.count > 0 else { return }
         menuItems[0].insert(item, at: at)
         let insertionIndexPath = IndexPath(row: at, section: 0)
         tableView?.insertRows(at: [insertionIndexPath], with: .automatic)
@@ -219,5 +260,76 @@ extension SidePanelViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuItem = menuItems[indexPath.section][indexPath.row]
         delegate?.didSelectSomething(menuItem: menuItem)
+    }
+}
+
+
+// source:  http://www.andrewkouri.com/swift-3-extension-to-uiimage-to-quickly-retrieve-image-from-a-url/
+extension UIImageView {
+    public func image(fromUrl urlString: String) {
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        let theTask = URLSession.shared.dataTask(with: url) {
+            data, response, error in
+            if let response = data {
+                DispatchQueue.main.async {
+                    self.image = UIImage(data: response)?.resizedImage(newSize: CGSize(width: 50, height: 50))
+                }
+            }
+        }
+        theTask.resume()
+    }
+}
+
+
+// source:  http://samwize.com/2016/06/01/resize-uiimage-in-swift/
+extension UIImage {
+    
+    /// Returns a image that fills in newSize
+    func resizedImage(newSize: CGSize) -> UIImage {
+        // Guard newSize is different
+        guard self.size != newSize else { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage.circle // note the extension further down
+    }
+    
+    /// Returns a resized image that fits in rectSize, keeping it's aspect ratio
+    /// Note that the new image size is not rectSize, but within it.
+    func resizedImageWithinRect(rectSize: CGSize) -> UIImage {
+        let widthFactor = size.width / rectSize.width
+        let heightFactor = size.height / rectSize.height
+        
+        var resizeFactor = widthFactor
+        if size.height > size.width {
+            resizeFactor = heightFactor
+        }
+        
+        let newSize = CGSize(width: size.width/resizeFactor, height: size.height/resizeFactor)
+        let resized = resizedImage(newSize: newSize)
+        return resized
+    }
+    
+}
+
+
+// source  https://www.reddit.com/r/swift/comments/3hjc0t/how_to_create_circular_images_for_a_profile/
+extension UIImage {
+    var circle: UIImage {
+        let square = size.width < size.height ? CGSize(width: size.width, height: size.width) : CGSize(width: size.height, height: size.height)
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.image = self
+        imageView.layer.cornerRadius = square.width/2
+        imageView.layer.masksToBounds = true
+        UIGraphicsBeginImageContext(imageView.bounds.size)
+        imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result!
     }
 }

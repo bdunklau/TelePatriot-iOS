@@ -70,7 +70,6 @@ class TPUser {
         return isAdmin || isDirector || isVolunteer;
     }
     
-    
     func fetchRoles(uid: String) {
         if(rolesAlreadyFetched) { return }
         

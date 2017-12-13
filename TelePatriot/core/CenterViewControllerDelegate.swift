@@ -20,4 +20,5 @@ protocol CenterViewControllerDelegate {
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
     func getMissionSummaryTVC() -> MissionSummaryTVC?
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC?
+    func viewChosen()
 }

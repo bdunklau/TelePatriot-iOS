@@ -47,17 +47,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         return button
     }()
     
-    // MARK: Button actions
-    
-    /************
-    @IBAction func leftMenuTapped(_ sender: Any) {
-        delegate?.toggleLeftPanel?()
-    }
-    
-    @IBAction func rightMenuTapped(_ sender: Any) {
-        delegate?.toggleRightPanel?()
-    }
-     ***********/
     
     @objc func toggleMainMenu(_ sender: Any) {
         delegate?.toggleLeftPanel?()
@@ -66,11 +55,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     override func viewDidLoad() {
         
         self.navigationItem.title = "TelePatriot" // what the user sees (across the top) when they first login
-        
-        //logo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        //logo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        //logo.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        //logo.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
         
         view.addSubview(logo)
         view.addSubview(getStartedButton)
@@ -279,12 +263,14 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         guard let viewController = inList(viewControllers: self.childViewControllers, viewController: vc) else {
             // vc not yet a child vc so add it
             addChildViewController(vc)
+            delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
             self.view.addSubview(vc.view)
             return
         }
         if let myMissionVc = viewController as? MyMissionViewController {
             myMissionVc.myResumeFunction()
         }
+        delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
         self.view.bringSubview(toFront: viewController.view)
         
     }
