@@ -26,8 +26,11 @@ class AllActivityVC: BaseViewController, UITableViewDataSource {
 
         // Do any additional setup after loading the view.
         
-        // TODO won't always be this...
-        let team = "The Cavalry"
+        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
+        // database like this...  Optional("The Cavalry")
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         ref = Database.database().reference().child("teams/\(team)/activity/all")
         
         activityTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key

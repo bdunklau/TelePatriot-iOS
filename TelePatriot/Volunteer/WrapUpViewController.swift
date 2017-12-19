@@ -135,8 +135,11 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         outcome = pickerData[0]
         picker.selectRow(0, inComponent: 0, animated: false)
         
-        // TODO won't always be this...
-        let team = "The Cavalry";
+        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
+        // database like this...  Optional("The Cavalry")
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
         let ref = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)/mission_items/\(missionItem.mission_item_id)")
         ref.child("accomplished").setValue("complete")

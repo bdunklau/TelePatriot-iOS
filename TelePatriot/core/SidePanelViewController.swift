@@ -17,6 +17,9 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     
     // see ContainerViewController.addChildSidePanelController()
     var delegate: SidePanelViewControllerDelegate?
+    var menuController: MenuController? // my own kind of delegate, a handle to ContainerViewController
+                                        // defined at the bottom of this class
+                                        // assigned in AppDelegate:  leftViewController?.menuController = containerViewController
     
     let cos_logo : UIImageView = {
         let image = UIImage(named: "coslogo")!
@@ -129,8 +132,9 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
-    func insert(item: MenuItem, at: Int) {
+    private func insert(item: MenuItem, at: Int) {
         guard menuItems.count > 0 else { return }
+        //guard menuItems[0].count > 0 else { return }
         menuItems[0].insert(item, at: at)
         let insertionIndexPath = IndexPath(row: at, section: 0)
         tableView?.insertRows(at: [insertionIndexPath], with: .automatic)
@@ -144,6 +148,10 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         
     }
     
+    // There's a note above about this method.  Worth reading.
+    // Also we are basically doing this same thing in CenterViewController.checkLoggedIn()
+    // Given that this method won't add this class a second time, I don't see why we even need this function
+    // We might - would have to experiment with commenting it out above.  Still, seems pointless to call this above
     func listenForAccountStatusEvents() {
         if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
             || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "SidePanelViewController" })) {
@@ -179,7 +187,27 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    // whileLoggingIn: If the team is selected by virtue of simply logging in,
+    // we won't call menuController?.slideOutLeftMenu().  We only call menuController?.slideOutLeftMenu()
+    // when the user has manually changed teams.  We want to provide a visual confirmation to the user
+    // when he changes teams.  That visual confirmation comes in the form the left menu that slides out
+    // to show the user what the new current team.  But we don't want to slide this menu out when the user is
+    // just logging in.  For one thing, it is screwing up the creation of the other role menu items.
+    func teamSelected(team: Team, whileLoggingIn: Bool) {
+        menuItems[0][0].title = "Team: "+team.team_name
+        tableView?.reloadData()
+        
+        // Set in AppDelegate.application()
+        // The thing is, we don't want this function called when the user is logging in
+        // But we DO want it called every other time the user changes his current_team
+        if(!whileLoggingIn) {
+            menuController?.slideOutLeftMenu()
+        }
+    }
+    
     // Note the inout modifier below - that's how you can modify a list passed to a function
+    // WHY DO WE NEED 'index' ?  AREN'T WE JUST ADDING WHATEVER ITEM TO THE END OF THE LIST
+    // REGARDLESS OF HOW BIG THE LIST IS?  (I think so)
     private func doRoleAdded(role: String, menuText: String, index: Int, items: Array<MenuItem>) {
         let itemText = menuText
         var alreadyGranted = false
@@ -191,7 +219,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
         if(!alreadyGranted) {
             let theItem = MenuItem(title: itemText)
-            self.insert(item: theItem, at: index)
+            self.insert(item: theItem, at: items.count-1)
         }
         
     }
@@ -332,4 +360,8 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return result!
     }
+}
+
+protocol MenuController {
+    func slideOutLeftMenu()
 }

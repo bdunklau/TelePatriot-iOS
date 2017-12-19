@@ -40,6 +40,10 @@
 		A12CDB591FB01BF7003DE424 /* MissionSummaryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */; };
 		A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */; };
 		A131189A1FE0BE670031D9AE /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13118991FE0BE670031D9AE /* ActivityTableViewCell.swift */; };
+		A131189C1FE617080031D9AE /* SwitchTeamsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189B1FE617080031D9AE /* SwitchTeamsVC.swift */; };
+		A131189E1FE6293E0031D9AE /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189D1FE6293E0031D9AE /* Team.swift */; };
+		A13118A01FE62B710031D9AE /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */; };
+		A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
@@ -54,6 +58,9 @@
 		A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */; };
 		A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
+		A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */; };
+		A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */; };
+		A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805E1FE97173003F140C /* AssignUserVC.swift */; };
 		A1EA20421FCE135100FF0ABB /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */; };
 		A1FD73381FE0725100A1B383 /* MissionItemEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */; };
 		A1FD73411FE094CF00A1B383 /* AllActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD73401FE094CF00A1B383 /* AllActivityVC.swift */; };
@@ -98,6 +105,10 @@
 		A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummaryTVC.swift; sourceTree = "<group>"; };
 		A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionSummary.swift; sourceTree = "<group>"; };
 		A13118991FE0BE670031D9AE /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
+		A131189B1FE617080031D9AE /* SwitchTeamsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTeamsVC.swift; sourceTree = "<group>"; };
+		A131189D1FE6293E0031D9AE /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
+		A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTeamsDelegate.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TelePatriot-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -117,6 +128,9 @@
 		A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEventTableViewCell.swift; sourceTree = "<group>"; };
 		A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEvent.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
+		A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedUsersVC.swift; sourceTree = "<group>"; };
+		A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUserTableViewCell.swift; sourceTree = "<group>"; };
+		A1DD805E1FE97173003F140C /* AssignUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignUserVC.swift; sourceTree = "<group>"; };
 		A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionItemEvent.swift; sourceTree = "<group>"; };
 		A1FD73401FE094CF00A1B383 /* AllActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllActivityVC.swift; sourceTree = "<group>"; };
@@ -217,7 +231,12 @@
 				A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */,
 				A109E8A61FC561370005517A /* SidePanelViewController.swift */,
 				A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */,
+				A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */,
+				A131189B1FE617080031D9AE /* SwitchTeamsVC.swift */,
+				A131189D1FE6293E0031D9AE /* Team.swift */,
+				A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */,
 				A185658F1FBAB5B2009EE57F /* TPUser.swift */,
+				A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */,
 				A15D845C1FA8D04D007EE77C /* ViewController.swift */,
 			);
 			path = core;
@@ -229,8 +248,10 @@
 				A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */,
 				A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */,
 				A12CDB421FAF7902003DE424 /* AdminViewController.swift */,
+				A1DD805E1FE97173003F140C /* AssignUserVC.swift */,
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
+				A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -447,6 +468,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */,
+				A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */,
 				A109E8AD1FC565E60005517A /* MenuItem.swift in Sources */,
 				A1217E311FCA199A0007ABF8 /* Call.swift in Sources */,
 				A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */,
@@ -464,7 +487,9 @@
 				A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */,
 				A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */,
 				A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */,
+				A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
+				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
 				A1217E331FCA1A070007ABF8 /* CallsViewController.swift in Sources */,
 				A1217E351FCA24150007ABF8 /* CallButton.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
@@ -474,6 +499,8 @@
 				A1FD73411FE094CF00A1B383 /* AllActivityVC.swift in Sources */,
 				A109E8A71FC561370005517A /* SidePanelViewController.swift in Sources */,
 				A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */,
+				A13118A01FE62B710031D9AE /* TeamTableViewCell.swift in Sources */,
+				A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */,
 				A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */,
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
@@ -482,6 +509,7 @@
 				A109E8BB1FC7E1F60005517A /* BaseButton.swift in Sources */,
 				A18565901FBAB5B2009EE57F /* TPUser.swift in Sources */,
 				A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */,
+				A131189C1FE617080031D9AE /* SwitchTeamsVC.swift in Sources */,
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,
 				A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */,
 				A109E8AB1FC564A50005517A /* CenterViewController.swift in Sources */,

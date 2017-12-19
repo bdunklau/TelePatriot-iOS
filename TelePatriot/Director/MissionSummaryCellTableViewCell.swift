@@ -101,13 +101,13 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
         
         self.addSubview(missionType)
         missionType.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
-        missionType.topAnchor.constraint(equalTo: self.topAnchor, constant: 32).isActive = true
+        missionType.topAnchor.constraint(equalTo: self.topAnchor, constant: 48).isActive = true
         missionType.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         //missionType.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
         /***********/
         self.addSubview(missionCreatedOn)
         missionCreatedOn.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
-        missionCreatedOn.topAnchor.constraint(equalTo: self.topAnchor, constant: 64).isActive = true
+        missionCreatedOn.topAnchor.constraint(equalTo: self.topAnchor, constant: 72).isActive = true
         missionCreatedOn.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         //missionCreatedOn.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
         /*********/

@@ -16,9 +16,12 @@ protocol CenterViewControllerDelegate {
     @objc optional func toggleRightPanel()
     @objc optional func collapseSidePanels()
     func getAllActivityVC() -> AllActivityVC?
-    func getDirectorViewController() -> DirectorViewController?
-    func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
-    func getMissionSummaryTVC() -> MissionSummaryTVC?
+    func getAssignUserVC() -> AssignUserVC?
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC?
+    func getDirectorViewController() -> DirectorViewController?
+    func getMissionSummaryTVC() -> MissionSummaryTVC?
+    func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
+    func getSwitchTeamsVC() -> SwitchTeamsVC?
+    func getUnassignedUsersVC() -> UnassignedUsersVC?
     func viewChosen()
 }

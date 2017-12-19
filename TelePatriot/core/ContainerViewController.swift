@@ -36,12 +36,15 @@ class ContainerViewController: UIViewController {
         case rightPanelExpanded
     }
     
+    var assignUserVC: AssignUserVC!
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
     var directorViewController: DirectorViewController!
     var newPhoneCampaignVC: NewPhoneCampaignVC!
     var missionSummaryTVC: MissionSummaryTVC!
     var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
+    var switchTeamsVC: SwitchTeamsVC!
+    var unassignedUsersVC: UnassignedUsersVC!
     
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -83,6 +86,8 @@ class ContainerViewController: UIViewController {
         // creation and assignment of all these delegates should be more consistent
         appDelegate?.wrapUpCallViewController?.delegate = centerViewController
         
+        assignUserVC = getAssignUserVC()
+        assignUserVC.assignUserDelegate = centerViewController
         
         // modeled after the centerViewController stuff above
         directorViewController = getDirectorViewController()
@@ -93,6 +98,12 @@ class ContainerViewController: UIViewController {
         
         chooseSpreadsheetTypeVC = getChooseSpreadsheetTypeVC()
         chooseSpreadsheetTypeVC?.delegate = centerViewController
+        
+        switchTeamsVC = getSwitchTeamsVC()
+        switchTeamsVC?.delegate = centerViewController
+        
+        unassignedUsersVC = getUnassignedUsersVC()
+        unassignedUsersVC?.unassignedUsersDelegate = centerViewController
         
         
         // wrap the centerViewController in a navigation controller, so we can push views to it
@@ -128,9 +139,11 @@ private extension UIStoryboard {
     
     class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }
     
+    /******
     class func leftViewController() -> SidePanelViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "LeftViewController") as? SidePanelViewController
     }
+     ********/
     
     class func rightViewController() -> SidePanelViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "RightViewController") as? SidePanelViewController
@@ -164,8 +177,14 @@ private extension UIStoryboard {
 
 extension ContainerViewController: CenterViewControllerDelegate {
     
+    
     func viewChosen() {
         allowPanningFromRightToLeft = false // see CenterViewController.doView()
+    }
+    
+    func getAssignUserVC() -> AssignUserVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.assignUserVC
     }
     
     func getDirectorViewController() -> DirectorViewController? {
@@ -183,6 +202,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.newPhoneCampaignVC
+    }
+    
+    func getSwitchTeamsVC() -> SwitchTeamsVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.switchTeamsVC
     }
     
     func getAllActivityVC() -> AllActivityVC? {
@@ -207,6 +231,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
         }
         
         return missionSummaryTVC
+    }
+    
+    func getUnassignedUsersVC() -> UnassignedUsersVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.unassignedUsersVC
     }
     
     func toggleLeftPanel() {
@@ -251,12 +280,20 @@ extension ContainerViewController: CenterViewControllerDelegate {
             return
         }
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        // leftViewController is instantiated now in AppDelegate
+        leftViewController = appDelegate?.leftViewController  // accessed in CenterViewController.checkLoggedIn()
+        addChildSidePanelController(leftViewController!)
+        
+        /*****
         if let vc = UIStoryboard.leftViewController() {
             vc.menuItems = MenuItems.sharedInstance.mainMenu
             vc.sections = MenuItems.sharedInstance.mainSections
             addChildSidePanelController(vc)
             leftViewController = vc
         }
+         *****/
     }
     
     func addRightPanelViewController() {
@@ -375,5 +412,16 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
         default:
             break
         }
+    }
+}
+
+extension ContainerViewController: MenuController {
+    
+    // See SidePanelViewController.teamSelected()
+    // I don't want to slide this out when the user first logs in.  See TPUser.fetchCurrentTeam()
+    // That is when I DON'T want to slide the menu out.  I just want to make sure the "Team" menu
+    // item has been updated
+    func slideOutLeftMenu () {
+        toggleLeftPanel() // buggy?  It toggles, doesn't necessarily guarantee the menu slides out
     }
 }

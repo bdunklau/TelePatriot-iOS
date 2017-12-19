@@ -168,8 +168,11 @@ class MyMissionViewController : BaseViewController {
                                   supporter_name: supporter_name,
                                   event_date: getDateString())
         
-        // TODO won't always be this...
-        let team = "The Cavalry"
+        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
+        // database like this...  Optional("The Cavalry")
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         let ref = Database.database().reference().child("teams/\(team)/activity")
         ref.child("all").childByAutoId().setValue(m.dictionary())
         ref.child("by_phone_number").child(ph).childByAutoId().setValue(m.dictionary())
@@ -189,8 +192,9 @@ class MyMissionViewController : BaseViewController {
 
     func fetchMission(parent: UIViewController?) {
         
-        // TODO won't always be this...
-        let team = "The Cavalry"
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         
         Database.database().reference()
             .child("teams/\(team)/mission_items")
@@ -226,7 +230,8 @@ class MyMissionViewController : BaseViewController {
                         let uid = mission_item_elements["uid"] as? String,
                         let uid_and_active = mission_item_elements["uid_and_active"] as? String,
                         let url = mission_item_elements["url"] as? String
-                        else { return }
+                        else {
+                            return }
         
                     // viewWillDisappear() doesn't get called because of the way we just add subviews to the CenterViewController
                     // so we need some other way to tell when this view goes visible/invisible.  This is what I came up with:

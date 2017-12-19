@@ -11,6 +11,7 @@ import Firebase
 
 class LimboViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, AccountStatusEventListener {
     
+    
     var isBrandNewUser : Bool?
     var accountStatusEvents = [AccountStatusEvent]()
     var tableViewAccountStatusEvents : UITableView?
@@ -166,6 +167,10 @@ class LimboViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
     // required by AccountStatusEventListener
     func roleRemoved(role: String) {
+        // do nothing
+    }
+    
+    func teamSelected(team: Team, whileLoggingIn: Bool) {
         // do nothing
     }
     

@@ -12,6 +12,7 @@ import UIKit
 // The static methods in MenuItem made it so we couldn't listen for these events
 class MenuItems {
     
+    var team = MenuItem(title: "Team: (tap to choose)")
     var myMission = MenuItem(title: "My Mission")
     var directors = MenuItem(title: "Directors")
     var admins = MenuItem(title: "Admins")
@@ -22,18 +23,19 @@ class MenuItems {
     static let sharedInstance = MenuItems()
     
     private init() {
-        mainSection0 = [myMission, directors, admins]
+        
+        mainSection0 = [team, myMission, directors, admins]
         mainMenu = [mainSection0,
                     [MenuItem(title: "Share Petition (coming soon)"),
-                     MenuItem(title: "Chat/Help (coming soon)") ],
+                     /*MenuItem(title: "Chat/Help (coming soon)")*/ ],
                     [MenuItem(title: "Sign Out")]
                 ]
         directorItems = [
                  [
                     MenuItem(title: "New Phone Campaign"),
-                    MenuItem(title: "My Active Missions (coming soon)"),
-                    MenuItem(title: "All My Missions (coming soon)"),
-                    MenuItem(title: "All Active Missions (coming soon)"),
+                    //MenuItem(title: "My Active Missions (coming soon)"),
+                    //MenuItem(title: "All My Missions (coming soon)"),
+                    //MenuItem(title: "All Active Missions (coming soon)"),
                     MenuItem(title: "All Missions"),
                     MenuItem(title: "All Activity")
                  ]

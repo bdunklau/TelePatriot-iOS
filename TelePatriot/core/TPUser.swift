@@ -22,6 +22,7 @@ class TPUser {
     var rolesAlreadyFetched = false
     var noRoleAssignedDelegate : NoRoleAssignedDelegate?
     var currentMissionItem : MissionItem?
+    private var currentTeam : Team?
     
     private init() {
         ref = Database.database().reference()
@@ -34,6 +35,7 @@ class TPUser {
         guard let usr = user else {
             user = u
             fetchRoles(uid: getUid())
+            fetchCurrentTeam(uid: getUid())
             return
         }
     }
@@ -68,6 +70,29 @@ class TPUser {
     
     func hasAnyRole() -> Bool {
         return isAdmin || isDirector || isVolunteer;
+    }
+    
+    func fetchCurrentTeam(uid: String) {
+        
+        guard let theref = ref else { return }
+        
+        theref.child("users").child(uid).child("current_team").queryLimited(toFirst: 1).observe(.value, with: {(snapshot) in
+            guard let teamNode = snapshot.value as? [String: [String:String]] else {
+                print(snapshot.value)
+                print("snapshot.value above")
+                return
+            }
+            
+            for (team_name_as_key, teamAttributes) in teamNode {
+                guard let team_name = teamAttributes["team_name"] else {
+                    return
+                }
+                let team = Team(team_name: team_name)
+                self.setCurrentTeamAndNotify(team: team, whileLoggingIn: true)
+            }
+            
+        })
+        
     }
     
     func fetchRoles(uid: String) {
@@ -148,10 +173,6 @@ class TPUser {
         }, withCancel: nil)
         
         
-        
-        
-        
-        
     }
     
     func roleAssigned(role: String) {
@@ -171,9 +192,28 @@ class TPUser {
         }
     }
     
-    /**
-    public getPhotoURL() {
-        guard let photoURL =
+    func setCurrentTeam(team: Team) {
+        // this needs to go back to the database
+        guard let theref = ref else { return }
+        let current_team = [team.team_name : team.dictionary()]
+        theref.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in // completion block
+            self.setCurrentTeamAndNotify(team: team, whileLoggingIn: false)
+        }
+        
     }
-    ****/
+    
+    private func setCurrentTeamAndNotify(team: Team, whileLoggingIn: Bool) {
+        self.currentTeam = team
+        // where are these listeners set?...
+        // Ans:  CenterViewController.checkLoggedIn()
+        for l in self.accountStatusEventListeners {
+            l.teamSelected(team: team, whileLoggingIn: whileLoggingIn)
+        }
+    }
+    
+    func getCurrentTeam() -> Team? {
+        return currentTeam
+    }
+    
+    
 }

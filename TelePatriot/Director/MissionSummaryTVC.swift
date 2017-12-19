@@ -26,8 +26,9 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO won't always be this...
-        var team = "The Cavalry"
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         ref = Database.database().reference().child("teams/\(team)/missions")
         
         missionSummaryTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
@@ -42,6 +43,8 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
     }
     
     func fetchMissions() {
+        missions.removeAll()
+        
         ref?.observe(.childAdded, with: {(snapshot) in
             
             if let dictionary = snapshot.value as? [String : Any] {
@@ -53,6 +56,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
                 mission.descrip = dictionary["description"] as? String
                 mission.mission_create_date = dictionary["mission_create_date"] as? String
                 mission.mission_name = dictionary["mission_name"] as? String
+                mission.mission_type = dictionary["mission_type"] as? String
                 mission.name = dictionary["name"] as? String
                 mission.script = dictionary["script"] as? String
                 mission.uid = dictionary["uid"] as? String

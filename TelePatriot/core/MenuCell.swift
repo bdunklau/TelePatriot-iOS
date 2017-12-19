@@ -15,6 +15,8 @@ class MenuCell: UITableViewCell {
     
     func configureCell(_ menuItem: MenuItem) {
         //menuItemImageView.image = menuItem.image
+        
+        // How do we make this "user aware"?  reload the tableview?
         label.text = menuItem.title
         
         let maxSize = CGSize(width: 150, height: 50)

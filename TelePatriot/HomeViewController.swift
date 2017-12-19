@@ -8,7 +8,7 @@ import FirebaseFacebookAuthUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class HomeViewController: BaseViewController, FUIAuthDelegate, AccountStatusEventListener {
+class HomeViewController: BaseViewController, FUIAuthDelegate /*, AccountStatusEventListener */ {
     
     //var db = FIRDatabaseReference.init()
     var kFacebookAppID = "111804472843925"
@@ -65,7 +65,7 @@ class HomeViewController: BaseViewController, FUIAuthDelegate, AccountStatusEven
         
         setupView()
         
-        listenForAccountStatusEvents()
+        //listenForAccountStatusEvents()
      
         // LimboViewController sets this in prepareForSegue
         if(!byPassLogin) {
@@ -234,6 +234,7 @@ class HomeViewController: BaseViewController, FUIAuthDelegate, AccountStatusEven
         }
     }
     
+    /************* Are we even using HomeViewController anymore?
     func listenForAccountStatusEvents() {
         if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
             || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "HomeViewController" })) {
@@ -241,6 +242,7 @@ class HomeViewController: BaseViewController, FUIAuthDelegate, AccountStatusEven
             TPUser.sharedInstance.accountStatusEventListeners.append(self)
         } else { print("HomeViewController: NOT adding self to list of accountStatusEventListeners") }
     }
+     **************/
     
 }
 

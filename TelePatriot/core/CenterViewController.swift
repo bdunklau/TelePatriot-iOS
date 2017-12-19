@@ -95,6 +95,24 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
                 let u = TPUser.sharedInstance
                 u.noRoleAssignedDelegate = self
+                
+                
+                
+                // need to get handle to SidePanelViewController
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                
+                
+                // The user object fires roleAssigned() which calls all listeners
+                // This call makes this class one of those listeners
+                // See also roleAssigned() in this class
+                // addLeftPanelViewController()
+                if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
+                    || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "SidePanelViewController" })) {
+                    TPUser.sharedInstance.accountStatusEventListeners.append((appDelegate?.leftViewController!)!)
+                } else { print("SidePanelViewController: NOT adding self to list of accountStatusEventListeners") }
+                
+                
+                
                 print("CenterViewController.checkLoggedIn() -----------------")
                 u.setUser(u: user)
                 
@@ -203,6 +221,11 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             try! Auth.auth().signOut()
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
         }
+        else if(menuItem.title.starts(with: "Team")) {
+            //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
+            guard let vc = delegate?.getSwitchTeamsVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
+        }
         else if(menuItem.title == "My Mission") {
             doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
         }
@@ -215,7 +238,8 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         else if(menuItem.title == "Admins") {
             unassignMissionItem(missionItemId: self.mission_item_id)
-            doView(vc: AdminViewController(), viewControllers: self.childViewControllers)
+            guard let vc = delegate?.getUnassignedUsersVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Share Petition") {
             unassignMissionItem(missionItemId: self.mission_item_id)
@@ -271,6 +295,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             myMissionVc.myResumeFunction()
         }
         delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
+        viewController.viewDidLoad() // creative or hacky?  I need to run the code in this function whenever the view becomes visible again
         self.view.bringSubview(toFront: viewController.view)
         
     }
@@ -279,8 +304,12 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         guard let mission_item_id = missionItemId else {
             return
         }
-        // TODO won't always be this...
-        let team = "The Cavalry"
+        
+        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
+        // database like this...  Optional("The Cavalry")
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         Database.database().reference().child("teams/\(team)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
         Database.database().reference().child("teams/\(team)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
         //self.mission_item_id = nil
@@ -322,6 +351,33 @@ extension CenterViewController : ChooseSpreadsheetTypeDelegate {
         guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
         vc.missionNode = missionNode
         vc.clearFields()
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+
+extension CenterViewController : SwitchTeamsDelegate {
+    func teamSelected(team: Team) {
+        TPUser.sharedInstance.setCurrentTeam(team: team)
+    }
+}
+
+// Sends the user to AssignUserVC when he clicks someone from the Unassigned Users
+// list on UnassignedUsersVC
+extension CenterViewController : UnassignedUsersDelegate {
+    func userSelected(user: [String:Any]) {
+        guard let vc = delegate?.getAssignUserVC() else {return}
+        vc.user = user
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+
+// Once the user (admin) has assigned the new user to some groups (Admin, Director and/or Volunteer)
+// the admin clicks OK which ends up calling this function, which sends the user back to the
+// Unassigned Users screen
+extension CenterViewController : AssignUserDelegate {
+    func userAssigned(user : [String:Any]) {
+        // go back to the Unassigned User screen
+        guard let vc = delegate?.getUnassignedUsersVC() else { return }
         doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }

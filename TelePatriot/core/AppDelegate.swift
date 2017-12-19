@@ -31,9 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // all viewcontrollers declared here
     var allActivityVC : AllActivityVC?
+    var assignUserVC : AssignUserVC?
     var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
     var newPhoneCampaignVC : NewPhoneCampaignVC?
+    var switchTeamsVC : SwitchTeamsVC?
     var wrapUpCallViewController : WrapUpViewController?
+    var leftViewController : SidePanelViewController?
+    var unassignedUsersVC : UnassignedUsersVC?
     
     var myDelegate : AppDelegateDelegate?
     var window: UIWindow?
@@ -59,9 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure(options: fileopts)
         
         allActivityVC = AllActivityVC()
+        assignUserVC = AssignUserVC()
         chooseSpreadsheetTypeVC = ChooseSpreadsheetTypeVC()
         newPhoneCampaignVC = NewPhoneCampaignVC()
+        switchTeamsVC = SwitchTeamsVC()
         wrapUpCallViewController = WrapUpViewController()
+        unassignedUsersVC = UnassignedUsersVC()
     }
     
 
@@ -81,11 +88,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
+        
+        leftViewController = SidePanelViewController()
+        leftViewController?.menuItems = MenuItems.sharedInstance.mainMenu
+        leftViewController?.sections = MenuItems.sharedInstance.mainSections
+        leftViewController?.menuController = containerViewController
+        
+        
         print("AppDelegate: didFinishLaunchingWithOptions: ")
         
         
         // ref:  https://stackoverflow.com/a/42754882
-        // in applicationDidFinishLaunching...
+        // in applicationDidFinishLaunching...  Not sure if this supports logging calls or not.
+        // There ARE som CallKit classes under /misc that don't support call logging.  Should be cleaned out if
+        // they're really not used.  Otherwise just confusion later on when I'm trying to figure out how something works.
         callObserver = CXCallObserver()
         callObserver?.setDelegate(self, queue: nil) // nil queue means main thread
         
@@ -226,9 +242,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                      supporter_name: supporter_name,
                                      event_date: getDateString())
             
-            
-            // TODO won't always be this...
-            let team = "The Cavalry"
+            // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
+            // database like this...  Optional("The Cavalry")
+            guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+                return
+            }
             let ref = Database.database().reference().child("teams/\(team)/activity")
             ref.child("all").childByAutoId().setValue(m.dictionary())
             ref.child("by_phone_number").child(phone).childByAutoId().setValue(m.dictionary())

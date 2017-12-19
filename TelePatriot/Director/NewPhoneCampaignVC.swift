@@ -102,9 +102,9 @@ class NewPhoneCampaignVC: BaseViewController {
     
     /*@IBAction*/ @objc func okPressed(_ sender: Any) {
         
-        
-        // TODO won't always be this...
-        let team = "The Cavalry"
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
         let key = rootRef.child("teams/\(team)/\(missionNode)").childByAutoId().key
         let uid : String = Auth.auth().currentUser!.uid
         let name : String = Auth.auth().currentUser!.displayName!
