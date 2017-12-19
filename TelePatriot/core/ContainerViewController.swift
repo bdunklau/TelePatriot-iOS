@@ -40,6 +40,7 @@ class ContainerViewController: UIViewController {
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
     var directorViewController: DirectorViewController!
+    var myMissionViewController: MyMissionViewController!
     var newPhoneCampaignVC: NewPhoneCampaignVC!
     var missionSummaryTVC: MissionSummaryTVC!
     var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
@@ -92,6 +93,9 @@ class ContainerViewController: UIViewController {
         // modeled after the centerViewController stuff above
         directorViewController = getDirectorViewController()
         directorViewController.delegate = centerViewController
+        
+        myMissionViewController = getMyMissionViewController()
+        //myMissionViewController?.noMissionDelegate = centerViewController
         
         newPhoneCampaignVC = getNewPhoneCampaignVC()
         newPhoneCampaignVC?.submitHandler = centerViewController
@@ -204,6 +208,13 @@ extension ContainerViewController: CenterViewControllerDelegate {
         return appDelegate?.newPhoneCampaignVC
     }
     
+    /****** not sure why the view wouldn't switch over to this view when no missions are found - oh well
+    func getNoMissionVC() -> NoMissionVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.noMissionVC
+    }
+     ******/
+    
     func getSwitchTeamsVC() -> SwitchTeamsVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.switchTeamsVC
@@ -217,6 +228,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.chooseSpreadsheetTypeVC
+    }
+    
+    func getMyMissionViewController() -> MyMissionViewController? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.myMissionViewController
     }
     
     func getMissionSummaryTVC() -> MissionSummaryTVC? {

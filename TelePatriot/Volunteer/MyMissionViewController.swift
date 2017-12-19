@@ -14,6 +14,7 @@ class MyMissionViewController : BaseViewController {
     var callButton1 = CallButton(text: "")
     var callButton2 = CallButton(text: "")
     var noMissionLabel = UILabel()
+    var noMissionDelegate : NoMissionDelegate?
     
     let descriptionHeaderLabel : UILabel = {
         let label = UILabel()
@@ -31,7 +32,7 @@ class MyMissionViewController : BaseViewController {
     
     let descriptionTextView : UITextView = {
         let textView = UITextView()
-        textView.text = "Searching for a mission..."
+        textView.text = "No missions found yet for this team..."
         textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
         //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize) // just example
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -203,6 +204,9 @@ class MyMissionViewController : BaseViewController {
             .observeSingleEvent(of: .value, with: {(snapshot) in
                 
                 guard let entries = snapshot.value as? [String:[String:AnyObject]] else {
+                    // send the user to a NoMissions screen telling them there aren't any missions at this time
+                    // (which obviously isn't good)
+                    self.noMissionDelegate?.notifyNoMissions()
                     return }
                 
                 // mission_item_id is a key node under /mission_items
@@ -229,7 +233,9 @@ class MyMissionViewController : BaseViewController {
                         let script = mission_item_elements["script"] as? String,
                         let uid = mission_item_elements["uid"] as? String,
                         let uid_and_active = mission_item_elements["uid_and_active"] as? String,
-                        let url = mission_item_elements["url"] as? String
+                        let url = mission_item_elements["url"] as? String,
+                        let group_number = mission_item_elements["group_number"] as? Int,
+                        let number_of_missions_in_master_mission = mission_item_elements["number_of_missions_in_master_mission"] as? Int
                         else {
                             return }
         
@@ -266,6 +272,13 @@ class MyMissionViewController : BaseViewController {
                     Database.database().reference()
                         .child("teams/\(team)/mission_items/\(mission_item_id)/active_and_accomplished").setValue("true_in progress")
                     
+                    Database.database().reference()
+                        .child("teams/\(team)/mission_items/\(mission_item_id)/group_number_was").setValue(group_number)
+                    
+                    Database.database().reference()
+                        .child("teams/\(team)/mission_items/\(mission_item_id)/group_number").setValue(999999)
+                    
+                    
                     let mi = MissionItem(mission_item_id: mission_item_id,
                                          accomplished: accomplished,
                                          active: active,
@@ -281,7 +294,12 @@ class MyMissionViewController : BaseViewController {
                                          script: script,
                                          uid: uid,
                                          uid_and_active: uid_and_active,
-                                         url: url)
+                                         url: url,
+                                         group_number: group_number,
+                                         number_of_missions_in_master_mission: number_of_missions_in_master_mission)
+                    
+                    mi.group_number_was = group_number
+                    mi.group_number = 999999
                     
                     TPUser.sharedInstance.currentMissionItem = mi
                     
@@ -307,4 +325,8 @@ class MyMissionViewController : BaseViewController {
      // Pass the selected object to the new view controller.
      }
      */
+}
+
+protocol NoMissionDelegate {
+    func notifyNoMissions()
 }

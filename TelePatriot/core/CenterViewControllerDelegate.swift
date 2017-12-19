@@ -20,6 +20,8 @@ protocol CenterViewControllerDelegate {
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC?
     func getDirectorViewController() -> DirectorViewController?
     func getMissionSummaryTVC() -> MissionSummaryTVC?
+    func getMyMissionViewController() -> MyMissionViewController?
+    //func getNoMissionVC() -> NoMissionVC?
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
     func getSwitchTeamsVC() -> SwitchTeamsVC?
     func getUnassignedUsersVC() -> UnassignedUsersVC?

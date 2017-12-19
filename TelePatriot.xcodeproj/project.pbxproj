@@ -44,6 +44,7 @@
 		A131189E1FE6293E0031D9AE /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189D1FE6293E0031D9AE /* Team.swift */; };
 		A13118A01FE62B710031D9AE /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */; };
 		A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */; };
+		A1369CAC1FE9C845008B426D /* NoMissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1369CAB1FE9C845008B426D /* NoMissionVC.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
@@ -109,6 +110,7 @@
 		A131189D1FE6293E0031D9AE /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
 		A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTeamsDelegate.swift; sourceTree = "<group>"; };
+		A1369CAB1FE9C845008B426D /* NoMissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMissionVC.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TelePatriot-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */,
 				A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */,
 				A17B6EFB1FD36C8A00A3325C /* WrapUpViewControllerDelegate.swift */,
+				A1369CAB1FE9C845008B426D /* NoMissionVC.swift */,
 			);
 			path = Volunteer;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */,
+				A1369CAC1FE9C845008B426D /* NoMissionVC.swift in Sources */,
 				A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */,
 				A109E8AD1FC565E60005517A /* MenuItem.swift in Sources */,
 				A1217E311FCA199A0007ABF8 /* Call.swift in Sources */,

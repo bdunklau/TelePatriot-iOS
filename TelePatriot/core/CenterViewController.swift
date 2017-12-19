@@ -227,7 +227,9 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "My Mission") {
-            doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
+            guard let vc = delegate?.getMyMissionViewController() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
+            //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Directors") {
             unassignMissionItem(missionItemId: self.mission_item_id)
@@ -341,7 +343,9 @@ extension CenterViewController : NewPhoneCampaignSubmittedHandler {
 // CenterViewController is assigned in ContainerViewController.viewDidLoad()
 extension CenterViewController : WrapUpViewControllerDelegate {
     func missionAccomplished() {
-        doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
+        guard let vc = delegate?.getMyMissionViewController() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
+        //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
     }
 }
 
@@ -381,3 +385,13 @@ extension CenterViewController : AssignUserDelegate {
         doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }
+
+/******
+extension CenterViewController : NoMissionDelegate {
+    func notifyNoMissions() {
+        guard let vc = delegate?.getNoMissionVC() else {
+            return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+ *******/

@@ -44,6 +44,10 @@ class MissionItem {
     var uid : String
     var uid_and_active : String
     var url : String
+    var group_number : Int
+    var group_number_was : Int?
+    var number_of_missions_in_master_mission : Int
+    
     
     
     init(mission_item_id : String,
@@ -61,7 +65,9 @@ class MissionItem {
          script : String,
          uid : String,
          uid_and_active : String,
-         url : String) {
+         url : String,
+         group_number : Int,
+         number_of_missions_in_master_mission : Int) {
         
         self.mission_item_id = mission_item_id
         self.accomplished = accomplished
@@ -79,6 +85,7 @@ class MissionItem {
         self.uid = uid
         self.uid_and_active = uid_and_active
         self.url = url
-        
+        self.group_number = group_number
+        self.number_of_missions_in_master_mission = number_of_missions_in_master_mission
     }
 }

@@ -97,7 +97,6 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
     
     
     func fetchData() {
-        unassignedUsers.removeAll()
         
         ref?.observe(.childAdded, with: {(snapshot) in
             
@@ -113,8 +112,15 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
                     return
             }
             
+            
             let unassignedUser = ["uid": uid, "values":["created": created, "email": email, "name": name, "photoUrl": photoUrl]] as [String : Any]
-            //let unassignedUser = ["created": created, "email": email, "name": name, "photoUrl": photoUrl]
+            
+            
+            // you'll get duplicate/phantom team entries without this.  That's because we explicitly
+            // call viewDidLoad() in CenterViewController.doView()
+            guard self.findIndex(unassignedUsers: self.unassignedUsers, unassignedUser: unassignedUser) == nil else {
+                return
+            }
             
             self.unassignedUsers.insert(unassignedUser, at: 0)
             print(unassignedUser)
@@ -124,6 +130,52 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
             
             
         }, withCancel: nil)
+        
+        
+        
+        ref?.observe(.childRemoved, with: {(snapshot) in
+            
+            guard let dictionary = snapshot.value as? [String:Any] else {
+                return
+            }
+            
+            guard let uid = snapshot.key as? String,
+                let created = dictionary["created"] as? String,
+                let email = dictionary["email"] as? String,
+                let name = dictionary["name"] as? String,
+                let photoUrl = dictionary["photoUrl"] as? String else {
+                    return
+            }
+            
+            
+            let unassignedUser = ["uid": uid, "values":["created": created, "email": email, "name": name, "photoUrl": photoUrl]] as [String : Any]
+            
+            
+            // find the team in the array and remove it
+            guard let index = self.findIndex(unassignedUsers: self.unassignedUsers, unassignedUser: unassignedUser) else {
+                return
+            }
+            
+            self.unassignedUsers.remove(at: index)
+            DispatchQueue.main.async {
+                self.unassignedUsersTableView?.reloadData()
+            }
+        })
+    }
+    
+    func findIndex(unassignedUsers: [[String:Any]], unassignedUser: [String:Any]) -> Int? {
+        var i = 0
+        for t in self.unassignedUsers {
+            if let uid1 = t["uid"] as! String? {
+                if let uid2 = unassignedUser["uid"] as! String? {
+                    if uid1 == uid2 {
+                        return i
+                    }
+                }
+            }
+            i = i + 1
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

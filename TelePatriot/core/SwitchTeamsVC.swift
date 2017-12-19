@@ -59,6 +59,8 @@ class SwitchTeamsVC: BaseViewController, UITableViewDataSource {
             
             let team = Team(team_name: team_name)
             
+            // you'll get duplicate/phantom team entries without this.  That's because we explicitly
+            // call viewDidLoad() in CenterViewController.doView()
             guard self.findIndex(teams: self.teams, team: team) == nil else {
                 return
             }
