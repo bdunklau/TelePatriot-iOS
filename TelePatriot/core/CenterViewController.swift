@@ -29,9 +29,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     
     var byPassLogin : Bool = false
     
-    // set by MyMissionViewController
-    var mission_item_id : String?
-    
     let logo : UIImageView = {
         let img = UIImage(named: "logo_round.png")
         let imgView = UIImageView(image: img)
@@ -175,25 +172,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
             let u = TPUser.sharedInstance
             u.noRoleAssignedDelegate = self
             u.setUser(u: user)
-            
-            /******************************
-             All the stuff below is replaced by the line above:  u.noRoleAssignedDelegate = self
-             
-            // now see if the user has any roles.  If he does, send him on to whatever the main/home screen is
-            // If he doesn't, send him to the "limbo" screen where he has to sit and wait to be let in.
-            if u.hasAnyRole() {
-                // let them in  ...which really means do nothing, because this screen/controller is where they need to be
-                var temp = "remove"
-            } else {
-                // send them to the "limbo" screen
-                //self.performSegue(withIdentifier: "ShowLimboScreen", sender: self)
-                //self.present(LimboViewController(), animated: true, completion: nil) // <--- this is the black screen
-                
-                let limboViewController = LimboViewController()
-                let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
-                self.present(navViewController, animated: true, completion: nil)
-            }
-             **************************/
         }
     }
 }
@@ -232,19 +210,19 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Directors") {
-            unassignMissionItem(missionItemId: self.mission_item_id)
+            unassignMissionItem()
             // don't instantiate here.  Get from ContainerViewController  ...but how?
             if let directorViewController = delegate?.getDirectorViewController() {
                 doView(vc: directorViewController, viewControllers: self.childViewControllers)
             }
         }
         else if(menuItem.title == "Admins") {
-            unassignMissionItem(missionItemId: self.mission_item_id)
+            unassignMissionItem()
             guard let vc = delegate?.getUnassignedUsersVC() else { return }
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Share Petition") {
-            unassignMissionItem(missionItemId: self.mission_item_id)
+            unassignMissionItem()
             doView(vc: SharePetitionViewController(), viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "Chat/Help") {
@@ -302,26 +280,34 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         
     }
     
-    func unassignMissionItem(missionItemId: String?) {
-        guard let mission_item_id = missionItemId else {
+    func unassignMissionItem(missionItem: MissionItem, team: Team) {
+        guard let mission_item_id = missionItem.mission_item_id as? String else {
             return
         }
         
-        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
-        // database like this...  Optional("The Cavalry")
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
-            return
+        // better way than this would be to do multi-path updates.  There are examples somewhere in xcode
+        // and/or Android studio
+        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
+        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
+        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/group_number").setValue(missionItem.group_number_was)
+        TPUser.sharedInstance.currentMissionItem = nil
+    }
+    
+    func unassignMissionItem() {
+        guard let team = TPUser.sharedInstance.getCurrentTeam(),
+              let missionItem = TPUser.sharedInstance.currentMissionItem else {
+                return
         }
-        Database.database().reference().child("teams/\(team)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
-        Database.database().reference().child("teams/\(team)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
-        //self.mission_item_id = nil
-        self.mission_item_id = nil
+        
+        unassignMissionItem(missionItem: missionItem, team: team)
     }
     
     // called by MyMissionViewController.viewWillDisappear()
-    func unassignMissionItem() {
+    /******
+    func unassignMissionItem(missionItem: MissionItem, team: Team) {
         unassignMissionItem(missionItemId: self.mission_item_id)
     }
+     ******/
 }
 
 extension CenterViewController : NoRoleAssignedDelegate {

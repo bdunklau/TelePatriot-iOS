@@ -137,22 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print("AppDelegate: applicationDidBecomeActive")
         
-        
-        
-        /********************
-         This shows the screen we want but not in the context of the CenterViewController
-         AND because there's no conditional logic here yet, this screen launches every time the app comes up
-        // source: https://stackoverflow.com/a/42454462
-        if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WrapUpViewController") as? WrapUpViewController {
-            if let window = self.window, let rootViewController = window.rootViewController {
-                var currentController = rootViewController
-                while let presentedController = currentController.presentedViewController {
-                    currentController = presentedController
-                }
-                currentController.present(controller, animated: true, completion: nil)
-            }
-        }
-         ********************/
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
