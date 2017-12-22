@@ -70,8 +70,7 @@ class AllActivityVC: BaseViewController, UITableViewDataSource {
                                        mission_name: mission_name, phone: phone, volunteer_phone: volunteer_phone,
                                        supporter_name: supporter_name, event_date: event_date)
             
-            self.events.insert(evt, at: 0)
-            print(evt)
+            self.events.insert(evt, at: 0) // this is what makes the most recent activities show up at the top
             DispatchQueue.main.async {
                 self.activityTableView?.reloadData()
             }

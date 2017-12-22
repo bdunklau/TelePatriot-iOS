@@ -37,9 +37,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         missionSummaryTableView?.rowHeight = 150
         view.addSubview(missionSummaryTableView!)
         
-        fetchMissions() // <-- need to figure something out here because viewDidLoad() doesn't get
-        // called each time we come to this screen.  That's because we add this viewcontroller to the
-        // CenterViewController once, and then after that, the view doesn't need to be loaded
+        fetchMissions() 
     }
     
     func fetchMissions() {
@@ -77,7 +75,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
                 return
             }
             
-            self.missions.append(mission)
+            self.missions.insert(mission, at: 0)  // this is what makes the most recent missions show up at the top
             DispatchQueue.main.async{
                 self.missionSummaryTableView?.reloadData()
             }
