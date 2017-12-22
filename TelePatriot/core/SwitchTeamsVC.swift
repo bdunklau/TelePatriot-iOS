@@ -28,10 +28,16 @@ class SwitchTeamsVC: BaseViewController, UITableViewDataSource {
         var uid = TPUser.sharedInstance.getUid()
         ref = Database.database().reference().child("users/\(uid)/teams")
         
+        
         teamTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         teamTableView?.dataSource = self
         teamTableView?.delegate = self
         teamTableView?.register(TeamTableViewCell.self, forCellReuseIdentifier: "cellId")
+        
+        // blank header view is the "Clayton Bink" fix.  For some reason, his phone wasn't showing the list of
+        // teams properly under the gray nav bar.  So this header view is just for some padding.
+        var headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+        teamTableView?.tableHeaderView = headerView
         //teamTableView?.rowHeight = 150
         view.addSubview(teamTableView!)
         

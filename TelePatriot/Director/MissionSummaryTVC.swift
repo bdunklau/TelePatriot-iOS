@@ -43,37 +43,86 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
     }
     
     func fetchMissions() {
-        missions.removeAll()
+        
+        // TODO code duplication - how do I put the guts of each of these into a separate function?
+        ref?.observe(.childChanged, with: {(snapshot) in
+            
+            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
+                let missionFromList = self.getMissionFromList(missions: self.missions, mission: mission) else {
+                    return
+            }
+            
+            missionFromList.active = mission.active
+            missionFromList.descrip = mission.descrip
+            missionFromList.mission_create_date = mission.mission_create_date
+            missionFromList.mission_name = mission.mission_name
+            missionFromList.mission_type = mission.mission_type
+            missionFromList.name = mission.name
+            missionFromList.script = mission.script
+            missionFromList.uid = mission.uid
+            missionFromList.uid_and_active = mission.uid_and_active
+            missionFromList.url = mission.url
+            
+            DispatchQueue.main.async{
+                self.missionSummaryTableView?.reloadData()
+            }
+            
+        }, withCancel: nil)
+        
         
         ref?.observe(.childAdded, with: {(snapshot) in
             
-            if let dictionary = snapshot.value as? [String : Any] {
-                let mission = MissionSummary()  //(snap: snapshot)
-                //print(dictionary)
-                //mission.setValuesForKeys(dictionary)
-                mission.mission_id = snapshot.key
-                mission.active = dictionary["active"] as? Bool
-                mission.descrip = dictionary["description"] as? String
-                mission.mission_create_date = dictionary["mission_create_date"] as? String
-                mission.mission_name = dictionary["mission_name"] as? String
-                mission.mission_type = dictionary["mission_type"] as? String
-                mission.name = dictionary["name"] as? String
-                mission.script = dictionary["script"] as? String
-                mission.uid = dictionary["uid"] as? String
-                mission.uid_and_active = dictionary["uid_and_active"] as? String
-                mission.url = dictionary["url"] as? String
-                
-                
-                /****/
-                self.missions.append(mission)
-                DispatchQueue.main.async{
-                    self.missionSummaryTableView?.reloadData()
-                }
-                /****/
+            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
+                self.getMissionFromList(missions: self.missions, mission: mission) == nil else {
+                return
             }
             
+            self.missions.append(mission)
+            DispatchQueue.main.async{
+                self.missionSummaryTableView?.reloadData()
+            }
             
         }, withCancel: nil)
+    }
+    
+    private func getMissionSummaryFromSnapshot(snapshot: DataSnapshot) -> MissionSummary? {
+        guard let dictionary = snapshot.value as? [String : Any],
+            let mission_id = snapshot.key as? String,
+            let active = dictionary["active"] as? Bool,
+            let descrip = dictionary["description"] as? String,
+            let mission_create_date = dictionary["mission_create_date"] as? String,
+            let mission_name = dictionary["mission_name"] as? String,
+            let mission_type = dictionary["mission_type"] as? String,
+            let name = dictionary["name"] as? String,
+            let script = dictionary["script"] as? String,
+            let uid = dictionary["uid"] as? String,
+            let uid_and_active = dictionary["uid_and_active"] as? String,
+            let url = dictionary["url"] as? String else {
+                return nil
+        }
+        
+        let mission = MissionSummary()
+        mission.mission_id = mission_id
+        mission.active = active
+        mission.descrip = descrip
+        mission.mission_create_date = mission_create_date
+        mission.mission_name = mission_name
+        mission.mission_type = mission_type
+        mission.name = name
+        mission.script = script
+        mission.uid = uid
+        mission.uid_and_active = uid_and_active
+        mission.url = url
+        return mission
+    }
+    
+    func getMissionFromList(missions: [MissionSummary], mission: MissionSummary) -> MissionSummary? {
+        for m in missions {
+            if m.mission_id == mission.mission_id {
+                return m
+            }
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

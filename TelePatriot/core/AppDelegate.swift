@@ -27,7 +27,7 @@ import CallKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var callObserver : CXCallObserver?
+    var callObserver : CXCallObserver? // not sure if we need this to log call activity
     
     // all viewcontrollers declared here
     var allActivityVC : AllActivityVC?

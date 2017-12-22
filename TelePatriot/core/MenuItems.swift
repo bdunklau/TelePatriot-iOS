@@ -26,8 +26,8 @@ class MenuItems {
         
         mainSection0 = [team, myMission, directors, admins]
         mainMenu = [mainSection0,
-                    [MenuItem(title: "Share Petition (coming soon)"),
-                     /*MenuItem(title: "Chat/Help (coming soon)")*/ ],
+                    /*[MenuItem(title: "Share Petition (coming soon)"),
+                     MenuItem(title: "Chat/Help (coming soon)") ], */
                     [MenuItem(title: "Sign Out")]
                 ]
         directorItems = [
@@ -43,7 +43,7 @@ class MenuItems {
         
     }
     
-    var mainSections : [String] = ["Act", "Communicate", "My Account"]
+    var mainSections : [String] = ["Act", /*"Communicate",*/ "My Account"]
     
     /*********
     var mainMenu : Array<Array<MenuItem>> = {
