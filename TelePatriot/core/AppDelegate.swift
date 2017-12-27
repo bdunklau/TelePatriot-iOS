@@ -55,8 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load a named file for switching between dev and prod firebase instances
         // see https://firebase.google.com/docs/configure/
-        //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        //let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
             else { assert(false, "Couldn't load config file")
                 return
@@ -204,9 +204,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // I don't think we need this...
     // https://www.raywenderlich.com/150015/callkit-tutorial-ios
-    func displayIncomingCall(uuid: UUID, handle: String, hasVideo: Bool = false, completion: ((NSError?) -> Void)?) {
+    //func displayIncomingCall(uuid: UUID, handle: String, hasVideo: Bool = false, completion: ((NSError?) -> Void)?) {
         //providerDelegate.reportIncomingCall(uuid: uuid, handle: handle, hasVideo: hasVideo, completion: completion)
-    }
+    //}
 
     // call begin is recorded in MyMissionViewController.makeCall()
     func onCallEnded() {

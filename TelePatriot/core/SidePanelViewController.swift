@@ -16,7 +16,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     var sections = [String]()
     
     // see ContainerViewController.addChildSidePanelController()
-    var delegate: SidePanelViewControllerDelegate?
+    var sidePanelDelegate: SidePanelViewControllerDelegate?
     var menuController: MenuController? // my own kind of delegate, a handle to ContainerViewController
                                         // defined at the bottom of this class
                                         // assigned in AppDelegate:  leftViewController?.menuController = containerViewController
@@ -81,8 +81,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         usernameLabel.bottomAnchor.constraint(equalTo: emailLabel.topAnchor, constant: 0).isActive = true
         
         
-        
-        var labelView: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let labelView: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         headerView.addSubview(labelView)
         tableView?.tableHeaderView = headerView
         tableView?.tableHeaderView?.frame.size.height = cos_logo.frame.size.height
@@ -117,6 +116,14 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    func putTheCorrectStuffInThisView(user: TPUser) {
+        usernameLabel.text = TPUser.sharedInstance.getName()
+        emailLabel.text = TPUser.sharedInstance.getEmail()
+        let picUrl = TPUser.sharedInstance.getPhotoURL().absoluteString
+        profilePic.image(fromUrl: picUrl)
+        
+    }
+    
     private func removeItem(items: inout [MenuItem], text: String) {
         var i = 0
         var found = -1
@@ -132,6 +139,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    /*****
     private func insert(item: MenuItem, at: Int) {
         guard menuItems.count > 0 else { return }
         //guard menuItems[0].count > 0 else { return }
@@ -139,10 +147,12 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         let insertionIndexPath = IndexPath(row: at, section: 0)
         tableView?.insertRows(at: [insertionIndexPath], with: .automatic)
     }
+     *******/
     
     func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView?.indexPath(for: cell) {
-            menuItems[0].remove(at: deletionIndexPath.row)
+            menuItems[0].remove(at: deletionIndexPath.row);
+            print("delete cell = \(cell.textLabel): deletionIndexPath.row = \(deletionIndexPath.row)")
             tableView?.deleteRows(at: [deletionIndexPath], with: .automatic)
         }
         
@@ -164,26 +174,29 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         if( role == "Volunteer" ) {
             // the & before menuItems is required to pass this list as an "inout" parameter
             // see doRoleAdded() and doRoleRemoved()
-            doRoleAdded(role: role, menuText: "My Mission", index: 0, items: menuItems[0])
+            //doRoleAdded(role: role, menuText: "My Mission", index: 0, items: menuItems[0])
+            doRoleAdded(menuText: "My Mission", items: menuItems[0])
         }
         if( role == "Director" ) {
-            doRoleAdded(role: role, menuText: "Directors", index: 1, items: menuItems[0])
+            //doRoleAdded(role: role, menuText: "Directors", index: 1, items: menuItems[0])
+            doRoleAdded(menuText: "Directors", items: menuItems[0])
         }
         if( role == "Admin" ) {
-            doRoleAdded(role: role, menuText: "Admins", index: 2, items: menuItems[0])
+            //doRoleAdded(role: role, menuText: "Admins", index: 2, items: menuItems[0])
+            doRoleAdded(menuText: "Admins", items: menuItems[0])
         }
     }
     
     // required by AccountStatusEventListener
     func roleRemoved(role: String) {
         if( role == "Volunteer" ) {
-            doRoleRemoved(role: role, menuText: "My Mission", items: menuItems[0])
+            doRoleRemoved(menuText: "My Mission", items: menuItems[0])
         }
         if( role == "Director" ) {
-            doRoleRemoved(role: role, menuText: "Directors", items: menuItems[0])
+            doRoleRemoved(menuText: "Directors", items: menuItems[0])
         }
         if( role == "Admin" ) {
-            doRoleRemoved(role: role, menuText: "Admins", items: menuItems[0])
+            doRoleRemoved(menuText: "Admins", items: menuItems[0])
         }
     }
     
@@ -205,10 +218,23 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    // required by AccountStatusEventListener
+    func userSignedOut() {
+        let teamItem = menuItems[0][0]
+        menuItems[0].removeAll()
+        menuItems[0].insert(teamItem, at: 0)
+        tableView?.reloadData()
+        /******
+        roleRemoved(role: "Volunteer")
+        roleRemoved(role: "Director")
+        roleRemoved(role: "Admin")
+         ******/
+    }
+    
     // Note the inout modifier below - that's how you can modify a list passed to a function
     // WHY DO WE NEED 'index' ?  AREN'T WE JUST ADDING WHATEVER ITEM TO THE END OF THE LIST
     // REGARDLESS OF HOW BIG THE LIST IS?  (I think so)
-    private func doRoleAdded(role: String, menuText: String, index: Int, items: Array<MenuItem>) {
+    private func doRoleAdded(menuText: String, items: Array<MenuItem>) {
         let itemText = menuText
         var alreadyGranted = false
         let loop = items
@@ -219,13 +245,14 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
         if(!alreadyGranted) {
             let theItem = MenuItem(title: itemText)
-            self.insert(item: theItem, at: items.count-1)
+            guard menuItems.count > 0 else { return }
+            menuItems[0].append(theItem)
         }
         
     }
     
     // Note the inout modifier below - that's how you can modify a list passed to a function
-    private func doRoleRemoved(role: String, menuText: String, items: Array<MenuItem>) {
+    private func doRoleRemoved(menuText: String, items: Array<MenuItem>) {
         // var cell:Cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section))?
         var i = 0
         var found = -1
@@ -287,7 +314,7 @@ extension SidePanelViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuItem = menuItems[indexPath.section][indexPath.row]
-        delegate?.didSelectSomething(menuItem: menuItem)
+        sidePanelDelegate?.didSelectSomething(menuItem: menuItem)
     }
 }
 

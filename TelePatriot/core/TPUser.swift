@@ -23,9 +23,13 @@ class TPUser {
     var noRoleAssignedDelegate : NoRoleAssignedDelegate?
     var currentMissionItem : MissionItem?
     private var currentTeam : Team?
+    private let appDelegate : AppDelegate
     
     private init() {
         ref = Database.database().reference()
+        // Need to put the AppDelegate or SidePanelViewController in here
+        
+        appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     }
     
     func setUser(u: User?) {
@@ -34,10 +38,20 @@ class TPUser {
         //  ...just my rule
         guard let usr = user else {
             user = u
+            // This is where I have to notify the SidePanelViewController that the user changed
+            appDelegate.leftViewController?.putTheCorrectStuffInThisView(user: self)
             fetchRoles(uid: getUid())
             fetchCurrentTeam(uid: getUid())
             return
         }
+    }
+    
+    func signOut() {
+        try! Auth.auth().signOut()
+        user = nil
+        rolesAlreadyFetched = false
+        fireSignedOutEvent()
+        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
     }
     
     func getName() -> String {
@@ -96,7 +110,8 @@ class TPUser {
     }
     
     func fetchRoles(uid: String) {
-        if(rolesAlreadyFetched) { return }
+        if(rolesAlreadyFetched) {
+            return }
         
         rolesAlreadyFetched = true
     
@@ -111,8 +126,8 @@ class TPUser {
             }
             // If we get past the guard, it means there IS a node under /no_roles corresponding to
             // the current user.  So in this case, we want to send them to the Limbo screen...
-            print("name = \(name)") // <--- just FYI
-            print("val = \(val)")
+            print("This user was found under the /no_roles node: name = \(name)") // <--- just FYI
+            print("This user was found under the /no_roles node: val = \(val)")
             self.noRoleAssignedDelegate?.theUserHasNoRoles()
         })
         
@@ -189,6 +204,12 @@ class TPUser {
         // we can now hide whatever role label corresponds to the role that was just removed
         for l in accountStatusEventListeners {
             l.roleRemoved(role: role)
+        }
+    }
+    
+    private func fireSignedOutEvent() {
+        for l in self.accountStatusEventListeners {
+            l.userSignedOut()
         }
     }
     

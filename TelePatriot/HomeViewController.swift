@@ -57,7 +57,9 @@ class HomeViewController: BaseViewController, FUIAuthDelegate /*, AccountStatusE
     var name = UILabel()
     
     @IBAction func logoutPressed(_ sender: Any) {
-        try! Auth.auth().signOut()
+        //try! Auth.auth().signOut()
+        //UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        TPUser.sharedInstance.signOut()
     }
     
     override func viewDidLoad() {

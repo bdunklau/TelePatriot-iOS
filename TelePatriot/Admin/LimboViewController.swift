@@ -174,6 +174,10 @@ class LimboViewController: BaseViewController, UITableViewDelegate, UITableViewD
         // do nothing
     }
     
+    func userSignedOut() {
+        // do nothing
+    }
+    
     
     // required by UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

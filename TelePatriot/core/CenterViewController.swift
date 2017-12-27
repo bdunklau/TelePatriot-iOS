@@ -30,7 +30,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     var byPassLogin : Bool = false
     
     let logo : UIImageView = {
-        let img = UIImage(named: "logo_round.png")
+        let img = UIImage(named: "splashscreen_image.png")
         let imgView = UIImageView(image: img)
         imgView.contentMode = .scaleAspectFit
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +82,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     }
     
     
+    // logging in is done here.  Logging out is done in TPUser.signOut()
     func checkLoggedIn() {
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
@@ -111,6 +112,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 
                 
                 print("CenterViewController.checkLoggedIn() -----------------")
+                // BUG: This setUser() call below has to notify the SidePanelViewController
                 u.setUser(u: user)
                 
                 // for starters, just leave the user here and show the logo and maybe a "Get Started" button
@@ -138,7 +140,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     }
     
     
-    
     // https://www.youtube.com/watch?v=jH2LdL-PsHI
     // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
     func login() {
@@ -156,7 +157,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     }
     
     
-    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+    internal func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         if error != nil {
             //Problem signing in
             login()
@@ -197,8 +198,9 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         // This is where we figure out where to send the user based on the
         // menu item that was just touched
         if(menuItem.title == "Sign Out") {
-            try! Auth.auth().signOut()
-            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            //try! Auth.auth().signOut()
+            //UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            TPUser.sharedInstance.signOut()
         }
         else if(menuItem.title.starts(with: "Team")) {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }

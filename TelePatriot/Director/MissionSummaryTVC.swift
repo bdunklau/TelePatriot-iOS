@@ -70,12 +70,30 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         
         ref?.observe(.childAdded, with: {(snapshot) in
             
-            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
-                self.getMissionFromList(missions: self.missions, mission: mission) == nil else {
+            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
+                return
+            }
+            
+            guard self.getMissionFromList(missions: self.missions, mission: mission) == nil else {
                 return
             }
             
             self.missions.insert(mission, at: 0)  // this is what makes the most recent missions show up at the top
+            DispatchQueue.main.async{
+                self.missionSummaryTableView?.reloadData()
+            }
+            
+        }, withCancel: nil)
+        
+        
+        ref?.observe(.childRemoved, with: {(snapshot) in
+            
+            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
+                let idx = self.getMissionIndex(missions: self.missions, mission: mission) else {
+                    return
+            }
+            
+            self.missions.remove(at: idx)
             DispatchQueue.main.async{
                 self.missionSummaryTableView?.reloadData()
             }
@@ -87,7 +105,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         guard let dictionary = snapshot.value as? [String : Any],
             let mission_id = snapshot.key as? String,
             let active = dictionary["active"] as? Bool,
-            let descrip = dictionary["description"] as? String,
+            let descrip = dictionary["description"] as? String, // <-- fails here on new spreadsheets
             let mission_create_date = dictionary["mission_create_date"] as? String,
             let mission_name = dictionary["mission_name"] as? String,
             let mission_type = dictionary["mission_type"] as? String,
@@ -114,11 +132,22 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         return mission
     }
     
-    func getMissionFromList(missions: [MissionSummary], mission: MissionSummary) -> MissionSummary? {
+    private func getMissionFromList(missions: [MissionSummary], mission: MissionSummary) -> MissionSummary? {
         for m in missions {
             if m.mission_id == mission.mission_id {
                 return m
             }
+        }
+        return nil
+    }
+    
+    private func getMissionIndex(missions: [MissionSummary], mission: MissionSummary) -> Int? {
+        var idx = 0
+        for m in missions {
+            if m.mission_id == mission.mission_id {
+                return idx
+            }
+            idx = idx + 1
         }
         return nil
     }

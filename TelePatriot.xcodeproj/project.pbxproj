@@ -19,10 +19,7 @@
 		A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */; };
 		A109E8BB1FC7E1F60005517A /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8BA1FC7E1F60005517A /* BaseButton.swift */; };
 		A109E8C31FC86DFC0005517A /* MenuItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8C21FC86DFC0005517A /* MenuItems.swift */; };
-		A1217E2D1FCA15C70007ABF8 /* ProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1217E2C1FCA15C70007ABF8 /* ProviderDelegate.swift */; };
-		A1217E2F1FCA19300007ABF8 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1217E2E1FCA19300007ABF8 /* CallManager.swift */; };
 		A1217E311FCA199A0007ABF8 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1217E301FCA199A0007ABF8 /* Call.swift */; };
-		A1217E331FCA1A070007ABF8 /* CallsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1217E321FCA1A070007ABF8 /* CallsViewController.swift */; };
 		A1217E351FCA24150007ABF8 /* CallButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1217E341FCA24150007ABF8 /* CallButton.swift */; };
 		A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A126AE131F8B1D860096714B /* AppDelegate.swift */; };
 		A126AE191F8B1D860096714B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A126AE171F8B1D860096714B /* Main.storyboard */; };
@@ -83,10 +80,7 @@
 		A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHelpViewController.swift; sourceTree = "<group>"; };
 		A109E8BA1FC7E1F60005517A /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		A109E8C21FC86DFC0005517A /* MenuItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItems.swift; sourceTree = "<group>"; };
-		A1217E2C1FCA15C70007ABF8 /* ProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDelegate.swift; sourceTree = "<group>"; };
-		A1217E2E1FCA19300007ABF8 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
 		A1217E301FCA199A0007ABF8 /* Call.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
-		A1217E321FCA1A070007ABF8 /* CallsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsViewController.swift; sourceTree = "<group>"; };
 		A1217E341FCA24150007ABF8 /* CallButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallButton.swift; sourceTree = "<group>"; };
 		A126AE101F8B1D860096714B /* TelePatriot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelePatriot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A126AE131F8B1D860096714B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -200,7 +194,6 @@
 				A126AE1F1F8B1D860096714B /* Info.plist */,
 				A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */,
 				A109E8B81FC7DFCA0005517A /* ChatHelpViewController.swift */,
-				A1217E2C1FCA15C70007ABF8 /* ProviderDelegate.swift */,
 			);
 			path = TelePatriot;
 			sourceTree = "<group>";
@@ -210,8 +203,6 @@
 			children = (
 				A1217E301FCA199A0007ABF8 /* Call.swift */,
 				A1217E341FCA24150007ABF8 /* CallButton.swift */,
-				A1217E2E1FCA19300007ABF8 /* CallManager.swift */,
-				A1217E321FCA1A070007ABF8 /* CallsViewController.swift */,
 			);
 			path = misc;
 			sourceTree = "<group>";
@@ -480,21 +471,18 @@
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
 				A17C7FB21FAC308D00430C05 /* HomeViewController.swift in Sources */,
 				A109E8A31FC55F090005517A /* SidePanelViewControllerDelegate.swift in Sources */,
-				A1217E2F1FCA19300007ABF8 /* CallManager.swift in Sources */,
 				A131189A1FE0BE670031D9AE /* ActivityTableViewCell.swift in Sources */,
 				A17B6ED61FD1EA7100A3325C /* MissionItem.swift in Sources */,
 				A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */,
 				A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
 				A109E8C31FC86DFC0005517A /* MenuItems.swift in Sources */,
-				A1217E2D1FCA15C70007ABF8 /* ProviderDelegate.swift in Sources */,
 				A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */,
 				A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */,
 				A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */,
 				A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
-				A1217E331FCA1A070007ABF8 /* CallsViewController.swift in Sources */,
 				A1217E351FCA24150007ABF8 /* CallButton.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,

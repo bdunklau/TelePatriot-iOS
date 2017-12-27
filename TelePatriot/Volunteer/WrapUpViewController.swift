@@ -59,7 +59,7 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     
     // need button to submit
     let submitAndQuitButton : BaseButton = {
-        let btn = BaseButton(text: "Submit and Quit")
+        let btn = BaseButton(text: "Submit and Logout")
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(submitWrapUpAndQuit(_:)), for: .touchUpInside)
         return btn
@@ -171,8 +171,9 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     }
     
     func logout() {
-        try! Auth.auth().signOut()
-        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        //try! Auth.auth().signOut()
+        //UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        TPUser.sharedInstance.signOut()
     }
     
     
