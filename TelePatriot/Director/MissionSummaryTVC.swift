@@ -45,25 +45,34 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         // TODO code duplication - how do I put the guts of each of these into a separate function?
         ref?.observe(.childChanged, with: {(snapshot) in
             
-            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
-                let missionFromList = self.getMissionFromList(missions: self.missions, mission: mission) else {
-                    return
+            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
+                return
             }
             
-            missionFromList.active = mission.active
-            missionFromList.descrip = mission.descrip
-            missionFromList.mission_create_date = mission.mission_create_date
-            missionFromList.mission_name = mission.mission_name
-            missionFromList.mission_type = mission.mission_type
-            missionFromList.name = mission.name
-            missionFromList.script = mission.script
-            missionFromList.uid = mission.uid
-            missionFromList.uid_and_active = mission.uid_and_active
-            missionFromList.url = mission.url
-            
-            DispatchQueue.main.async{
-                self.missionSummaryTableView?.reloadData()
+            if self.getMissionFromList(missions: self.missions, mission: mission) == nil {
+                /*********
+                missionFromList.active = mission.active
+                missionFromList.descrip = mission.descrip
+                missionFromList.mission_create_date = mission.mission_create_date
+                missionFromList.mission_name = mission.mission_name
+                missionFromList.mission_type = mission.mission_type
+                missionFromList.name = mission.name
+                missionFromList.script = mission.script
+                missionFromList.uid = mission.uid
+                missionFromList.uid_and_active = mission.uid_and_active
+                missionFromList.url = mission.url
+                 *********/
+                
+                self.missions.insert(mission, at: 0)
+                DispatchQueue.main.async{
+                    self.missionSummaryTableView?.reloadData()
+                }
             }
+            
+            
+            // Why don't we do something like this?...
+            //self.missions.insert(mission, at: 0)
+            
             
         }, withCancel: nil)
         
@@ -74,7 +83,12 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
                 return
             }
             
-            guard self.getMissionFromList(missions: self.missions, mission: mission) == nil else {
+            // TODO This isn't working the way it should.
+            // On newly created missions, we should not be able to get the newly created mission
+            // from the list of missions.  We don't add it to the list of missions until just after
+            // this guard statement
+            let missionFromList =  self.getMissionFromList(missions: self.missions, mission: mission)
+            guard missionFromList == nil else {
                 return
             }
             
@@ -134,10 +148,15 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
     
     private func getMissionFromList(missions: [MissionSummary], mission: MissionSummary) -> MissionSummary? {
         for m in missions {
-            if m.mission_id == mission.mission_id {
-                return m
+            if let thisId = m.mission_id {
+                if let thatId = mission.mission_id {
+                    if thisId == thatId {
+                        return m
+                    }
+                }
             }
         }
+        print("return nil because missions did not contain mission_id: \(mission.mission_id)")
         return nil
     }
     
