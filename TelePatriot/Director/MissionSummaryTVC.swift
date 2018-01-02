@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 
-class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
+class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatusEventListener {
+    
     // your firebase reference as a property
     //var rootRef: DatabaseReference!
     //var ref: DatabaseReference!
@@ -29,6 +30,19 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
             return
         }
+        
+        
+        // need to get handle to MissionSummaryTVC
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+        
+        if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
+            || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "MissionSummaryTVC" })) {
+            TPUser.sharedInstance.accountStatusEventListeners.append((appDelegate?.missionSummaryTVC!)!)
+        }
+        else { print("MissionSummaryTVC: NOT adding appDelegate?.missionSummaryTVC! to list of accountStatusEventListeners") }
+        
+        
         ref = Database.database().reference().child("teams/\(team)/missions")
         
         missionSummaryTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
@@ -50,18 +64,6 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
             }
             
             if self.getMissionFromList(missions: self.missions, mission: mission) == nil {
-                /*********
-                missionFromList.active = mission.active
-                missionFromList.descrip = mission.descrip
-                missionFromList.mission_create_date = mission.mission_create_date
-                missionFromList.mission_name = mission.mission_name
-                missionFromList.mission_type = mission.mission_type
-                missionFromList.name = mission.name
-                missionFromList.script = mission.script
-                missionFromList.uid = mission.uid
-                missionFromList.uid_and_active = mission.uid_and_active
-                missionFromList.url = mission.url
-                 *********/
                 
                 self.missions.insert(mission, at: 0)
                 DispatchQueue.main.async{
@@ -185,6 +187,27 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource {
         cell.commonInit(missionSummary: mission, ref: ref!)
         
         return cell
+    }
+    
+    
+    // required by AccountStatusEventListener
+    func roleAssigned(role: String) {
+        // do nothing
+    }
+    
+    // required by AccountStatusEventListener
+    func roleRemoved(role: String) {
+        // do nothing
+    }
+    
+    // required by AccountStatusEventListener
+    func teamSelected(team: Team, whileLoggingIn: Bool) {
+        missions.removeAll()
+    }
+    
+    // required by AccountStatusEventListener
+    func userSignedOut() {
+        // do nothing
     }
     
     /********

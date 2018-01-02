@@ -227,6 +227,8 @@ class TPUser {
         self.currentTeam = team
         // where are these listeners set?...
         // Ans:  CenterViewController.checkLoggedIn()
+        // We also want MissionSummaryTVC to be a listener also so that we can clear out its 'missions' list
+        // from the previously selected team
         for l in self.accountStatusEventListeners {
             l.teamSelected(team: team, whileLoggingIn: whileLoggingIn)
         }

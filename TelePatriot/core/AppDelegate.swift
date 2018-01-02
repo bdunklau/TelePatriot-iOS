@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var assignUserVC : AssignUserVC?
     var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
     var myMissionViewController : MyMissionViewController?
+    var missionSummaryTVC : MissionSummaryTVC?
     //var noMissionVC : NoMissionVC?
     var newPhoneCampaignVC : NewPhoneCampaignVC?
     var switchTeamsVC : SwitchTeamsVC?
@@ -72,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switchTeamsVC = SwitchTeamsVC()
         wrapUpCallViewController = WrapUpViewController()
         unassignedUsersVC = UnassignedUsersVC()
+        missionSummaryTVC = MissionSummaryTVC()
     }
     
 

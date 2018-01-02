@@ -236,6 +236,10 @@ extension ContainerViewController: CenterViewControllerDelegate {
     }
     
     func getMissionSummaryTVC() -> MissionSummaryTVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.missionSummaryTVC
+        
+        /*********
         if missionSummaryTVC == nil {
             missionSummaryTVC = UIStoryboard.missionSummaryTVC()
             if missionSummaryTVC == nil {
@@ -247,6 +251,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
         }
         
         return missionSummaryTVC
+         ******/
     }
     
     func getUnassignedUsersVC() -> UnassignedUsersVC? {

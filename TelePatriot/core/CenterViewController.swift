@@ -325,7 +325,8 @@ extension CenterViewController : NoRoleAssignedDelegate {
 
 extension CenterViewController : NewPhoneCampaignSubmittedHandler {
     func newPhoneCampaignSubmitted() {
-        doView(vc: MissionSummaryTVC(), viewControllers: self.childViewControllers)
+        guard let vc = delegate?.getMissionSummaryTVC() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }
 

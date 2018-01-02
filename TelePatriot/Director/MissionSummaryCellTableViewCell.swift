@@ -47,22 +47,6 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
     
     func missionActivated(_ sender: Any) {
     }
-    
-    /**************
-    init() {
-        super.init()
-        ref = Database.database().reference()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-     ************/
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -75,7 +59,8 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
         self.ref = ref
         
         let active = missionSummary.active != nil ? missionSummary.active! : false
-        mission_id = missionSummary.mission_id
+        guard let m_id = missionSummary.mission_id else { return }
+        mission_id = m_id
         /*user id*/ uid = missionSummary.uid
         missionName.text = missionSummary.mission_name
         activateSwitch.setOn(active, animated: true)
@@ -92,37 +77,34 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
         
         activateSwitch.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
         self.addSubview(activateSwitch)
-        /********
-        activateSwitch.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32).isActive = true
-        activateSwitch.topAnchor.constraint(equalTo: self.topAnchor, constant: 50).isActive = true
-        activateSwitch.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        activateSwitch.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
-         ******/
         
         self.addSubview(missionType)
         missionType.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         missionType.topAnchor.constraint(equalTo: self.topAnchor, constant: 48).isActive = true
         missionType.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        //missionType.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
-        /***********/
+        
         self.addSubview(missionCreatedOn)
         missionCreatedOn.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         missionCreatedOn.topAnchor.constraint(equalTo: self.topAnchor, constant: 72).isActive = true
         missionCreatedOn.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        //missionCreatedOn.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
-        /*********/
+        
         self.addSubview(missionCreatedBy)
         missionCreatedBy.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         missionCreatedBy.topAnchor.constraint(equalTo: self.topAnchor, constant: 96).isActive = true
         missionCreatedBy.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        //missionCreatedBy.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
-         /********/
+        
+        
+        self.ref?.child(mission_id!).child("active").observe(.value, with: {(snapshot) in
+            guard let active = snapshot.value as? Bool else { return }
+            self.activateSwitch.setOn(active, animated: true)
+        }, withCancel: nil)
     }
     
     @objc func switchValueDidChange(_ sender: UISwitch) {
         var on = sender.isOn
         
-        guard let userId = uid, let missionId = mission_id else {
+        guard let userId = uid,
+            let missionId = mission_id else {
             return }
         
         let onString = on ? "true" : "false"
