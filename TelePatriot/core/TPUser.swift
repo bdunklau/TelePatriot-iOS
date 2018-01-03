@@ -216,12 +216,46 @@ class TPUser {
     func setCurrentTeam(team: Team) {
         // this needs to go back to the database
         guard let theref = ref else { return }
+        
+        if let mi = currentMissionItem {
+            unassignCurrentMissionItem(missionItem: mi, team: team)
+        }
+        
         let current_team = [team.team_name : team.dictionary()]
         theref.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in // completion block
             self.setCurrentTeamAndNotify(team: team, whileLoggingIn: false)
         }
-        
     }
+    
+    func unassignCurrentMissionItem(missionItem: MissionItem, team: Team) {
+        
+        // this check is kind of pointless
+        guard let mission_item_id = missionItem.mission_item_id as? String else {
+            return
+        }
+        
+        // better way than this would be to do multi-path updates.  There are examples somewhere in xcode
+        // and/or Android studio
+        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
+        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
+        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/group_number").setValue(missionItem.group_number_was)
+        
+        // works, but ugly.  We're actually passing in the currentMissionItem and operating on that function arg
+        // Then here at the end, we set this instance var to nil - ugh
+        currentMissionItem = nil
+    }
+    
+    /*********
+ 
+     
+     public void unassignCurrentMissionItem() {
+     if(missionItem == null)
+     return;
+     missionItem.unassign(missionItemId);
+     missionItemId = null;
+     missionItem = null;
+     }
+     *********/
     
     private func setCurrentTeamAndNotify(team: Team, whileLoggingIn: Bool) {
         self.currentTeam = team

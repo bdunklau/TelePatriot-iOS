@@ -54,47 +54,34 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         fetchMissions() 
     }
     
+    
+    /******************
+     Not a typical fetch...
+     It's complicated...
+     Mission data isn't all available as soon as you click OK.  All the stuff that's actually IN the spreadsheet
+     is read into the database after the mission record is first inserted.  So the description and the script for example,
+     aren't in the mission object when .childAdded is fired.  That's why both .childAdded and .childChanged are fired
+     when a new mission is added
+     ******************/
     func fetchMissions() {
         
-        // TODO code duplication - how do I put the guts of each of these into a separate function?
+        print("fetchMissions: =======================")
+        missions.removeAll() // start "fresh" each time - not every view controller does this - case by case basis - whatever works, ultimately
+        
+        // On this event, get the data out of the snapshot and update the corresponding MissionSummary
+        // item in the 'missions' list
         ref?.observe(.childChanged, with: {(snapshot) in
             
-            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
+            guard let missionFromSnapshot = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
                 return
             }
             
-            if self.getMissionFromList(missions: self.missions, mission: mission) == nil {
-                
-                self.missions.insert(mission, at: 0)
-                DispatchQueue.main.async{
-                    self.missionSummaryTableView?.reloadData()
-                }
-            }
-            
-            
-            // Why don't we do something like this?...
-            //self.missions.insert(mission, at: 0)
-            
-            
-        }, withCancel: nil)
-        
-        
-        ref?.observe(.childAdded, with: {(snapshot) in
-            
-            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
+            guard let missionFromList = self.getMissionFromList(missions: self.missions, mission: missionFromSnapshot) else {
                 return
             }
             
-            // TODO This isn't working the way it should.
-            // On newly created missions, we should not be able to get the newly created mission
-            // from the list of missions.  We don't add it to the list of missions until just after
-            // this guard statement
-            let missionFromList =  self.getMissionFromList(missions: self.missions, mission: mission)
-            guard missionFromList == nil else {
-                return
-            }
+            missionFromList.updateWith(mission: missionFromSnapshot)
             
-            self.missions.insert(mission, at: 0)  // this is what makes the most recent missions show up at the top
             DispatchQueue.main.async{
                 self.missionSummaryTableView?.reloadData()
             }
@@ -102,10 +89,29 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         }, withCancel: nil)
         
         
+        
+        ref?.observe(.childAdded, with: {(snapshot) in
+         
+            print("fetchMissions: childAdded")
+            
+            guard let missionFromSnapshot = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
+                //print("fetchMissions: childAdded: could not get mission from snapshot, so returning early")
+                return
+            }
+            
+            self.missions.insert(missionFromSnapshot, at: 0)  // this is what makes the most recent missions show up at the top
+            DispatchQueue.main.async{
+                self.missionSummaryTableView?.reloadData()
+            }
+            
+        }, withCancel: nil)
+        
+        
+        
         ref?.observe(.childRemoved, with: {(snapshot) in
             
-            guard let mission = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
-                let idx = self.getMissionIndex(missions: self.missions, mission: mission) else {
+            guard let missionFromSnapshot = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
+                let idx = self.getMissionIndex(missions: self.missions, mission: missionFromSnapshot) else {
                     return
             }
             
@@ -117,34 +123,68 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         }, withCancel: nil)
     }
     
+    
+    // description and script are not going to be present on newly loaded spreadsheets,
+    // so we shouldn't expect them to be present here.
     private func getMissionSummaryFromSnapshot(snapshot: DataSnapshot) -> MissionSummary? {
-        guard let dictionary = snapshot.value as? [String : Any],
-            let mission_id = snapshot.key as? String,
-            let active = dictionary["active"] as? Bool,
-            let descrip = dictionary["description"] as? String, // <-- fails here on new spreadsheets
-            let mission_create_date = dictionary["mission_create_date"] as? String,
-            let mission_name = dictionary["mission_name"] as? String,
-            let mission_type = dictionary["mission_type"] as? String,
-            let name = dictionary["name"] as? String,
-            let script = dictionary["script"] as? String,
-            let uid = dictionary["uid"] as? String,
-            let uid_and_active = dictionary["uid_and_active"] as? String,
-            let url = dictionary["url"] as? String else {
-                return nil
-        }
         
         let mission = MissionSummary()
+        
+        guard let mission_id = snapshot.key as? String else {
+            //print("getMissionSummaryFromSnapshot: could not get mission_id, return nil early")
+            return nil
+        }
+        
         mission.mission_id = mission_id
-        mission.active = active
-        mission.descrip = descrip
-        mission.mission_create_date = mission_create_date
-        mission.mission_name = mission_name
-        mission.mission_type = mission_type
-        mission.name = name
-        mission.script = script
-        mission.uid = uid
-        mission.uid_and_active = uid_and_active
-        mission.url = url
+        
+        guard let dictionary = snapshot.value as? [String : Any] else {
+            //print("getMissionSummaryFromSnapshot: could not get dictionary from snapshot.value, return nil early")
+            return nil
+        }
+        
+        // description and script are not going to be present on newly loaded spreadsheets,
+        // so we shouldn't expect them to be present here.
+        if let description = dictionary["description"] as? String {
+            mission.descrip = description
+        }
+        
+        if let script = dictionary["script"] as? String {
+            mission.script = script
+        }
+        
+        if let active = dictionary["active"] as? Bool {
+            mission.active = active
+        }
+        
+        if let mission_create_date = dictionary["mission_create_date"] as? String {
+            mission.mission_create_date = mission_create_date // why isn't this immediately available ?
+        }
+        
+        if let mission_name = dictionary["mission_name"] as? String {
+            mission.mission_name = mission_name
+        }
+        
+        if let mission_type = dictionary["mission_type"] as? String {
+            mission.mission_type = mission_type
+        }
+        
+        if let name = dictionary["name"] as? String {
+            mission.name = name
+        }
+        
+        if let uid = dictionary["uid"] as? String {
+            mission.uid = uid
+        }
+        
+        if let uid_and_active = dictionary["uid_and_active"] as? String {
+            mission.uid_and_active = uid_and_active
+        }
+        
+        if let url = dictionary["url"] as? String {
+            mission.url = url
+        }
+        
+        //print("getMissionSummaryFromSnapshot: return this mission: \(mission)")
         return mission
     }
     
@@ -153,12 +193,13 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
             if let thisId = m.mission_id {
                 if let thatId = mission.mission_id {
                     if thisId == thatId {
+                        //print("getMissionFromList: FOUND mission from list: "+thisId)
                         return m
                     }
                 }
             }
         }
-        print("return nil because missions did not contain mission_id: \(mission.mission_id)")
+        //print("getMissionFromList: return nil because missions did not contain mission_id: \(mission.mission_id)")
         return nil
     }
     

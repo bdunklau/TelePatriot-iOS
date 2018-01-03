@@ -284,6 +284,8 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
     }
     
     func unassignMissionItem(missionItem: MissionItem, team: Team) {
+        
+        /******
         guard let mission_item_id = missionItem.mission_item_id as? String else {
             return
         }
@@ -294,6 +296,9 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
         Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/group_number").setValue(missionItem.group_number_was)
         TPUser.sharedInstance.currentMissionItem = nil
+        ******/
+        
+        TPUser.sharedInstance.unassignCurrentMissionItem(missionItem: missionItem, team: team)
     }
     
     func unassignMissionItem() {

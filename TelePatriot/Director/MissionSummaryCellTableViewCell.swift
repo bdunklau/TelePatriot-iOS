@@ -103,6 +103,10 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
     @objc func switchValueDidChange(_ sender: UISwitch) {
         var on = sender.isOn
         
+        print("==================")
+        print("switchValueDidChange: sender...")
+        print(sender)
+        
         guard let userId = uid,
             let missionId = mission_id else {
             return }

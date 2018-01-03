@@ -196,6 +196,10 @@ class MyMissionViewController : BaseViewController {
     }
     
     
+    private func workThis(mission_item: MissionItem) {
+        
+    }
+    
     
     func fetchMission(parent: UIViewController?) {
         
@@ -203,113 +207,128 @@ class MyMissionViewController : BaseViewController {
             return
         }
         
-        Database.database().reference()
-            .child("teams/\(team)/mission_items")
-            .queryOrdered(byChild: "group_number")
-            .queryLimited(toFirst: 1)
-            .observeSingleEvent(of: .value, with: {(snapshot) in
-                
-                guard let entries = snapshot.value as? [String:[String:AnyObject]] else {
-                    self.indicateNoMissionsAvailable()
-                    return }
-                
-                // mission_item_id is a key node under /mission_items
-                // mission_item_elements are all the nodes under /mission_items/{mission_item_id}
-                for (mission_item_id,mission_item_elements) in entries {
-                    print("mission_item_id is...")
-                    print(mission_item_id)
-                    print(mission_item_elements)
-                    /*************** this is what print(dict) shows...
-                     ["name": Walker, Jim, "active_and_accomplished": true_new, "email": jimwalkerwhitefishmontana@gmail.com, "accomplished": new, "description": Here we are testing 3way calls, "name2": Pretend Legislator, "uid_and_active": ApvMfQc4ixUeNZkEREIiUMHzAdP2_true, "active": 1, "uid": ApvMfQc4ixUeNZkEREIiUMHzAdP2, "mission_id": -KyUE52JKX3QVDH1D57f, "phone2": 719-567-6742, "mission_create_date": Nov 8, 2017 11:24 pm CST, "phone": 2146325613, "mission_name": Montana Mission 11:23, "mission_type": Phone Campaign, "url": https://docs.google.com/spreadsheets/d/1-qLih2jZFE2QEwUY7-H4dowp1Pk0dCReYmRDWZP0e_g/edit?usp=drivesdk, "script": There is no script in this case because we aren't actually calling anyone.  The 3rd "person" in this case is just an auto-attendant giving out the current time.]
-                     **************/
+        if TPUser.sharedInstance.currentMissionItem == nil {
+            // This would happen if the user was looking at a mission, then swiped to get
+            // the menu, then touched "My Mission"
+            // If the user happens to do this, we don't want to get ANOTHER mission.
+            // We need to serve up the current "in progress" mission.  Otherwise, the mission
+            // the user was looking at will become an orphan and no one will end up working it.
+            
+            // Similar to MyMissionFragment.workThis() in Android
+            // On iOS, we don't actually have to do anything when the mission item
+            // already exists.  On Android, we have to reset the text fields
+            
+            
+            Database.database().reference()
+                .child("teams/\(team)/mission_items")
+                .queryOrdered(byChild: "group_number")
+                .queryLimited(toFirst: 1)
+                .observeSingleEvent(of: .value, with: {(snapshot) in
                     
-                    guard let group_number = mission_item_elements["group_number"] as? Int,
-                        group_number != 999999
-                        else {
-                            // if all we got was a 999999, then this item is being worked by someone else and
-                            // there basically are no more missions for this user
-                            self.indicateNoMissionsAvailable()
-                            return
-                    }
+                    guard let entries = snapshot.value as? [String:[String:AnyObject]] else {
+                        self.indicateNoMissionsAvailable()
+                        return }
                     
-                    guard let description = mission_item_elements["description"] as? String,
-                        let accomplished = mission_item_elements["accomplished"] as? String,
-                        let active = mission_item_elements["active"] as? Bool,
-                        let active_and_accomplished = mission_item_elements["active_and_accomplished"] as? String,
-                        //let email = mission_item_elements["email"] as? String,
-                        let mission_create_date = mission_item_elements["mission_create_date"] as? String,
-                        let mission_id = mission_item_elements["mission_id"] as? String,
-                        let mission_name = mission_item_elements["mission_name"] as? String,
-                        let mission_type = mission_item_elements["mission_type"] as? String,
-                        let name1 = mission_item_elements["name"] as? String,
-                        let phone1 = mission_item_elements["phone"] as? String,
-                        let script = mission_item_elements["script"] as? String,
-                        let uid = mission_item_elements["uid"] as? String,
-                        let uid_and_active = mission_item_elements["uid_and_active"] as? String,
-                        let url = mission_item_elements["url"] as? String,
-                        let number_of_missions_in_master_mission = mission_item_elements["number_of_missions_in_master_mission"] as? Int
-                        else {
-                            return }
+                    // mission_item_id is a key node under /mission_items
+                    // mission_item_elements are all the nodes under /mission_items/{mission_item_id}
+                    for (mission_item_id,mission_item_elements) in entries {
+                        print("mission_item_id is...")
+                        print(mission_item_id)
+                        print(mission_item_elements)
+                        /*************** this is what print(dict) shows...
+                         ["name": Walker, Jim, "active_and_accomplished": true_new, "email": jimwalkerwhitefishmontana@gmail.com, "accomplished": new, "description": Here we are testing 3way calls, "name2": Pretend Legislator, "uid_and_active": ApvMfQc4ixUeNZkEREIiUMHzAdP2_true, "active": 1, "uid": ApvMfQc4ixUeNZkEREIiUMHzAdP2, "mission_id": -KyUE52JKX3QVDH1D57f, "phone2": 719-567-6742, "mission_create_date": Nov 8, 2017 11:24 pm CST, "phone": 2146325613, "mission_name": Montana Mission 11:23, "mission_type": Phone Campaign, "url": https://docs.google.com/spreadsheets/d/1-qLih2jZFE2QEwUY7-H4dowp1Pk0dCReYmRDWZP0e_g/edit?usp=drivesdk, "script": There is no script in this case because we aren't actually calling anyone.  The 3rd "person" in this case is just an auto-attendant giving out the current time.]
+                         **************/
+                        
+                        guard let group_number = mission_item_elements["group_number"] as? Int,
+                            group_number != 999999
+                            else {
+                                // if all we got was a 999999, then this item is being worked by someone else and
+                                // there basically are no more missions for this user
+                                self.indicateNoMissionsAvailable()
+                                return
+                        }
+                        
+                        guard let description = mission_item_elements["description"] as? String,
+                            let accomplished = mission_item_elements["accomplished"] as? String,
+                            let active = mission_item_elements["active"] as? Bool,
+                            let active_and_accomplished = mission_item_elements["active_and_accomplished"] as? String,
+                            //let email = mission_item_elements["email"] as? String,
+                            let mission_create_date = mission_item_elements["mission_create_date"] as? String,
+                            let mission_id = mission_item_elements["mission_id"] as? String,
+                            let mission_name = mission_item_elements["mission_name"] as? String,
+                            let mission_type = mission_item_elements["mission_type"] as? String,
+                            let name1 = mission_item_elements["name"] as? String,
+                            let phone1 = mission_item_elements["phone"] as? String,
+                            let script = mission_item_elements["script"] as? String,
+                            let uid = mission_item_elements["uid"] as? String,
+                            let uid_and_active = mission_item_elements["uid_and_active"] as? String,
+                            let url = mission_item_elements["url"] as? String,
+                            let number_of_missions_in_master_mission = mission_item_elements["number_of_missions_in_master_mission"] as? Int
+                            else {
+                                return }
+                        
+                        //let button1Text = name1 + " " + phone1
+                        DispatchQueue.main.async {
+                            self.callButton1.setTitle(name1 + " " + phone1, for: .normal)
+                        }
+                        self.callButton1.phone = phone1
+                        
+                        // TODO boy this is ugly.  Had a bitch of a time getting scrolling to work on the "My Mission"
+                        // screen.  It would scroll until I added the second UITextView for the script.  So I am re-purposing
+                        // the description field to also contain the script
+                        self.descriptionTextView.text = description + "\n\n\n\nScript\n\n" + script
+                        //self.scriptTextView.text = script
+                        
+                        if let phone2 = mission_item_elements["phone2"] as? String, let name2 = mission_item_elements["name2"] as? String {
+                            let button2Text = name2 + " " + phone2
+                            self.callButton2.setTitle(button2Text, for: .normal)
+                            self.callButton2.phone = phone2
+                        }
+                        
+                        Database.database().reference()
+                            .child("teams/\(team)/mission_items/\(mission_item_id)/accomplished").setValue("in progress")
+                        
+                        Database.database().reference()
+                            .child("teams/\(team)/mission_items/\(mission_item_id)/active_and_accomplished").setValue("true_in progress")
+                        
+                        Database.database().reference()
+                            .child("teams/\(team)/mission_items/\(mission_item_id)/group_number_was").setValue(group_number)
+                        
+                        Database.database().reference()
+                            .child("teams/\(team)/mission_items/\(mission_item_id)/group_number").setValue(999999)
+                        
+                        
+                        let mi = MissionItem(mission_item_id: mission_item_id,
+                                             accomplished: accomplished,
+                                             active: active,
+                                             active_and_accomplished: active_and_accomplished,
+                                             description: description,
+                                             //email: email,
+                            mission_create_date: mission_create_date,
+                            mission_id: mission_id,
+                            mission_name: mission_name,
+                            mission_type: mission_type,
+                            name: name1,
+                            phone: phone1,
+                            script: script,
+                            uid: uid,
+                            uid_and_active: uid_and_active,
+                            url: url,
+                            group_number: group_number,
+                            number_of_missions_in_master_mission: number_of_missions_in_master_mission)
+                        
+                        mi.group_number_was = group_number
+                        mi.group_number = 999999
+                        
+                        TPUser.sharedInstance.currentMissionItem = mi
+                        
+                    } // end for
                     
-                    //let button1Text = name1 + " " + phone1
-                    DispatchQueue.main.async {
-                        self.callButton1.setTitle(name1 + " " + phone1, for: .normal)
-                    }
-                    self.callButton1.phone = phone1
                     
-                    // TODO boy this is ugly.  Had a bitch of a time getting scrolling to work on the "My Mission"
-                    // screen.  It would scroll until I added the second UITextView for the script.  So I am re-purposing
-                    // the description field to also contain the script
-                    self.descriptionTextView.text = description + "\n\n\n\nScript\n\n" + script
-                    //self.scriptTextView.text = script
-                    
-                    if let phone2 = mission_item_elements["phone2"] as? String, let name2 = mission_item_elements["name2"] as? String {
-                        let button2Text = name2 + " " + phone2
-                        self.callButton2.setTitle(button2Text, for: .normal)
-                        self.callButton2.phone = phone2
-                    }
-                    
-                    Database.database().reference()
-                        .child("teams/\(team)/mission_items/\(mission_item_id)/accomplished").setValue("in progress")
-                    
-                    Database.database().reference()
-                        .child("teams/\(team)/mission_items/\(mission_item_id)/active_and_accomplished").setValue("true_in progress")
-                    
-                    Database.database().reference()
-                        .child("teams/\(team)/mission_items/\(mission_item_id)/group_number_was").setValue(group_number)
-                    
-                    Database.database().reference()
-                        .child("teams/\(team)/mission_items/\(mission_item_id)/group_number").setValue(999999)
-                    
-                    
-                    let mi = MissionItem(mission_item_id: mission_item_id,
-                                         accomplished: accomplished,
-                                         active: active,
-                                         active_and_accomplished: active_and_accomplished,
-                                         description: description,
-                                         //email: email,
-                        mission_create_date: mission_create_date,
-                        mission_id: mission_id,
-                        mission_name: mission_name,
-                        mission_type: mission_type,
-                        name: name1,
-                        phone: phone1,
-                        script: script,
-                        uid: uid,
-                        uid_and_active: uid_and_active,
-                        url: url,
-                        group_number: group_number,
-                        number_of_missions_in_master_mission: number_of_missions_in_master_mission)
-                    
-                    mi.group_number_was = group_number
-                    mi.group_number = 999999
-                    
-                    TPUser.sharedInstance.currentMissionItem = mi
-                    
-                } // end for
-                
-                
-            }, withCancel: nil)
+                }, withCancel: nil)
+            
+        } // if TPUser.sharedInstance.currentMissionItem != nil
+        
     }
     
     

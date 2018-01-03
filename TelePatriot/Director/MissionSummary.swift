@@ -21,9 +21,17 @@ class MissionSummary : NSObject {
     var url : String?
     var mission_type : String?
     
-    /*****
-    init(snap: DataSnapshot) {
-        self.name = snap.childSnapshot(forPath: "name").value as? String
+    
+    func updateWith(mission: MissionSummary) {
+        self.active = mission.active
+        self.descrip = mission.descrip
+        self.mission_create_date = mission.mission_create_date
+        self.mission_name = mission.mission_name
+        self.name = mission.name
+        self.script = mission.script
+        self.uid = mission.uid
+        self.uid_and_active = mission.uid_and_active
+        self.url = mission.url
+        self.mission_type = mission.mission_type
     }
-    *****/
 }
