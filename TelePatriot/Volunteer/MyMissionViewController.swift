@@ -61,18 +61,14 @@ class MyMissionViewController : BaseViewController {
         return textView
     }()
     
-    /*******
-     let scrollView : UIScrollView = {
-     let s = UIScrollView()
-     s.backgroundColor = UIColor.black
-     return s
-     }()
-     *******/
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        loadTheView()
+    }
+    
+    private func loadTheView() {
         
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 50, width: self.view.frame.width, height: self.view.frame.height))
         scrollView.contentSize = CGSize(width: 250, height: 1450)
@@ -90,13 +86,6 @@ class MyMissionViewController : BaseViewController {
         scrollView.addSubview(callButton1)
         
         view.addSubview(scrollView)
-        
-        /***********
-         scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-         scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 55).isActive = true
-         scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-         scrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
-         ***********/
         
         
         descriptionHeaderLabel.text = "Mission Description"
@@ -139,17 +128,16 @@ class MyMissionViewController : BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("MyMissionViewController: viewWillAppear")
+        //print("MyMissionViewController: viewWillAppear")
+        loadTheView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        guard let centerVc = parent as? CenterViewController,
-            let team = TPUser.sharedInstance.getCurrentTeam(),
-            let missionItem = TPUser.sharedInstance.currentMissionItem else {
-                return
+        guard let centerVc = parent as? CenterViewController else {
+            return
         }
         
-        centerVc.unassignMissionItem(missionItem: missionItem, team: team)
+        centerVc.unassignMissionItem()
     }
     
     func myResumeFunction() {
@@ -195,10 +183,6 @@ class MyMissionViewController : BaseViewController {
         return dateFormatter.string(from: date)
     }
     
-    
-    private func workThis(mission_item: MissionItem) {
-        
-    }
     
     
     func fetchMission(parent: UIViewController?) {

@@ -48,6 +48,7 @@ class TPUser {
     
     func signOut() {
         try! Auth.auth().signOut()
+        unassignCurrentMissionItem()
         user = nil
         rolesAlreadyFetched = false
         fireSignedOutEvent()
@@ -217,9 +218,9 @@ class TPUser {
         // this needs to go back to the database
         guard let theref = ref else { return }
         
-        if let mi = currentMissionItem {
-            unassignCurrentMissionItem(missionItem: mi, team: team)
-        }
+        // LESSON LEARNED: Do not try to unassign the "current mission item" from here
+        // The "current team" has already been changed.  So if you try to unassign the current
+        // mission item from here, you will write a partial mission_item record to the wrong team
         
         let current_team = [team.team_name : team.dictionary()]
         theref.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in // completion block
@@ -227,11 +228,12 @@ class TPUser {
         }
     }
     
-    func unassignCurrentMissionItem(missionItem: MissionItem, team: Team) {
-        
-        // this check is kind of pointless
-        guard let mission_item_id = missionItem.mission_item_id as? String else {
-            return
+    
+    func unassignCurrentMissionItem() {
+        guard let team = getCurrentTeam(),
+            let missionItem = currentMissionItem,
+            let mission_item_id = missionItem.mission_item_id as? String else {
+                return
         }
         
         // better way than this would be to do multi-path updates.  There are examples somewhere in xcode
@@ -245,17 +247,6 @@ class TPUser {
         currentMissionItem = nil
     }
     
-    /*********
- 
-     
-     public void unassignCurrentMissionItem() {
-     if(missionItem == null)
-     return;
-     missionItem.unassign(missionItemId);
-     missionItemId = null;
-     missionItem = null;
-     }
-     *********/
     
     private func setCurrentTeamAndNotify(team: Team, whileLoggingIn: Bool) {
         self.currentTeam = team

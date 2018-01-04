@@ -16,7 +16,7 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     // need drop down for outcome type
     var picker: UIPickerView = {
         let p = UIPickerView()
-        p.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS !!!!!!
+        //p.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS - EXCEPT IN THIS CASE
         return p
     }()
     
@@ -79,11 +79,12 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         
         // source:  https://codewithchris.com/uipickerview-example/
         // Connect data:
-        self.picker = UIPickerView()
+        //self.picker = UIPickerView()
         self.picker.delegate = self
         self.picker.dataSource = self
         
         self.picker.frame = CGRect(x: 0, y: 64, width: self.view.bounds.width, height: 200.0)
+        picker.selectRow(-1, inComponent: 0, animated: false)
         
         /****/
         view.addSubview(whatHappenedLabel)
@@ -92,6 +93,15 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         whatHappenedLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         whatHappenedLabel.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.25).isActive = true
         /****/
+        
+        if view.subviews.contains(picker) {
+            picker.removeFromSuperview()
+            // I don't know why we have to do this.  Must be something different about UIPickerView's
+            // We don't have to make sure other controls aren't added twice.  Unless they ARE added multiple
+            // times and we just don't realize it because right on top of either other ... ?
+        }
+        
+        notesField.text = ""
         
         view.addSubview(picker)
         //pickerViewContainer.view.addSubview(picker)
@@ -128,12 +138,16 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     
     
     @objc func submitWrapUp(_ sender: BaseButton) {
-        guard let missionItem = TPUser.sharedInstance.currentMissionItem else {
-                    return }
+        saveNotes()
         
-        notesField.text = ""
-        outcome = pickerData[0]
-        picker.selectRow(0, inComponent: 0, animated: false)
+        // Now, just send the user to another mission
+        delegate?.missionAccomplished()
+    }
+    
+    private func saveNotes() {
+        guard let missionItem = TPUser.sharedInstance.currentMissionItem else {
+            return }
+        
         
         // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
         // database like this...  Optional("The Cavalry")
@@ -158,15 +172,10 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
         
         TPUser.sharedInstance.currentMissionItem = nil
-        
-        // Now, just send the user to another mission
-        delegate?.missionAccomplished()        
-        
     }
     
-    
     @objc func submitWrapUpAndQuit(_ sender: BaseButton) {
-        submitWrapUp(sender)
+        saveNotes()
         logout()
     }
     

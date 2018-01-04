@@ -107,22 +107,20 @@ class ActivityTableViewCell: UITableViewCell {
         self.addSubview(volunteerPhoneLabel)
         volunteerPhoneLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         volunteerPhoneLabel.topAnchor.constraint(equalTo: supporterNameLabel.bottomAnchor, constant: 8).isActive = true
-        //volunteerPhoneLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        
-        /*********/
-        self.addSubview(phoneIcon)
-        phoneIcon.leadingAnchor.constraint(equalTo: volunteerPhoneLabel.trailingAnchor, constant: 4).isActive = true
-        phoneIcon.topAnchor.constraint(equalTo: volunteerPhoneLabel.topAnchor, constant: 0).isActive = true
-         /********/
         
         self.addSubview(supporterPhoneLabel)
         /*****/
-        supporterPhoneLabel.leadingAnchor.constraint(equalTo: phoneIcon.trailingAnchor, constant: 4).isActive = true
-        supporterPhoneLabel.topAnchor.constraint(equalTo: phoneIcon.topAnchor, constant: 0).isActive = true
+        supporterPhoneLabel.topAnchor.constraint(equalTo: volunteerPhoneLabel.bottomAnchor, constant: 8).isActive = true
+        supporterPhoneLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24).isActive = true
          /******
         supporterPhoneLabel.leadingAnchor.constraint(equalTo: volunteerPhoneLabel.trailingAnchor, constant: 4).isActive = true
         supporterPhoneLabel.topAnchor.constraint(equalTo: volunteerPhoneLabel.topAnchor, constant: 0).isActive = true
         *******/
+        
+        // this is actually to the left of the supporterPhoneLabel
+        self.addSubview(phoneIcon)
+        phoneIcon.topAnchor.constraint(equalTo: volunteerPhoneLabel.bottomAnchor, constant: 8).isActive = true
+        phoneIcon.trailingAnchor.constraint(equalTo: supporterPhoneLabel.leadingAnchor, constant: -24).isActive = true
         
     }
     

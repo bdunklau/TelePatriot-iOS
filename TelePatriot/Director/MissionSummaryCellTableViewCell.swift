@@ -41,7 +41,7 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
     var ref : DatabaseReference?
     
     let activateSwitch : UISwitch = {
-        let s = UISwitch(frame: CGRect(x: 300, y: 5, width: 30, height: 10))
+        let s = UISwitch(frame: CGRect(x: 250, y: 5, width: 30, height: 10))
         return s
     }()
     
@@ -66,6 +66,7 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
         activateSwitch.setOn(active, animated: true)
         missionType.text = missionSummary.mission_type
         if let d = missionSummary.mission_create_date { missionCreatedOn.text = "Created on "+d }
+        else { missionCreatedOn.text = "(Loading...)" }
         if let n = missionSummary.name { missionCreatedBy.text = "By "+n }
         
         self.addSubview(missionName)

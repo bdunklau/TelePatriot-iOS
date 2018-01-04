@@ -51,6 +51,30 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         
+        loadSplashscreen()
+        
+        
+        if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
+            || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "CenterViewController" })) {
+            TPUser.sharedInstance.accountStatusEventListeners.append(self)
+        } else { print("CenterViewController: NOT adding self to list of accountStatusEventListeners") }
+        
+        
+        // LimboViewController sets this in prepareForSegue
+        if(!byPassLogin) {
+            checkLoggedIn()
+        }
+        else {
+            // If we're bypassing the login logic, it's because we are coming back to this
+            // screen from LimboViewController.  In that case, we don't want to show the back
+            // button here.  We don't want the user to be able to go back to that screen.
+            
+            // https://stackoverflow.com/a/44403725
+            self.navigationItem.hidesBackButton = true
+        }
+    }
+    
+    private func loadSplashscreen() {
         self.navigationItem.title = "TelePatriot" // what the user sees (across the top) when they first login
         
         view.addSubview(logo)
@@ -66,19 +90,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         getStartedButton.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 30).isActive = true
         getStartedButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         getStartedButton.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
-        
-        // LimboViewController sets this in prepareForSegue
-        if(!byPassLogin) {
-            checkLoggedIn()
-        }
-        else {
-            // If we're bypassing the login logic, it's because we are coming back to this
-            // screen from LimboViewController.  In that case, we don't want to show the back
-            // button here.  We don't want the user to be able to go back to that screen.
-            
-            // https://stackoverflow.com/a/44403725
-            self.navigationItem.hidesBackButton = true
-        }
     }
     
     
@@ -118,19 +129,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 // for starters, just leave the user here and show the logo and maybe a "Get Started" button
                 // that slides out the left menu
                 
-                
-                // TODO Figure out why LimboViewController is just a black screen
-                /***********************
-                 All the stuff below is replaced by the line above:  u.noRoleAssignedDelegate = self
-                if(!u.hasAnyRole()) {
-                    
-                    // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
-                    // With it commented out, you'll always be sent to the Home screen where you can logout.
-                    let limboViewController = LimboViewController()
-                    let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
-                    self.present(navViewController, animated: true, completion: nil)
-                }
-                 *********************/
                 
             } else {
                 // No user is signed in.
@@ -198,9 +196,10 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         // This is where we figure out where to send the user based on the
         // menu item that was just touched
         if(menuItem.title == "Sign Out") {
-            //try! Auth.auth().signOut()
-            //UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             TPUser.sharedInstance.signOut()
+            // see userSignedOut() below.  We created an extension of this class that implements
+            // AccountStatusEventListener because we call TPUser.sharedInstance.signOut() from other
+            // places besides just here and we need the UI to be cleared out whenever the logs out
         }
         else if(menuItem.title.starts(with: "Team")) {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
@@ -283,39 +282,10 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         
     }
     
-    func unassignMissionItem(missionItem: MissionItem, team: Team) {
-        
-        /******
-        guard let mission_item_id = missionItem.mission_item_id as? String else {
-            return
-        }
-        
-        // better way than this would be to do multi-path updates.  There are examples somewhere in xcode
-        // and/or Android studio
-        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
-        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
-        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/group_number").setValue(missionItem.group_number_was)
-        TPUser.sharedInstance.currentMissionItem = nil
-        ******/
-        
-        TPUser.sharedInstance.unassignCurrentMissionItem(missionItem: missionItem, team: team)
-    }
-    
     func unassignMissionItem() {
-        guard let team = TPUser.sharedInstance.getCurrentTeam(),
-              let missionItem = TPUser.sharedInstance.currentMissionItem else {
-                return
-        }
-        
-        unassignMissionItem(missionItem: missionItem, team: team)
+        TPUser.sharedInstance.unassignCurrentMissionItem()
     }
     
-    // called by MyMissionViewController.viewWillDisappear()
-    /******
-    func unassignMissionItem(missionItem: MissionItem, team: Team) {
-        unassignMissionItem(missionItemId: self.mission_item_id)
-    }
-     ******/
 }
 
 extension CenterViewController : NoRoleAssignedDelegate {
@@ -356,6 +326,11 @@ extension CenterViewController : ChooseSpreadsheetTypeDelegate {
 
 extension CenterViewController : SwitchTeamsDelegate {
     func teamSelected(team: Team) {
+        if let oldteam = TPUser.sharedInstance.getCurrentTeam() {
+            if oldteam.team_name != team.team_name {
+                unassignMissionItem()
+            }
+        }
         TPUser.sharedInstance.setCurrentTeam(team: team)
     }
 }
@@ -379,6 +354,34 @@ extension CenterViewController : AssignUserDelegate {
         guard let vc = delegate?.getUnassignedUsersVC() else { return }
         doView(vc: vc, viewControllers: self.childViewControllers)
     }
+}
+
+extension CenterViewController : AccountStatusEventListener {
+    func roleAssigned(role: String) {
+        // stub
+    }
+    
+    func roleRemoved(role: String) {
+        // stub
+    }
+    
+    func teamSelected(team: Team, whileLoggingIn: Bool) {
+        // stub
+    }
+    
+    func userSignedOut() {
+        
+        // remove all subviews and child view controllers so that we don't come back to the screen we were on - that's really confusing
+        for subview in view.subviews as! [UIView] {
+            subview.removeFromSuperview()
+        }
+        for child in self.childViewControllers as! [UIViewController] {
+            child.removeFromParentViewController()
+        }
+        loadSplashscreen()
+    }
+    
+    
 }
 
 /******
