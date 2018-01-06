@@ -155,7 +155,8 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
             return
         }
         Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
-        let ref = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)/mission_items/\(missionItem.mission_item_id)")
+        let missionRef = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)")
+        let ref = missionRef.child("mission_items/\(missionItem.mission_item_id)")
         ref.child("accomplished").setValue("complete")
         ref.child("active").setValue(false)
         ref.child("active_and_accomplished").setValue("false_complete")
@@ -171,7 +172,28 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         ref.child("mission_complete_date").setValue(mission_complete_date)
         ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
         
+        // need to update total_rows_completed using a firebase transaction like we do in MissionDetail.java: updateCompletedCount()
+        updateCompletedCount(ref: missionRef)
+        
         TPUser.sharedInstance.currentMissionItem = nil
+    }
+    
+    
+    // see   https://stackoverflow.com/q/41337765
+    private func updateCompletedCount(ref: DatabaseReference) {
+        ref.runTransactionBlock({ (currentData:MutableData) -> TransactionResult in
+            if var value = currentData.value as? [String: AnyObject] {
+                
+                var total_rows_completed = value["total_rows_completed"] as? Int ?? 0
+                total_rows_completed += 1
+                value["total_rows_completed"] = total_rows_completed as AnyObject?
+                currentData.value = value
+                return TransactionResult.success(withValue: currentData)
+            }
+            //Abort like if there was a problem
+            return TransactionResult.abort()
+        })
+        
     }
     
     @objc func submitWrapUpAndQuit(_ sender: BaseButton) {

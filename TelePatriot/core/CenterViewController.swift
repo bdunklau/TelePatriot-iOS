@@ -144,7 +144,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         let authUI = FUIAuth.init(uiWith: Auth.auth())
         
         // This is how you disable sign-in by email.  Uncomment to disable
-        //authUI?.isSignInWithEmailHidden = true
+        authUI?.isSignInWithEmailHidden = true
         
         let googleProvider = FUIGoogleAuth(scopes: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"])
         let facebookProvider = FUIFacebookAuth.init(permissions: ["public_profile", "email"])
