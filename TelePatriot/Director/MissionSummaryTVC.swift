@@ -251,22 +251,4 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         // do nothing
     }
     
-    /********
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-     *********/
-    
 }
-
-/********************* think this can be deleted
-class MissionSummaryCell : UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-**********************/

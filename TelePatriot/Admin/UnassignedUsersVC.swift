@@ -58,14 +58,6 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
         
         ref = Database.database().reference().child("no_roles")
         
-        unassignedUsersTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
-        unassignedUsersTableView?.dataSource = self
-        unassignedUsersTableView?.delegate = self
-        unassignedUsersTableView?.register(TPUserTableViewCell.self, forCellReuseIdentifier: "cellId")
-        //unassignedUsersTableView?.rowHeight = 150
-        view.addSubview(unassignedUsersTableView!)
-        
-        
         var headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 75))
         headerView.addSubview(headerLabel)
         headerView.addSubview(descriptionTextView)
@@ -82,12 +74,20 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
         descriptionTextView.widthAnchor.constraint(equalTo: headerLabel
             .widthAnchor, multiplier: 0.95).isActive = true
         
-        //var label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        //unassignedUsersTableView?.addSubview(label)
+        
+        unassignedUsersTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         unassignedUsersTableView?.tableHeaderView = headerView
         unassignedUsersTableView?.tableHeaderView?.frame.size.height = 150
+        unassignedUsersTableView?.dataSource = self
+        unassignedUsersTableView?.delegate = self
+        unassignedUsersTableView?.register(TPUserTableViewCell.self, forCellReuseIdentifier: "cellId")
+        unassignedUsersTableView?.rowHeight = 200
+        view.addSubview(unassignedUsersTableView!)
+        
+        
         
         fetchData()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,24 +96,56 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
     }
     
     
+    private func getUserInfo(uid: String, dictionary: [String:Any]) -> [String:Any] {
+        
+        guard let created = dictionary["created"] as? String,
+            let email = dictionary["email"] as? String,
+            let name = dictionary["name"] as? String,
+            let photoUrl = dictionary["photoUrl"] as? String else {
+                return [:]
+        }
+        
+        var has_signed_petition : Bool?
+        if let pet = dictionary["has_signed_petition"] as? Bool {
+            has_signed_petition = pet
+        }
+        
+        var has_signed_confidentiality_agreement : Bool?
+        if let conf = dictionary["has_signed_confidentiality_agreement"] as? Bool {
+            has_signed_confidentiality_agreement = conf
+        }
+        
+        var is_banned : Bool?
+        if let ban = dictionary["is_banned"] as? Bool {
+            is_banned = ban
+        }
+        
+        let unassignedUser = ["uid": uid,
+                              "values":["created": created,
+                                        "email": email,
+                                        "name": name,
+                                        "photoUrl": photoUrl,
+                                        "has_signed_petition": has_signed_petition,
+                                        "has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
+                                        "is_banned": is_banned]
+            ]
+            as [String : Any]
+        
+        return unassignedUser
+    }
+    
+    
     func fetchData() {
         
         ref?.observe(.childAdded, with: {(snapshot) in
             
-            guard let dictionary = snapshot.value as? [String:Any] else {
+            guard let dictionary = snapshot.value as? [String:Any],
+                  let uid = snapshot.key as? String else {
                 return
             }
             
-            guard let uid = snapshot.key as? String,
-                let created = dictionary["created"] as? String,
-                let email = dictionary["email"] as? String,
-                let name = dictionary["name"] as? String,
-                let photoUrl = dictionary["photoUrl"] as? String else {
-                    return
-            }
-            
-            
-            let unassignedUser = ["uid": uid, "values":["created": created, "email": email, "name": name, "photoUrl": photoUrl]] as [String : Any]
+            let unassignedUser = self.getUserInfo(uid: uid, dictionary: dictionary)
+            guard !unassignedUser.isEmpty else { return }
             
             
             // you'll get duplicate/phantom team entries without this.  That's because we explicitly
@@ -128,6 +160,30 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
                 self.unassignedUsersTableView?.reloadData()
             }
             
+            
+        }, withCancel: nil)
+        
+        
+        
+        ref?.observe(.childChanged, with: {(snapshot) in
+            
+            guard let dictionary = snapshot.value as? [String:Any],
+                let uid = snapshot.key as? String else {
+                    return
+            }
+            
+            let unassignedUser = self.getUserInfo(uid: uid, dictionary: dictionary)
+            guard !unassignedUser.isEmpty else { return }
+            
+            // we BETTER find this...
+            guard let index = self.findIndex(unassignedUsers: self.unassignedUsers, unassignedUser: unassignedUser) else {
+                return
+            }
+            
+            self.unassignedUsers[index] = unassignedUser
+            DispatchQueue.main.async {
+                self.unassignedUsersTableView?.reloadData()
+            }
             
         }, withCancel: nil)
         

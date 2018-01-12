@@ -197,7 +197,7 @@ class AssignUserVC: BaseViewController {
         
         let boolval = uiswitch.isOn
         if boolval {
-            ref?.child("users").child(theUid).child("roles").child(role).setValue(boolval);
+            ref?.child("users").child(theUid).child("roles").child(role).setValue("true"); // string, not boolean
         }
         else {
             ref?.child("users").child(theUid).child("roles").child(role).removeValue()
