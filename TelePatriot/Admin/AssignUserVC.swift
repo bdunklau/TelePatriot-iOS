@@ -84,7 +84,7 @@ class AssignUserVC: BaseViewController {
 
         // Do any additional setup after loading the view.
         
-        guard let userAttributes = user!["values"] as! [String:String]?,
+        guard let userAttributes = user!["values"] as? [String:Any],
             let theUid = user!["uid"] as! String?,
             let name = userAttributes["name"] as! String?,
             let email = userAttributes["email"] as! String? else {
@@ -98,7 +98,7 @@ class AssignUserVC: BaseViewController {
         emailLabel.text = email
      
         
-        if let isVolunteer = userAttributes["isVolunteer"] {
+        if let isVolunteer = userAttributes["isVolunteer"] as? String {
             volunteerSwitch.setOn(isVolunteer == "true", animated: true)
         }
         else {
@@ -106,7 +106,7 @@ class AssignUserVC: BaseViewController {
         }
         
         
-        if let isDirector = userAttributes["isDirector"] {
+        if let isDirector = userAttributes["isDirector"] as? String {
             directorSwitch.setOn(isDirector == "true", animated: true)
         }
         else {
@@ -114,7 +114,7 @@ class AssignUserVC: BaseViewController {
         }
         
         
-        if let isAdmin = userAttributes["isAdmin"] {
+        if let isAdmin = userAttributes["isAdmin"] as? String {
             adminSwitch.setOn(isAdmin == "true", animated: true)
         }
         else {

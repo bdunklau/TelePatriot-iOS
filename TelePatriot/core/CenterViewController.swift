@@ -150,8 +150,17 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         let facebookProvider = FUIFacebookAuth.init(permissions: ["public_profile", "email"])
         authUI?.delegate = self
         authUI?.providers = [googleProvider, facebookProvider]
-        let authViewController = authUI?.authViewController()
-        self.present(authViewController!, animated: true, completion: nil)
+        
+        // from Brian Caldwell YouTube
+        /*********/
+        let authViewController = MyAuthPicker(authUI: authUI!)
+        let navc = UINavigationController(rootViewController: authViewController)
+        self.present(navc, animated: true, completion: nil)
+         /********/
+        /*****
+        let authViewController = authUI?.authViewController()  // this is what it was
+        self.present(authViewController!, animated: true, completion: nil) // this is what it was
+         ******/
     }
     
     
@@ -339,9 +348,41 @@ extension CenterViewController : SwitchTeamsDelegate {
 // list on UnassignedUsersVC
 extension CenterViewController : UnassignedUsersDelegate {
     func userSelected(user: [String:Any]) {
-        guard let vc = delegate?.getAssignUserVC() else {return}
-        vc.user = user
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        /******
+         The user could be banned, or maybe hasn't signed the conf agreement.
+         We have to know this stuff because if they shouldn't be let in, we need to send them
+         to another screen...
+         ********/
+        
+        
+        guard let userAttributes = user["values"] as! [String:Any]? else {
+                return }
+        
+        
+        if let is_banned = userAttributes["is_banned"] as? Bool {
+            guard let vc : UserIsBannedVC = delegate?.getUserIsBannedVC() else { return }
+            vc.user = user
+            doView(vc: vc, viewControllers: self.childViewControllers)
+            return
+        }
+            
+        guard let has_signed_confidentiality_agreement = userAttributes["has_signed_confidentiality_agreement"] as? Bool else {
+            guard let vc : UserMustSignCAViewController = delegate?.getUserMustSignCAViewController() else { return }
+            vc.user = user
+            doView(vc: vc, viewControllers: self.childViewControllers)
+            return
+        }
+        
+        if !has_signed_confidentiality_agreement {
+            guard let vc : UserMustSignCAViewController = delegate?.getUserMustSignCAViewController() else { return }
+            vc.user = user
+            doView(vc: vc, viewControllers: self.childViewControllers)
+            return
+        }
+        
+        guard let normalVC = delegate?.getAssignUserVC() else {return}
+        normalVC.user = user
+        doView(vc: normalVC, viewControllers: self.childViewControllers)
     }
 }
 

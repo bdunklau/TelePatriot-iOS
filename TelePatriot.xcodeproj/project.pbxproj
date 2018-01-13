@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */; };
 		A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */; };
 		A109E8A31FC55F090005517A /* SidePanelViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */; };
 		A109E8A71FC561370005517A /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8A61FC561370005517A /* SidePanelViewController.swift */; };
@@ -55,6 +56,9 @@
 		A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565911FBC0523009EE57F /* LimboViewController.swift */; };
 		A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */; };
 		A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */; };
+		A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */; };
+		A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */; };
+		A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
 		A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */; };
 		A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */; };
@@ -68,6 +72,7 @@
 /* Begin PBXFileReference section */
 		21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TelePatriot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B10EA8C10D32C5053B267AA /* Pods-TelePatriot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.debug.xcconfig"; sourceTree = "<group>"; };
+		A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAuthPicker.swift; sourceTree = "<group>"; };
 		A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePanelViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A109E8A61FC561370005517A /* SidePanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +128,9 @@
 		A18565911FBC0523009EE57F /* LimboViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimboViewController.swift; sourceTree = "<group>"; };
 		A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEventTableViewCell.swift; sourceTree = "<group>"; };
 		A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusEvent.swift; sourceTree = "<group>"; };
+		A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsBannedVC.swift; sourceTree = "<group>"; };
+		A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMustSignCAViewController.swift; sourceTree = "<group>"; };
+		A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotApproveUserVC.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedUsersVC.swift; sourceTree = "<group>"; };
 		A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUserTableViewCell.swift; sourceTree = "<group>"; };
@@ -222,6 +230,7 @@
 				A109E8C21FC86DFC0005517A /* MenuItems.swift */,
 				A17B6ED51FD1EA7100A3325C /* MissionItem.swift */,
 				A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */,
+				A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */,
 				A109E8A61FC561370005517A /* SidePanelViewController.swift */,
 				A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */,
 				A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */,
@@ -245,6 +254,9 @@
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
 				A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */,
+				A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */,
+				A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */,
+				A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -467,6 +479,7 @@
 				A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */,
 				A109E8AD1FC565E60005517A /* MenuItem.swift in Sources */,
 				A1217E311FCA199A0007ABF8 /* Call.swift in Sources */,
+				A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */,
 				A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */,
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
 				A17C7FB21FAC308D00430C05 /* HomeViewController.swift in Sources */,
@@ -476,6 +489,7 @@
 				A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */,
 				A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
+				A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */,
 				A109E8C31FC86DFC0005517A /* MenuItems.swift in Sources */,
 				A12CDB411FAF78F5003DE424 /* DirectorViewController.swift in Sources */,
 				A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */,
@@ -483,6 +497,7 @@
 				A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
+				A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */,
 				A1217E351FCA24150007ABF8 /* CallButton.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,
@@ -492,6 +507,7 @@
 				A109E8A71FC561370005517A /* SidePanelViewController.swift in Sources */,
 				A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */,
 				A13118A01FE62B710031D9AE /* TeamTableViewCell.swift in Sources */,
+				A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */,
 				A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */,
 				A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */,
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,

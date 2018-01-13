@@ -20,16 +20,6 @@ class ContainerViewController: UIViewController {
     
     var allowPanningFromRightToLeft = false
     
-    /*************
-    let menuButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Menu", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(slideMenu), for: .touchUpInside)
-        return button
-    }()
-     *********/
-    
     enum SlideOutState {
         case bothCollapsed
         case leftPanelExpanded
@@ -238,25 +228,22 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getMissionSummaryTVC() -> MissionSummaryTVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.missionSummaryTVC
-        
-        /*********
-        if missionSummaryTVC == nil {
-            missionSummaryTVC = UIStoryboard.missionSummaryTVC()
-            if missionSummaryTVC == nil {
-                return nil
-            }
-            
-            // do this?
-            //newPhoneCampaignVC?.submitHandler = centerViewController // we do this above - what's up?
-        }
-        
-        return missionSummaryTVC
-         ******/
     }
     
     func getUnassignedUsersVC() -> UnassignedUsersVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.unassignedUsersVC
+    }
+    
+    
+    func getUserIsBannedVC() -> UserIsBannedVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.userIsBannedVC
+    }
+    
+    func getUserMustSignCAViewController() -> UserMustSignCAViewController? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.userMustSignCAViewController
     }
     
     func toggleLeftPanel() {

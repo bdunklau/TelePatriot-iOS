@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var wrapUpCallViewController : WrapUpViewController?
     var leftViewController : SidePanelViewController?
     var unassignedUsersVC : UnassignedUsersVC?
+    var userIsBannedVC : UserIsBannedVC?
+    var userMustSignCAViewController : UserMustSignCAViewController?
     
     var myDelegate : AppDelegateDelegate?
     var window: UIWindow?
@@ -56,8 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load a named file for switching between dev and prod firebase instances
         // see https://firebase.google.com/docs/configure/
-        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        //let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
             else { assert(false, "Couldn't load config file")
                 return
@@ -74,6 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         wrapUpCallViewController = WrapUpViewController()
         unassignedUsersVC = UnassignedUsersVC()
         missionSummaryTVC = MissionSummaryTVC()
+        userIsBannedVC = UserIsBannedVC()
+        userMustSignCAViewController = UserMustSignCAViewController()
     }
     
 

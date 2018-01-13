@@ -25,5 +25,7 @@ protocol CenterViewControllerDelegate {
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
     func getSwitchTeamsVC() -> SwitchTeamsVC?
     func getUnassignedUsersVC() -> UnassignedUsersVC?
+    func getUserIsBannedVC() -> UserIsBannedVC?
+    func getUserMustSignCAViewController() -> UserMustSignCAViewController?
     func viewChosen()
 }
