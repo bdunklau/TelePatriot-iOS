@@ -22,6 +22,11 @@ class BaseViewController: UIViewController {
         UIGraphicsEndImageContext()
         self.view.backgroundColor = UIColor(patternImage: image)
         
+        
+        // trying to implement a back button - doesn't seem to do anything
+        //let backTitle = NSLocalizedString("Back", comment: "Back button label")
+        //self.addBackbutton(title: backTitle)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,3 +46,27 @@ class BaseViewController: UIViewController {
     */
 
 }
+
+
+/******************************
+ // trying to implement a back button - doesn't seem to do anything
+extension UIViewController {
+    
+    @objc func backButtonAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func addBackbutton(title: String) {
+        if let nav = self.navigationController,
+            let item = nav.navigationBar.topItem {
+            item.backBarButtonItem  = UIBarButtonItem(title: title, style: UIBarButtonItemStyle.plain, target: self, action:
+                #selector(self.backButtonAction))
+        } else {
+            if let nav = self.navigationController,
+                let _ = nav.navigationBar.backItem {
+                self.navigationController!.navigationBar.backItem!.title = title
+            }
+        }
+    }
+}
+ *********************/

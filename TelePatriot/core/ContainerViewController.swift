@@ -56,15 +56,16 @@ class ContainerViewController: UIViewController {
          but there isn't a need right now because we display a "Get Started" button on the
          default CenterViewController screen and "Get Started" slides out the menu, so users
          will see right away that there is a slide-out menu
-         
+         **********/
+        
+        /*********
         let item2 = UIBarButtonItem(customView: menuButton)
         navigationItem.setLeftBarButtonItems([item2], animated: true)
          *************/
         
-        //self.navigationItem.title = "ContainerVC"
         
         // does this hide the back button on all screens?
-        self.navigationItem.hidesBackButton = true
+        //self.navigationItem.hidesBackButton = true  // doesn't appear to have ANY effect  -1/12/18
         
         centerViewController = UIStoryboard.centerViewController()
         centerViewController.delegate = self

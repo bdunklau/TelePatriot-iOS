@@ -20,6 +20,10 @@ class MyAuthPicker: FUIAuthPickerViewController {
         return imgView
     }()
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.title = "TelePatriot" // what the user sees (across the top) when they first login
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +55,5 @@ class MyAuthPicker: FUIAuthPickerViewController {
     // from:  https://stackoverflow.com/a/41274376
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.title = "TelePatriot" // what the user sees (across the top) when they first login
     }
 }

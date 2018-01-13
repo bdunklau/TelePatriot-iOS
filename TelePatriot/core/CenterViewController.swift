@@ -18,13 +18,6 @@ import FBSDKLoginKit
 
 class CenterViewController: BaseViewController, FUIAuthDelegate {
     
-    
-    /********
-    @IBOutlet weak fileprivate var imageView: UIImageView!
-    @IBOutlet weak fileprivate var titleLabel: UILabel!
-    @IBOutlet weak fileprivate var creatorLabel: UILabel!
-    *******/
-    
     var delegate: CenterViewControllerDelegate?
     
     var byPassLogin : Bool = false
@@ -70,7 +63,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
             // button here.  We don't want the user to be able to go back to that screen.
             
             // https://stackoverflow.com/a/44403725
-            self.navigationItem.hidesBackButton = true
+            //self.navigationItem.hidesBackButton = true
         }
     }
     
@@ -158,6 +151,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         self.present(navc, animated: true, completion: nil)
          /********/
         /*****
+         // This is the old way...  (pre-Jan 2018)
         let authViewController = authUI?.authViewController()  // this is what it was
         self.present(authViewController!, animated: true, completion: nil) // this is what it was
          ******/
@@ -193,13 +187,30 @@ extension CenterViewController : AppDelegateDelegate {
 
 extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewControllerDelegate {
     
+    @objc func goBack() {
+        /*********
+        guard let vc = BackTracker.sharedInstance.onBack() else {
+            self.navigationItem.leftBarButtonItem = nil
+            return
+        }
+        doView(vc: vc, viewControllers: self.childViewControllers, track: false)
+         **********/
+    }
+    
     func didSelectSomething(menuItem: MenuItem) {
-        /*******
-        imageView.image = animal.image
-        titleLabel.text = animal.title
-        creatorLabel.text = animal.creator
-        ********/
+        
+        // sets the title in the navigation bar at the top of each screen
         self.navigationItem.title = menuItem.title
+        
+        /*********
+        if let _ = BackTracker.sharedInstance.last() {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(self.goBack))
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = nil
+        }
+         **********/
+        
         delegate?.collapseSidePanels?()
         
         // This is where we figure out where to send the user based on the
@@ -234,11 +245,13 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         else if(menuItem.title == "Share Petition") {
             unassignMissionItem()
-            doView(vc: SharePetitionViewController(), viewControllers: self.childViewControllers)
+            doView(vc:  SharePetitionViewController(), viewControllers: self.childViewControllers)
         }
+        /*********
         else if(menuItem.title == "Chat/Help") {
-            doView(vc: ChatHelpViewController(), viewControllers: self.childViewControllers)
+            doView(name: menuItem.title, vc:  ChatHelpViewController(),, viewControllers: self.childViewControllers)
         }
+         **********/
         // Director screen...
         else if(menuItem.title == "New Phone Campaign") {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
@@ -274,12 +287,17 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         return nil
     }
     
-    func doView(vc: UIViewController, viewControllers: [UIViewController]) {
+    private func doView(vc: UIViewController, viewControllers: [UIViewController]) {
+        doView(vc: vc, viewControllers: viewControllers, track: true)
+    }
+    
+    private func doView(vc: UIViewController, viewControllers: [UIViewController], track: Bool) {
         guard let viewController = inList(viewControllers: self.childViewControllers, viewController: vc) else {
             // vc not yet a child vc so add it
             addChildViewController(vc)
             delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
             self.view.addSubview(vc.view)
+            //if track { BackTracker.sharedInstance.onChoose(vc: vc) }
             return
         }
         if let myMissionVc = viewController as? MyMissionViewController {
@@ -288,7 +306,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
         viewController.viewDidLoad() // creative or hacky?  I need to run the code in this function whenever the view becomes visible again
         self.view.bringSubview(toFront: viewController.view)
-        
+        //if track { BackTracker.sharedInstance.onChoose(vc: vc) }
     }
     
     func unassignMissionItem() {

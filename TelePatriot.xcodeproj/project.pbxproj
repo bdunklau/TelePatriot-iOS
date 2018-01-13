@@ -59,6 +59,7 @@
 		A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */; };
 		A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */; };
 		A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */; };
+		A1AD5C462009AC1400CB113E /* BackTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C452009AC1400CB113E /* BackTracker.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
 		A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */; };
 		A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */; };
@@ -131,6 +132,7 @@
 		A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsBannedVC.swift; sourceTree = "<group>"; };
 		A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMustSignCAViewController.swift; sourceTree = "<group>"; };
 		A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotApproveUserVC.swift; sourceTree = "<group>"; };
+		A1AD5C452009AC1400CB113E /* BackTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackTracker.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedUsersVC.swift; sourceTree = "<group>"; };
 		A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUserTableViewCell.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				A126AE131F8B1D860096714B /* AppDelegate.swift */,
 				A17B6ED71FD2195F00A3325C /* AppDelegateDelegate.swift */,
+				A1AD5C452009AC1400CB113E /* BackTracker.swift */,
 				A109E8BA1FC7E1F60005517A /* BaseButton.swift */,
 				A12CDB3C1FAF77FE003DE424 /* BaseViewController.swift */,
 				A109E8AA1FC564A50005517A /* CenterViewController.swift */,
@@ -524,6 +527,7 @@
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
 				A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */,
 				A17B6EFC1FD36C8A00A3325C /* WrapUpViewControllerDelegate.swift in Sources */,
+				A1AD5C462009AC1400CB113E /* BackTracker.swift in Sources */,
 				A12CDB591FB01BF7003DE424 /* MissionSummaryTVC.swift in Sources */,
 				A17B6EFF1FDDE44300A3325C /* ChooseSpreadsheetTypeVC.swift in Sources */,
 			);
