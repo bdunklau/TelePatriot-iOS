@@ -48,7 +48,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         missionSummaryTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         missionSummaryTableView?.dataSource = self
         missionSummaryTableView?.register(MissionSummaryCellTableViewCell.self, forCellReuseIdentifier: "cellId")
-        missionSummaryTableView?.rowHeight = 150
+        missionSummaryTableView?.rowHeight = 300
         view.addSubview(missionSummaryTableView!)
         
         fetchMissions() 
@@ -183,6 +183,31 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         if let url = dictionary["url"] as? String {
             mission.url = url
         }
+        
+        if let total_rows_in_spreadsheet = dictionary["total_rows_in_spreadsheet"] as? Int {
+            mission.total_rows_in_spreadsheet = total_rows_in_spreadsheet
+        }
+        
+        if let total_rows_in_spreadsheet_with_phone = dictionary["total_rows_in_spreadsheet_with_phone"] as? Int {
+            mission.total_rows_in_spreadsheet_with_phone = total_rows_in_spreadsheet_with_phone
+        }
+        
+        if let total_rows_activated = dictionary["total_rows_activated"] as? Int {
+            mission.total_rows_activated = total_rows_activated
+        }
+        
+        if let total_rows_deactivated = dictionary["total_rows_deactivated"] as? Int {
+            mission.total_rows_deactivated = total_rows_deactivated
+        }
+        
+        if let total_rows_completed = dictionary["total_rows_completed"] as? Int {
+            mission.total_rows_completed = total_rows_completed
+        }
+        
+        if let percent_complete = dictionary["percent_complete"] as? Int {
+            mission.percent_complete = percent_complete
+        }
+        
         
         //print("getMissionSummaryFromSnapshot: return this mission: \(mission)")
         return mission

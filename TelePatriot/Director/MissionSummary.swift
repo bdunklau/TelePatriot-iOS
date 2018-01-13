@@ -8,6 +8,7 @@
 
 import Firebase
 
+// In Android, the class is just called Mission
 class MissionSummary : NSObject {
     var mission_id : String?
     var active : Bool?
@@ -21,6 +22,13 @@ class MissionSummary : NSObject {
     var url : String?
     var mission_type : String?
     
+    var total_rows_in_spreadsheet : Int?
+    var total_rows_in_spreadsheet_with_phone : Int?
+    var total_rows_activated : Int?
+    var total_rows_deactivated : Int?
+    var total_rows_completed : Int?
+    var percent_complete : Int?
+    
     
     func updateWith(mission: MissionSummary) {
         self.active = mission.active
@@ -33,5 +41,12 @@ class MissionSummary : NSObject {
         self.uid_and_active = mission.uid_and_active
         self.url = mission.url
         self.mission_type = mission.mission_type
+        
+        self.total_rows_in_spreadsheet = mission.total_rows_in_spreadsheet
+        self.total_rows_in_spreadsheet_with_phone = mission.total_rows_in_spreadsheet_with_phone
+        self.total_rows_activated = mission.total_rows_activated
+        self.total_rows_deactivated = mission.total_rows_deactivated
+        self.total_rows_completed = mission.total_rows_completed
+        self.percent_complete = mission.percent_complete
     }
 }
