@@ -226,6 +226,16 @@ extension ContainerViewController: CenterViewControllerDelegate {
         return appDelegate?.myMissionViewController
     }
     
+    func getMyLegislatorsVC() -> MyLegislatorsVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.myLegislatorsVC
+    }
+    
+    func getMyProfileVC() -> MyProfileVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.myProfileVC
+    }
+    
     func getMissionSummaryTVC() -> MissionSummaryTVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.missionSummaryTVC

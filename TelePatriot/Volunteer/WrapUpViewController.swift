@@ -20,7 +20,10 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         return p
     }()
     
-    var pickerData = ["voice mail", "spoke on the phone", "number disconnected", "wrong number"]
+    // In Android, this list is in strings.xml   At some point, we should probably put this
+    // list in the database
+    //var pickerData = ["voice mail", "spoke on the phone", "number disconnected", "wrong number"] // this is what is was prior to 1/16/18
+    var pickerData = ["Voicemail", "Talked on the phone", "3-way call", "Wrong number", "Number disconnected", "No answer"]
     
     var outcome : String = "voice mail"
     

@@ -28,7 +28,9 @@ class MenuItems {
         mainMenu = [mainSection0,
                     /*[MenuItem(title: "Share Petition (coming soon)"),
                      MenuItem(title: "Chat/Help (coming soon)") ], */
-                    [MenuItem(title: "Sign Out")]
+                    [MenuItem(title: "My Profile"),
+                     MenuItem(title: "My Legislators"),
+                     MenuItem(title: "Sign Out")]
                 ]
         directorItems = [
                  [

@@ -22,6 +22,13 @@ class TPUser {
     var rolesAlreadyFetched = false
     var noRoleAssignedDelegate : NoRoleAssignedDelegate?
     var currentMissionItem : MissionItem?
+    var residential_address_line1 : String?
+    var residential_address_line2 : String?
+    var residential_address_city : String?
+    var residential_address_state_abbrev : String?
+    var residential_address_zip : String?
+    var current_latitude : Double?
+    var current_longitude : Double?
     private var currentTeam : Team?
     private let appDelegate : AppDelegate
     
@@ -42,6 +49,8 @@ class TPUser {
             appDelegate.leftViewController?.putTheCorrectStuffInThisView(user: self)
             fetchRoles(uid: getUid())
             fetchCurrentTeam(uid: getUid())
+            
+            fetchUser(uid: getUid()) // this should replace the other fetches above at some point
             return
         }
     }
@@ -85,6 +94,62 @@ class TPUser {
     
     func hasAnyRole() -> Bool {
         return isAdmin || isDirector || isVolunteer;
+    }
+    
+    // right now, we are only updating residential address fields and lat/long fields
+    // At some point, we should use this to update all fields
+    func update(callback: @escaping (_ err: NSError?) -> Void) {
+        
+        guard let theref = ref else { return }
+        let uid = getUid()
+        // Create the data we want to update
+        let updatedUserData = ["users/\(uid)/residential_address_line1": residential_address_line1,
+                               "users/\(uid)/residential_address_line2": residential_address_line2,
+                               "users/\(uid)/residential_address_city": residential_address_city,
+                               "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
+                               "users/\(uid)/residential_address_zip": residential_address_zip,
+                               "users/\(uid)/current_latitude": current_latitude,
+                               "users/\(uid)/current_longitude": current_longitude] as [String : Any]
+        
+        // Do a deep-path update
+        theref.updateChildValues(updatedUserData, withCompletionBlock: { (error, ref) -> Void in
+            callback(error as? NSError)
+        })
+        
+    }
+    
+    // this should replace the other fetchXxxx() functions at some point
+    // Right now, all we're getting are the residential address fields
+    private func fetchUser(uid: String) {
+        
+        guard let theref = ref else { return }
+        
+        theref.child("users").child(uid).observe(.value, with: {(snapshot) in
+            guard let userNode = snapshot.value as? [String: Any] else {
+                return
+            }
+            if let rad1 = userNode["residential_address_line1"] as? String {
+                self.residential_address_line1 = rad1
+            }
+            if let rad2 = userNode["residential_address_line2"] as? String {
+                self.residential_address_line2 = rad2
+            }
+            if let rac = userNode["residential_address_city"] as? String {
+                self.residential_address_city = rac
+            }
+            if let ras = userNode["residential_address_state_abbrev"] as? String {
+                self.residential_address_state_abbrev = ras
+            }
+            if let raz = userNode["residential_address_zip"] as? String {
+                self.residential_address_zip = raz
+            }
+            if let lat = userNode["residential_address_latitude"] as? Double {
+                self.current_latitude = lat
+            }
+            if let lng = userNode["residential_address_longitude"] as? Double {
+                self.current_longitude = lng
+            }
+        })
     }
     
     func fetchCurrentTeam(uid: String) {

@@ -221,6 +221,14 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             // AccountStatusEventListener because we call TPUser.sharedInstance.signOut() from other
             // places besides just here and we need the UI to be cleared out whenever the logs out
         }
+        else if(menuItem.title.starts(with: "My Profile")) {
+            guard let vc = delegate?.getMyProfileVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title.starts(with: "My Legislators")) {
+            guard let vc = delegate?.getMyLegislatorsVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
+        }
         else if(menuItem.title.starts(with: "Team")) {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
             guard let vc = delegate?.getSwitchTeamsVC() else { return }
@@ -378,12 +386,20 @@ extension CenterViewController : UnassignedUsersDelegate {
         
         
         if let is_banned = userAttributes["is_banned"] as? Bool {
-            guard let vc : UserIsBannedVC = delegate?.getUserIsBannedVC() else { return }
-            vc.user = user
-            doView(vc: vc, viewControllers: self.childViewControllers)
-            return
-        }
+            if is_banned {
+                guard let vc : UserIsBannedVC = delegate?.getUserIsBannedVC() else { return }
+                vc.user = user
+                doView(vc: vc, viewControllers: self.childViewControllers)
+                return
+            }
             
+        }
+        
+        /*********************
+         This adheres to a security policy that we quickly replaced.  We used to say that a person could not even be
+         let in if they hadn't signed the conf agreement.  Now (1/15/18) we are saying that they CAN be let in.  We just
+         don't want to put them on any team except for a training team.
+ 
         guard let has_signed_confidentiality_agreement = userAttributes["has_signed_confidentiality_agreement"] as? Bool else {
             guard let vc : UserMustSignCAViewController = delegate?.getUserMustSignCAViewController() else { return }
             vc.user = user
@@ -397,6 +413,7 @@ extension CenterViewController : UnassignedUsersDelegate {
             doView(vc: vc, viewControllers: self.childViewControllers)
             return
         }
+         ****************/
         
         guard let normalVC = delegate?.getAssignUserVC() else {return}
         normalVC.user = user

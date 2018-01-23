@@ -148,7 +148,10 @@ class TPUserTableViewCell: UITableViewCell {
             confidentialityAgreementIcon.image = has_signed_confidentiality_agreement ? ok_image() : error_image()
         } else {
             confidentialityAgreementLabel.text = "Confidentiality Agreement: unknown"
-            confidentialityAgreementIcon.image = error_image()
+            confidentialityAgreementIcon.image = warn_image() // <-- not the greatest...
+            // A warning is fine when we are on-boarding someone.  But we may want the error icon when we are
+            // about to assign someone to a team - because we don't want people assigned to real missions that
+            // haven't signed the conf agreement yet.  But perhaps
         }
         
         if let is_banned = userAttributes["is_banned"] as? Bool {
