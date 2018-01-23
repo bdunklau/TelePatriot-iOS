@@ -70,28 +70,34 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         return l
     }()
     
+    var scrollView : UIScrollView?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         
+        if scrollView != nil {
+            //scrollView?.removeFromSuperview()
+            return // this may be better
+        }
         
-        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        scrollView.contentSize = CGSize(width: 250, height: 1450)
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        scrollView?.contentSize = CGSize(width: 250, height: 1450)
         
-        view.addSubview(scrollView)
+        view.addSubview(scrollView!)
         
         
-        scrollView.addSubview(locationButton)
-        locationButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 8).isActive = true
-        locationButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        scrollView?.addSubview(locationButton)
+        locationButton.topAnchor.constraint(equalTo: (scrollView?.topAnchor)!, constant: 8).isActive = true
+        locationButton.centerXAnchor.constraint(equalTo: (scrollView?.centerXAnchor)!).isActive = true
         //locationButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         //locationButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         
-        scrollView.addSubview(myLegislatorsHeading)
+        scrollView?.addSubview(myLegislatorsHeading)
         myLegislatorsHeading.topAnchor.constraint(equalTo: locationButton.bottomAnchor, constant: 16).isActive = true
-        myLegislatorsHeading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        myLegislatorsHeading.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
         //myAddressHeading.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
         //myAddressHeading.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
         
@@ -100,29 +106,29 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         
         let rectSenator = CGRect(
             origin: CGPoint(x: myLegislatorsHeading.frame.origin.x, y: senatorViewY),
-            size: CGSize(width: scrollView.frame.width-16, height: 200)
+            size: CGSize(width: (scrollView?.frame.width)!-16, height: 200)
         )
         
         
         senatorView = LegislatorUI(frame: rectSenator)
-        scrollView.addSubview(senatorView!)
+        scrollView?.addSubview(senatorView!)
         senatorView?.topAnchor.constraint(equalTo: myLegislatorsHeading.bottomAnchor, constant: 16).isActive = true
-        senatorView?.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        senatorView?.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
+        senatorView?.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
+        senatorView?.widthAnchor.constraint(equalTo: (scrollView?.widthAnchor)!, multiplier: 0.95).isActive = true
         /********/
         
         let houseRepViewY = (senatorView?.frame.origin.y)! + (senatorView?.frame.height)! + 32
         
         let rectHouseRep = CGRect(
             origin: CGPoint(x: myLegislatorsHeading.frame.origin.x, y: houseRepViewY),
-            size: CGSize(width: scrollView.frame.width-16, height: 200)
+            size: CGSize(width: (scrollView?.frame.width)!-16, height: 200)
         )
         
         houserepView = LegislatorUI(frame: rectHouseRep)
-        scrollView.addSubview(houserepView!)
+        scrollView?.addSubview(houserepView!)
         houserepView?.topAnchor.constraint(equalTo: (senatorView?.bottomAnchor)!, constant: 48).isActive = true
-        houserepView?.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        houserepView?.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
+        houserepView?.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
+        houserepView?.widthAnchor.constraint(equalTo: (scrollView?.widthAnchor)!, multiplier: 0.95).isActive = true
         
         
         /************
