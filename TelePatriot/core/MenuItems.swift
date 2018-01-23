@@ -12,10 +12,90 @@ import UIKit
 // The static methods in MenuItem made it so we couldn't listen for these events
 class MenuItems {
     
-    var team = MenuItem(title: "Team: (tap to choose)")
-    var myMission = MenuItem(title: "My Mission")
-    var directors = MenuItem(title: "Directors")
-    var admins = MenuItem(title: "Admins")
+    static let teamIcon : UIImageView = {
+        let img = UIImage(named: "ic_people_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let myMissionIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let directorsIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let newPhoneCampaignIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let allMissionsIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let allActivityIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let adminsIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let myProfileIcon : UIImageView = {
+        let img = UIImage(named: "ic_person_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let myLegislatorsIcon : UIImageView = {
+        let img = UIImage(named: "ic_people_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let logoutIcon : UIImageView = {
+        let img = UIImage(named: "ic_power_settings_new_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    static let team = MenuItem(icon: MenuItems.teamIcon, title: "Team: (tap to choose)")
+    static let myMission = MenuItem(icon: MenuItems.myMissionIcon, title: "My Mission")
+    static let directors = MenuItem(icon: MenuItems.directorsIcon, title: "Directors")
+    static let admins = MenuItem(icon: MenuItems.adminsIcon, title: "Admins")
     var mainSection0 : [MenuItem]
     var mainMenu : [[MenuItem]]
     var directorItems : [[MenuItem]]
@@ -24,22 +104,28 @@ class MenuItems {
     
     private init() {
         
-        mainSection0 = [team, myMission, directors, admins]
+        mainSection0 = [MenuItems.team,
+                        MenuItems.myMission,
+                        MenuItems.directors,
+                        MenuItems.admins]
+        
         mainMenu = [mainSection0,
+                    
                     /*[MenuItem(title: "Share Petition (coming soon)"),
                      MenuItem(title: "Chat/Help (coming soon)") ], */
-                    [MenuItem(title: "My Profile"),
-                     MenuItem(title: "My Legislators"),
-                     MenuItem(title: "Sign Out")]
+            
+                    [MenuItem(icon: MenuItems.myProfileIcon, title: "My Profile"),
+                     MenuItem(icon: MenuItems.myLegislatorsIcon, title: "My Legislators"),
+                     MenuItem(icon: MenuItems.logoutIcon, title: "Sign Out")]
                 ]
         directorItems = [
                  [
-                    MenuItem(title: "New Phone Campaign"),
+                    MenuItem(icon: MenuItems.newPhoneCampaignIcon, title: "New Phone Campaign"),
                     //MenuItem(title: "My Active Missions (coming soon)"),
                     //MenuItem(title: "All My Missions (coming soon)"),
                     //MenuItem(title: "All Active Missions (coming soon)"),
-                    MenuItem(title: "All Missions"),
-                    MenuItem(title: "All Activity")
+                    MenuItem(icon: MenuItems.allMissionsIcon, title: "All Missions"),
+                    MenuItem(icon: MenuItems.allActivityIcon, title: "All Activity")
                  ]
             ]
         
@@ -47,33 +133,16 @@ class MenuItems {
     
     var mainSections : [String] = ["Act", /*"Communicate",*/ "My Account"]
     
-    /*********
-    var mainMenu : Array<Array<MenuItem>> = {
-        var section1 = mainSection0
+    static func getItem(withText: String) -> MenuItem? {
+        let roleItems : [String: MenuItem] = {
+            var items = [String: MenuItem]()
+            items["My Mission"] = myMission
+            items["Directors"] = directors
+            items["Admins"] = admins
+            return items
+        }()
         
-        var section2 = [MenuItem(title: "Share Petition"),
-            MenuItem(title: "Chat/Help") ]
-        
-        var section3 = [
-            MenuItem(title: "Sign Out")
-        ]
-        return [section1, section2, section3]
-    }()
-    
-    
-    var directorItems : Array<Array<MenuItem>> = {
-        var section1 = [
-            MenuItem(title: "New Phone Campaign"),
-            MenuItem(title: "My Active Missions"),
-            MenuItem(title: "All My Missions"),
-            MenuItem(title: "All Active Missions"),
-            MenuItem(title: "All Missions"),
-            MenuItem(title: "All Activity")
-        ]
-        
-        return [section1]
-    }()
-     ********/
-    
+        return roleItems[withText]
+    }
     
 }

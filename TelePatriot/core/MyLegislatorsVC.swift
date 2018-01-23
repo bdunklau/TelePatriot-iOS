@@ -28,9 +28,10 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
     var currentState : String?
     var currentZip : String?
     
+    var addressUpdater : AddressUpdater? // defined at bottom
     
     
-    
+    /*********
     let myLegislatorsHeading : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -39,18 +40,10 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
         return l
     }()
+     *********/
     
     var senatorView : LegislatorUI?
     var houserepView : LegislatorUI?
-    
-    
-    
-    let locationButton : BaseButton = {
-        let button = BaseButton(text: "Capture Location")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(captureLocation(_:)), for: .touchUpInside)
-        return button
-    }()
     
     let lat : UILabel = {
         let l = UILabel()
@@ -64,10 +57,30 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         return l
     }()
     
-    let speed : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        return l
+    
+    let noAddressText : UITextView = {
+        let textView = UITextView()
+        textView.text = "This app needs to know your location in order to look up your state legislators.  If you are at home now, touch \"Get My Address\"."
+        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
+        //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize) // just example
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        //var frame = textView.frame
+        //frame.size.height = 200
+        //textView.frame = frame
+        textView.backgroundColor = UIColor.clear
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    
+    
+    let getMyAddressButton : BaseButton = {
+        let button = BaseButton(text: "Get My Address")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(updateAddress(_:)), for: .touchUpInside)
+        return button
     }()
     
     var scrollView : UIScrollView?
@@ -76,43 +89,62 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        initView()
         
-        if scrollView != nil {
-            //scrollView?.removeFromSuperview()
-            return // this may be better
+        if TPUser.sharedInstance.hasStoredLocation() {
+            createViewWhenAddressIsKnown()
         }
+        else {
+            createViewWhenAddressIsUnknown()
+        }
+    }
+    
+    private func initView() {
+        if scrollView != nil {
+            scrollView?.removeFromSuperview()
+        }
+        
+        noAddressText.removeFromSuperview()
+        getMyAddressButton.removeFromSuperview()
+    }
+    
+    private func createViewWhenAddressIsUnknown() {
+        view.addSubview(noAddressText)
+        noAddressText.topAnchor.constraint(equalTo: view.topAnchor, constant: 72).isActive = true
+        noAddressText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        noAddressText.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive = true
+        
+        view.addSubview(getMyAddressButton)
+        getMyAddressButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        getMyAddressButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+    }
+    
+    private func createViewWhenAddressIsKnown() {
         
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         scrollView?.contentSize = CGSize(width: 250, height: 1450)
         
         view.addSubview(scrollView!)
         
-        
-        scrollView?.addSubview(locationButton)
-        locationButton.topAnchor.constraint(equalTo: (scrollView?.topAnchor)!, constant: 8).isActive = true
-        locationButton.centerXAnchor.constraint(equalTo: (scrollView?.centerXAnchor)!).isActive = true
-        //locationButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
-        //locationButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
-        
+        /***************
         scrollView?.addSubview(myLegislatorsHeading)
-        myLegislatorsHeading.topAnchor.constraint(equalTo: locationButton.bottomAnchor, constant: 16).isActive = true
+        myLegislatorsHeading.topAnchor.constraint(equalTo: (scrollView?.topAnchor)!, constant: 16).isActive = true
         myLegislatorsHeading.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
-        //myAddressHeading.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
-        //myAddressHeading.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
+         ***********/
         
         /*******/
-        let senatorViewY = myLegislatorsHeading.frame.origin.y + myLegislatorsHeading.frame.height + 8
+        let senatorViewY = /*myLegislatorsHeading.frame.origin.y + myLegislatorsHeading.frame.height + */ 8
         
         let rectSenator = CGRect(
-            origin: CGPoint(x: myLegislatorsHeading.frame.origin.x, y: senatorViewY),
+            origin: CGPoint(x: 0/*myLegislatorsHeading.frame.origin.x*/, y: senatorViewY),
             size: CGSize(width: (scrollView?.frame.width)!-16, height: 200)
         )
         
         
         senatorView = LegislatorUI(frame: rectSenator)
         scrollView?.addSubview(senatorView!)
-        senatorView?.topAnchor.constraint(equalTo: myLegislatorsHeading.bottomAnchor, constant: 16).isActive = true
+        senatorView?.topAnchor.constraint(equalTo: (scrollView?.topAnchor)!, constant: 16).isActive = true
         senatorView?.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
         senatorView?.widthAnchor.constraint(equalTo: (scrollView?.widthAnchor)!, multiplier: 0.95).isActive = true
         /********/
@@ -120,7 +152,7 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         let houseRepViewY = (senatorView?.frame.origin.y)! + (senatorView?.frame.height)! + 32
         
         let rectHouseRep = CGRect(
-            origin: CGPoint(x: myLegislatorsHeading.frame.origin.x, y: houseRepViewY),
+            origin: CGPoint(x: 0/*myLegislatorsHeading.frame.origin.x*/, y: houseRepViewY),
             size: CGSize(width: (scrollView?.frame.width)!-16, height: 200)
         )
         
@@ -130,6 +162,7 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         houserepView?.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
         houserepView?.widthAnchor.constraint(equalTo: (scrollView?.widthAnchor)!, multiplier: 0.95).isActive = true
         
+        doCaptureLocation()
         
         /************
          view.addSubview(lat)
@@ -165,12 +198,20 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc private func updateAddress(_ sender: UIButton) {
+        // send the user to MyProfileVC to update address based on lat/long location
+        
+        // addressUpdater is a "delegate"
+        addressUpdater?.beginUpdatingAddress()
+    }
     
-    @objc func captureLocation(_ sender: UIButton) {
+    private func doCaptureLocation() {
+        
         //guard user != nil else {return}
         
-        guard let lati = latitude,
-            let longi = longitude else { return }
+        guard let lati = TPUser.sharedInstance.current_latitude,
+            let longi = TPUser.sharedInstance.current_longitude else {
+                return }
         
         
         lat.text = "Lat: \(lati)"
@@ -220,34 +261,10 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         }
         
         task.resume()
-        
-        /***************
-         //creating a NSURL
-         guard let url = URL(string: "https://openstates.org/api/v1/legislators/geo/?lat=\(lati)&long=\(longi)&apikey=aad44b39-c9f2-4cc5-a90a-e0503e5bdc3c") else { return }
-         
-         //fetching the data from the url
-         URLSession.shared.dataTask(with: url) {(data, response, error) in
-         guard let data = data else {
-         return}
-         
-         print("data = \(data)")
-         
-         do {
-         guard let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-         as? [String: Any] else {
-         return}
-         print("json = \(json)")
-         print("1")
-         }
-         catch {
-         
-         }
-         
-         }.resume()
-         ***********/
     }
     
     
+    /************
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -258,13 +275,16 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
+        
+        // You have to ask.  You can't just skip this and think the phone will share location
+        locationManager.requestAlwaysAuthorization() // this is where the dialog pops up asking you to allow access to your location
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
             //locationManager.startUpdatingHeading()
         }
     }
+    **********/
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
@@ -279,64 +299,6 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         
         latitude = userLocation.coordinate.latitude
         longitude = userLocation.coordinate.longitude
-        speed.text = "Speed: \(userLocation.speed.magnitude)"
-        
-        CLGeocoder().reverseGeocodeLocation(locations.last!, completionHandler: { (placemarks, error) -> Void in
-            
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placemarks?[0]
-            
-            // Address dictionary
-            //print(placeMark.addressDictionary ?? "address n/a", terminator: "")
-            
-            guard let plc = placeMark,
-                let addrDict = placeMark.addressDictionary else {
-                    return
-            }
-            
-            
-            // Location name
-            if let locationName = placeMark.addressDictionary!["Name"] as? NSString {
-                self.currentStreetAddress = locationName as String
-            }
-            
-            // Street address
-            if let street = placeMark.addressDictionary!["Thoroughfare"] as? NSString {
-                //print(street, terminator: "")
-            }
-            
-            // City
-            if let city = placeMark.addressDictionary!["City"] as? NSString {
-                self.currentCity = city as String
-            }
-            
-            // state
-            if let state = placeMark.addressDictionary!["State"] as? NSString {
-                self.currentState = state as String
-            }
-            
-            // Zip code
-            if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
-                self.currentZip = zip as String
-            }
-            
-            // Country
-            if let country = placeMark.addressDictionary!["Country"] as? NSString {
-                //print(country, terminator: "")
-            }
-            
-            //self.address.text = self.address.text! + "\(placeMark.addressDictionary)"
-            
-        })
-        
-        
-        
-    }
-    
-    func formatAddressFromPlacemark(placemark: CLPlacemark) -> String {
-        return (placemark.addressDictionary!["FormattedAddressLines"] as!
-            [String]).joined(separator: ", ")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
@@ -358,5 +320,10 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
      }
      */
     
+}
+
+// CenterViewController is an AddressUpdater and the assignment is made in ContainerViewController
+protocol AddressUpdater {
+    func beginUpdatingAddress()
 }
 

@@ -78,6 +78,8 @@ class ContainerViewController: UIViewController {
         // creation and assignment of all these delegates should be more consistent
         appDelegate?.wrapUpCallViewController?.delegate = centerViewController
         
+        appDelegate?.myLegislatorsVC?.addressUpdater = centerViewController
+        
         assignUserVC = getAssignUserVC()
         assignUserVC.assignUserDelegate = centerViewController
         

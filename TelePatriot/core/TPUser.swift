@@ -27,6 +27,8 @@ class TPUser {
     var residential_address_city : String?
     var residential_address_state_abbrev : String?
     var residential_address_zip : String?
+    var legislative_house_district : String?
+    var legislative_senate_district : String?
     var current_latitude : Double?
     var current_longitude : Double?
     private var currentTeam : Team?
@@ -96,6 +98,15 @@ class TPUser {
         return isAdmin || isDirector || isVolunteer;
     }
     
+    // Note, it's possible that the user has sinced turned off location services
+    // This method just returns true if the user has EVER turned on location services
+    func hasStoredLocation() -> Bool {
+        
+        // Even this criteria
+        let notNil = current_latitude != nil
+        return notNil
+    }
+    
     // right now, we are only updating residential address fields and lat/long fields
     // At some point, we should use this to update all fields
     func update(callback: @escaping (_ err: NSError?) -> Void) {
@@ -108,6 +119,8 @@ class TPUser {
                                "users/\(uid)/residential_address_city": residential_address_city,
                                "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
                                "users/\(uid)/residential_address_zip": residential_address_zip,
+                               "users/\(uid)/legislative_house_district": legislative_house_district,
+                               "users/\(uid)/legislative_senate_district": legislative_senate_district,
                                "users/\(uid)/current_latitude": current_latitude,
                                "users/\(uid)/current_longitude": current_longitude] as [String : Any]
         
@@ -143,10 +156,16 @@ class TPUser {
             if let raz = userNode["residential_address_zip"] as? String {
                 self.residential_address_zip = raz
             }
-            if let lat = userNode["residential_address_latitude"] as? Double {
+            if let hd = userNode["legislative_house_district"] as? String {
+                self.legislative_house_district = hd
+            }
+            if let sd = userNode["legislative_senate_district"] as? String {
+                self.legislative_senate_district = sd
+            }
+            if let lat = userNode["current_latitude"] as? Double {
                 self.current_latitude = lat
             }
-            if let lng = userNode["residential_address_longitude"] as? Double {
+            if let lng = userNode["current_longitude"] as? Double {
                 self.current_longitude = lng
             }
         })

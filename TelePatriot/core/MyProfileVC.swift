@@ -24,6 +24,8 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
     var currentCity : String?
     var currentState : String?
     var currentZip : String?
+    var houseDistrict : String? // usually a number but at least one states uses numbers+letters
+    var senateDistrict : String? // usually a number but at least one states uses numbers+letters
     
     
     let myAddressHeading : UILabel = {
@@ -118,13 +120,63 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         return field
     }()
     
-    var myLegislatorView : MyLegislators?
+    
+    let houseDistrictLabel : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.text = "House District"
+        //l.font = l.font.withSize(24)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
+        return l
+    }()
+    
+    
+    let houseDistrictValueLabel : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.text = ""
+        //l.font = l.font.withSize(24)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
+        return l
+    }()
+    
+    
+    let senateDistrictLabel : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.text = "Senate District"
+        //l.font = l.font.withSize(24)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
+        return l
+    }()
+    
+    
+    let senateDistrictValueLabel : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.text = ""
+        //l.font = l.font.withSize(24)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
+        return l
+    }()
+    
+    
+    //var myLegislatorView : MyLegislators?
     
     
     let locationButton : BaseButton = {
         let button = BaseButton(text: "Capture Location")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(captureLocation(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    static let thisIsHome = "This is my Home Address"
+    
+    let thisIsMyHomeAddressButton : BaseButton = {
+        let button = BaseButton(text: MyProfileVC.thisIsHome)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(updateResidentialAddress(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -140,20 +192,13 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         return l
     }()
     
-    let speed : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        return l
-    }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if TPUser.sharedInstance.residential_address_line1 == nil {
+        if !TPUser.sharedInstance.hasStoredLocation() {
             myAddressExplanation.text = "Enter your residential address in the fields below, or touch Capture Location next time you're home"
         }
-        
         
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         scrollView.contentSize = CGSize(width: 250, height: 1450)
@@ -203,13 +248,38 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         zipField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.25).isActive = true
         zipField.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.05).isActive = true
         
+        scrollView.addSubview(houseDistrictLabel)
+        houseDistrictLabel.topAnchor.constraint(equalTo: cityField.bottomAnchor, constant: 8).isActive = true
+        houseDistrictLabel.leadingAnchor.constraint(equalTo: cityField.leadingAnchor, constant: 0).isActive = true
+        //houseDistrictLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.5).isActive = true
+        //houseDistrictLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.05).isActive = true
+        
+        scrollView.addSubview(houseDistrictValueLabel)
+        houseDistrictValueLabel.topAnchor.constraint(equalTo: houseDistrictLabel.topAnchor, constant: 0).isActive = true
+        houseDistrictValueLabel.leadingAnchor.constraint(equalTo: houseDistrictLabel.trailingAnchor, constant: 4).isActive = true
+        
+        scrollView.addSubview(senateDistrictLabel)
+        senateDistrictLabel.topAnchor.constraint(equalTo: houseDistrictLabel.bottomAnchor, constant: 8).isActive = true
+        senateDistrictLabel.leadingAnchor.constraint(equalTo: houseDistrictLabel.leadingAnchor, constant: 0).isActive = true
+        //senateDistrictLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.5).isActive = true
+        //senateDistrictLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.05).isActive = true
+        
+        scrollView.addSubview(senateDistrictValueLabel)
+        senateDistrictValueLabel.topAnchor.constraint(equalTo: senateDistrictLabel.topAnchor, constant: 0).isActive = true
+        senateDistrictValueLabel.leadingAnchor.constraint(equalTo: senateDistrictLabel.trailingAnchor, constant: 4).isActive = true
+        
         
         scrollView.addSubview(locationButton)
-        locationButton.topAnchor.constraint(equalTo: zipField.bottomAnchor, constant: 8).isActive = true
+        locationButton.topAnchor.constraint(equalTo: senateDistrictLabel.bottomAnchor, constant: 8).isActive = true
         locationButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         //locationButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         //locationButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         
+        scrollView.addSubview(thisIsMyHomeAddressButton)
+        thisIsMyHomeAddressButton.topAnchor.constraint(equalTo: locationButton.bottomAnchor, constant: 8).isActive = true
+        thisIsMyHomeAddressButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        /*********
         if myLegislatorView != nil {
             myLegislatorView?.removeFromSuperview()
         }
@@ -219,7 +289,7 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         myLegislatorView?.topAnchor.constraint(equalTo: locationButton.bottomAnchor, constant: 16).isActive = true
         myLegislatorView?.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         myLegislatorView?.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
-        
+        ********/
         
         /*****************
          // cool - but don't need this
@@ -229,6 +299,28 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
          ***************/
         
         //locationTuples = [(sourceField, nil), (destinationField1, nil), (destinationField2, nil)]
+        
+        if let rad1 = TPUser.sharedInstance.residential_address_line1 {
+            addressLine1Field.text = rad1
+        }
+        if let rad2 = TPUser.sharedInstance.residential_address_line2 {
+            addressLine2Field.text = rad2
+        }
+        if let rac = TPUser.sharedInstance.residential_address_city {
+            cityField.text = rac
+        }
+        if let ras = TPUser.sharedInstance.residential_address_state_abbrev {
+            stateField.text = ras
+        }
+        if let raz = TPUser.sharedInstance.residential_address_zip {
+            zipField.text = raz
+        }
+        if let hd = TPUser.sharedInstance.legislative_house_district {
+            houseDistrictValueLabel.text = hd
+        }
+        if let sd = TPUser.sharedInstance.legislative_senate_district {
+            senateDistrictValueLabel.text = sd
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -236,16 +328,6 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @objc func captureLocation(_ sender: UIButton) {
-        
-        if sender.titleLabel?.text == "Capture Location" {
-            doCaptureLocation(sender)
-        }
-        else if sender.titleLabel?.text == "This is my Home Address" {
-            updateResidentialAddress()
-        }
-    }
     
     func callback(error: NSError?) {
         //var error : NSError?
@@ -276,29 +358,32 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func updateResidentialAddress() {
+    @objc private func updateResidentialAddress(_ sender: UIButton) {
         
         TPUser.sharedInstance.residential_address_line1 = addressLine1Field.text
         TPUser.sharedInstance.residential_address_line2 = addressLine2Field.text
         TPUser.sharedInstance.residential_address_city = cityField.text
         TPUser.sharedInstance.residential_address_state_abbrev = stateField.text
         TPUser.sharedInstance.residential_address_zip = zipField.text
+        TPUser.sharedInstance.legislative_house_district = houseDistrict
+        TPUser.sharedInstance.legislative_senate_district = senateDistrict
         TPUser.sharedInstance.current_latitude = latitude
         TPUser.sharedInstance.current_longitude = longitude
         TPUser.sharedInstance.update(callback: callback)
     }
     
-    private func doCaptureLocation(_ sender: UIButton) {
+    @objc func captureLocation(_ sender: UIButton) {
         
         //guard user != nil else {return}
         
         guard let lati = latitude,
             let longi = longitude else { return }
         
-        let thisIsHome = "This is my Home Address"
-        sender.setTitle(thisIsHome, for: .normal)
-        myAddressExplanation.text = "If this is your residential address, touch \"\(thisIsHome)\". If not, use these fields to correct and then touch \"\(thisIsHome)\""
+        //let thisIsHome = "This is my Home Address"
+        //sender.setTitle(thisIsHome, for: .normal)
+        myAddressExplanation.text = "If this is your residential address, touch \"\(MyProfileVC.thisIsHome)\". If not, use these fields to correct and then touch \"\(MyProfileVC.thisIsHome)\""
         
+        // we're getting these values every second down in func locationManager()
         addressLine1Field.text = currentStreetAddress
         cityField.text = currentCity
         stateField.text = currentState
@@ -325,7 +410,24 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
             let decoder = JSONDecoder()
             let legislators = try? decoder.decode([Legislator].self, from: data!)
             
-            self.myLegislatorView?.setLegislators(legislators: legislators!)
+            // get house and senate district numbers here so we can put them in the TPUser object
+            
+            if let legs = legislators {
+                DispatchQueue.main.async {
+                    for legislator in legs {
+                        if legislator.chamber == "lower" {
+                            self.houseDistrict = legislator.district
+                            self.houseDistrictValueLabel.text = legislator.district
+                        }
+                        else {
+                            self.senateDistrict = legislator.district
+                            self.senateDistrictValueLabel.text = legislator.district
+                        }
+                    }
+                }
+            }
+            
+            //self.myLegislatorView?.setLegislators(legislators: legislators!)
         }
         
         task.resume()
@@ -363,7 +465,6 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         
         latitude = userLocation.coordinate.latitude
         longitude = userLocation.coordinate.longitude
-        speed.text = "Speed: \(userLocation.speed.magnitude)"
         
         CLGeocoder().reverseGeocodeLocation(locations.last!, completionHandler: { (placemarks, error) -> Void in
             

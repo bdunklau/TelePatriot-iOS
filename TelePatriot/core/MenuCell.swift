@@ -10,7 +10,7 @@ import UIKit
 
 class MenuCell: UITableViewCell {
     
-    //var menuItemImageView = UIImageView()
+    
     var label = UILabel()
     
     func configureCell(_ menuItem: MenuItem) {
@@ -23,7 +23,13 @@ class MenuCell: UITableViewCell {
         let size = label.sizeThatFits(maxSize)
         label.frame = CGRect(origin: CGPoint(x: 50, y: 10), size: size)
         
+        addSubview(menuItem.icon)
+        menuItem.icon.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        menuItem.icon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
+        
         addSubview(label)
+        label.centerYAnchor.constraint(equalTo: menuItem.icon.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: menuItem.icon.trailingAnchor, constant: 4).isActive = true
     }
 }
 

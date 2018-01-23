@@ -86,6 +86,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         tableView?.tableHeaderView = headerView
         tableView?.tableHeaderView?.frame.size.height = cos_logo.frame.size.height
         
+        
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.register(MenuCell.self, forCellReuseIdentifier: "thecell")
@@ -244,7 +245,10 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
             }
         }
         if(!alreadyGranted) {
-            let theItem = MenuItem(title: itemText)
+            guard let theItem = MenuItems.getItem(withText: itemText) else { //MenuItem(title: itemText)
+                // TODO this is a problem - no error handling here
+                return
+            }
             guard menuItems.count > 0 else { return }
             menuItems[0].append(theItem)
         }
@@ -315,6 +319,13 @@ extension SidePanelViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuItem = menuItems[indexPath.section][indexPath.row]
         sidePanelDelegate?.didSelectSomething(menuItem: menuItem)
+    }
+    
+    // sets the color of the section headings
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
+        view.tintColor = UIColor.darkGray
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.white
     }
 }
 

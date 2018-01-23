@@ -456,8 +456,15 @@ extension CenterViewController : AccountStatusEventListener {
         }
         loadSplashscreen()
     }
-    
-    
+}
+
+// AddressUpdater is declared at the bottom of MyLegislatorsVC
+// MyLegislatorsVC.addressUpdater is assigned to CenterViewController in ContainerViewController
+extension CenterViewController : AddressUpdater {
+    func beginUpdatingAddress() {
+        guard let vc = delegate?.getMyProfileVC() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
 }
 
 /******

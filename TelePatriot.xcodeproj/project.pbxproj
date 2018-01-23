@@ -46,7 +46,6 @@
 		A13F7AA62013EB7500EF0766 /* Legislator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA52013EB7500EF0766 /* Legislator.swift */; };
 		A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA72014031A00EF0766 /* LegislatorUI.swift */; };
 		A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */; };
-		A13F7AAC20145D8E00EF0766 /* MyLegislators.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAB20145D8E00EF0766 /* MyLegislators.swift */; };
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
@@ -120,7 +119,6 @@
 		A13F7AA52013EB7500EF0766 /* Legislator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legislator.swift; sourceTree = "<group>"; };
 		A13F7AA72014031A00EF0766 /* LegislatorUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegislatorUI.swift; sourceTree = "<group>"; };
 		A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeTableViewCell.swift; sourceTree = "<group>"; };
-		A13F7AAB20145D8E00EF0766 /* MyLegislators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislators.swift; sourceTree = "<group>"; };
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 				A17B6ED51FD1EA7100A3325C /* MissionItem.swift */,
 				A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */,
 				A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */,
-				A13F7AAB20145D8E00EF0766 /* MyLegislators.swift */,
 				A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */,
 				A1AD5C472011A32900CB113E /* MyProfileVC.swift */,
 				A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */,
@@ -532,7 +529,6 @@
 				A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */,
 				A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */,
 				A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */,
-				A13F7AAC20145D8E00EF0766 /* MyLegislators.swift in Sources */,
 				A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */,
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
