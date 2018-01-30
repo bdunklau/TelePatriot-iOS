@@ -8,6 +8,9 @@
 
 import UIKit
 
+// THIS IS NOT THE CLASS TO USE
+// THIS CLASS IS A HOLDOVER FROM WHEN WE WERE USING STORYBOARDS
+// FIND REFERENCES TO THIS CLASS THEN DELETE THIS CLASS
 class AdminViewController: BaseViewController {
 
     override func viewDidLoad() {

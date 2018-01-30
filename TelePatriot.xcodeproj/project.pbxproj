@@ -42,11 +42,17 @@
 		A131189E1FE6293E0031D9AE /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189D1FE6293E0031D9AE /* Team.swift */; };
 		A13118A01FE62B710031D9AE /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */; };
 		A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */; };
+		A134C1AE2017ECD000B64939 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = A134C1AD2017ECD000B64939 /* Util.swift */; };
+		A134C1B02017EFB500B64939 /* CallLegislatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A134C1AF2017EFB500B64939 /* CallLegislatorEvent.swift */; };
+		A134C1B220183CD100B64939 /* MissionItem2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A134C1B120183CD100B64939 /* MissionItem2.swift */; };
+		A135C2FF20196A6200B50B49 /* AdminVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135C2FE20196A6200B50B49 /* AdminVC.swift */; };
+		A135C30120197AE500B50B49 /* SearchUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135C30020197AE500B50B49 /* SearchUsersVC.swift */; };
 		A1369CAC1FE9C845008B426D /* NoMissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1369CAB1FE9C845008B426D /* NoMissionVC.swift */; };
 		A13F7AA62013EB7500EF0766 /* Legislator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA52013EB7500EF0766 /* Legislator.swift */; };
 		A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA72014031A00EF0766 /* LegislatorUI.swift */; };
 		A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */; };
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
+		A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
@@ -115,11 +121,17 @@
 		A131189D1FE6293E0031D9AE /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		A131189F1FE62B710031D9AE /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
 		A13118A11FE6323F0031D9AE /* SwitchTeamsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTeamsDelegate.swift; sourceTree = "<group>"; };
+		A134C1AD2017ECD000B64939 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		A134C1AF2017EFB500B64939 /* CallLegislatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLegislatorEvent.swift; sourceTree = "<group>"; };
+		A134C1B120183CD100B64939 /* MissionItem2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionItem2.swift; sourceTree = "<group>"; };
+		A135C2FE20196A6200B50B49 /* AdminVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminVC.swift; sourceTree = "<group>"; };
+		A135C30020197AE500B50B49 /* SearchUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUsersVC.swift; sourceTree = "<group>"; };
 		A1369CAB1FE9C845008B426D /* NoMissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMissionVC.swift; sourceTree = "<group>"; };
 		A13F7AA52013EB7500EF0766 /* Legislator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legislator.swift; sourceTree = "<group>"; };
 		A13F7AA72014031A00EF0766 /* LegislatorUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegislatorUI.swift; sourceTree = "<group>"; };
 		A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeTableViewCell.swift; sourceTree = "<group>"; };
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
+		A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNeededView.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84621FA92975007EE77C /* TelePatriot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TelePatriot-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -221,8 +233,10 @@
 		A13B4C501FDF1FBF00D5527E /* misc */ = {
 			isa = PBXGroup;
 			children = (
+				A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */,
 				A1217E301FCA199A0007ABF8 /* Call.swift */,
 				A1217E341FCA24150007ABF8 /* CallButton.swift */,
+				A134C1AD2017ECD000B64939 /* Util.swift */,
 			);
 			path = misc;
 			sourceTree = "<group>";
@@ -235,6 +249,7 @@
 				A1AD5C452009AC1400CB113E /* BackTracker.swift */,
 				A109E8BA1FC7E1F60005517A /* BaseButton.swift */,
 				A12CDB3C1FAF77FE003DE424 /* BaseViewController.swift */,
+				A134C1AF2017EFB500B64939 /* CallLegislatorEvent.swift */,
 				A109E8AA1FC564A50005517A /* CenterViewController.swift */,
 				A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */,
 				A109E8AE1FC6233F0005517A /* ContainerViewController.swift */,
@@ -244,6 +259,7 @@
 				A109E8AC1FC565E60005517A /* MenuItem.swift */,
 				A109E8C21FC86DFC0005517A /* MenuItems.swift */,
 				A17B6ED51FD1EA7100A3325C /* MissionItem.swift */,
+				A134C1B120183CD100B64939 /* MissionItem2.swift */,
 				A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */,
 				A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */,
 				A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */,
@@ -267,11 +283,13 @@
 			children = (
 				A18565971FBCF2A6009EE57F /* AccountStatusEvent.swift */,
 				A18565931FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift */,
+				A135C2FE20196A6200B50B49 /* AdminVC.swift */,
 				A12CDB421FAF7902003DE424 /* AdminViewController.swift */,
 				A1DD805E1FE97173003F140C /* AssignUserVC.swift */,
 				A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */,
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
+				A135C30020197AE500B50B49 /* SearchUsersVC.swift */,
 				A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */,
 				A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */,
 				A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */,
@@ -492,6 +510,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A134C1B02017EFB500B64939 /* CallLegislatorEvent.swift in Sources */,
 				A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */,
 				A1369CAC1FE9C845008B426D /* NoMissionVC.swift in Sources */,
 				A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */,
@@ -515,9 +534,11 @@
 				A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */,
 				A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
+				A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
 				A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */,
 				A1217E351FCA24150007ABF8 /* CallButton.swift in Sources */,
+				A134C1B220183CD100B64939 /* MissionItem2.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,
 				A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */,
@@ -529,6 +550,7 @@
 				A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */,
 				A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */,
 				A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */,
+				A135C30120197AE500B50B49 /* SearchUsersVC.swift in Sources */,
 				A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */,
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
@@ -542,7 +564,9 @@
 				A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */,
 				A109E8AB1FC564A50005517A /* CenterViewController.swift in Sources */,
 				A13F7AA62013EB7500EF0766 /* Legislator.swift in Sources */,
+				A135C2FF20196A6200B50B49 /* AdminVC.swift in Sources */,
 				A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */,
+				A134C1AE2017ECD000B64939 /* Util.swift in Sources */,
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
 				A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */,
 				A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */,

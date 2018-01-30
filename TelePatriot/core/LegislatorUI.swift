@@ -157,12 +157,15 @@ class LegislatorUI: UIView, UITableViewDataSource {
         let cell = officesTable?.dequeueReusableCell(withIdentifier: "cellId",
                                                       for: indexPath as IndexPath) as! OfficeTableViewCell
         
-        
-        let office = offices[indexPath.row]
-        
-        // Most other examples of this method pass a DatabaseReference object
-        // to the commonInit() method.  In this case, we don't need to
-        cell.commonInit(office: office /*, ref: ref!*/)
+        if let legislator = legislator {
+            
+            let office = offices[indexPath.row]
+            
+            // Most other examples of this method pass a DatabaseReference object
+            // to the commonInit() method.  In this case, we don't need to
+            cell.commonInit(legislator: legislator, office: office /*, ref: ref!*/)
+            
+        }
         
         return cell
      }

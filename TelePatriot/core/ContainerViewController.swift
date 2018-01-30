@@ -26,14 +26,16 @@ class ContainerViewController: UIViewController {
         case rightPanelExpanded
     }
     
+    var adminVC: AdminVC!
     var assignUserVC: AssignUserVC!
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
+    var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
     var directorViewController: DirectorViewController!
     var myMissionViewController: MyMissionViewController!
     var newPhoneCampaignVC: NewPhoneCampaignVC!
     var missionSummaryTVC: MissionSummaryTVC!
-    var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
+    var searchUsersVC: SearchUsersVC!
     var switchTeamsVC: SwitchTeamsVC!
     var unassignedUsersVC: UnassignedUsersVC!
     
@@ -79,9 +81,13 @@ class ContainerViewController: UIViewController {
         appDelegate?.wrapUpCallViewController?.delegate = centerViewController
         
         appDelegate?.myLegislatorsVC?.addressUpdater = centerViewController
+        appDelegate?.myProfileVC?.addressUpdater = centerViewController
+        
+        adminVC = getAdminVC()
+        adminVC?.adminDelegate = centerViewController
         
         assignUserVC = getAssignUserVC()
-        assignUserVC.assignUserDelegate = centerViewController
+        //assignUserVC.assignUserDelegate = centerViewController
         
         // modeled after the centerViewController stuff above
         directorViewController = getDirectorViewController()
@@ -95,6 +101,10 @@ class ContainerViewController: UIViewController {
         
         chooseSpreadsheetTypeVC = getChooseSpreadsheetTypeVC()
         chooseSpreadsheetTypeVC?.delegate = centerViewController
+        
+        if let searchUsersVC = getSearchUsersVC() {
+            searchUsersVC.searchUsersDelegate = centerViewController
+        }
         
         switchTeamsVC = getSwitchTeamsVC()
         switchTeamsVC?.delegate = centerViewController
@@ -174,7 +184,6 @@ private extension UIStoryboard {
 
 extension ContainerViewController: CenterViewControllerDelegate {
     
-    
     func viewChosen() {
         allowPanningFromRightToLeft = false // see CenterViewController.doView()
     }
@@ -213,6 +222,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
         return appDelegate?.switchTeamsVC
     }
     
+    func getAdminVC() -> AdminVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.adminVC
+    }
+    
     func getAllActivityVC() -> AllActivityVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.allActivityVC
@@ -241,6 +255,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getMissionSummaryTVC() -> MissionSummaryTVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.missionSummaryTVC
+    }
+    
+    func getSearchUsersVC() -> SearchUsersVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.searchUsersVC
     }
     
     func getUnassignedUsersVC() -> UnassignedUsersVC? {

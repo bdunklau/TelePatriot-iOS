@@ -15,6 +15,7 @@ protocol CenterViewControllerDelegate {
     @objc optional func toggleLeftPanel()
     @objc optional func toggleRightPanel()
     @objc optional func collapseSidePanels()
+    func getAdminVC() -> AdminVC?
     func getAllActivityVC() -> AllActivityVC?
     func getAssignUserVC() -> AssignUserVC?
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC?
@@ -25,6 +26,7 @@ protocol CenterViewControllerDelegate {
     func getMyLegislatorsVC() -> MyLegislatorsVC?
     func getMyProfileVC() -> MyProfileVC?
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC?
+    func getSearchUsersVC() -> SearchUsersVC?
     func getSwitchTeamsVC() -> SwitchTeamsVC?
     func getUnassignedUsersVC() -> UnassignedUsersVC?
     func getUserIsBannedVC() -> UserIsBannedVC?

@@ -48,6 +48,8 @@ class MissionItem {
     var group_number_was : Int?
     var number_of_missions_in_master_mission : Int
     
+    // set in AppDelegate
+    static var nextViewController : UIViewController?
     
     
     init(mission_item_id : String,
@@ -89,28 +91,5 @@ class MissionItem {
         self.number_of_missions_in_master_mission = number_of_missions_in_master_mission
     }
     
-    
-    /************
-    func unassign(missionItemId: String) {
-        // New as of Dec 2017: When we unassign a mission item, we have to set group_number
-        // back to group_number_was.  Otherwise, group_number will stay at 999999 and forever be at
-        // the end of the queue
-        if let was = group_number_was {
-            group_number = was
-        }
-        else {
-            group_number = 0
-        }
-        setState(state: "new", missionItemId: missionItemId)
-    }
-    
-    private func setState(state: String, missionItemId: String) {
-        self.accomplished = state
-        let activeStr = self.active ? "true" : "false"
-        self.active_and_accomplished = activeStr + "_" + state
-        let team = TPUser.sharedInstance.getCurrentTeam()
-        FirebaseDatabase.getInstance().getReference("/teams/"+team+"/mission_items/"+missionItemId).setValue(this)
-    }
-     ************/
     
 }

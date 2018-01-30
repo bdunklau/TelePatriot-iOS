@@ -39,7 +39,9 @@ class CannotApproveUserVC: BaseViewController {
         return textView
     }()
     
-    var user : [String:Any]?
+    // consolidate these two soon
+    //var user : [String:Any]?
+    var user : TPUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +51,8 @@ class CannotApproveUserVC: BaseViewController {
             return
         }
         
-        guard let userAttributes = usr["values"] as! [String:Any]?,
-            let name = userAttributes["name"] as! String?,
-            let email = userAttributes["email"] as! String? else {
+        guard let name = user?.getName() ,
+            let email = user?.getEmail() else {
                 return }
         
         nameLabel.text = name

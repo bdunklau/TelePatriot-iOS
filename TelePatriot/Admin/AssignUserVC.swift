@@ -27,6 +27,7 @@ class AssignUserVC: BaseViewController {
     let instructionsLabel : UILabel = {
         let label = UILabel()
         label.text = "Assign to One More Groups"
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,16 +68,71 @@ class AssignUserVC: BaseViewController {
         return s
     }()
     
+    let has_user_satisfied_legal_label : UILabel = {
+        let label = UILabel()
+        label.text = "Legal Requirements"
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let has_signed_petition_Label : UILabel = {
+        let label = UILabel()
+        label.text = "Petition"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    static private let YES = 0
+    static private let NO = 1
+    static private let UNKNOWN = 2
+    
+    let has_signed_petition_segmented_control : UISegmentedControl = {
+        let s = UISegmentedControl(items: ["Yes", "No", "Unknown"])
+        s.frame = CGRect(x: 150, y: 433, width: 200, height: 30)
+        return s
+    }()
+    
+    let has_signed_confidentiality_agreement_Label : UILabel = {
+        let label = UILabel()
+        label.text = "Confidentiality"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let has_signed_confidentiality_agreement_segmented_control : UISegmentedControl = {
+        let s = UISegmentedControl(items: ["Yes", "No", "Unknown"])
+        s.frame = CGRect(x: 150, y: 475, width: 200, height: 30)
+        return s
+    }()
+    
+    let is_banned_Label : UILabel = {
+        let label = UILabel()
+        label.text = "Banned"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    
+    let is_banned_segmented_control : UISegmentedControl = {
+        let s = UISegmentedControl(items: ["Yes", "No", "Unknown"])
+        s.frame = CGRect(x: 150, y: 517, width: 200, height: 30)
+        return s
+    }()
+    
     let okButton : BaseButton = {
         let button = BaseButton(text: "OK")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(assignUser(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(updateUser(_:)), for: .touchUpInside)
         return button
     }()
     
-    var user : [String:Any]?
+    // consolidate these two soon
+    //var user : [String:Any]?
+    var user : TPUser?
+    
     var uid : String?
-    var assignUserDelegate : AssignUserDelegate?
+    //var assignUserDelegate : AssignUserDelegate?
     var ref : DatabaseReference?
 
     override func viewDidLoad() {
@@ -84,10 +140,9 @@ class AssignUserVC: BaseViewController {
 
         // Do any additional setup after loading the view.
         
-        guard let userAttributes = user!["values"] as? [String:Any],
-            let theUid = user!["uid"] as! String?,
-            let name = userAttributes["name"] as! String?,
-            let email = userAttributes["email"] as! String? else {
+        guard let theUid = user?.getUid() ,
+            let name = user?.getName() ,
+            let email = user?.getEmail() else {
                 return }
     
         uid = theUid
@@ -98,28 +153,50 @@ class AssignUserVC: BaseViewController {
         emailLabel.text = email
      
         
-        if let isVolunteer = userAttributes["isVolunteer"] as? String {
-            volunteerSwitch.setOn(isVolunteer == "true", animated: true)
+        // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
+        if let isVolunteer = user?.isVolunteer as? Bool {
+            volunteerSwitch.setOn(isVolunteer, animated: true)
         }
         else {
             volunteerSwitch.setOn(false, animated: true)
         }
         
         
-        if let isDirector = userAttributes["isDirector"] as? String {
-            directorSwitch.setOn(isDirector == "true", animated: true)
+        // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
+        if let isDirector = user?.isDirector {
+            directorSwitch.setOn(isDirector, animated: true)
         }
         else {
             directorSwitch.setOn(false, animated: true)
         }
         
         
-        if let isAdmin = userAttributes["isAdmin"] as? String {
-            adminSwitch.setOn(isAdmin == "true", animated: true)
+        // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
+        if let isAdmin = user?.isAdmin {
+            adminSwitch.setOn(isAdmin, animated: true)
         }
         else {
             adminSwitch.setOn(false, animated: true)
         }
+        
+        has_signed_petition_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+        has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+        is_banned_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+        
+        if let pet = user?.has_signed_petition {
+            has_signed_petition_segmented_control.selectedSegmentIndex = pet ? AssignUserVC.YES : AssignUserVC.NO
+        }
+        
+        
+        if let conf = user?.has_signed_confidentiality_agreement {
+            has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = conf ? AssignUserVC.YES : AssignUserVC.NO
+        }
+        
+        
+        if let ban = user?.is_banned {
+            is_banned_segmented_control.selectedSegmentIndex = ban ? AssignUserVC.YES : AssignUserVC.NO
+        }
+        
         
         
         view.addSubview(nameLabel)
@@ -140,7 +217,7 @@ class AssignUserVC: BaseViewController {
         //instructionsLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         
         view.addSubview(volunteerLabel)
-        volunteerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
+        volunteerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         volunteerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
         volunteerLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
         
@@ -148,7 +225,7 @@ class AssignUserVC: BaseViewController {
         // switch placement is done in the declaration of the switch
         
         view.addSubview(directorLabel)
-        directorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
+        directorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         directorLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 300).isActive = true
         //directorLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
         
@@ -156,12 +233,54 @@ class AssignUserVC: BaseViewController {
         // switch placement is done in the declaration of the switch
         
         view.addSubview(adminLabel)
-        adminLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
+        adminLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         adminLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 350).isActive = true
         //adminLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
         
         view.addSubview(adminSwitch)
         // switch placement is done in the declaration of the switch
+        
+        
+        view.addSubview(has_user_satisfied_legal_label)
+        has_user_satisfied_legal_label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        has_user_satisfied_legal_label.topAnchor.constraint(equalTo: instructionsLabel.topAnchor, constant: 200).isActive = true
+        
+        
+        view.addSubview(has_signed_petition_Label)
+        has_signed_petition_Label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        has_signed_petition_Label.topAnchor.constraint(equalTo: has_user_satisfied_legal_label.bottomAnchor, constant: 15).isActive = true
+        
+        
+        view.addSubview(has_signed_petition_segmented_control)
+        // placement is done in the declaration of the switch
+        
+        //view.addSubview(has_signed_petition_Switch)
+        // switch placement is done in the declaration of the switch
+        
+        
+        view.addSubview(has_signed_confidentiality_agreement_Label)
+        has_signed_confidentiality_agreement_Label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        has_signed_confidentiality_agreement_Label.topAnchor.constraint(equalTo: has_signed_petition_Label.bottomAnchor, constant: 20).isActive = true
+        
+        
+        view.addSubview(has_signed_confidentiality_agreement_segmented_control)
+        // placement is done in the declaration of the switch
+        
+        //view.addSubview(has_signed_confidentiality_agreement_Switch)
+        // switch placement is done in the declaration of the switch
+        
+        
+        view.addSubview(is_banned_Label)
+        is_banned_Label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        is_banned_Label.topAnchor.constraint(equalTo: has_signed_confidentiality_agreement_Label.bottomAnchor, constant: 20).isActive = true
+        
+        
+        view.addSubview(is_banned_segmented_control)
+        // placement is done in the declaration of the switch
+        
+        //view.addSubview(is_banned_Switch)
+        // switch placement is done in the declaration of the switch
+        
         
         view.addSubview(okButton)
         okButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -174,23 +293,51 @@ class AssignUserVC: BaseViewController {
     }
     
     
-    @objc func assignUser(_ sender: UIButton) {
-        guard user != nil else {return}
+    @objc private func updateUser(_ sender: UIButton) {
+        guard let usr = user else {
+            return}
         
-        doTheBoolean(uiswitch: volunteerSwitch, role: "Volunteer")
-        doTheBoolean(uiswitch: directorSwitch, role: "Director")
-        doTheBoolean(uiswitch: adminSwitch, role: "Admin")
+        usr.isAdmin = adminSwitch.isOn
+        usr.isDirector = directorSwitch.isOn
+        usr.isVolunteer = volunteerSwitch.isOn
         
-        guard let theUid = uid else {return}
+        if has_signed_petition_segmented_control.selectedSegmentIndex == AssignUserVC.YES {
+            usr.has_signed_petition = true
+        } else if has_signed_petition_segmented_control.selectedSegmentIndex == AssignUserVC.NO {
+            usr.has_signed_petition = false
+        } else {
+            usr.has_signed_petition = nil
+        }
+        
+        if has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex == AssignUserVC.YES {
+            usr.has_signed_confidentiality_agreement = true
+        } else if has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex == AssignUserVC.NO {
+            usr.has_signed_confidentiality_agreement = false
+        } else {
+            usr.has_signed_confidentiality_agreement = nil
+        }
+        
+        if is_banned_segmented_control.selectedSegmentIndex == AssignUserVC.YES {
+            usr.is_banned = true
+        } else if is_banned_segmented_control.selectedSegmentIndex == AssignUserVC.NO {
+            usr.is_banned = false
+        } else {
+            usr.is_banned = nil
+        }
+        
+        usr.update(callback: callback)
         
         if volunteerSwitch.isOn || directorSwitch.isOn || adminSwitch.isOn {
             // as long as the user is assigned to some role/group, remove him from the /no_roles node
-            ref?.child("no_roles").child(theUid).removeValue()
+            ref?.child("no_roles").child(usr.getUid()).removeValue()
         }
         
-        assignUserDelegate?.userAssigned(user: user!)
+        // When we're done, just go back using the BackTracker - genius!
+        BackTracker.sharedInstance.goBack()
+        
     }
     
+    /************
     private func doTheBoolean(uiswitch: UISwitch, role: String) {
         
         guard let theUid = uid else {return}
@@ -203,6 +350,7 @@ class AssignUserVC: BaseViewController {
             ref?.child("users").child(theUid).child("roles").child(role).removeValue()
         }
     }
+     ***********/
     
 
     /*
@@ -214,9 +362,43 @@ class AssignUserVC: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // STRAIGHT UP CODE DUPE FROM MyProfileVC
+    func callback(error: NSError?) {
+        //var error : NSError?
+        //error = NSError(domain:"", code:400, userInfo: ["message": "Uh Oh! You got an error.  Try again and if this problem persists, talk to Michelle or Brent"])
+        var message = "Account info updated"
+        var title = "Success"
+        let buttonText = "OK"
+        if ((error) != nil) {
+            message = "Hmmm - didn't expect this...\nYou should probably talk to Michelle or Brent"
+            title = "Error"
+            // need to display alert box to user on error or success
+            if let msg = error!.userInfo["message"] as? String {
+                message = msg
+            }
+        }
+        
+        let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: buttonText, style: .default, handler: { action in
+            switch action.style {
+            case .default:
+                print("default")
+            case .cancel:
+                print("cancel")
+            case .destructive:
+                print("destructive")
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }
 
+/******
 protocol AssignUserDelegate {
-    func userAssigned(user : [String:Any])
+    //func userAssigned(user : [String:Any])   // old way
+    func userAssigned(user : TPUser)
 }
+ *******/

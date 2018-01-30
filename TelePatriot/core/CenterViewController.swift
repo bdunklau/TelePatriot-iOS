@@ -46,6 +46,8 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         
         loadSplashscreen()
         
+        BackTracker.sharedInstance.setNavigationItem(nav: self.navigationItem, backHandler: self)
+        
         
         if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
             || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "CenterViewController" })) {
@@ -248,8 +250,9 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         else if(menuItem.title == "Admins") {
             unassignMissionItem()
-            guard let vc = delegate?.getUnassignedUsersVC() else { return }
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            //guard let vc = delegate?.getUnassignedUsersVC() else { return }
+            guard let vc = delegate?.getAdminVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         else if(menuItem.title == "Share Petition") {
             unassignMissionItem()
@@ -296,7 +299,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
     }
     
     private func doView(vc: UIViewController, viewControllers: [UIViewController]) {
-        doView(vc: vc, viewControllers: viewControllers, track: true)
+        doView(vc: vc, viewControllers: viewControllers, track: false)
     }
     
     private func doView(vc: UIViewController, viewControllers: [UIViewController], track: Bool) {
@@ -305,7 +308,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             addChildViewController(vc)
             delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
             self.view.addSubview(vc.view)
-            //if track { BackTracker.sharedInstance.onChoose(vc: vc) }
+            if track { BackTracker.sharedInstance.onChoose(vc: vc) }
             return
         }
         if let myMissionVc = viewController as? MyMissionViewController {
@@ -314,7 +317,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
         viewController.viewDidLoad() // creative or hacky?  I need to run the code in this function whenever the view becomes visible again
         self.view.bringSubview(toFront: viewController.view)
-        //if track { BackTracker.sharedInstance.onChoose(vc: vc) }
+        if track { BackTracker.sharedInstance.onChoose(vc: vc) }
     }
     
     func unassignMissionItem() {
@@ -342,10 +345,17 @@ extension CenterViewController : NewPhoneCampaignSubmittedHandler {
 
 // CenterViewController is assigned in ContainerViewController.viewDidLoad()
 extension CenterViewController : WrapUpViewControllerDelegate {
+    
     func missionAccomplished() {
         guard let vc = delegate?.getMyMissionViewController() else { return }
         doView(vc: vc, viewControllers: self.childViewControllers)
-        //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
+    }
+    
+    // Not sure if I like this idea...  Let's put a viewcontroller inside the mission_item
+    // object so the mission_item can direct us to the next screen, either back to My Mission
+    // or to My Legislators or to ... ?
+    func missionAccomplished(vc: UIViewController) {
+        doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }
 
@@ -373,7 +383,7 @@ extension CenterViewController : SwitchTeamsDelegate {
 // Sends the user to AssignUserVC when he clicks someone from the Unassigned Users
 // list on UnassignedUsersVC
 extension CenterViewController : UnassignedUsersDelegate {
-    func userSelected(user: [String:Any]) {
+    func unassignedUserSelected(user: TPUser) {
         /******
          The user could be banned, or maybe hasn't signed the conf agreement.
          We have to know this stuff because if they shouldn't be let in, we need to send them
@@ -381,56 +391,50 @@ extension CenterViewController : UnassignedUsersDelegate {
          ********/
         
         
-        guard let userAttributes = user["values"] as! [String:Any]? else {
-                return }
-        
-        
-        if let is_banned = userAttributes["is_banned"] as? Bool {
+        if let is_banned = user.is_banned as? Bool {
             if is_banned {
                 guard let vc : UserIsBannedVC = delegate?.getUserIsBannedVC() else { return }
                 vc.user = user
-                doView(vc: vc, viewControllers: self.childViewControllers)
+                doView(vc: vc, viewControllers: self.childViewControllers, track: true)
                 return
             }
             
         }
         
-        /*********************
-         This adheres to a security policy that we quickly replaced.  We used to say that a person could not even be
-         let in if they hadn't signed the conf agreement.  Now (1/15/18) we are saying that they CAN be let in.  We just
-         don't want to put them on any team except for a training team.
- 
-        guard let has_signed_confidentiality_agreement = userAttributes["has_signed_confidentiality_agreement"] as? Bool else {
-            guard let vc : UserMustSignCAViewController = delegate?.getUserMustSignCAViewController() else { return }
-            vc.user = user
-            doView(vc: vc, viewControllers: self.childViewControllers)
-            return
-        }
-        
-        if !has_signed_confidentiality_agreement {
-            guard let vc : UserMustSignCAViewController = delegate?.getUserMustSignCAViewController() else { return }
-            vc.user = user
-            doView(vc: vc, viewControllers: self.childViewControllers)
-            return
-        }
-         ****************/
+        guard let normalVC = delegate?.getAssignUserVC() else {return}
+        normalVC.user = user
+        doView(vc: normalVC, viewControllers: self.childViewControllers, track: true)
+    }
+}
+
+
+extension CenterViewController : SearchUsersDelegate {
+    func userSelected(user: TPUser) {
+        /******
+         The user could be banned, or maybe hasn't signed the conf agreement.
+         We have to know this stuff because if they shouldn't be let in, we need to send them
+         to another screen...
+         ********/
         
         guard let normalVC = delegate?.getAssignUserVC() else {return}
         normalVC.user = user
-        doView(vc: normalVC, viewControllers: self.childViewControllers)
+        doView(vc: normalVC, viewControllers: self.childViewControllers, track: true)
     }
 }
+
 
 // Once the user (admin) has assigned the new user to some groups (Admin, Director and/or Volunteer)
 // the admin clicks OK which ends up calling this function, which sends the user back to the
 // Unassigned Users screen
+/**************
 extension CenterViewController : AssignUserDelegate {
-    func userAssigned(user : [String:Any]) {
+    func userAssigned(user : TPUser) {
         // go back to the Unassigned User screen
         guard let vc = delegate?.getUnassignedUsersVC() else { return }
         doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }
+ ***********/
 
 extension CenterViewController : AccountStatusEventListener {
     func roleAssigned(role: String) {
@@ -461,9 +465,34 @@ extension CenterViewController : AccountStatusEventListener {
 // AddressUpdater is declared at the bottom of MyLegislatorsVC
 // MyLegislatorsVC.addressUpdater is assigned to CenterViewController in ContainerViewController
 extension CenterViewController : AddressUpdater {
-    func beginUpdatingAddress() {
+    func beginUpdatingAddressManually() {
         guard let vc = delegate?.getMyProfileVC() else { return }
+        vc.useGPS = false
         doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+    func beginUpdatingAddressUsingGPS() {
+        guard let vc = delegate?.getMyProfileVC() else { return }
+        vc.useGPS = true
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+
+
+extension CenterViewController : AdminDelegate {
+    func gotoUnassignedUsers() {
+        guard let vc = delegate?.getUnassignedUsersVC() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+    }
+    
+    func gotoSearchUsers() {
+        guard let vc = delegate?.getSearchUsersVC() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+    }
+}
+
+extension CenterViewController : BackHandler {
+    func goBack(vc: UIViewController, track: Bool) {
+        doView(vc: vc, viewControllers: self.childViewControllers, track: track)
     }
 }
 

@@ -68,14 +68,6 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         return btn
     }()
     
-    /********
-    let pickerViewContainer : ContainerViewController = {
-        let c = ContainerViewController()
-        
-        return c
-    }()
-     ********/
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,6 +119,12 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         notesField.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
         notesField.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
         
+        // submit button text depends on the type of mission
+        setSubmitButtonText()
+        
+        // But what if the user is taking a single action like calling his legislator?
+        // There is no "next mission" in this case.  We have to intelligently figure out what the user's
+        // next move is.
         view.addSubview(submitButton)
         submitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
         submitButton.topAnchor.constraint(equalTo: notesField.bottomAnchor, constant: 8).isActive = true
@@ -134,29 +132,54 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         
         view.addSubview(submitAndQuitButton)
         submitAndQuitButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        submitAndQuitButton.topAnchor.constraint(equalTo: submitButton.bottomAnchor, constant: 8).isActive = true
+        submitAndQuitButton.topAnchor.constraint(equalTo: submitButton.bottomAnchor, constant: 32).isActive = true
         submitAndQuitButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         
+    }
+    
+    
+    private func setSubmitButtonText() {
+        if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
+            submitButton.setTitle("Submit", for: .normal)
+        }
+        
+        // else use default from declaration
     }
     
     
     @objc func submitWrapUp(_ sender: BaseButton) {
         saveNotes()
         
-        // Now, just send the user to another mission
-        delegate?.missionAccomplished()
+        if let mi2 = TPUser.sharedInstance.currentMissionItem2,
+            let vc = MissionItem2.nextViewController {
+            
+            TPUser.sharedInstance.currentMissionItem2 = nil
+            
+            // Now, just send the user to another mission
+            delegate?.missionAccomplished(vc: vc)
+        }
+        else {
+            TPUser.sharedInstance.currentMissionItem = nil
+            
+            delegate?.missionAccomplished()
+        }
+        
+        
     }
     
     private func saveNotes() {
-        guard let missionItem = TPUser.sharedInstance.currentMissionItem else {
-            return }
         
-        
-        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
-        // database like this...  Optional("The Cavalry")
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
-            return
+        if let missionItem = TPUser.sharedInstance.currentMissionItem,
+            let team = TPUser.sharedInstance.getCurrentTeam()?.team_name {
+            
+            saveMissionItem_original_style(missionItem: missionItem, team: team)
         }
+        else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
+            saveMissionItem2(mission_item: mi2)
+        }
+    }
+    
+    private func saveMissionItem_original_style(missionItem: MissionItem, team: String) {
         Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
         let missionRef = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)")
         let ref = missionRef.child("mission_items/\(missionItem.mission_item_id)")
@@ -168,17 +191,26 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         ref.child("completed_by_uid").setValue(TPUser.sharedInstance.getUid())
         ref.child("completed_by_name").setValue(TPUser.sharedInstance.getName())
         
-        let date : Date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy h:mm a z"
-        let mission_complete_date = dateFormatter.string(from: date)
-        ref.child("mission_complete_date").setValue(mission_complete_date)
+        //let date : Date = Date()
+        //let dateFormatter = DateFormatter()
+        //dateFormatter.dateFormat = "MMM d, yyyy h:mm a z"
+        //let mission_complete_date = dateFormatter.string(from: date)
+        ref.child("mission_complete_date").setValue(Util.getDate_MMM_d_yyyy_hmm_am_z())
         ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
         
         // need to update total_rows_completed using a firebase transaction like we do in MissionDetail.java: updateCompletedCount()
         updateCompletedCount(ref: missionRef)
         
-        TPUser.sharedInstance.currentMissionItem = nil
+    }
+    
+    
+    private func saveMissionItem2(mission_item: MissionItem2) {
+        
+        // Where is this MissionItem2 instantiate?   Ans: OfficeTableViewCell.makeCall()
+        mission_item.complete(outcome: outcome, notes: notesField.text)
+        
+        // The "call ended" event has already been logged by this time
+        // It's written to the database in AppDelegate.endPhoneCallForMissionItem2()
     }
     
     

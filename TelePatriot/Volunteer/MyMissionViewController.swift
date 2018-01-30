@@ -83,7 +83,6 @@ class MyMissionViewController : BaseViewController {
          scrollView.addSubview(scriptHeaderLabel)
          scrollView.addSubview(scriptTextView)
          ***********/
-        scrollView.addSubview(callButton1)
         
         view.addSubview(scrollView)
         
@@ -114,11 +113,19 @@ class MyMissionViewController : BaseViewController {
          //scriptTextView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1).isActive = true
          ************/
         
+        scrollView.addSubview(callButton1)
         callButton1.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         callButton1.topAnchor.constraint(equalTo: descriptionTextView
             .bottomAnchor, constant: 8).isActive = true
         callButton1.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
         callButton1.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
+        
+        
+        scrollView.addSubview(callButton2)
+        callButton2.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        callButton2.topAnchor.constraint(equalTo: callButton1.bottomAnchor, constant: 24).isActive = true
+        callButton2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
+        callButton2.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
         
         
         // might also want to look into this: https://stackoverflow.com/a/31428932
@@ -177,10 +184,7 @@ class MyMissionViewController : BaseViewController {
     }
     
     func getDateString() -> String {
-        let date : Date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE MMM d, h:mm:ss a z yyyy"
-        return dateFormatter.string(from: date)
+        return Util.getDate_Day_MMM_d_hmmss_am_z_yyyy()
     }
     
     
@@ -267,6 +271,10 @@ class MyMissionViewController : BaseViewController {
                             let button2Text = name2 + " " + phone2
                             self.callButton2.setTitle(button2Text, for: .normal)
                             self.callButton2.phone = phone2
+                        }
+                        else {
+                            self.callButton2.setTitle("", for: .normal)
+                            //self.callButton2.phone = phone2
                         }
                         
                         Database.database().reference()

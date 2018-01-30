@@ -30,18 +30,6 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
     
     var addressUpdater : AddressUpdater? // defined at bottom
     
-    
-    /*********
-    let myLegislatorsHeading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "My Legislators"
-        l.font = l.font.withSize(24)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
-        return l
-    }()
-     *********/
-    
     var senatorView : LegislatorUI?
     var houserepView : LegislatorUI?
     
@@ -57,31 +45,8 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         return l
     }()
     
+    var addressNeededView : AddressNeededView?
     
-    let noAddressText : UITextView = {
-        let textView = UITextView()
-        textView.text = "This app needs to know your location in order to look up your state legislators.  If you are at home now, touch \"Get My Address\"."
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize) // just example
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        
-        //var frame = textView.frame
-        //frame.size.height = 200
-        //textView.frame = frame
-        textView.backgroundColor = UIColor.clear
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    
-    let getMyAddressButton : BaseButton = {
-        let button = BaseButton(text: "Get My Address")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(updateAddress(_:)), for: .touchUpInside)
-        return button
-    }()
     
     var scrollView : UIScrollView?
     
@@ -104,20 +69,16 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
             scrollView?.removeFromSuperview()
         }
         
-        noAddressText.removeFromSuperview()
-        getMyAddressButton.removeFromSuperview()
+        if addressNeededView != nil {
+            addressNeededView?.removeFromSuperview()
+        }
     }
     
     private func createViewWhenAddressIsUnknown() {
-        view.addSubview(noAddressText)
-        noAddressText.topAnchor.constraint(equalTo: view.topAnchor, constant: 72).isActive = true
-        noAddressText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        noAddressText.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive = true
         
-        view.addSubview(getMyAddressButton)
-        getMyAddressButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        getMyAddressButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
+        addressNeededView = AddressNeededView(frame: self.view.frame)
+        addressNeededView?.addressUpdater = self
+        view.addSubview(addressNeededView!)
     }
     
     private func createViewWhenAddressIsKnown() {
@@ -126,12 +87,6 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         scrollView?.contentSize = CGSize(width: 250, height: 1450)
         
         view.addSubview(scrollView!)
-        
-        /***************
-        scrollView?.addSubview(myLegislatorsHeading)
-        myLegislatorsHeading.topAnchor.constraint(equalTo: (scrollView?.topAnchor)!, constant: 16).isActive = true
-        myLegislatorsHeading.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
-         ***********/
         
         /*******/
         let senatorViewY = /*myLegislatorsHeading.frame.origin.y + myLegislatorsHeading.frame.height + */ 8
@@ -164,45 +119,11 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         
         doCaptureLocation()
         
-        /************
-         view.addSubview(lat)
-         lat.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-         lat.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).isActive = true
-         
-         view.addSubview(lng)
-         lng.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-         lng.topAnchor.constraint(equalTo: lat.bottomAnchor, constant: 8).isActive = true
-         
-         view.addSubview(address)
-         address.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-         address.topAnchor.constraint(equalTo: lng.bottomAnchor, constant: 160).isActive = true
-         
-         view.addSubview(legislatorView)
-         legislatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-         legislatorView.topAnchor.constraint(equalTo: address.bottomAnchor, constant: 8).isActive = true
-         **************/
-        
-        
-        /*****************
-         // cool - but don't need this
-         view.addSubview(speed)
-         speed.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-         speed.bottomAnchor.constraint(equalTo: address.topAnchor, constant: -16).isActive = true
-         ***************/
-        
-        //locationTuples = [(sourceField, nil), (destinationField1, nil), (destinationField2, nil)]
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @objc private func updateAddress(_ sender: UIButton) {
-        // send the user to MyProfileVC to update address based on lat/long location
-        
-        // addressUpdater is a "delegate"
-        addressUpdater?.beginUpdatingAddress()
     }
     
     private func doCaptureLocation() {
@@ -232,19 +153,6 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
             let str = String(describing: type(of: data))
             print( "data is: \(str)"  )
             
-            /*************
-             var resultFromServer: Any?
-             resultFromServer = try? JSONSerialization.jsonObject(with: data!, options: [.allowFragments])
-             print( String(describing: type(of: resultFromServer)) )
-             //print(resultFromServer)
-             
-             guard let array = resultFromServer as? [[String: Any]] else {
-             return
-             }
-             
-             print( String(describing: type(of: array)) )
-             ***********/
-            
             let decoder = JSONDecoder()
             let legislators = try? decoder.decode([Legislator].self, from: data!)
             
@@ -262,29 +170,6 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
         
         task.resume()
     }
-    
-    
-    /************
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        determineMyCurrentLocation()
-    }
-    
-    func determineMyCurrentLocation() {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
-        // You have to ask.  You can't just skip this and think the phone will share location
-        locationManager.requestAlwaysAuthorization() // this is where the dialog pops up asking you to allow access to your location
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-            //locationManager.startUpdatingHeading()
-        }
-    }
-    **********/
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
@@ -305,9 +190,6 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
     {
         print("Error \(error)")
     }
-    /**********
-     
-     *********/
     
     
     /*
@@ -322,8 +204,20 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
     
 }
 
+
+extension MyLegislatorsVC : AddressUpdater {
+    func beginUpdatingAddressManually() {
+        addressUpdater?.beginUpdatingAddressManually()
+    }
+    func beginUpdatingAddressUsingGPS() {
+        addressUpdater?.beginUpdatingAddressUsingGPS()
+    }
+}
+
+
 // CenterViewController is an AddressUpdater and the assignment is made in ContainerViewController
 protocol AddressUpdater {
-    func beginUpdatingAddress()
+    func beginUpdatingAddressManually()
+    func beginUpdatingAddressUsingGPS()
 }
 

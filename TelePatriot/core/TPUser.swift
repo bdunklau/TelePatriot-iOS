@@ -14,29 +14,48 @@ import FirebaseAuthUI
 class TPUser {
     static let sharedInstance = TPUser()
     var user : User?
+    
+    // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
+    private var uid : String? // this is the key of the user's node
+    var created : String? // MMM d, yyyy h:mm a z
+    var current_latitude : Double?
+    var current_longitude : Double?
+    private var currentTeam : Team?
+    private var email : String?
+    var has_signed_confidentiality_agreement : Bool?
+    var has_signed_petition : Bool?
+    var is_banned : Bool?
+    var legislative_house_district : String?
+    var legislative_senate_district : String?
+    private var name : String?
+    private var photoUrl : URL? // the FirebaseUser attribute is actually this: photoURL
+    var residential_address_city : String?
+    var residential_address_line1 : String?
+    var residential_address_line2 : String?
+    var residential_address_state_abbrev : String?
+    var residential_address_zip : String?
+    
     var isAdmin = false
     var isDirector = false
     var isVolunteer = false
+    
+    // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
     var accountStatusEventListeners = [AccountStatusEventListener]()
     var ref : DatabaseReference?
     var rolesAlreadyFetched = false
     var noRoleAssignedDelegate : NoRoleAssignedDelegate?
+    
+    // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
+    // both are reset to nil in WrapUpViewController.submitWrapUp()
     var currentMissionItem : MissionItem?
-    var residential_address_line1 : String?
-    var residential_address_line2 : String?
-    var residential_address_city : String?
-    var residential_address_state_abbrev : String?
-    var residential_address_zip : String?
-    var legislative_house_district : String?
-    var legislative_senate_district : String?
-    var current_latitude : Double?
-    var current_longitude : Double?
-    private var currentTeam : Team?
+    var currentMissionItem2 : MissionItem2?
+    
     private let appDelegate : AppDelegate
     
     private init() {
+        // Is this going to be a problem when working with really large users sets?
+        // WILL an admin ever be working be really large users sets?  dunno
         ref = Database.database().reference()
-        // Need to put the AppDelegate or SidePanelViewController in here
         
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     }
@@ -57,41 +76,146 @@ class TPUser {
         }
     }
     
+    static func create(uid: String, dictionary: [String:Any]) -> TPUser? {
+        let someuser = TPUser()
+        someuser.uid = uid
+        
+        guard let created = dictionary["created"] as? String,
+            let email = dictionary["email"] as? String,
+            let name = dictionary["name"] as? String,
+            let photoUrl = dictionary["photoUrl"] as? String else {
+                return nil
+        }
+        
+        someuser.created = created
+        someuser.email = email
+        someuser.name = name
+        someuser.photoUrl = URL(string: photoUrl)
+        
+        if let lat = dictionary["current_latitude"] as? Double {
+            someuser.current_latitude = lat
+        }
+        
+        if let lng = dictionary["current_longitude"] as? Double {
+            someuser.current_longitude = lng
+        }
+        
+        if let conf = dictionary["has_signed_confidentiality_agreement"] as? Bool {
+            someuser.has_signed_confidentiality_agreement = conf
+        }
+        
+        if let pet = dictionary["has_signed_petition"] as? Bool {
+            someuser.has_signed_petition = pet
+        }
+        
+        if let ban = dictionary["is_banned"] as? Bool {
+            someuser.is_banned = ban
+        }
+        
+        if let hd = dictionary["legislative_house_district"] as? String {
+            someuser.legislative_house_district = hd
+        }
+        
+        if let sd = dictionary["legislative_senate_district"] as? String {
+            someuser.legislative_senate_district = sd
+        }
+        
+        if let city = dictionary["residential_address_city"] as? String {
+            someuser.residential_address_city = city
+        }
+        
+        if let line1 = dictionary["residential_address_line1"] as? String {
+            someuser.residential_address_line1 = line1
+        }
+        
+        if let line2 = dictionary["residential_address_line2"] as? String {
+            someuser.residential_address_line2 = line2
+        }
+        
+        if let st = dictionary["residential_address_state_abbrev"] as? String {
+            someuser.residential_address_state_abbrev = st.uppercased()
+        }
+        
+        if let zip = dictionary["residential_address_zip"] as? String {
+            someuser.residential_address_zip = zip
+        }
+        
+        if let roles = dictionary["roles"] as? [String:String] {
+            if let adm = roles["Admin"] as? String, adm == "true" {
+                someuser.isAdmin = true
+            }
+            if let dir = roles["Director"] as? String, dir == "true" {
+                someuser.isDirector = true
+            }
+            if let vol = roles["Volunteer"] as? String, vol == "true" {
+                someuser.isVolunteer = true
+            }
+        }
+        /*************
+         private var currentTeam : Team?
+         probably should get the user's list of teams also
+         *************/
+        
+        
+        return someuser
+    }
+    
     func signOut() {
         try! Auth.auth().signOut()
         unassignCurrentMissionItem()
         user = nil
         rolesAlreadyFetched = false
         fireSignedOutEvent()
+        clearFields()
         UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
     }
     
     func getName() -> String {
-        guard let name = user!.displayName else {
+        if let usr = user, let displayName = usr.displayName {
+            return displayName
+        }
+        else if let nm = name {
+            return nm
+        }
+        else {
             return "name not available"
         }
-        return name
     }
     
     func getEmail() -> String {
-        guard let email = user!.email else {
+        if let usr = user, let em = usr.email {
+            return em
+        }
+        else if let em = email {
+            return em
+        }
+        else {
             return "email not available"
         }
-        return email
     }
     
     func getUid() -> String {
-        guard let u = user else {
+        if let usr = user {
+            return usr.uid
+        }
+        else if let id = uid {
+            return id
+        }
+        else {
             return "uid not available"
         }
-        return u.uid
     }
     
     func getPhotoURL() -> URL {
-        guard let photoURL = user!.photoURL else {
+        if let usr = user, let p = usr.photoURL {
+            return p
+        }
+        else if let p = photoUrl {
+            return p
+        }
+        else {
             return URL(string: "https://i.stack.imgur.com/34AD2.jpg")!
         }
-        return photoURL
     }
     
     func hasAnyRole() -> Bool {
@@ -114,7 +238,7 @@ class TPUser {
         guard let theref = ref else { return }
         let uid = getUid()
         // Create the data we want to update
-        let updatedUserData = ["users/\(uid)/residential_address_line1": residential_address_line1,
+        var updatedUserData = ["users/\(uid)/residential_address_line1": residential_address_line1,
                                "users/\(uid)/residential_address_line2": residential_address_line2,
                                "users/\(uid)/residential_address_city": residential_address_city,
                                "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
@@ -122,11 +246,32 @@ class TPUser {
                                "users/\(uid)/legislative_house_district": legislative_house_district,
                                "users/\(uid)/legislative_senate_district": legislative_senate_district,
                                "users/\(uid)/current_latitude": current_latitude,
-                               "users/\(uid)/current_longitude": current_longitude] as [String : Any]
+                               "users/\(uid)/current_longitude": current_longitude,
+                               "users/\(uid)/has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
+                               "users/\(uid)/has_signed_petition": has_signed_petition,
+                               "users/\(uid)/is_banned": is_banned] as [String : Any]
         
-        // Do a deep-path update
+        if isAdmin {
+            updatedUserData["users/\(uid)/roles/Admin"] = "true"
+        } else {
+            updatedUserData["users/\(uid)/roles/Admin"] = nil
+        }
+        
+        if isDirector {
+            updatedUserData["users/\(uid)/roles/Director"] = "true"
+        } else {
+            updatedUserData["users/\(uid)/roles/Director"] = nil
+        }
+        
+        if isVolunteer {
+            updatedUserData["users/\(uid)/roles/Volunteer"] = "true"
+        } else {
+            updatedUserData["users/\(uid)/roles/Volunteer"] = nil
+        }
+        
+        // Do a multi-path update
         theref.updateChildValues(updatedUserData, withCompletionBlock: { (error, ref) -> Void in
-            callback(error as? NSError)
+            callback(error as NSError?)
         })
         
     }
@@ -345,6 +490,45 @@ class TPUser {
     
     func getCurrentTeam() -> Team? {
         return currentTeam
+    }
+    
+    
+    private func clearFields() {
+        
+        user = nil
+        uid = nil // this is the key of the user's node
+        created = nil
+        current_latitude  = nil
+        current_longitude = nil
+        currentTeam = nil
+        email = nil
+        has_signed_confidentiality_agreement  = nil
+        has_signed_petition  = nil
+        is_banned  = nil
+        legislative_house_district = nil
+        legislative_senate_district = nil
+        name = nil
+        photoUrl = nil // the FirebaseUser attribute is actually this: photoURL
+        residential_address_city = nil
+        residential_address_line1 = nil
+        residential_address_line2  = nil
+        residential_address_state_abbrev = nil
+        residential_address_zip = nil
+        
+        // Not sure why these prevent their menu items from showing up.  I thought they
+        // would re-appear whenever the user logs in.  But for some reason, they don't
+        //isAdmin = false
+        //isDirector = false
+        //isVolunteer = false
+        
+        accountStatusEventListeners = [AccountStatusEventListener]()
+        ref = nil
+        rolesAlreadyFetched = false
+        noRoleAssignedDelegate = nil
+        
+        // both are reset to nil in WrapUpViewController.submitWrapUp()
+        currentMissionItem = nil
+        currentMissionItem2 = nil
     }
     
     

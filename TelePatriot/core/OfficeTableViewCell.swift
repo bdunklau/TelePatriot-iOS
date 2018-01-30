@@ -44,7 +44,7 @@ class OfficeTableViewCell: UITableViewCell {
     }()
     
     var ref : DatabaseReference?
-    
+    var legislator : Legislator?
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -54,10 +54,11 @@ class OfficeTableViewCell: UITableViewCell {
     
     // Most other examples of this method pass a DatabaseReference object
     // to the commonInit() method.  In this case, we don't need to
-    func commonInit(office: Legislator.Office /*, ref: DatabaseReference*/ ) {
+    func commonInit(legislator: Legislator, office: Legislator.Office /*, ref: DatabaseReference*/ ) {
         
         //self.ref = ref
         
+        self.legislator = legislator
         self.backgroundColor = .clear
         
         self.addSubview(nameLabel)
@@ -70,7 +71,9 @@ class OfficeTableViewCell: UITableViewCell {
         
         
         self.addSubview(phoneButton)
-        phoneButton.phone = office.phone
+        
+        // to test calling legislators without actually calling them, comment out office.phone and replace with 555-555-5555
+        phoneButton.phone = "555-555-5555"//office.phone
         phoneButton.setTitle(office.phone, for: .normal)
         phoneButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
         phoneButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 0).isActive = true
@@ -92,10 +95,45 @@ class OfficeTableViewCell: UITableViewCell {
     
     // call end is recorded in AppDelegate.onCallEnded()
     @objc func makeCall(_ sender: CallButton) {
-        guard let ph = sender.phone else { return }
+        guard let ph = sender.phone as? String else {
+                return }
+        
         guard let number = URL(string: "tel://"+ph) else { return }
         
-        // we should record that a call was made - we'll add this later
+        guard let legislator = legislator,
+            let legfirstname = legislator.first_name as? String,
+            let leglastname = legislator.last_name as? String,
+            let legstate = legislator.state as? String,
+            let legchamber = legislator.chamber as? String,
+            let legdistrict = legislator.district as? String else {
+                return
+        }
+        
+        // In Android, MyMissionFragment.call() creates a MissionItemEvent
+        let m = CallLegislatorEvent(event_type: "is calling",
+                                 volunteer_uid: TPUser.sharedInstance.getUid(),
+                                 volunteer_name: TPUser.sharedInstance.getName(),
+                                 mission_name: "no mission",
+                                 phone: ph,
+                                 volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
+            legislator_name: legfirstname+" "+leglastname,
+            legislator_state_abbrev: legstate.uppercased(),
+            legislator_chamber: legchamber,
+            legislator_district: legdistrict,
+            event_date: Util.getDate_Day_MMM_d_hmmss_am_z_yyyy())
+        
+        
+        let ref = Database.database().reference().child("users/\(TPUser.sharedInstance.getUid())/activity")
+        ref.child("all").childByAutoId().setValue(m.dictionary())
+        ref.child("by_phone_number").child(ph).childByAutoId().setValue(m.dictionary())
+        
+        var mi2 = MissionItem2()
+        mi2.set(user: TPUser.sharedInstance)
+        mi2.set(legislator: legislator)
+        mi2.set(phone: ph)
+        mi2.set(mission_type: "Call to Legislator")
+        mi2.set(mission_name: "Call to \(legfirstname) \(leglastname)")
+        TPUser.sharedInstance.currentMissionItem2 = mi2
         
         // now do the call
         UIApplication.shared.open(number)

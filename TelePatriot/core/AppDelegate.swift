@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var callObserver : CXCallObserver? // not sure if we need this to log call activity
     
     // all viewcontrollers declared here
+    var adminVC : AdminVC?
     var allActivityVC : AllActivityVC?
     var assignUserVC : AssignUserVC?
     var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
@@ -39,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var myLegislatorsVC : MyLegislatorsVC?
     var myProfileVC : MyProfileVC?
     var newPhoneCampaignVC : NewPhoneCampaignVC?
+    var searchUsersVC : SearchUsersVC?
     var switchTeamsVC : SwitchTeamsVC?
     var wrapUpCallViewController : WrapUpViewController?
     var leftViewController : SidePanelViewController?
@@ -60,8 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load a named file for switching between dev and prod firebase instances
         // see https://firebase.google.com/docs/configure/
-        //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        //let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
             else { assert(false, "Couldn't load config file")
                 return
@@ -69,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //***// IMPORTANT!!!!!!!!!
         FirebaseApp.configure(options: fileopts)
         
+        adminVC = AdminVC()
         allActivityVC = AllActivityVC()
         assignUserVC = AssignUserVC()
         chooseSpreadsheetTypeVC = ChooseSpreadsheetTypeVC()
@@ -76,12 +79,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         myLegislatorsVC = MyLegislatorsVC()
         myProfileVC = MyProfileVC()
         newPhoneCampaignVC = NewPhoneCampaignVC()
+        searchUsersVC = SearchUsersVC()
         switchTeamsVC = SwitchTeamsVC()
         wrapUpCallViewController = WrapUpViewController()
         unassignedUsersVC = UnassignedUsersVC()
         missionSummaryTVC = MissionSummaryTVC()
         userIsBannedVC = UserIsBannedVC()
         userMustSignCAViewController = UserMustSignCAViewController()
+        
+        MissionItem.nextViewController = myMissionViewController
+        MissionItem2.nextViewController = myLegislatorsVC
     }
     
 
@@ -218,39 +225,89 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //providerDelegate.reportIncomingCall(uuid: uuid, handle: handle, hasVideo: hasVideo, completion: completion)
     //}
 
-    // call begin is recorded in MyMissionViewController.makeCall()
     func onCallEnded() {
         // set in MyMissionViewController
         // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
         // so they can enter some notes on the call.
-        if let missionItem = TPUser.sharedInstance.currentMissionItem, let vc = wrapUpCallViewController {
-            
-            guard let mission_name = TPUser.sharedInstance.currentMissionItem?.mission_name else { return }
-            guard let supporter_name = TPUser.sharedInstance.currentMissionItem?.name else { return }
-            guard let phone = TPUser.sharedInstance.currentMissionItem?.phone else { return }
-            
-            // just like User.completeMissionItem() in Android
-            let m = MissionItemEvent(event_type: "ended call to",
-                                     volunteer_uid: TPUser.sharedInstance.getUid(),
-                                     volunteer_name: TPUser.sharedInstance.getName(),
-                                     mission_name: mission_name,
-                                     phone: phone,
-                                     volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
-                                     supporter_name: supporter_name,
-                                     event_date: getDateString())
-            
-            // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
-            // database like this...  Optional("The Cavalry")
-            guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
-                return
+        if let vc = wrapUpCallViewController {
+            if let _ = TPUser.sharedInstance.currentMissionItem {
+                
+                // call begin is recorded in MyMissionViewController.makeCall()
+                endPhoneCallForOriginalStyleMissionItem()
             }
-            let ref = Database.database().reference().child("teams/\(team)/activity")
-            ref.child("all").childByAutoId().setValue(m.dictionary())
-            ref.child("by_phone_number").child(phone).childByAutoId().setValue(m.dictionary())
+            else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
+                
+                // call begin is recorded in OfficeTableViewCell.makeCall()
+                endPhoneCallForMissionItem2(mission_item: mi2)
+            }
             
             // myDelegate is assigned in ContainerViewController.viewDidLoad()
+            // It's probably assigned to CenterViewController
             myDelegate?.show(viewController: vc)
         }
+    }
+    
+    
+    private func endPhoneCallForMissionItem2(mission_item: MissionItem2) {
+        
+        guard let phone = mission_item.getPhone(),
+            let mission_name = mission_item.getMission_name(),
+            let legislator = mission_item.legislator,
+            let legfirstname = legislator.first_name as? String,
+            let leglastname = legislator.last_name as? String,
+            let legstate = legislator.state as? String,
+            let legchamber = legislator.chamber as? String,
+            let legdistrict = legislator.district as? String else {
+                return
+        }
+        
+        // call begin is recorded in OfficeTableViewCell.makeCall()
+        let m = CallLegislatorEvent(event_type: "ended call to",
+                                    volunteer_uid: TPUser.sharedInstance.getUid(),
+                                    volunteer_name: TPUser.sharedInstance.getName(),
+                                    mission_name: mission_name,
+                                    phone: phone,
+                                    volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
+            legislator_name: legfirstname+" "+leglastname,
+            legislator_state_abbrev: legstate.uppercased(),
+            legislator_chamber: legchamber,
+            legislator_district: legdistrict,
+            event_date: Util.getDate_Day_MMM_d_hmmss_am_z_yyyy())
+        
+        
+        let ref = Database.database().reference().child("users/\(TPUser.sharedInstance.getUid())/activity")
+        ref.child("all").childByAutoId().setValue(m.dictionary())
+        ref.child("by_phone_number").child(phone).childByAutoId().setValue(m.dictionary())
+    }
+    
+    
+    /***************************************
+     This is us wrapping up a phone call
+     "Original Style" refers to this as the first kind of phone call and mission type that was ever created
+     ***************************************/
+    private func endPhoneCallForOriginalStyleMissionItem() {
+        guard let mission_name = TPUser.sharedInstance.currentMissionItem?.mission_name else { return }
+        guard let supporter_name = TPUser.sharedInstance.currentMissionItem?.name else { return }
+        guard let phone = TPUser.sharedInstance.currentMissionItem?.phone else { return }
+        
+        // just like User.completeMissionItem() in Android
+        let m = MissionItemEvent(event_type: "ended call to",
+                                 volunteer_uid: TPUser.sharedInstance.getUid(),
+                                 volunteer_name: TPUser.sharedInstance.getName(),
+                                 mission_name: mission_name,
+                                 phone: phone,
+                                 volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
+            supporter_name: supporter_name,
+            event_date: getDateString())
+        
+        // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
+        // database like this...  Optional("The Cavalry")
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+            return
+        }
+        let ref = Database.database().reference().child("teams/\(team)/activity")
+        ref.child("all").childByAutoId().setValue(m.dictionary())
+        ref.child("by_phone_number").child(phone).childByAutoId().setValue(m.dictionary())
     }
     
     
@@ -270,6 +327,7 @@ var callObserver: CXCallObserver! // add property
 // ref:  https://stackoverflow.com/a/42754882
 extension AppDelegate: CXCallObserverDelegate {
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        
         if call.hasEnded == true {
             print("Disconnected")
             onCallEnded()
