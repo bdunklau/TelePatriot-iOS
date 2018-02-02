@@ -345,7 +345,8 @@ class TPUser {
         
         rolesAlreadyFetched = true
     
-        guard let theref = ref else { return }
+        guard let theref = ref else {
+            return }
         
         theref.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
             guard let val = snapshot.value as? [String: Any] else {
@@ -522,7 +523,7 @@ class TPUser {
         //isVolunteer = false
         
         accountStatusEventListeners = [AccountStatusEventListener]()
-        ref = nil
+        //ref = nil
         rolesAlreadyFetched = false
         noRoleAssignedDelegate = nil
         
