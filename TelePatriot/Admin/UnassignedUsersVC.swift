@@ -103,48 +103,6 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
     }
     
     
-    // STRAIGHT UP CODE DUPLICATION FROM SearchUsersVC
-    /************
-    private func getUserInfo_original_version_using_map(uid: String, dictionary: [String:Any]) -> [String:Any] {
-        
-        guard let created = dictionary["created"] as? String,
-            let email = dictionary["email"] as? String,
-            let name = dictionary["name"] as? String,
-            let photoUrl = dictionary["photoUrl"] as? String else {
-                return [:]
-        }
-        
-        var has_signed_petition : Bool?
-        if let pet = dictionary["has_signed_petition"] as? Bool {
-            has_signed_petition = pet
-        }
-        
-        var has_signed_confidentiality_agreement : Bool?
-        if let conf = dictionary["has_signed_confidentiality_agreement"] as? Bool {
-            has_signed_confidentiality_agreement = conf
-        }
-        
-        var is_banned : Bool?
-        if let ban = dictionary["is_banned"] as? Bool {
-            is_banned = ban
-        }
-        
-        let unassignedUser = ["uid": uid,
-                              "values":["created": created,
-                                        "email": email,
-                                        "name": name,
-                                        "photoUrl": photoUrl,
-                                        "has_signed_petition": has_signed_petition,
-                                        "has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
-                                        "is_banned": is_banned]
-            ]
-            as [String : Any]
-        
-        return unassignedUser
-    }
-    *******************/
-    
-    
     func fetchData() {
         
         ref?.observe(.childAdded, with: {(snapshot) in
@@ -163,6 +121,7 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
                 return
             }
             
+            // inserting objects at 0 index is how you get reverse order sorting
             self.unassignedUsers.insert(unassignedUser, at: 0)
             print(unassignedUser)
             DispatchQueue.main.async {

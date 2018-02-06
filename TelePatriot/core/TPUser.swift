@@ -25,10 +25,12 @@ class TPUser {
     var has_signed_confidentiality_agreement : Bool?
     var has_signed_petition : Bool?
     var is_banned : Bool?
-    var legislative_house_district : String?
-    var legislative_senate_district : String?
+    var legislative_house_district : String?   // WHY ARE SOME OF THESE PRIVATE AND OTHERS AREN'T
+    var legislative_senate_district : String?  // I DON'T THINK THERE'S A GOOD REASON
     private var name : String?
+    private var phone : String?
     private var photoUrl : URL? // the FirebaseUser attribute is actually this: photoURL
+    var recruiter_id : String?
     var residential_address_city : String?
     var residential_address_line1 : String?
     var residential_address_line2 : String?
@@ -41,7 +43,9 @@ class TPUser {
     
     // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
     var accountStatusEventListeners = [AccountStatusEventListener]()
-    var ref : DatabaseReference?
+    
+    // don't set this to nil unless you know what you're doing.  See LESSON LEARNED at the very bottom
+    var databaseRef : DatabaseReference?
     var rolesAlreadyFetched = false
     var noRoleAssignedDelegate : NoRoleAssignedDelegate?
     
@@ -52,10 +56,12 @@ class TPUser {
     
     private let appDelegate : AppDelegate
     
+    
+    // We don't want this class to be a singleton
     private init() {
         // Is this going to be a problem when working with really large users sets?
         // WILL an admin ever be working be really large users sets?  dunno
-        ref = Database.database().reference()
+        //ref = Database.database().reference()
         
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     }
@@ -68,96 +74,156 @@ class TPUser {
             user = u
             // This is where I have to notify the SidePanelViewController that the user changed
             appDelegate.leftViewController?.putTheCorrectStuffInThisView(user: self)
-            fetchRoles(uid: getUid())
-            fetchCurrentTeam(uid: getUid())
-            
-            fetchUser(uid: getUid()) // this should replace the other fetches above at some point
+            //setUserId(uid: (user?.uid)!) // fix/refactor
+            createNotStatic(uid: (user?.uid)!, callback: {(tpuser) in /* do nothing */  })
             return
         }
     }
     
+    /*******
+    func setUserId(uid: String) {
+        fetchRoles(uid: uid)
+        fetchCurrentTeam(uid: uid)
+        fetchUser(uid: uid) // this should replace the other fetches above at some point
+    }
+    *******/
+    
+    private func createNotStatic(uid: String, callback: @escaping (TPUser) -> Void ) {
+        if databaseRef == nil {
+            databaseRef = Database.database().reference()
+        }
+        
+        databaseRef?.child("users").child(uid).observe(.value, with: {(snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else {
+                return
+            }
+            self.fetchRoles(uid: uid)
+            self.fetchCurrentTeam(uid: uid)
+            self.populate(uid: uid, dictionary: dictionary)
+            callback(self)
+        })
+    }
+    
+    static func create(uid: String, callback: @escaping (TPUser) -> Void ) {
+        let someuser = TPUser()
+        someuser.createNotStatic(uid: uid, callback: callback)
+        /*******
+        someuser.databaseRef = Database.database().reference()
+        
+        someuser.databaseRef?.child("users").child(uid).observe(.value, with: {(snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else {
+                return
+            }
+            someuser.fetchRoles(uid: uid)
+            someuser.fetchCurrentTeam(uid: uid)
+            someuser.populate(uid: uid, dictionary: dictionary)
+            callback(someuser)
+        })
+         ***********/
+    }
+    
+    private func populate(uid: String, dictionary: [String:Any]) {
+        
+        self.uid = uid
+        
+        // account_status_events ?
+        
+        if let created = dictionary["created"] as? String {
+            self.created = created
+        }
+        if let lat = dictionary["current_latitude"] as? Double {
+            self.current_latitude = lat
+        }
+        if let lng = dictionary["current_longitude"] as? Double {
+            self.current_longitude = lng
+        }
+        
+        // current_team ?
+        
+        if let email = dictionary["email"] as? String {
+            self.email = email
+        }
+        
+        if let has_signed_confidentiality_agreement = dictionary["has_signed_confidentiality_agreement"] as? Bool {
+            self.has_signed_confidentiality_agreement = has_signed_confidentiality_agreement
+        }
+        else {
+            self.has_signed_confidentiality_agreement = nil
+        }
+        
+        if let has_signed_petition = dictionary["has_signed_petition"] as? Bool {
+            self.has_signed_petition = has_signed_petition
+        }
+        else {
+            self.has_signed_petition = nil
+        }
+        
+        if let is_banned = dictionary["is_banned"] as? Bool {
+            self.is_banned = is_banned
+        }
+        else {
+            self.is_banned = nil
+        }
+        
+        if let hd = dictionary["legislative_house_district"] as? String {
+            self.legislative_house_district = hd
+        }
+        if let sd = dictionary["legislative_senate_district"] as? String {
+            self.legislative_senate_district = sd
+        }
+        if let name = dictionary["name"] as? String {
+            self.name = name
+        }
+        if let phone = dictionary["phone"] as? String {
+            self.phone = phone
+        }
+        if let photoUrl = dictionary["photoUrl"] as? URL {
+            self.photoUrl = photoUrl
+        }
+        if let recruiter_id = dictionary["recruiter_id"] as? String {
+            self.recruiter_id = recruiter_id
+        }
+        if let rac = dictionary["residential_address_city"] as? String {
+            self.residential_address_city = rac
+        }
+        if let rad1 = dictionary["residential_address_line1"] as? String {
+            self.residential_address_line1 = rad1
+        }
+        if let rad2 = dictionary["residential_address_line2"] as? String {
+            self.residential_address_line2 = rad2
+        }
+        if let ras = dictionary["residential_address_state_abbrev"] as? String {
+            self.residential_address_state_abbrev = ras
+        }
+        if let raz = dictionary["residential_address_zip"] as? String {
+            self.residential_address_zip = raz
+        }
+        if let roles = dictionary["roles"] as? [String:String] {
+            if let adm = roles["Admin"] as? String, adm == "true" {
+                self.isAdmin = true
+            }
+            if let dir = roles["Director"] as? String, dir == "true" {
+                self.isDirector = true
+            }
+            if let vol = roles["Volunteer"] as? String, vol == "true" {
+                self.isVolunteer = true
+            }
+        }
+        
+        // teams?
+        // topics?
+        
+    }
+    
+    // Called from SearchUsersVC, UnassignedUsersVC
     static func create(uid: String, dictionary: [String:Any]) -> TPUser? {
         let someuser = TPUser()
         someuser.uid = uid
         
-        guard let created = dictionary["created"] as? String,
-            let email = dictionary["email"] as? String,
-            let name = dictionary["name"] as? String,
-            let photoUrl = dictionary["photoUrl"] as? String else {
-                return nil
-        }
-        
-        someuser.created = created
-        someuser.email = email
-        someuser.name = name
-        someuser.photoUrl = URL(string: photoUrl)
-        
-        if let lat = dictionary["current_latitude"] as? Double {
-            someuser.current_latitude = lat
-        }
-        
-        if let lng = dictionary["current_longitude"] as? Double {
-            someuser.current_longitude = lng
-        }
-        
-        if let conf = dictionary["has_signed_confidentiality_agreement"] as? Bool {
-            someuser.has_signed_confidentiality_agreement = conf
-        }
-        
-        if let pet = dictionary["has_signed_petition"] as? Bool {
-            someuser.has_signed_petition = pet
-        }
-        
-        if let ban = dictionary["is_banned"] as? Bool {
-            someuser.is_banned = ban
-        }
-        
-        if let hd = dictionary["legislative_house_district"] as? String {
-            someuser.legislative_house_district = hd
-        }
-        
-        if let sd = dictionary["legislative_senate_district"] as? String {
-            someuser.legislative_senate_district = sd
-        }
-        
-        if let city = dictionary["residential_address_city"] as? String {
-            someuser.residential_address_city = city
-        }
-        
-        if let line1 = dictionary["residential_address_line1"] as? String {
-            someuser.residential_address_line1 = line1
-        }
-        
-        if let line2 = dictionary["residential_address_line2"] as? String {
-            someuser.residential_address_line2 = line2
-        }
-        
-        if let st = dictionary["residential_address_state_abbrev"] as? String {
-            someuser.residential_address_state_abbrev = st.uppercased()
-        }
-        
-        if let zip = dictionary["residential_address_zip"] as? String {
-            someuser.residential_address_zip = zip
-        }
-        
-        if let roles = dictionary["roles"] as? [String:String] {
-            if let adm = roles["Admin"] as? String, adm == "true" {
-                someuser.isAdmin = true
-            }
-            if let dir = roles["Director"] as? String, dir == "true" {
-                someuser.isDirector = true
-            }
-            if let vol = roles["Volunteer"] as? String, vol == "true" {
-                someuser.isVolunteer = true
-            }
-        }
-        /*************
-         private var currentTeam : Team?
-         probably should get the user's list of teams also
-         *************/
-        
+        someuser.populate(uid: uid, dictionary: dictionary)
         
         return someuser
+        
     }
     
     func signOut() {
@@ -235,7 +301,10 @@ class TPUser {
     // At some point, we should use this to update all fields
     func update(callback: @escaping (_ err: NSError?) -> Void) {
         
-        guard let theref = ref else { return }
+        if databaseRef == nil {
+            databaseRef = Database.database().reference()
+        }
+        
         let uid = getUid()
         // Create the data we want to update
         var updatedUserData = ["users/\(uid)/residential_address_line1": residential_address_line1,
@@ -254,58 +323,47 @@ class TPUser {
         if isAdmin {
             updatedUserData["users/\(uid)/roles/Admin"] = "true"
         } else {
-            updatedUserData["users/\(uid)/roles/Admin"] = nil
+            updatedUserData["users/\(uid)/roles/Admin"] = NSNull()
         }
         
         if isDirector {
             updatedUserData["users/\(uid)/roles/Director"] = "true"
         } else {
-            updatedUserData["users/\(uid)/roles/Director"] = nil
+            updatedUserData["users/\(uid)/roles/Director"] = NSNull()
         }
         
         if isVolunteer {
             updatedUserData["users/\(uid)/roles/Volunteer"] = "true"
         } else {
-            updatedUserData["users/\(uid)/roles/Volunteer"] = nil
+            updatedUserData["users/\(uid)/roles/Volunteer"] = NSNull()
         }
         
         // Do a multi-path update
-        theref.updateChildValues(updatedUserData, withCompletionBlock: { (error, ref) -> Void in
+        databaseRef?.updateChildValues(updatedUserData, withCompletionBlock: { (error, ref) -> Void in
             callback(error as NSError?)
         })
         
     }
     
+    
+    // DON'T USE THIS - USE create() INSTEAD ***************************************************
     // this should replace the other fetchXxxx() functions at some point
     // Right now, all we're getting are the residential address fields
     private func fetchUser(uid: String) {
         
-        guard let theref = ref else { return }
+        // the thing is - we don't ever want this to be nil.  So how do we ensure it's always not nil?
+        guard let theref = databaseRef else {
+            return }
         
         theref.child("users").child(uid).observe(.value, with: {(snapshot) in
             guard let userNode = snapshot.value as? [String: Any] else {
                 return
             }
-            if let rad1 = userNode["residential_address_line1"] as? String {
-                self.residential_address_line1 = rad1
-            }
-            if let rad2 = userNode["residential_address_line2"] as? String {
-                self.residential_address_line2 = rad2
-            }
-            if let rac = userNode["residential_address_city"] as? String {
-                self.residential_address_city = rac
-            }
-            if let ras = userNode["residential_address_state_abbrev"] as? String {
-                self.residential_address_state_abbrev = ras
-            }
-            if let raz = userNode["residential_address_zip"] as? String {
-                self.residential_address_zip = raz
-            }
-            if let hd = userNode["legislative_house_district"] as? String {
-                self.legislative_house_district = hd
-            }
-            if let sd = userNode["legislative_senate_district"] as? String {
-                self.legislative_senate_district = sd
+            
+            // account_status_events ?
+            
+            if let created = userNode["created"] as? String {
+                self.created = created
             }
             if let lat = userNode["current_latitude"] as? Double {
                 self.current_latitude = lat
@@ -313,14 +371,69 @@ class TPUser {
             if let lng = userNode["current_longitude"] as? Double {
                 self.current_longitude = lng
             }
+            
+            // current_team ?
+            
+            if let email = userNode["email"] as? String {
+                self.email = email
+            }
+            if let has_signed_confidentiality_agreement = userNode["has_signed_confidentiality_agreement"] as? Bool {
+                self.has_signed_confidentiality_agreement = has_signed_confidentiality_agreement
+            }
+            if let has_signed_petition = userNode["has_signed_petition"] as? Bool {
+                self.has_signed_petition = has_signed_petition
+            }
+            if let is_banned = userNode["is_banned"] as? Bool {
+                self.is_banned = is_banned
+            }
+            if let hd = userNode["legislative_house_district"] as? String {
+                self.legislative_house_district = hd
+            }
+            if let sd = userNode["legislative_senate_district"] as? String {
+                self.legislative_senate_district = sd
+            }
+            if let name = userNode["name"] as? String {
+                self.name = name
+            }
+            if let phone = userNode["phone"] as? String {
+                self.phone = phone
+            }
+            if let photoUrl = userNode["photoUrl"] as? URL {
+                self.photoUrl = photoUrl
+            }
+            if let recruiter_id = userNode["recruiter_id"] as? String {
+                self.recruiter_id = recruiter_id
+            }
+            if let rac = userNode["residential_address_city"] as? String {
+                self.residential_address_city = rac
+            }
+            if let rad1 = userNode["residential_address_line1"] as? String {
+                self.residential_address_line1 = rad1
+            }
+            if let rad2 = userNode["residential_address_line2"] as? String {
+                self.residential_address_line2 = rad2
+            }
+            if let ras = userNode["residential_address_state_abbrev"] as? String {
+                self.residential_address_state_abbrev = ras
+            }
+            if let raz = userNode["residential_address_zip"] as? String {
+                self.residential_address_zip = raz
+            }
+            
+            // roles?
+            // teams?
+            // topics?
+            
         })
     }
     
-    func fetchCurrentTeam(uid: String) {
+    private func fetchCurrentTeam(uid: String) {
         
-        guard let theref = ref else { return }
+        if databaseRef == nil {
+            databaseRef = Database.database().reference()
+        }
         
-        theref.child("users").child(uid).child("current_team").queryLimited(toFirst: 1).observe(.value, with: {(snapshot) in
+        databaseRef?.child("users").child(uid).child("current_team").queryLimited(toFirst: 1).observe(.value, with: {(snapshot) in
             guard let teamNode = snapshot.value as? [String: [String:String]] else {
                 print(snapshot.value)
                 print("snapshot.value above")
@@ -339,16 +452,17 @@ class TPUser {
         
     }
     
-    func fetchRoles(uid: String) {
+    private func fetchRoles(uid: String) {
         if(rolesAlreadyFetched) {
             return }
         
         rolesAlreadyFetched = true
-    
-        guard let theref = ref else {
-            return }
         
-        theref.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
+        if databaseRef == nil {
+            databaseRef = Database.database().reference()
+        }
+        
+        databaseRef?.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
             guard let val = snapshot.value as? [String: Any] else {
                 return
             }
@@ -362,7 +476,7 @@ class TPUser {
             self.noRoleAssignedDelegate?.theUserHasNoRoles()
         })
         
-        theref.child("users").child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
+        databaseRef?.child("users").child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
             
             if let role = snapshot.key as? String {
                 print(snapshot)
@@ -388,7 +502,7 @@ class TPUser {
         
         // To remove a permission, we don't set Admin=false or Director=false, etc
         // Instead, we remove the node altogether
-        theref.child("users").child(uid).child("roles").observe(.childRemoved, with: {(snapshot) in
+        databaseRef?.child("users").child(uid).child("roles").observe(.childRemoved, with: {(snapshot) in
             
             print("==============================")
             print("snapshot is...")
@@ -445,15 +559,17 @@ class TPUser {
     }
     
     func setCurrentTeam(team: Team) {
-        // this needs to go back to the database
-        guard let theref = ref else { return }
+        if databaseRef == nil {
+            databaseRef = Database.database().reference()
+        }
+        
         
         // LESSON LEARNED: Do not try to unassign the "current mission item" from here
         // The "current team" has already been changed.  So if you try to unassign the current
         // mission item from here, you will write a partial mission_item record to the wrong team
         
         let current_team = [team.team_name : team.dictionary()]
-        theref.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in // completion block
+        databaseRef?.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in // completion block
             self.setCurrentTeamAndNotify(team: team, whileLoggingIn: false)
         }
     }
@@ -523,7 +639,13 @@ class TPUser {
         //isVolunteer = false
         
         accountStatusEventListeners = [AccountStatusEventListener]()
-        //ref = nil
+        
+        //ref = nil // LESSON LEARNED - don't set this to nil unless you see where we're using this in this class
+        // Setting this to nil created a bug on signout that was only apparent when they tried to sign back in.
+        // The user wouldn't see "My Mission" or "Directors" or "Admins" and they couldn't switch teams because this
+        // DatabaseReference object was not being re-instantiated.  The user would have to swipe the app out of the
+        // background AFTER logging out in order for this init() in this class to be called again.
+        
         rolesAlreadyFetched = false
         noRoleAssignedDelegate = nil
         

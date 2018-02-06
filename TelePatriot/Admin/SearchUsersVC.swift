@@ -91,18 +91,43 @@ class SearchUsersVC: UITableViewController, UISearchResultsUpdating {
             
             guard let user = self.getUserObject(uid: uid, dictionary: dictionary) else { return }
             
-            // you'll get duplicate/phantom user entries without this.  That's because we explicitly
-            // call viewDidLoad() in CenterViewController.doView()
-            //guard self.findIndex(users: self.users, user: user) == nil else {
-            //    return
-            //}
+            if self.findIndex(users: self.users, user: user) == nil {
+                self.users.append(user)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
             
-            self.users.append(user)
+        })
+        
+        
+        // Seems like overkill to monitor .childChanged but could actually come in handy when reviewing an
+        // account with another admin.  One admin could update an account and the other one could watch and
+        // confirm that the account was updated.
+        /************/
+        query?.queryStarting(atValue: str).queryEnding(atValue: end).observe(.childChanged ,with: { (snapshot) in
+            
+            guard let dictionary = snapshot.value as? [String:Any],
+                let uid = snapshot.key as? String else {
+                    return
+            }
+            
+            // when a node changes, we want to identify that object in the list and update it
+            guard let user = self.getUserObject(uid: uid, dictionary: dictionary) else { return }
+            
+            guard let index = self.findIndex(users: self.users, user: user) else {
+                return
+            }
+            
+            self.users.remove(at: index)
+            self.users.insert(user, at: index)
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
             
         })
+        /**************/
     }
     
     

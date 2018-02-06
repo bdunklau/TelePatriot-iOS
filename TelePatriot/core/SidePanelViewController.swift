@@ -154,7 +154,8 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         if let deletionIndexPath = tableView?.indexPath(for: cell) {
             menuItems[0].remove(at: deletionIndexPath.row);
             print("delete cell = \(cell.textLabel): deletionIndexPath.row = \(deletionIndexPath.row)")
-            tableView?.deleteRows(at: [deletionIndexPath], with: .automatic)
+            //tableView?.deleteRows(at: [deletionIndexPath], with: .automatic)
+            tableView?.reloadData()
         }
         
     }
@@ -222,14 +223,11 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     // required by AccountStatusEventListener
     func userSignedOut() {
         let teamItem = menuItems[0][0]
+        
+        // why were we doing this?
         menuItems[0].removeAll()
         menuItems[0].insert(teamItem, at: 0)
         tableView?.reloadData()
-        /******
-        roleRemoved(role: "Volunteer")
-        roleRemoved(role: "Director")
-        roleRemoved(role: "Admin")
-         ******/
     }
     
     // Note the inout modifier below - that's how you can modify a list passed to a function
@@ -251,6 +249,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
             }
             guard menuItems.count > 0 else { return }
             menuItems[0].append(theItem)
+            tableView?.reloadData()
         }
         
     }

@@ -129,74 +129,52 @@ class AssignUserVC: BaseViewController {
     
     // consolidate these two soon
     //var user : [String:Any]?
-    var user : TPUser?
+    private var user : TPUser? // We just keep an internal reference to the user to make updating easier
     
     var uid : String?
     //var assignUserDelegate : AssignUserDelegate?
-    var ref : DatabaseReference?
+    //var ref : DatabaseReference? // might not need this - the TPUser object has an internal db ref :)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        guard let theUid = user?.getUid() ,
-            let name = user?.getName() ,
-            let email = user?.getEmail() else {
+        //ref = Database.database().reference()
+        
+        guard let theUid = uid
+            //let name = user?.getName() ,
+            //let email = user?.getEmail()
+            else {
                 return }
-    
-        uid = theUid
         
-        ref = Database.database().reference()
-        
-        nameLabel.text = name
-        emailLabel.text = email
-     
-        
-        // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
-        if let isVolunteer = user?.isVolunteer as? Bool {
-            volunteerSwitch.setOn(isVolunteer, animated: true)
-        }
-        else {
-            volunteerSwitch.setOn(false, animated: true)
-        }
-        
-        
-        // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
-        if let isDirector = user?.isDirector {
-            directorSwitch.setOn(isDirector, animated: true)
-        }
-        else {
-            directorSwitch.setOn(false, animated: true)
-        }
-        
-        
-        // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
-        if let isAdmin = user?.isAdmin {
-            adminSwitch.setOn(isAdmin, animated: true)
-        }
-        else {
-            adminSwitch.setOn(false, animated: true)
-        }
-        
-        has_signed_petition_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
-        has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
-        is_banned_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
-        
-        if let pet = user?.has_signed_petition {
-            has_signed_petition_segmented_control.selectedSegmentIndex = pet ? AssignUserVC.YES : AssignUserVC.NO
-        }
-        
-        
-        if let conf = user?.has_signed_confidentiality_agreement {
-            has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = conf ? AssignUserVC.YES : AssignUserVC.NO
-        }
-        
-        
-        if let ban = user?.is_banned {
-            is_banned_segmented_control.selectedSegmentIndex = ban ? AssignUserVC.YES : AssignUserVC.NO
-        }
-        
+        let auser = TPUser.create(uid: theUid, callback: {(user: TPUser) -> Void in
+            
+            self.user = user
+            self.nameLabel.text = user.getName()
+            self.emailLabel.text = user.getEmail()
+            
+            // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
+            self.volunteerSwitch.setOn(user.isVolunteer, animated: true)
+            self.directorSwitch.setOn(user.isDirector, animated: true)
+            self.adminSwitch.setOn(user.isAdmin, animated: true)
+            
+            self.has_signed_petition_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+            self.has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+            self.is_banned_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+            
+            if let pet = user.has_signed_petition {
+                self.has_signed_petition_segmented_control.selectedSegmentIndex = pet ? AssignUserVC.YES : AssignUserVC.NO
+            }
+            
+            if let conf = user.has_signed_confidentiality_agreement {
+                self.has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = conf ? AssignUserVC.YES : AssignUserVC.NO
+            }
+            
+            if let ban = user.is_banned {
+                self.is_banned_segmented_control.selectedSegmentIndex = ban ? AssignUserVC.YES : AssignUserVC.NO
+            }
+        })
         
         
         view.addSubview(nameLabel)
@@ -329,7 +307,7 @@ class AssignUserVC: BaseViewController {
         
         if volunteerSwitch.isOn || directorSwitch.isOn || adminSwitch.isOn {
             // as long as the user is assigned to some role/group, remove him from the /no_roles node
-            ref?.child("no_roles").child(usr.getUid()).removeValue()
+            Database.database().reference().child("no_roles").child(usr.getUid()).removeValue()
         }
         
         // When we're done, just go back using the BackTracker - genius!

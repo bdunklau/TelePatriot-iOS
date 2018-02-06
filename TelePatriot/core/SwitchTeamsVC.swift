@@ -53,7 +53,7 @@ class SwitchTeamsVC: BaseViewController, UITableViewDataSource {
     func fetchData() {
         //teams.removeAll()
         
-        ref?.observe(.childAdded, with: {(snapshot) in
+        ref?.queryOrdered(byChild: "team_name").observe(.childAdded, with: {(snapshot) in
             
             guard let dictionary = snapshot.value as? [String:Any] else {
                 return
@@ -71,7 +71,7 @@ class SwitchTeamsVC: BaseViewController, UITableViewDataSource {
                 return
             }
             
-            self.teams.insert(team, at: 0)
+            self.teams.append(team)
             print(team)
             DispatchQueue.main.async {
                 self.teamTableView?.reloadData()
