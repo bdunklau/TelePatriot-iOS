@@ -93,7 +93,7 @@ class MissionSummaryCellTableViewCell: UITableViewCell {
     var ref : DatabaseReference?
     
     let activateSwitch : UISwitch = {
-        let s = UISwitch(frame: CGRect(x: 250, y: 5, width: 30, height: 10))
+        let s = UISwitch(frame: CGRect(x: 250, y: 30, width: 30, height: 10))
         return s
     }()
     
