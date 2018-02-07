@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatusEventListener {
+class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewDelegate, AccountStatusEventListener {
     
     // your firebase reference as a property
     //var rootRef: DatabaseReference!
@@ -18,19 +18,25 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
     //var items = [DataSnapshot]()
     var missions = [MissionSummary]()
     
+    var missionListDelegate : MissionListDelegate? // defined at bottom
+    
     let cellId = "cellId"
     
     var missionSummaryTableView: UITableView?
     
     var ref : DatabaseReference?
     
+    var team : Team?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+        guard let tm = TPUser.sharedInstance.getCurrentTeam() else {
             return
         }
         
+        team = tm
+        guard let team_name = team?.team_name else { return }
         
         // need to get handle to MissionSummaryTVC
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -43,10 +49,11 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         else { print("MissionSummaryTVC: NOT adding appDelegate?.missionSummaryTVC! to list of accountStatusEventListeners") }
         
         
-        ref = Database.database().reference().child("teams/\(team)/missions")
+        ref = Database.database().reference().child("teams/\(team_name)/missions")
         
         missionSummaryTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         missionSummaryTableView?.dataSource = self
+        missionSummaryTableView?.delegate = self
         missionSummaryTableView?.register(MissionSummaryCellTableViewCell.self, forCellReuseIdentifier: "cellId")
         missionSummaryTableView?.rowHeight = 300
         view.addSubview(missionSummaryTableView!)
@@ -276,4 +283,18 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, AccountStatu
         // do nothing
     }
     
+    // per UITableViewDelegate - This is what gets called when you click one of the users in the search results
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let mission = missions[indexPath.row]
+        
+        if let team = team {
+            missionListDelegate?.missionSelected(mission: mission, team: team)
+        }
+        
+    }
+    
+}
+
+protocol MissionListDelegate {
+    func missionSelected(mission: MissionSummary, team: Team)
 }

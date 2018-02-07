@@ -100,8 +100,8 @@ class ActivityTableViewCell: UITableViewCell {
         //eventTypeLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         
         self.addSubview(supporterNameLabel)
-        supporterNameLabel.leadingAnchor.constraint(equalTo: eventTypeLabel.trailingAnchor, constant: 4).isActive = true
-        supporterNameLabel.topAnchor.constraint(equalTo: eventTypeLabel.topAnchor, constant: 0).isActive = true
+        supporterNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
+        supporterNameLabel.topAnchor.constraint(equalTo: eventTypeLabel.bottomAnchor, constant: 8).isActive = true
         //supporterNameLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         
         self.addSubview(volunteerPhoneLabel)

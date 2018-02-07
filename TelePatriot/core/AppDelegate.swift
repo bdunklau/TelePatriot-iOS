@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var assignUserVC : AssignUserVC?
     var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
     var myMissionViewController : MyMissionViewController?
+    var missionDetailsVC : MissionDetailsVC?
     var missionSummaryTVC : MissionSummaryTVC?
     //var noMissionVC : NoMissionVC?
     var myLegislatorsVC : MyLegislatorsVC?
@@ -76,6 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assignUserVC = AssignUserVC()
         chooseSpreadsheetTypeVC = ChooseSpreadsheetTypeVC()
         myMissionViewController = MyMissionViewController()
+        missionDetailsVC = MissionDetailsVC()
         myLegislatorsVC = MyLegislatorsVC()
         myProfileVC = MyProfileVC()
         newPhoneCampaignVC = NewPhoneCampaignVC()

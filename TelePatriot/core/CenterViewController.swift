@@ -18,6 +18,7 @@ import FBSDKLoginKit
 
 class CenterViewController: BaseViewController, FUIAuthDelegate {
     
+    // centerViewController.delegate = self  (from ContainerViewController)
     var delegate: CenterViewControllerDelegate?
     
     var byPassLogin : Bool = false
@@ -493,6 +494,22 @@ extension CenterViewController : AdminDelegate {
 extension CenterViewController : BackHandler {
     func goBack(vc: UIViewController, track: Bool) {
         doView(vc: vc, viewControllers: self.childViewControllers, track: track)
+    }
+}
+
+extension CenterViewController : MissionListDelegate {
+    func missionSelected(mission: MissionSummary, team: Team) {
+        guard let vc = delegate?.getMissionDetailsVC() else { return }
+        vc.mission = mission
+        vc.team = team
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+
+extension CenterViewController : MissionDetailsDelegate {
+    func missionDeleted(mission: MissionSummary) {
+        guard let vc = delegate?.getMissionSummaryTVC() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }
 

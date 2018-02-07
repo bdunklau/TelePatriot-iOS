@@ -84,7 +84,7 @@ class MyLegislatorsVC: BaseViewController, CLLocationManagerDelegate {
     private func createViewWhenAddressIsKnown() {
         
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        scrollView?.contentSize = CGSize(width: 250, height: 1450)
+        scrollView?.contentSize = CGSize(width: self.view.frame.width, height: 1450)
         
         view.addSubview(scrollView!)
         

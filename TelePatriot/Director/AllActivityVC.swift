@@ -36,7 +36,7 @@ class AllActivityVC: BaseViewController, UITableViewDataSource {
         activityTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         activityTableView?.dataSource = self
         activityTableView?.register(ActivityTableViewCell.self, forCellReuseIdentifier: "cellId")
-        activityTableView?.rowHeight = 150
+        activityTableView?.rowHeight = 175
         view.addSubview(activityTableView!)
         
         fetchData()
@@ -49,6 +49,8 @@ class AllActivityVC: BaseViewController, UITableViewDataSource {
     
     
     func fetchData() {
+        self.events.removeAll()
+        
         ref?.observe(.childAdded, with: {(snapshot) in
             
             guard let dictionary = snapshot.value as? [String:Any] else {

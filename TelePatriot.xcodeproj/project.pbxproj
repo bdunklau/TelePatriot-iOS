@@ -71,6 +71,7 @@
 		A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */; };
 		A1AD5C462009AC1400CB113E /* BackTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C452009AC1400CB113E /* BackTracker.swift */; };
 		A1AD5C482011A32900CB113E /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C472011A32900CB113E /* MyProfileVC.swift */; };
+		A1B55464202A64B20083C066 /* MissionDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B55463202A64B20083C066 /* MissionDetailsVC.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
 		A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */; };
 		A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */; };
@@ -155,6 +156,7 @@
 		A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotApproveUserVC.swift; sourceTree = "<group>"; };
 		A1AD5C452009AC1400CB113E /* BackTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackTracker.swift; sourceTree = "<group>"; };
 		A1AD5C472011A32900CB113E /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
+		A1B55463202A64B20083C066 /* MissionDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDetailsVC.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedUsersVC.swift; sourceTree = "<group>"; };
 		A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUserTableViewCell.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				A17B6EFE1FDDE44300A3325C /* ChooseSpreadsheetTypeVC.swift */,
 				A12CDB401FAF78F5003DE424 /* DirectorViewController.swift */,
 				A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */,
+				A1B55463202A64B20083C066 /* MissionDetailsVC.swift */,
 				A12CDB5A1FB020B8003DE424 /* MissionSummary.swift */,
 				A12CDB4C1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift */,
 				A12CDB581FB01BF7003DE424 /* MissionSummaryTVC.swift */,
@@ -539,6 +542,7 @@
 				A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */,
 				A1217E351FCA24150007ABF8 /* CallButton.swift in Sources */,
 				A134C1B220183CD100B64939 /* MissionItem2.swift in Sources */,
+				A1B55464202A64B20083C066 /* MissionDetailsVC.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,
 				A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */,

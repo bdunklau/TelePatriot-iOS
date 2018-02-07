@@ -32,6 +32,7 @@ class ContainerViewController: UIViewController {
     var centerViewController: CenterViewController!
     var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
     var directorViewController: DirectorViewController!
+    var missionDetailsVC: MissionDetailsVC!
     var myMissionViewController: MyMissionViewController!
     var newPhoneCampaignVC: NewPhoneCampaignVC!
     var missionSummaryTVC: MissionSummaryTVC!
@@ -92,6 +93,12 @@ class ContainerViewController: UIViewController {
         // modeled after the centerViewController stuff above
         directorViewController = getDirectorViewController()
         directorViewController.delegate = centerViewController
+        
+        missionDetailsVC = getMissionDetailsVC()
+        missionDetailsVC.missionDetailsDelegate = centerViewController
+        
+        missionSummaryTVC = getMissionSummaryTVC()
+        missionSummaryTVC.missionListDelegate = centerViewController
         
         myMissionViewController = getMyMissionViewController()
         //myMissionViewController?.noMissionDelegate = centerViewController
@@ -168,11 +175,11 @@ private extension UIStoryboard {
     class func newPhoneCampaignVC() -> NewPhoneCampaignVC? {
         return mainStoryboard().instantiateViewController(withIdentifier: "NewPhoneCampaignVC") as? NewPhoneCampaignVC
     }
+     
+     class func missionSummaryTVC() -> MissionSummaryTVC? {
+     return mainStoryboard().instantiateViewController(withIdentifier: "MissionSummaryTVC") as? MissionSummaryTVC
+     }
      **********/
-    
-    class func missionSummaryTVC() -> MissionSummaryTVC? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "MissionSummaryTVC") as? MissionSummaryTVC
-    }
     
     /***********
     class func chooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
@@ -250,6 +257,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getMyProfileVC() -> MyProfileVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.myProfileVC
+    }
+    
+    func getMissionDetailsVC() -> MissionDetailsVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.missionDetailsVC
     }
     
     func getMissionSummaryTVC() -> MissionSummaryTVC? {
