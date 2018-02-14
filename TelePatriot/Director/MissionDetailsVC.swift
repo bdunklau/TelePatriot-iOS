@@ -73,6 +73,7 @@ class MissionDetailsVC: BaseViewController {
     let delete_button : BaseButton = {
         let button = BaseButton(text: "Delete Mission")
         button.titleLabel?.font = button.titleLabel?.font.withSize(16)
+        button.setTitleColor(.red, for: .normal)
         button.addTarget(self, action: #selector(deleteMissionPressed(_:)), for: .touchUpInside)
         return button
     }()
@@ -132,7 +133,7 @@ class MissionDetailsVC: BaseViewController {
             ************/
             
             scrollView.addSubview(delete_button)
-            delete_button.topAnchor.constraint(equalTo: descriptionAndScript.bottomAnchor, constant: 24).isActive = true
+            delete_button.topAnchor.constraint(equalTo: descriptionAndScript.bottomAnchor, constant: 48).isActive = true
             delete_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
             
             mission_name.text = mission.mission_name
