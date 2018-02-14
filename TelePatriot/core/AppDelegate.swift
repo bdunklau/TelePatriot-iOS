@@ -232,20 +232,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
         // so they can enter some notes on the call.
         if let vc = wrapUpCallViewController {
+            var gotoWrapUpScreen = false
             if let _ = TPUser.sharedInstance.currentMissionItem {
                 
                 // call begin is recorded in MyMissionViewController.makeCall()
                 endPhoneCallForOriginalStyleMissionItem()
+                gotoWrapUpScreen = true
             }
             else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
                 
                 // call begin is recorded in OfficeTableViewCell.makeCall()
                 endPhoneCallForMissionItem2(mission_item: mi2)
+                gotoWrapUpScreen = true
             }
             
-            // myDelegate is assigned in ContainerViewController.viewDidLoad()
-            // It's probably assigned to CenterViewController
-            myDelegate?.show(viewController: vc)
+            if gotoWrapUpScreen {
+                // myDelegate is assigned in ContainerViewController.viewDidLoad()
+                // It's probably assigned to CenterViewController
+                myDelegate?.show(viewController: vc)
+            }
         }
     }
     
