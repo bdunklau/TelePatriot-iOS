@@ -105,7 +105,8 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
     
     func fetchData() {
         
-        ref?.observe(.childAdded, with: {(snapshot) in
+        let query = ref?.queryOrdered(byChild: "account_disposition").queryEqual(toValue: "new user")
+        query?.observe(.childAdded, with: {(snapshot) in
             
             guard let dictionary = snapshot.value as? [String:Any],
                   let uid = snapshot.key as? String else {
@@ -133,7 +134,7 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
         
         
         
-        ref?.observe(.childChanged, with: {(snapshot) in
+        query?.observe(.childChanged, with: {(snapshot) in
             
             guard let dictionary = snapshot.value as? [String:Any],
                 let uid = snapshot.key as? String else {
@@ -156,7 +157,7 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
         
         
         
-        ref?.observe(.childRemoved, with: {(snapshot) in
+        query?.observe(.childRemoved, with: {(snapshot) in
             
             guard let dictionary = snapshot.value as? [String:Any] else {
                 return

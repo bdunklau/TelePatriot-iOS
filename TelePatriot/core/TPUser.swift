@@ -17,6 +17,12 @@ class TPUser {
     
     // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
     private var uid : String? // this is the key of the user's node
+    var account_disposition : String?
+    var account_dispositioned_by : String?
+    var account_dispositioned_by_uid : String?
+    var account_dispositioned_on : String?
+    var account_dispositioned_on_ms : Int64?
+    
     var created : String? // MMM d, yyyy h:mm a z
     var current_latitude : Double?
     var current_longitude : Double?
@@ -36,6 +42,7 @@ class TPUser {
     var residential_address_line2 : String?
     var residential_address_state_abbrev : String?
     var residential_address_zip : String?
+    var teams : [Team]?
     
     var isAdmin = false
     var isDirector = false
@@ -305,9 +312,16 @@ class TPUser {
             databaseRef = Database.database().reference()
         }
         
+        
         let uid = getUid()
         // Create the data we want to update
-        var updatedUserData = ["users/\(uid)/residential_address_line1": residential_address_line1,
+        var updatedUserData = [
+                               "users/\(uid)/account_disposition": account_disposition,
+                               "users/\(uid)/account_dispositioned_by": account_dispositioned_by,
+                               "users/\(uid)/account_dispositioned_by_uid": account_dispositioned_by_uid,
+                               "users/\(uid)/account_dispositioned_on": account_dispositioned_on,
+                               "users/\(uid)/account_dispositioned_on_ms": account_dispositioned_on_ms,
+                               "users/\(uid)/residential_address_line1": residential_address_line1,
                                "users/\(uid)/residential_address_line2": residential_address_line2,
                                "users/\(uid)/residential_address_city": residential_address_city,
                                "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
@@ -338,6 +352,11 @@ class TPUser {
             updatedUserData["users/\(uid)/roles/Volunteer"] = NSNull()
         }
         
+        if let teams = teams, teams.isEmpty {
+            // very specific case of deactivating users...
+            updatedUserData["users/\(uid)/teams"] = NSNull()
+        }
+        
         // Do a multi-path update
         databaseRef?.updateChildValues(updatedUserData, withCompletionBlock: { (error, ref) -> Void in
             callback(error as NSError?)
@@ -345,10 +364,28 @@ class TPUser {
         
     }
     
+    func deactivate(deactivatedBy: TPUser, callback: @escaping (_ err: NSError?) -> Void) {
+        // will cause teams to be removed...
+        teams = [Team]()
+        
+        isAdmin = false
+        isDirector = false
+        isVolunteer = false
+        
+        account_disposition = "deactivated"
+        account_dispositioned_by = TPUser.sharedInstance.getName()
+        account_dispositioned_by_uid = TPUser.sharedInstance.getUid()
+        account_dispositioned_on = Util.getDate_MMM_d_yyyy_hmm_am_z()
+        account_dispositioned_on_ms = Util.getDate_as_millis()
+        
+        update(callback: callback)
+    }
+    
     
     // DON'T USE THIS - USE create() INSTEAD ***************************************************
     // this should replace the other fetchXxxx() functions at some point
     // Right now, all we're getting are the residential address fields
+    /*******
     private func fetchUser(uid: String) {
         
         // the thing is - we don't ever want this to be nil.  So how do we ensure it's always not nil?
@@ -426,6 +463,7 @@ class TPUser {
             
         })
     }
+     *************/
     
     private func fetchCurrentTeam(uid: String) {
         

@@ -10,6 +10,10 @@ import Foundation
 
 class Util {
     
+    static func getDate_as_millis() -> Int64 {
+        let date : Date = Date()
+        return Int64((date.timeIntervalSince1970 * 1000.0).rounded())
+    }
     
     static func getDate_Day_MMM_d_hmmss_am_z_yyyy() -> String {
         return getDate(withFormat: "EEE MMM d, h:mm:ss a z yyyy")

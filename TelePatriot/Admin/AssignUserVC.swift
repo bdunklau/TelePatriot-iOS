@@ -24,6 +24,14 @@ class AssignUserVC: BaseViewController {
         return label
     }()
     
+    let deactivateButton : BaseButton = {
+        let button = BaseButton(text: "Deny/Deactivate")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.red, for: .normal)
+        button.addTarget(self, action: #selector(deactivateUser(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     let instructionsLabel : UILabel = {
         let label = UILabel()
         label.text = "Assign to One More Groups"
@@ -189,6 +197,10 @@ class AssignUserVC: BaseViewController {
         emailLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         //emailLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         
+        view.addSubview(deactivateButton)
+        deactivateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        deactivateButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 24).isActive = true
+        
         view.addSubview(instructionsLabel)
         instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         instructionsLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
@@ -268,6 +280,42 @@ class AssignUserVC: BaseViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @objc private func deactivateUser(_ sender: UIButton) {
+        guard let usr = user else {
+            return}
+        
+        // remove Volunteer, Director and Admin access for the person and set
+        // account_disposition:deactivated
+        adminSwitch.setOn(false, animated: true)
+        directorSwitch.setOn(false, animated: true)
+        volunteerSwitch.setOn(false, animated: true)
+        
+        usr.deactivate(deactivatedBy: TPUser.sharedInstance, callback: callback)
+        
+        // When we're done, just go back using the BackTracker - genius!
+        BackTracker.sharedInstance.goBack()
+        
+        /*********
+         
+         extension Date {
+         var msSince1970:Int64 {
+         return Int64((self.timeIntervalSince1970 * 1000.0).rounded())
+         }
+         init(ms: Int) {
+         self = Date(timeIntervalSince1970: TimeInterval(ms / 1000))
+         }
+         }
+         
+         let one = Date().msSince1970
+         let two = Date(ms: 0)
+         
+         print(one)
+         print(two)
+
+        ********/
     }
     
     
