@@ -139,7 +139,9 @@ class AssignUserVC: BaseViewController {
     //var user : [String:Any]?
     private var user : TPUser? // We just keep an internal reference to the user to make updating easier
     
-    var uid : String?
+    var passedInUser : TPUser? // passed in from UnassignedUsersVC and SearchUsersVC
+    
+    //var uid : String?
     //var assignUserDelegate : AssignUserDelegate?
     //var ref : DatabaseReference? // might not need this - the TPUser object has an internal db ref :)
 
@@ -150,14 +152,16 @@ class AssignUserVC: BaseViewController {
         
         //ref = Database.database().reference()
         
-        guard let theUid = uid
+        guard let puser = passedInUser
             //let name = user?.getName() ,
             //let email = user?.getEmail()
             else {
                 return }
         
-        let auser = TPUser.create(uid: theUid, callback: {(user: TPUser) -> Void in
-            
+        puser.currentlyBeingReviewed(by: TPUser.sharedInstance)
+        
+        TPUser.create(uid: puser.getUid(), callback: {(user: TPUser) -> Void in
+
             self.user = user
             self.nameLabel.text = user.getName()
             self.emailLabel.text = user.getEmail()
@@ -182,7 +186,9 @@ class AssignUserVC: BaseViewController {
             if let ban = user.is_banned {
                 self.is_banned_segmented_control.selectedSegmentIndex = ban ? AssignUserVC.YES : AssignUserVC.NO
             }
+            
         })
+        
         
         
         view.addSubview(nameLabel)

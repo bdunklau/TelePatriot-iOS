@@ -403,7 +403,8 @@ extension CenterViewController : UnassignedUsersDelegate {
         }
         
         guard let normalVC = delegate?.getAssignUserVC() else {return}
-        normalVC.uid = user.getUid()
+        //normalVC.uid = user.getUid()
+        normalVC.passedInUser = user
         doView(vc: normalVC, viewControllers: self.childViewControllers, track: true)
     }
 }
@@ -418,7 +419,8 @@ extension CenterViewController : SearchUsersDelegate {
          ********/
         
         guard let normalVC = delegate?.getAssignUserVC() else {return}
-        normalVC.uid = user.getUid()
+        //normalVC.uid = user.getUid()
+        normalVC.passedInUser = user
         doView(vc: normalVC, viewControllers: self.childViewControllers, track: true)
     }
 }

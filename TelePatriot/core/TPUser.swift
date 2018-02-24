@@ -632,6 +632,12 @@ class TPUser {
     }
     
     
+    func currentlyBeingReviewed(by: TPUser) {
+        let evt = ["date": Util.getDate_MMM_d_yyyy_hmm_am_z(), "event": "Admin (\(by.getName())) is reviewing your account..."]
+        Database.database().reference().child("users/\(getUid())/account_status_events/").childByAutoId().setValue(evt)
+    }
+    
+    
     private func setCurrentTeamAndNotify(team: Team, whileLoggingIn: Bool) {
         self.currentTeam = team
         // where are these listeners set?...
