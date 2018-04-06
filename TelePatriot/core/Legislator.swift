@@ -21,6 +21,9 @@ struct Legislator : Decodable {
     let district : String // but really a number
     let state : String // state abbrev
     
+    let legislator_cos_position : String?
+    let legislator_facebook : String?
+    let legislator_twitter : String?
     
     struct Office : Decodable {
         let name : String

@@ -111,9 +111,12 @@ class MenuItems {
         
         mainMenu = [mainSection0,
                     
-                    /*[MenuItem(title: "Share Petition (coming soon)"),
-                     MenuItem(title: "Chat/Help (coming soon)") ], */
+                    // Communicate section - ICONS AREN'T RIGHT - FIX LATER
+                    [MenuItem(icon: MenuItems.allActivityIcon, title: "Video Chat")
+                    /*MenuItem(icon: MenuItems.allActivityIcon, title: "Share Petition (coming soon)"),
+                     MenuItem(icon: MenuItems.allActivityIcon, title: "Chat/Help (coming soon)")*/ ],
             
+                    // My Account section
                     [MenuItem(icon: MenuItems.myProfileIcon, title: "My Profile"),
                      MenuItem(icon: MenuItems.myLegislatorsIcon, title: "My Legislators"),
                      MenuItem(icon: MenuItems.logoutIcon, title: "Sign Out")]
@@ -131,7 +134,7 @@ class MenuItems {
         
     }
     
-    var mainSections : [String] = ["Act", /*"Communicate",*/ "My Account"]
+    var mainSections : [String] = ["Act", "Communicate", "My Account"]
     
     static func getItem(withText: String) -> MenuItem? {
         let roleItems : [String: MenuItem] = {

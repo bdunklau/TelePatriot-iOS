@@ -39,6 +39,7 @@ class ContainerViewController: UIViewController {
     var searchUsersVC: SearchUsersVC!
     var switchTeamsVC: SwitchTeamsVC!
     var unassignedUsersVC: UnassignedUsersVC!
+    var videoChatVC: VideoChatVC!
     
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -118,6 +119,10 @@ class ContainerViewController: UIViewController {
         
         unassignedUsersVC = getUnassignedUsersVC()
         unassignedUsersVC?.unassignedUsersDelegate = centerViewController
+        
+        ////////////////////////////////////////
+        // VideoChatVC - at some point, we'll probably need to do something similar to above
+        // for the VideoChatVC
         
         
         // wrap the centerViewController in a navigation controller, so we can push views to it
@@ -288,6 +293,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getUserMustSignCAViewController() -> UserMustSignCAViewController? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.userMustSignCAViewController
+    }
+    
+    func getVideoChatViewController() -> VideoChatVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.videoChatVC
     }
     
     func toggleLeftPanel() {

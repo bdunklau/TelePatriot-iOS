@@ -251,13 +251,17 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         else if(menuItem.title == "Admins") {
             unassignMissionItem()
-            //guard let vc = delegate?.getUnassignedUsersVC() else { return }
             guard let vc = delegate?.getAdminVC() else { return }
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         else if(menuItem.title == "Share Petition") {
             unassignMissionItem()
             doView(vc:  SharePetitionViewController(), viewControllers: self.childViewControllers)
+        }
+        else if(menuItem.title == "Video Chat") {
+            // delegate is probably ContainerViewController
+            guard let vc = delegate?.getVideoChatViewController() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers)
         }
         /*********
         else if(menuItem.title == "Chat/Help") {

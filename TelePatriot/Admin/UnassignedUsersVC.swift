@@ -105,7 +105,7 @@ class UnassignedUsersVC: BaseViewController, UITableViewDataSource {
     
     func fetchData() {
         
-        let query = ref?.queryOrdered(byChild: "account_disposition").queryEqual(toValue: "new user")
+        let query = ref?.queryOrdered(byChild: "account_disposition").queryEqual(toValue: "enabled")
         query?.observe(.childAdded, with: {(snapshot) in
             
             guard let dictionary = snapshot.value as? [String:Any],

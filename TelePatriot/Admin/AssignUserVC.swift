@@ -24,12 +24,27 @@ class AssignUserVC: BaseViewController {
         return label
     }()
     
+    /*************
     let deactivateButton : BaseButton = {
         let button = BaseButton(text: "Deny/Deactivate")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.red, for: .normal)
-        button.addTarget(self, action: #selector(deactivateUser(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(activateOrDeactivateUser(_:)), for: .touchUpInside)
         return button
+    }()
+    ************/
+    
+    let enabledDisabledLabel : UILabel = {
+        let label = UILabel()
+        label.text = ""  //"Enabled/Disabled"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let enabledDisabledSwitch : UISwitch = {
+        let s = UISwitch(frame: CGRect(x: 200, y: 145, width: 30, height: 10))
+        s.addTarget(self, action: #selector(enabledDisabledChanged(_:)), for: .touchUpInside)
+        return s
     }()
     
     let instructionsLabel : UILabel = {
@@ -129,7 +144,7 @@ class AssignUserVC: BaseViewController {
     }()
     
     let okButton : BaseButton = {
-        let button = BaseButton(text: "OK")
+        let button = BaseButton(text: "") // we'll display the "OK" once the user data has been loaded, so the admin can't click prematurely
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(updateUser(_:)), for: .touchUpInside)
         return button
@@ -158,37 +173,6 @@ class AssignUserVC: BaseViewController {
             else {
                 return }
         
-        puser.currentlyBeingReviewed(by: TPUser.sharedInstance)
-        
-        TPUser.create(uid: puser.getUid(), callback: {(user: TPUser) -> Void in
-
-            self.user = user
-            self.nameLabel.text = user.getName()
-            self.emailLabel.text = user.getEmail()
-            
-            // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
-            self.volunteerSwitch.setOn(user.isVolunteer, animated: true)
-            self.directorSwitch.setOn(user.isDirector, animated: true)
-            self.adminSwitch.setOn(user.isAdmin, animated: true)
-            
-            self.has_signed_petition_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
-            self.has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
-            self.is_banned_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
-            
-            if let pet = user.has_signed_petition {
-                self.has_signed_petition_segmented_control.selectedSegmentIndex = pet ? AssignUserVC.YES : AssignUserVC.NO
-            }
-            
-            if let conf = user.has_signed_confidentiality_agreement {
-                self.has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = conf ? AssignUserVC.YES : AssignUserVC.NO
-            }
-            
-            if let ban = user.is_banned {
-                self.is_banned_segmented_control.selectedSegmentIndex = ban ? AssignUserVC.YES : AssignUserVC.NO
-            }
-            
-        })
-        
         
         
         view.addSubview(nameLabel)
@@ -203,9 +187,19 @@ class AssignUserVC: BaseViewController {
         emailLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         //emailLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         
+        view.addSubview(enabledDisabledLabel)
+        enabledDisabledLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        enabledDisabledLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 24).isActive = true
+        
+        // just being careful.  We enable this below once the user has been loaded
+        enabledDisabledSwitch.isEnabled = false
+        view.addSubview(enabledDisabledSwitch)
+        
+        /*************
         view.addSubview(deactivateButton)
         deactivateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         deactivateButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 24).isActive = true
+        **************/
         
         view.addSubview(instructionsLabel)
         instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
@@ -281,7 +275,65 @@ class AssignUserVC: BaseViewController {
         view.addSubview(okButton)
         okButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         okButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
+        
+        puser.currentlyBeingReviewed(by: TPUser.sharedInstance)
+        
+        //setActivateDeactivateButton(button: deactivateButton, user: puser)
+        
+        TPUser.create(uid: puser.getUid(), callback: {(user: TPUser) -> Void in
+            
+            self.user = user
+            self.nameLabel.text = user.getName()
+            self.emailLabel.text = user.getEmail()
+            
+            // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
+            self.volunteerSwitch.setOn(user.isVolunteer, animated: true)
+            self.directorSwitch.setOn(user.isDirector, animated: true)
+            self.adminSwitch.setOn(user.isAdmin, animated: true)
+            
+            self.has_signed_petition_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+            self.has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+            self.is_banned_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
+            
+            if let pet = user.has_signed_petition {
+                self.has_signed_petition_segmented_control.selectedSegmentIndex = pet ? AssignUserVC.YES : AssignUserVC.NO
+            }
+            
+            if let conf = user.has_signed_confidentiality_agreement {
+                self.has_signed_confidentiality_agreement_segmented_control.selectedSegmentIndex = conf ? AssignUserVC.YES : AssignUserVC.NO
+            }
+            
+            if let ban = user.is_banned {
+                self.is_banned_segmented_control.selectedSegmentIndex = ban ? AssignUserVC.YES : AssignUserVC.NO
+            }
+            
+            self.enabledDisabledSwitch.setOn(!user.isDisabled(), animated: true)
+            if user.isDisabled() {
+                self.enabledDisabledLabel.text = "Disabled"
+            }
+            else {
+                self.enabledDisabledLabel.text = "Enabled"
+            }
+            
+            self.enabledDisabledSwitch.isEnabled = true
+            self.okButton.setTitle("OK", for: .normal)
+        })
     }
+    
+    /***********
+    private func setActivateDeactivateButton(button: UIButton, user: TPUser) {
+        if user.isDeactivated() {
+            // make the button blue and change text to say "Approve/Activate"
+            button.setTitle("Approve/Activate", for: .normal)
+            button.setTitleColor(UIButton().tintColor, for: .normal)
+        }
+        else {
+            
+            button.setTitle("Deny/Deactivate", for: .normal)
+            button.setTitleColor(.red, for: .normal)
+        }
+    }
+     ***********/
  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -289,9 +341,8 @@ class AssignUserVC: BaseViewController {
     }
     
     
-    @objc private func deactivateUser(_ sender: UIButton) {
-        guard let usr = user else {
-            return}
+    /*******************
+    private func deactivateUser(user: TPUser) {
         
         // remove Volunteer, Director and Admin access for the person and set
         // account_disposition:deactivated
@@ -299,29 +350,54 @@ class AssignUserVC: BaseViewController {
         directorSwitch.setOn(false, animated: true)
         volunteerSwitch.setOn(false, animated: true)
         
-        usr.deactivate(deactivatedBy: TPUser.sharedInstance, callback: callback)
+        user.deactivate(deactivatedBy: TPUser.sharedInstance, callback: callback)
+    }
+    
+    
+    @objc private func activateOrDeactivateUser(_ sender: UIButton) {
+        guard let usr = user else {
+            return}
+        
+        if usr.isDisabled() {
+            usr.activate(activatedBy: TPUser.sharedInstance, callback: callback)
+        }
+        else {
+            deactivateUser(user: usr)
+        }
         
         // When we're done, just go back using the BackTracker - genius!
         BackTracker.sharedInstance.goBack()
-        
-        /*********
-         
-         extension Date {
-         var msSince1970:Int64 {
-         return Int64((self.timeIntervalSince1970 * 1000.0).rounded())
-         }
-         init(ms: Int) {
-         self = Date(timeIntervalSince1970: TimeInterval(ms / 1000))
-         }
-         }
-         
-         let one = Date().msSince1970
-         let two = Date(ms: 0)
-         
-         print(one)
-         print(two)
-
-        ********/
+    }
+    ******************/
+    
+    
+    /************************
+     NOTE that disabling someone's account does not automatically remove them from the
+     teams they're on.  That would make sense.  But the app just isn't programmed that way
+     right now.  At one time, we cleared the user's list of teams whenever the enable/disable
+     switch was moved to "disabled".  But that occurred before the user was saved.
+     And I wanted to make sure we didn't lose team membership info prior to actually saving
+     the user.  Otherwise, the admin could toggle to disabled, then back to enabled, never actually
+     changing the state of the user but losing all the team info in the process.
+    ************************/
+    @objc func enabledDisabledChanged(_ sender: UISwitch) {
+        enabledDisabledLabel.text = sender.isOn ? "Enabled" : "Disabled"
+        if sender.isOn {
+            volunteerSwitch.isEnabled = true
+            directorSwitch.isEnabled = true
+            adminSwitch.isEnabled = true
+        }
+        else {
+            volunteerSwitch.setOn(false, animated: true)
+            directorSwitch.setOn(false, animated: true)
+            adminSwitch.setOn(false, animated: true)
+            volunteerSwitch.isEnabled = false
+            directorSwitch.isEnabled = false
+            adminSwitch.isEnabled = false
+        }
+        if let usr = self.user {
+            usr.setEnabled(sender.isOn) // handles both the enabled AND disabled case
+        }
     }
     
     

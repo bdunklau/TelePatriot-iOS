@@ -29,16 +29,6 @@ class ViewController: UIViewController {
     }
     
     func sideMenus() {
-        if revealViewController() != nil {
-            menuButton1.target = revealViewController()
-            menuButton1.action = #selector(SWRevealViewController.revealToggle(_:))
-            revealViewController().rearViewRevealWidth = 275 // how far the menu slides open
-            revealViewController().rightViewRevealWidth = 275 // how far the menu slides open
-            
-            menuButton2.target = revealViewController()
-            menuButton2.action = #selector(SWRevealViewController.rightRevealToggle(_ :))
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
     }
 
     /*

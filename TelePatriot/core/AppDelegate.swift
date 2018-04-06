@@ -16,6 +16,7 @@ import FirebaseAuthUI
 import FirebaseAuth
 import GoogleSignIn
 import FBSDKLoginKit
+import UserNotifications
 
 // https://stackoverflow.com/a/32555911
 // https://github.com/hackiftekhar/IQKeyboardManager
@@ -48,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var unassignedUsersVC : UnassignedUsersVC?
     var userIsBannedVC : UserIsBannedVC?
     var userMustSignCAViewController : UserMustSignCAViewController?
+    var videoChatVC : VideoChatVC?
+    var videoTypes = [VideoType]()
     
     var myDelegate : AppDelegateDelegate?
     var window: UIWindow?
@@ -63,8 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load a named file for switching between dev and prod firebase instances
         // see https://firebase.google.com/docs/configure/
-        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        //let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
             else { assert(false, "Couldn't load config file")
                 return
@@ -88,15 +91,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         missionSummaryTVC = MissionSummaryTVC()
         userIsBannedVC = UserIsBannedVC()
         userMustSignCAViewController = UserMustSignCAViewController()
+        videoChatVC = VideoChatVC()
         
         MissionItem.nextViewController = myMissionViewController
         MissionItem2.nextViewController = myLegislatorsVC
     }
     
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("deviceToken = \(deviceToken)")
+    }
+    
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register device token because of this error:  \(error)")
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+            // Enable or disable features based on authorization.
+        }
+        UIApplication.shared.registerForRemoteNotifications() // you can also set here for local notification.
         
         // https://stackoverflow.com/a/32555911
         // https://github.com/hackiftekhar/IQKeyboardManager
@@ -126,6 +144,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // they're really not used.  Otherwise just confusion later on when I'm trying to figure out how something works.
         callObserver = CXCallObserver()
         callObserver?.setDelegate(self, queue: nil) // nil queue means main thread
+        
+        // capture all the different video types...
+        // We use this list in VideoChatVC
+        Database.database().reference().child("video/types").observe(.value, with:{ (snapshot) in
+            let children = snapshot.children
+            while let snap = children.nextObject() as? DataSnapshot {
+                if let vt = VideoType.getVideoTypeFrom(snapshot: snap) {
+                    self.videoTypes.append(vt)
+                }
+            }
+        })
         
         return true
     }

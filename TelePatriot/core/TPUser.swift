@@ -135,6 +135,24 @@ class TPUser {
         
         // account_status_events ?
         
+        var account_dispositioned_by : String?
+        var account_dispositioned_by_uid : String?
+        var account_dispositioned_on : String?
+        var account_dispositioned_on_ms : Int64?
+        
+        if let account_disposition = dictionary["account_disposition"] as? String {
+            self.account_disposition = account_disposition
+        }
+        if let account_dispositioned_by_uid = dictionary["account_dispositioned_by_uid"] as? String {
+            self.account_dispositioned_by_uid = account_dispositioned_by_uid
+        }
+        if let account_dispositioned_on = dictionary["account_dispositioned_on"] as? String {
+            self.account_dispositioned_on = account_dispositioned_on
+        }
+        if let account_dispositioned_on_ms = dictionary["account_dispositioned_on_ms"] as? Int64 {
+            self.account_dispositioned_on_ms = account_dispositioned_on_ms
+        }
+        
         if let created = dictionary["created"] as? String {
             self.created = created
         }
@@ -364,7 +382,34 @@ class TPUser {
         
     }
     
+    func setEnabled(_ enabled: Bool) {
+        account_disposition = enabled ? "enabled" : "disabled"
+        account_dispositioned_by = TPUser.sharedInstance.getName()
+        account_dispositioned_by_uid = TPUser.sharedInstance.getUid()
+        account_dispositioned_on = Util.getDate_MMM_d_yyyy_hmm_am_z()
+        account_dispositioned_on_ms = Util.getDate_as_millis()
+    }
+    
+    /*******************
+    func activate(activatedBy: TPUser, callback: @escaping (_ err: NSError?) -> Void) {
+        
+        let evt = ["date": Util.getDate_MMM_d_yyyy_hmm_am_z(), "event": "Admin (\(activatedBy.getName())) has activated your account"]
+        Database.database().reference().child("users/\(getUid())/account_status_events/").childByAutoId().setValue(evt)
+        
+        account_disposition = "activated"
+        account_dispositioned_by = TPUser.sharedInstance.getName()
+        account_dispositioned_by_uid = TPUser.sharedInstance.getUid()
+        account_dispositioned_on = Util.getDate_MMM_d_yyyy_hmm_am_z()
+        account_dispositioned_on_ms = Util.getDate_as_millis()
+        
+        update(callback: callback)
+    }
+    
     func deactivate(deactivatedBy: TPUser, callback: @escaping (_ err: NSError?) -> Void) {
+        
+        let evt = ["date": Util.getDate_MMM_d_yyyy_hmm_am_z(), "event": "Admin (\(deactivatedBy.getName())) has deactivated your account"]
+        Database.database().reference().child("users/\(getUid())/account_status_events/").childByAutoId().setValue(evt)
+        
         // will cause teams to be removed...
         teams = [Team]()
         
@@ -379,6 +424,16 @@ class TPUser {
         account_dispositioned_on_ms = Util.getDate_as_millis()
         
         update(callback: callback)
+    }
+    *****************/
+    
+    func isDisabled() -> Bool {
+        if let disp = account_disposition {
+            return disp == "disabled"
+        }
+        else {
+            return false
+        }
     }
     
     
