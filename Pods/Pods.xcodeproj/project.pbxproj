@@ -15,7 +15,6 @@
 		022BA60EB6ADD7B97EE365CCCE52A1C2 /* arena.h in Headers */ = {isa = PBXBuildFile; fileRef = 2418D1156705F449294995E143BC8596 /* arena.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		023A168D0794BF648DBD337435921F33 /* es-EC.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E114553416E17EE0A1A0A2F9E7A33268 /* es-EC.lproj */; };
 		0272C8D90E50168CA8B836F5B07833B4 /* en-AU.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DBB060239D670FA35EEEEDA2E815A0CD /* en-AU.lproj */; };
-		02A8CD406255AE081E99A62241BAC587 /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A98FD1D0086B38E2FF09D9DE6636B /* IQToolbar.swift */; };
 		02B5219375804D12865A4F249F30D7FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73800A288CEF4C905B2768E28CA8653D /* Foundation.framework */; };
 		02B5A79A3C870B34E4AF25238773FF8D /* es-BO.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E4412B0E4A754D5A749CB25D00A8F41D /* es-BO.lproj */; };
 		0311F23F91A698F81529C0334B3D0A9E /* ic_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439A3116E9EE30ECFF7BE2EA737F12D1 /* ic_twitter@2x.png */; };
@@ -150,14 +149,15 @@
 		1D224B89A5BD9D404FF0AD3A374CC0EF /* es-VE.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 62B52390F779EDF26989019375E3C99F /* es-VE.lproj */; };
 		1D513137A69A4D9FEF4A1C5DB5A2E447 /* ur.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 99D0941C1BEFE70DB170AB9A4D5C4720 /* ur.lproj */; };
 		1DCDF6263322B9239142054D86B3CB5B /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ECDFDCE047C926B846FDB921B702F60D /* fr.lproj */; };
+		1DF0DEB77D26401892D4E76463DD3949 /* IQPreviousNextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAEE500FB131E956D56A6F167131D5E /* IQPreviousNextView.swift */; };
 		1E0C1C24BB58DC9EAE01F0AC167FD4D2 /* FBSDKProfilePictureView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA7FB19EB08D49D9D896E632226AB18 /* FBSDKProfilePictureView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E157747466C9ADBF7A5E2F6D04088E7 /* FBSDKErrorRecoveryConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = CE52C99491C0E667920B70F6F862E809 /* FBSDKErrorRecoveryConfiguration.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		1E3A45D61C5E3CC212438D03B0A4C763 /* FBSDKShareMessengerGenericTemplateElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D18314694B3A8E7B15808A8A60ADD754 /* FBSDKShareMessengerGenericTemplateElement.m */; };
 		1E4802C2A7E18B695584677DD121EEA8 /* FBSDKAppInviteDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C73099C3DC0F04AADFB9D392071AF8 /* FBSDKAppInviteDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1E66A4899FC855FC61F13721CF63EB35 /* IQKeyboardReturnKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61985C2F55D7220281FB1C03305B98AB /* IQKeyboardReturnKeyHandler.swift */; };
 		1EA483AB0F83DC9A67BEF648508F0253 /* GTLRUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 930D5BFB3C8686821F3ADE7820D1E629 /* GTLRUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1ECBC672278C12EE8756E52881ECBAC6 /* GTLRURITemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = F996899DA70D31AD2EB98531A8930701 /* GTLRURITemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1EE63A42EF4BAF076FF0BCFA77F49577 /* ta.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 3E12ACD64BA2B1C50B3D957823D07763 /* ta.lproj */; };
-		1F0F49D029C4471F2AE3712D1FCB1D8A /* IQTitleBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B64906F6495FBF8F8F9CA6FB5EC68B /* IQTitleBarButtonItem.swift */; };
 		1F4592F3F365A8D98D701975E7BDD40B /* fi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F3FFB40B12BD0ECC4AC463C1E6873792 /* fi.lproj */; };
 		1FAEC9B6349843BCA943465866E2DA71 /* SDWebImageCodersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E896FAB3D236096B7C85A90A658034A /* SDWebImageCodersManager.m */; };
 		1FF5D065C1996EAE29E83064FC596BE1 /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4FDAE09082087285BFFEA88BCA1024EA /* de.lproj */; };
@@ -175,7 +175,6 @@
 		2353774FFF053F9D7683681517E2B154 /* id.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7A6A4B8B11C074DC1A2ABCF764634B6F /* id.lproj */; };
 		235E442F2EE0B3DC95C773749097FDFD /* he.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABCCC49F98DE7F9F21BA363D4F850026 /* he.lproj */; };
 		2380FFD3A6782D1CA86A0A6B6E508BAE /* GTLRBatchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = F86E1C42C659B5B414FD7B784EA31686 /* GTLRBatchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2384AC373E752D55842F37DE4F2CE2A7 /* IQUIScrollView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195CFBDE2C50835ACE3A9A9ED13C68EC /* IQUIScrollView+Additions.swift */; };
 		238C9CC2D949C584DE7E086BFF4CABC8 /* FBSDKBridgeAPICrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E57284400B8607EB3ED7A14E64D1605 /* FBSDKBridgeAPICrypto.m */; };
 		23B57D887A45DD35B2FB7525B59620C7 /* pl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB7531228EFABEFC368238D2533AA6 /* pl.lproj */; };
 		23FD3D373F26B440D923F0007E8CB05C /* fi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 20D4788FA01B72836FEAB6662B26168C /* fi.lproj */; };
@@ -202,7 +201,7 @@
 		29B119CB3766E7A48CCF6A7C878EBF4D /* FBSDKShareConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 2994C61DA7C38376EA5011A385939060 /* FBSDKShareConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29E0DA950199F973643F54B0C1616CD2 /* FBSDKShareDialogMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFED49FCF37D18FDBF68CCFEB7BF969 /* FBSDKShareDialogMode.m */; };
 		29FEADDF2086FDEA7D5BA87DD23B08C6 /* pb_decode.h in Headers */ = {isa = PBXBuildFile; fileRef = AFE4FFDFD5C52B3A5136CC6BF8353C7B /* pb_decode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A2FE216328BFC23AF9D30EAEFAA2303 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CDF25643FE6B47E29E9D74D1B888A075 /* IQKeyboardManager.bundle */; };
+		2A2FE216328BFC23AF9D30EAEFAA2303 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5CABDFEB28120F0FD8DC938997105BAA /* IQKeyboardManager.bundle */; };
 		2A63E1ACE4144C6A3F3CA581487870F2 /* zh-Hant-TW.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A1B6C10D1F599DA3800BFB4E26020D12 /* zh-Hant-TW.lproj */; };
 		2AA0BDC1EF9DB597DA1DC359678A31AE /* FBSDKLikeButton+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E5E7EE5B3C93C6D122D64CE0A2D9E43 /* FBSDKLikeButton+Internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2B8C8B316846964139DF7E4350D03939 /* ic_visibility@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D2586A13176B082924F014EBE9B3BD2 /* ic_visibility@3x.png */; };
@@ -226,7 +225,6 @@
 		2F3D5316D1EA302FDD00E8D1EF7B58E7 /* FBSDKShareDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D9BDCBEE112C6C8DF91703C6F85CD84 /* FBSDKShareDefines.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2F90CCCB03C93484F5810B18080D16D4 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 57E73D772C03234779444EEB2496E74D /* logging.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
 		307557C6BFF82B5EF7B1356AD24BE3D9 /* es-BO.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 1A212538D670B38FDC325BF4646A9F70 /* es-BO.lproj */; };
-		3077B4186B916A8DB980BBB72DF7FFB9 /* IQUIView+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E5F19770762290F1EF06F47A26B1D3 /* IQUIView+Hierarchy.swift */; };
 		3089511208D63F73F1840F06C5798B87 /* FBSDKCloseIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 6AD207EF808EAC2F7819A6C3D156312D /* FBSDKCloseIcon.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		30C98C51244D99E558007847CC1684B2 /* sk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 297F4B7828A4E64C9F9E30D27C9CE0B4 /* sk.lproj */; };
 		30D5A855C06401CC3E2C417E0BA8802F /* lv.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2900083A5D24608592E6EAB94612C63A /* lv.lproj */; };
@@ -240,6 +238,7 @@
 		3237307D8FD9E4064F5C601E68483945 /* FBSDKGameRequestContent.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DADE8BAB3E0E6942AE756F15D52E36 /* FBSDKGameRequestContent.m */; };
 		3248526D513EBE90AD271569294EB792 /* ur.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E5AF6E430986CF898D242183E748E237 /* ur.lproj */; };
 		3253FEF8893266E409C7C6294D77703C /* ro.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 36F7AE32517949C420FC9DBDBDD7EEC4 /* ro.lproj */; };
+		3285188513F859E100A7BBE29B36599D /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71479E2A563FC2930073D40E31871184 /* IQUIView+IQKeyboardToolbar.swift */; };
 		32CA56B3BB2976B456AFDC386FFC048F /* de-AT.lproj in Resources */ = {isa = PBXBuildFile; fileRef = D0B173776353B650DBCC25483D72892E /* de-AT.lproj */; };
 		32E1F9A1D3A976FAA75035A3C27F450D /* fa.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 48BF06F653A946A5547015B7BF71D7A2 /* fa.lproj */; };
 		3304A5867E8D70385D5FDB8EAC4F41AD /* vi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DDEC47813F770C880E036F78F1EB318D /* vi.lproj */; };
@@ -299,11 +298,13 @@
 		3D60BD6F371B0E16FD1576FC0F9AE959 /* FBSDKMessageDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = AFB93E9EEDF95F66114CBADA9A664EC0 /* FBSDKMessageDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D68A446B67C80E17179F71C7D8EEC30 /* ko.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BF778B8739DD44AE6383F8517F52DAD1 /* ko.lproj */; };
 		3D6CC0CD2D45B77503FFFF6F717A6341 /* pt-PT.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BACCC09364F40CC4D8D06E5C3E9AD5BA /* pt-PT.lproj */; };
+		3D77B7DC6449E6CC41C0FF73714B6BE9 /* IQNSArray+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8B68F951662A99EE712D06E33E67A /* IQNSArray+Sort.swift */; };
 		3DBFD436769841EABCD8865516C7AB07 /* log_format.h in Headers */ = {isa = PBXBuildFile; fileRef = 3850FF451C51432115D507F936334E69 /* log_format.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3E95058C12588FB186618FB358EB60E1 /* options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A0A60FAFDB3407E8AC3A60FFA9B9456 /* options.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
 		3EA5EB74DECDECA27E6505BD395A6BB9 /* GTMOAuth2ViewControllerTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = E6D208CD633BB2D4339C33141302E143 /* GTMOAuth2ViewControllerTouch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3ED61D0A47336589F6A2664E29DD30EA /* FBSDKImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = BE7759DD62DDF7371AFC02479A3C1C39 /* FBSDKImageDownloader.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3ED6A2D730E9B57B9B98EA2474032487 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 254CB37A0FA3967B78442BC50FF54492 /* builder.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
+		3EDA7575644614ACD562D23759D18DE8 /* IQUIView+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC26D4B220852CCBA0DAF26B60D113F /* IQUIView+Hierarchy.swift */; };
 		3F1A5D10778AAD482D977798476727A9 /* FBSDKMaleSilhouetteIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = FA49FC190B79ADDFD000973AD7F9C7AC /* FBSDKMaleSilhouetteIcon.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3F20AF07DD419ABF300DDB019728A003 /* Duration.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 232B41D98690DC2B58A4FA20C6334891 /* Duration.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3F888AD30840AC0999B4E7227556FC59 /* BFCancellationTokenRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = F884820E8FADB833D332D10B5D99CDCE /* BFCancellationTokenRegistration.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -344,7 +345,6 @@
 		47FE8EBC54065C71A9E7067F6DD67438 /* uk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DDA763718748697B89C1C16CD179523F /* uk.lproj */; };
 		4802D3C6012E8E587DB627A312F8ED70 /* cs.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 3A22A058A90F63CB2E2979C23A9ED5DC /* cs.lproj */; };
 		4853E9FA8797D7B65074070EAE4EA6DF /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F93C65B0E4BE112EF9AD06F9EF7B1C73 /* UIImageView+WebCache.m */; };
-		4882783C5576C5D43CE79C03DE33C3DD /* IQKeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084326ACD5FD803C06CE1CF8FC373AAE /* IQKeyboardManager.swift */; };
 		4890F5DA6CCE3D517DFCA4C365AE40E6 /* BFCancellationTokenRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F6C59B4084EE0F7D824C086C62F7D3 /* BFCancellationTokenRegistration.m */; };
 		48D166DE3E77D76546028DA996436BB1 /* en-ZA.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BE500F85E006DE6E5FCB62743957D4E8 /* en-ZA.lproj */; };
 		49A671FD58020A763767EC73DE9A7C4E /* es-US.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0696045B987F6140EE15011C352E1228 /* es-US.lproj */; };
@@ -352,6 +352,7 @@
 		49E82C3ABB8E479004086177878978D4 /* ko.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9A662C27DD924FB7B31CD54F622372C3 /* ko.lproj */; };
 		4A396D7D7A5DF81544FE09D469655521 /* testharness.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9DCD9848D55EE8CC6154EDFC556C4CB0 /* testharness.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
 		4ABBCF6422E2A454990A151B9BD10F59 /* GTMLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = BFD4427F88655949E43B82F49C64A918 /* GTMLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4B0F9347718263C67557054C2E15DE61 /* IQTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF906C38D2FD246B0D3EEF54EC6CAB /* IQTextView.swift */; };
 		4B2670A25A478E38427CC46923BC348E /* Duration.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE9DE9DBAA154B2E237C70659E52D3 /* Duration.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4B4EB90C208B7F52EFF707E2D80401CD /* GTLRFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C06C615354A5FD9C2B7ACF802B833F3 /* GTLRFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B5130FA8CDA5DAC808ACDC9154A18E3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BBE117E999F1C78F832EC4E6A41EF5 /* FBSDKCoreKit.framework */; };
@@ -416,8 +417,10 @@
 		581D19FFF3A73460B0E867960CB81CA8 /* es-CL.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5A14D65329B5E34344AD52F22FB0246F /* es-CL.lproj */; };
 		5890149031D7BE39D8F5721F6505E482 /* _FBSDKLoginRecoveryAttempter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F82CA1B27FA19F09020E28213C69A90 /* _FBSDKLoginRecoveryAttempter.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		58BD23E49069CDB97DB822D30EC5579F /* memtable.cc in Sources */ = {isa = PBXBuildFile; fileRef = D58DE21DCE607F3838AAB5B90A97396F /* memtable.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
+		5939499A16FC0C349C94A634D25C4EE7 /* IQUIScrollView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF943CB1E712807A7EC40A66BCE14AC /* IQUIScrollView+Additions.swift */; };
 		593FACE5092D783FE41113EB6DDDE053 /* FBSDKErrorRecoveryAttempter.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FF75373FCE65C9B426D66652092DDA /* FBSDKErrorRecoveryAttempter.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		5984C9A911E102A44C198919285D7701 /* Wrappers.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 89122611A4BA6BA7C42EB9803E5CC51C /* Wrappers.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		598527A1D24BD6C0C9F741E8F84DFE17 /* IQKeyboardManagerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6810C4572AB2CE8AB570548CBD71CA /* IQKeyboardManagerConstants.swift */; };
 		5993F14F4E48863E136EEF30B581C24B /* FBSDKUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 888843DAA5972CB460173B9430A3002B /* FBSDKUtility.m */; };
 		59CFB9754D56BA871E641C7AC2E97C52 /* FBSDKGraphRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DE2256995E8BD02B8BEA4DDB847D8CDD /* FBSDKGraphRequestConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE95BDC58EEE3A5BE894346C01CD3A2 /* sk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BEF40A3CA95C10C693EEE5052B48332C /* sk.lproj */; };
@@ -473,7 +476,7 @@
 		640751498CA9559EC1F88863178934B5 /* FBSDKKeychainStoreViaBundleID.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B8D76F038BB78FAAF1C832034D4F11 /* FBSDKKeychainStoreViaBundleID.m */; };
 		641ABE28803D04A53D139F1A6EA5B7DC /* es-PE.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 16A5D2A2A9AE7AD2E282FF0579610D17 /* es-PE.lproj */; };
 		647835B9869C12A72D67D3AA30641A43 /* es-UY.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 79A1B5DB18A186E23ACF9EE4E25C2701 /* es-UY.lproj */; };
-		64FFC1F647245F61C405AE7AC1DA9D31 /* IQUIWindow+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010C315CE8055A34A00A58686D68B573 /* IQUIWindow+Hierarchy.swift */; };
+		64F354609DA76AD80DD40850DB763562 /* IQKeyboardManagerSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C42573BB97CBA1AB26B7CDA3B34EAF /* IQKeyboardManagerSwift-dummy.m */; };
 		652BC484F58AE2FED2E9C1063EC158E1 /* Api.pbobjc.h in Headers */ = {isa = PBXBuildFile; fileRef = BA3E2D8D6B59EA77C984660C6ED782F9 /* Api.pbobjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65776A8016E9BB167855428DAE0198CF /* FBSDKMutableCopying.h in Headers */ = {isa = PBXBuildFile; fileRef = DAB31DC08A6CF7B3F5C7BBC850BA822D /* FBSDKMutableCopying.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65ADEC87310CC0BBAFE5082DB8525DC7 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E514F148D9454BC822F918447EDE9983 /* en.lproj */; };
@@ -577,6 +580,7 @@
 		7F3677FD26EB887B876E568DA412A605 /* FBSDKBridgeAPIProtocolWebV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 58858A75A8357E92602A391BFAF6FC3B /* FBSDKBridgeAPIProtocolWebV2.m */; };
 		7F8C6707F29040F2211B16995A7908F4 /* FBSDKShareMessengerGenericTemplateContent.m in Sources */ = {isa = PBXBuildFile; fileRef = B97FE4BE1D60D7DDD618617E692A53AD /* FBSDKShareMessengerGenericTemplateContent.m */; };
 		7FD08B6B82A891654A03F600D2DAD7CE /* gu.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F06282B33406D98B26A490A0B5554385 /* gu.lproj */; };
+		7FE321828ECA1D78CCF8A2892A30438B /* IQUIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4837F794F2BF9DDA0FC38554F18BE /* IQUIViewController+Additions.swift */; };
 		7FEB41A22C8E016780F699544126BBFE /* fi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C96881B9DD152FC20D068BF668A75019 /* fi.lproj */; };
 		7FF81D2998E77985B091B19E525B6008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73800A288CEF4C905B2768E28CA8653D /* Foundation.framework */; };
 		8002AD9F747489E797236249D6D3204F /* GPBRootObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FF37C8A2A0A1F864739D8E684F705 /* GPBRootObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -597,6 +601,7 @@
 		8323B1CFA2B781F3B2FD94C695AF834B /* FBSDKShareMessengerActionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = AC43B02CF82BE450FA9CA6FFE6EE014C /* FBSDKShareMessengerActionButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8352F4659AB3CAA63777F9FFA92F42F6 /* sv.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9334F3F9DE5C3289F6775A18DD05BDCA /* sv.lproj */; };
 		839D678F9B5EE0860857EDA4A0F477BE /* FBSDKShareCameraEffectContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B8E3F6ADC5468E0135A515D8F39FB97 /* FBSDKShareCameraEffectContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83B0E4A33786C45550CBAA86DD9E400B /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890A15217456513CC5C9F86B2FDAB4B0 /* IQToolbar.swift */; };
 		84A687CE6E1562A985549A1E45524815 /* FBSDKConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 58636FBB590C676FA0CF3A589F4F4D94 /* FBSDKConstants.m */; };
 		8503C9A328B76D14DF219D4336A0F0B6 /* GTMSessionFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 32679AED28B13C731CE6F9189A66435A /* GTMSessionFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8522410C85B627FD53DD15A9D7C6D2D1 /* db_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1745D43C37BBF7027D736B5394A57688 /* db_impl.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -606,17 +611,15 @@
 		854DACD14A4C99B5B48236D606E369D4 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A95057946C8977467DDCBCA56B2E10 /* SDWebImageManager.m */; };
 		863069C724F7834A4515F52E285FC5D5 /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = B0112E048A36F4935EF0EBBA02F89F05 /* it.lproj */; };
 		86362204FA92F6A663F363AE705EC71E /* FBSDKInternalUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A39DD04696607E63A356F3DB8071E8 /* FBSDKInternalUtility.m */; };
-		866952184CCB9236E8D567A97A7C3224 /* IQUIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55051D9466548BE36E62BBEFC331C0DA /* IQUIViewController+Additions.swift */; };
 		86F8530F2896EF7E46FD8D3AB0D55DCD /* es-US.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A4CCFA8FB327264A31DC00510DB94AFB /* es-US.lproj */; };
 		86FBEB3BD444B5C55B842A40F9B893EE /* BFAppLinkReturnToRefererView.h in Headers */ = {isa = PBXBuildFile; fileRef = 65A744B00F0B639F4619A9B743C5227A /* BFAppLinkReturnToRefererView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87287DD2B3B3D89E56329355EB2C3DB9 /* GTLRBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 955B4C3096D4EE0CD5011FA5B1744C51 /* GTLRBatchQuery.m */; };
 		879D3BAFB02204D2E4ED929CC53CC633 /* Bolts-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 422EC8035F582E24E377376D509A57C9 /* Bolts-dummy.m */; };
-		87AD9D97F0F94C85720FC018235CD8A9 /* IQKeyboardManagerSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CEE6437F16D67AEF485ED0784919E41 /* IQKeyboardManagerSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		87AD9D97F0F94C85720FC018235CD8A9 /* IQKeyboardManagerSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E27726BA3D0F8219F1B38A0DAC6A6C3F /* IQKeyboardManagerSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87AF984D590EF5A1D055E191BB62B983 /* lt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 882572329A811CDEA62366ED11B2D657 /* lt.lproj */; };
 		87FD21C84E4D1AF01055F2FF979BD469 /* fil.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 806738070859F37D015319C8727D2C35 /* fil.lproj */; };
 		87FFE70D58AD1DB646CC7F950888A47A /* FBSDKLoginManagerLoginResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 976CFAD9B85D96C405101A2D81E370A6 /* FBSDKLoginManagerLoginResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		882849A8EFB44833AAF519A73F28C907 /* hr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 07F5918E53B2EA363CA5EC5E11509650 /* hr.lproj */; };
-		88A25F661A4435D57041D21700515CC6 /* IQTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CCCB26B9E1321C090CF05342CAAC03 /* IQTextView.swift */; };
 		88CCBC1F2ACEFFDAEEA19E67DA42DA5A /* UIView+WebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1E862988A7BC2E23AAF2490D7C6FCB /* UIView+WebCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		88E6ACFDD5B347846623B0EC71B944A2 /* hu.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 299C8372169501F49797236801085B47 /* hu.lproj */; };
 		895132958DD37950BDF09C76368028C7 /* FBSDKLikeObjectType.m in Sources */ = {isa = PBXBuildFile; fileRef = BD80E9B6DA3C3FCBD07EE49C68912973 /* FBSDKLikeObjectType.m */; };
@@ -694,12 +697,10 @@
 		9B0D54DC78D209CFDB00542C9A7D8895 /* FBSDKGraphErrorRecoveryProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 21195CBB2950B3EBB89A53C5B5076CC6 /* FBSDKGraphErrorRecoveryProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B3EEB4EAC0637B1BDC25DD2695FB4F4 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = CD56C20042AD1DDA22268A601ACF938E /* es.lproj */; };
 		9B5E366330C0712A87C98F1066A5DAF1 /* GPBUnknownField.m in Sources */ = {isa = PBXBuildFile; fileRef = 55641FBFF64F01C55E1CB7D0B89740E0 /* GPBUnknownField.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9B9C1A095D68E3B91BD38F910C6F2E7F /* IQKeyboardManagerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE9BE7BAC6684DFC4C042A49CFFC57E /* IQKeyboardManagerConstants.swift */; };
 		9BB3AE2D0A207A3E6A0D857DF4DA2B9E /* kn.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7E78BAFFCCC37608705F4190DC4300CB /* kn.lproj */; };
 		9BCA33B9DB1ED5A6D53F2E783B5D55A9 /* iterator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9658621BDE52E32AE2C9B69B837E5E22 /* iterator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9BCDA5018A81DA38A04BDD58B1F6BEAF /* FBSDKGraphRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD38E22C0335CD01BCB8F5FDFF464D1 /* FBSDKGraphRequest.m */; };
 		9C0A7A9E4800B69C960AB8251E4E46F5 /* lt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C2075B53F69441E41D03F5B90E3EBD5C /* lt.lproj */; };
-		9C178A996A6A0F14CF4B1F1D1BA4B2EB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A016067FA60411AC9F4501A3DB811CF2 /* IQUIView+IQKeyboardToolbar.swift */; };
 		9C44F1C7A3C688903ECFB4FB916711B7 /* FBSDKLikeButtonPopWAV.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E5CC436D27A374FC3C4EB59592E3F3 /* FBSDKLikeButtonPopWAV.m */; };
 		9C4B6D703AE5D4CDAED221D59B142781 /* BFMeasurementEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFCBCB688CE93DFDDFEAC7A550B01C6 /* BFMeasurementEvent.m */; };
 		9C8A03AF7F66F55BBB79851E86A85DAF /* pl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2D235D663F7B2CE821B13C969435D707 /* pl.lproj */; };
@@ -809,9 +810,7 @@
 		B09BEFAF7BBA39537BF838653C48EF63 /* SDWebImagePrefetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B52382B4AE69783D3CEBD24A97352D4 /* SDWebImagePrefetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B0A9906F5C64376F4AD621211F51BA98 /* write_batch.cc in Sources */ = {isa = PBXBuildFile; fileRef = B9EEE7D3D737C2D3BF048D3413B356CC /* write_batch.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
 		B0E477FD3669D1B2C743725B6572F00F /* FBSDKURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB1BECBBB6BC86106A92CEE40302F97 /* FBSDKURLConnection.m */; };
-		B0EF72D8E2CB6594FEE4DB2600B32650 /* IQKeyboardManagerSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A7891CDD6AE7DC1FE168E178DBA689CC /* IQKeyboardManagerSwift-dummy.m */; };
 		B12E34BF9032C23F6E00182698097E59 /* FBSDKAppLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E87DC85808911073469DB627FEEA8B6 /* FBSDKAppLinkResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B1A7ADAE2CAEDA5D703CE5C6A6DA405B /* IQUITextFieldView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1190A756730C86C5166D2BDA9CA33D /* IQUITextFieldView+Additions.swift */; };
 		B25F3D5470B5167D7B220DE26738617D /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F305DE1CE3CB1CC0E58746F042ACCA51 /* pt.lproj */; };
 		B2900F81399336316CDA369D2D7EC5BE /* sk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = B625D06CABD00A60638A3DC8F154A41D /* sk.lproj */; };
 		B2AD4D098642F111DC1DDB0550BA9EDF /* FBSDKURLSessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = ADA4F0A344ACFEEEE752F3B640D50D30 /* FBSDKURLSessionTask.m */; };
@@ -852,6 +851,7 @@
 		BB04209DDB72CD325AE09D2EC3EBC380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E353095C4B94BE688014F72CB6FC9CCC /* CoreGraphics.framework */; };
 		BB046EA973B2AA90ECA3F93929783D69 /* BFAppLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CE7229A08140DF10124016B26A41E0 /* BFAppLink.m */; };
 		BB1B686EEAB081EBE4D92FB33423E070 /* en-AU.lproj in Resources */ = {isa = PBXBuildFile; fileRef = FFBE14D0D344E866CC0B2767D6033BFB /* en-AU.lproj */; };
+		BB4FCDEB31262E21F9021F22B2A73FAC /* IQTitleBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3952EA216D0271A695BA0BE7BF4A7DB3 /* IQTitleBarButtonItem.swift */; };
 		BB6CEDCCA5DC3CC721AFAC496718D38D /* FBSDKLoginKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A25E29DFE1F8B25A2AE655FFAD31DD8A /* FBSDKLoginKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB80FF9920CFC58552D6800F6CA0E413 /* de-CH.lproj in Resources */ = {isa = PBXBuildFile; fileRef = CFE296DCD0B5E1900129548AA6B7452C /* de-CH.lproj */; };
 		BBC331E01AEE3C5F33BB84C6600A9698 /* FBSDKAudioResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A16130975AD9B71D7D1FB790482458 /* FBSDKAudioResourceLoader.m */; };
@@ -886,7 +886,6 @@
 		C2CD6C40C87A841A5B888AC6045A1154 /* ar.lproj in Resources */ = {isa = PBXBuildFile; fileRef = CEBB73C8A73D0B8A126C6A1B1AFE5B6B /* ar.lproj */; };
 		C3B1A604BE640A407045B2291AC92FD5 /* GTLRErrorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D5C0DB25E8213D6ABF80F2CCA25DD2 /* GTLRErrorObject.m */; };
 		C3E2994DDA29C775D24600731CD821A0 /* FBSDKSharingContent.h in Headers */ = {isa = PBXBuildFile; fileRef = B0BC9DF052F2E8A89B6ECCFD838BD77D /* FBSDKSharingContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C40F6D2FE20755C045864C23F73260C8 /* IQKeyboardReturnKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAAEDA562CBA98F985BC32157E6F6C2 /* IQKeyboardReturnKeyHandler.swift */; };
 		C43DF6C7E1E7F3148A016F5D278717A8 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = C7DF95CA7C093069E3D0C95135AB2033 /* format.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C4570088B1A4500587702D0861B1EB09 /* FBSDKShareMessengerContentUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = B65F9D66B873D07A084C032A3B363C1C /* FBSDKShareMessengerContentUtility.m */; };
 		C4C4FCE999D5828F7FE69C91510CB4C5 /* FBSDKAppInviteContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 79706B16FFE607766A085439D5830829 /* FBSDKAppInviteContent.m */; };
@@ -926,18 +925,17 @@
 		CB04742481BF8ABECD0596F2EFF4F675 /* FBSDKTypeUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = B119E8C4A33F228779441218BA0E9A4A /* FBSDKTypeUtility.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		CB0CA0C3EF2349D1842379874513F870 /* FBSDKApplicationDelegate+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D7C36179F14A2899B48D5274DA0956CD /* FBSDKApplicationDelegate+Internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		CB2416FCF99E61625C582F954CF88378 /* FBSDKAccessTokenCacheV3_17.h in Headers */ = {isa = PBXBuildFile; fileRef = CB5AEEBF9D8DC03F7689AE3800F84E91 /* FBSDKAccessTokenCacheV3_17.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		CB29E86F679E9DDC5C5A1C89482701CA /* IQPreviousNextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF30265328617BFFC0B2EB76CB2F63 /* IQPreviousNextView.swift */; };
 		CB8DEAB39CEA8CBFA79C0EE66C0B119A /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBB8F34FE224AA7D1074AF2C84782FD7 /* GTMSessionFetcher.framework */; };
 		CBD9EB71B9FD33D050C7524443791C03 /* en-AU.lproj in Resources */ = {isa = PBXBuildFile; fileRef = AB5B26CDD4C2F71DAFF595A550B8A220 /* en-AU.lproj */; };
 		CC0E4B707864B9886520483633A29F4C /* FBSDKShareMessengerContentUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 76817BC3C12E7218028751554614CA2C /* FBSDKShareMessengerContentUtility.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		CC23DFFF26B8ADAB75C96B4A1EFD2C2E /* sr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 1E0329019D563523F1A00129E97B4B3F /* sr.lproj */; };
 		CC762FB99CB65B71C0172135C27E1DD1 /* BFURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FB74CD21868C6CA2960378934F689D5 /* BFURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CC93854C66A808596F5A3B58FDB49BF8 /* IQNSArray+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2E2E2D5449C9D63EED7C378C31B9EE /* IQNSArray+Sort.swift */; };
 		CD02EFF91211DCC1DE607F885831F891 /* GTMOAuth2-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B81F17D6205C8D956279D3D574E0CC4 /* GTMOAuth2-dummy.m */; };
 		CD0B4D1E79667FFF07EC95BC1B4F326C /* ro.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 34E81C5B72AB11A93001D541B0EEB062 /* ro.lproj */; };
 		CD3F35A3EE61F482054BF5A79A72F725 /* GTMDebugThreadValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 58C2EEDAF41B21E6E818CD31E1261359 /* GTMDebugThreadValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD6E51A06ECA0EAB00975D05E74759A9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C5FDA68E2D901CE775673588006805E /* Security.framework */; };
 		CE5CC4D8726C3049A69F7262A49BEB28 /* es-PR.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 8535E72DF7BDF6C6039058A970C2F3FE /* es-PR.lproj */; };
+		CE6BAE070E573E1FABA820360F22737B /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9F12319E079DDA31A428A143DCCBC7 /* IQBarButtonItem.swift */; };
 		CEA17F33B511DD468D3D604D659FC4D3 /* GTMStringEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3D81DFB61D42BCE900E72ECE449D43 /* GTMStringEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CF1A4D8DBBE2925B87242D6C05810C47 /* el.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 08066C30FAF57471D936DE230DD5D971 /* el.lproj */; };
 		CF2407D8DA987E602A64D4F965B28CD9 /* bn.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5E10012760B5F0B5989487CD44298D3B /* bn.lproj */; };
@@ -1004,7 +1002,9 @@
 		E062BD58832B7D3C20F7B51325075B3E /* uk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = D1F863E281D7DD21A458459C1D66BEE9 /* uk.lproj */; };
 		E17FC6C2C7A76B443D4536DA6D7FAC3E /* _FBSDKLoginRecoveryAttempter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8738931AB4CD611CADD2D7E36B2148D7 /* _FBSDKLoginRecoveryAttempter.m */; };
 		E181395E73163EB702FCE9A21403D67B /* pb_encode.h in Headers */ = {isa = PBXBuildFile; fileRef = C9469416B19740B08EED5C5A201B3D79 /* pb_encode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E1892F605D93810A9FBE0902043EB8AF /* IQKeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DC45A5B16AE094EC3C7DC90A6D6CE /* IQKeyboardManager.swift */; };
 		E1C41B1F969B4A555E8C29CB3F0CA6C3 /* FUIInputTableViewCell.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2C63481BAFB63C1CAB6F60237DCF589F /* FUIInputTableViewCell.nib */; };
+		E1E729DD19EDA12DF13E1A4CF6D748C8 /* IQKeyboardManagerConstantsInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C390F687660D67D748090D78B41CB62E /* IQKeyboardManagerConstantsInternal.swift */; };
 		E21963D87FC07A78AD814ADFDB43D42E /* FBSDKDialogConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 3956B46F8CA8BF74887C870159FFE17B /* FBSDKDialogConfiguration.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E2459EA49BD6CD0779105BB966147B90 /* Protobuf-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 77AB8A03D61DB1FCABF50937F21F805E /* Protobuf-dummy.m */; };
 		E2607C36DCDB5284EDCF9A08A69260B7 /* FBSDKShareKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E96326F2B48A759DDB4E87C83BE530 /* FBSDKShareKit-dummy.m */; };
@@ -1046,6 +1046,7 @@
 		E8AA0CE57E58361AC5861B480C1E7F4D /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE91DC17258FC0FE0C79ABC1C469B32 /* UIImageView+HighlightedWebCache.m */; };
 		E8C15B30A241B6BB92027BB2BD052086 /* he.lproj in Resources */ = {isa = PBXBuildFile; fileRef = D4F040622ED9BC704DF5E4AAB5F1DC90 /* he.lproj */; };
 		E8CFBF0102A47C42F7AE900BA70D8743 /* table_cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = BF22B12D44A54BFF5543501776032C89 /* table_cache.cc */; settings = {COMPILER_FLAGS = "-DOS_MACOSX -DLEVELDB_PLATFORM_POSIX -fno-objc-arc"; }; };
+		E8F5CC4714C4AB1D6FE8FC85651DF3A3 /* IQInvocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C5CACCCB3876413ED32FDD5B7F4CCD /* IQInvocation.swift */; };
 		E9038CBFB7680E4D9AA6A6B813355B81 /* es-VE.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 78586BFCA3816DC85ED40810D32EAA61 /* es-VE.lproj */; };
 		E933853BB3ECC8A6C750611878367936 /* GTMSessionFetcher-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B170119CD37EC83E2323606C42A0B7 /* GTMSessionFetcher-dummy.m */; };
 		E944F0484E461088FF3894A3E8877CDB /* FBSDKLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 274EF4691B1C2428DB911201879A92CD /* FBSDKLikeButton.m */; };
@@ -1064,7 +1065,6 @@
 		EBBA8A424521CA17960FCB89F481636B /* SDWebImageCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = E82E6E74F222861E2AFF11519C50A931 /* SDWebImageCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EBC12FFF007BE2A218D3B825F3872D93 /* FBSDKMessengerIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = BA45BB6017BB1FE97F6CB29B166F5852 /* FBSDKMessengerIcon.m */; };
 		EBD2B712DA8C8A86B30ABCC11FCA635A /* FBSDKCameraEffectArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = E60E1CE58EE52F19028790CFFCCCC730 /* FBSDKCameraEffectArguments.m */; };
-		EC2CCB07B8CCEF669FAF345D29691030 /* IQKeyboardManagerConstantsInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0648085F535A38A128BEF9C78689812 /* IQKeyboardManagerConstantsInternal.swift */; };
 		ECB36288B6EED704F681229839ED438F /* FBSDKLikeBoxBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CD427EFC57EA025661657D6EFE0ADDFD /* FBSDKLikeBoxBorderView.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		ECDE91574F403399011082290B7FA949 /* zh-Hant-TW.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 784E684434BD88A269A4CA972ABEF1FF /* zh-Hant-TW.lproj */; };
 		ED64F92B529CC8A654A2C588D3F7053C /* es-419.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 668A5FD9BB3B4A029D0228E3E87BE638 /* es-419.lproj */; };
@@ -1074,6 +1074,7 @@
 		EE8F4C47A1F1611BF2B344E08EA04DF4 /* filename.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C7EB91E37A2214AD697F125D5E10103 /* filename.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		EEA18A3FCD4361604D10940D883225BA /* FUIAccountSettingsViewController.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7ABBAC763825A485B4D8F90683F0272C /* FUIAccountSettingsViewController.nib */; };
 		EEB42D1408B25DFD97AA502373A8E0AF /* FBSDKAppGroupJoinDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE5615E7458E65B01F65614751342AE /* FBSDKAppGroupJoinDialog.m */; };
+		EEC5EE727FA2DF9D913B4E2A48B57DAD /* IQUITextFieldView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDC366A2F52136088B5510C369FBFD /* IQUITextFieldView+Additions.swift */; };
 		EEDB5F0C92C9D85E6976D603892BA749 /* SDWebImageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F715F044F9B2BC1C46179860021CEA0E /* SDWebImageManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EEE2D741ED6E900EBC18D8E0E4E6A990 /* es-PE.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 45BCAB551E7B0152FC40C347B35B25CC /* es-PE.lproj */; };
 		EF2D953C98B2956F35AE54CE0B98E720 /* GTLRDuration.h in Headers */ = {isa = PBXBuildFile; fileRef = A17D633FBE725076D6C9565305BAA793 /* GTLRDuration.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1098,7 +1099,6 @@
 		F416039197A22C379C182BBA9469D5F5 /* GPBExtensionInternals.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CA969612FC427E8B9D80DCA2771856 /* GPBExtensionInternals.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F43EE9193EE2DC7689B151D232E67A51 /* da.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2D9BCA6BFAC856D543BBBCB91014CC29 /* da.lproj */; };
 		F4679986CB5DF8A2CE3918A117C35701 /* BFAppLinkTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 133BAF938EB407166792B09E5B4748D7 /* BFAppLinkTarget.m */; };
-		F48DD4AF7C254B7A2F67A690AF8EF143 /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02701E47D2E8F7AC1552BE16F2699027 /* IQBarButtonItem.swift */; };
 		F4B07E33E1033643EA1D8032FA001CFC /* FBSDKAccessTokenCacheV3.h in Headers */ = {isa = PBXBuildFile; fileRef = BBB469A991AE93C631E808CB8A5E2068 /* FBSDKAccessTokenCacheV3.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F5531F9DDD1D852322A97C682A5AFC15 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226A41B734DC8A83812E8B436DC679A5 /* GTMOAuth2ViewTouch.xib */; };
 		F5DFF2AE3956D12D118DF430C6260779 /* es-DO.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9F9663CE9042A6CD0EA1E191E353C354 /* es-DO.lproj */; };
@@ -1345,10 +1345,8 @@
 		006F1F3E98EA8E78E51627A2D6B45F76 /* FBSDKGameRequestDialog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKGameRequestDialog.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKGameRequestDialog.h; sourceTree = "<group>"; };
 		00993B3FF4A2F14EB95919201AAC8FC2 /* two_level_iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = two_level_iterator.cc; path = table/two_level_iterator.cc; sourceTree = "<group>"; };
 		009FA05948DEB59FC87674F7D9DD2A58 /* FBSDKSettings.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSettings.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKSettings.m; sourceTree = "<group>"; };
-		00E5F19770762290F1EF06F47A26B1D3 /* IQUIView+Hierarchy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIView+Hierarchy.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIView+Hierarchy.swift"; sourceTree = "<group>"; };
 		00E687396FEF63FF9676F76EEE8AEE44 /* GTMOAuth2.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GTMOAuth2.xcconfig; sourceTree = "<group>"; };
 		00F9DC514D0B43A03EACADB40CB997D7 /* FirebaseCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCrash.framework; path = Frameworks/FirebaseCrash.framework; sourceTree = "<group>"; };
-		010C315CE8055A34A00A58686D68B573 /* IQUIWindow+Hierarchy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIWindow+Hierarchy.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIWindow+Hierarchy.swift"; sourceTree = "<group>"; };
 		01414473DA4711A35EA96D57852D8508 /* FBSDKCrypto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKCrypto.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/Cryptography/FBSDKCrypto.h; sourceTree = "<group>"; };
 		015F1DB5ABCF3566C97F2990D1988ED0 /* vi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = vi.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/vi.lproj; sourceTree = "<group>"; };
 		0175061AE02606D84726A19C730F3705 /* FBSDKAppEvents+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKAppEvents+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEvents+Internal.h"; sourceTree = "<group>"; };
@@ -1359,10 +1357,8 @@
 		020E974CF07725B22AB49D938BB25BC5 /* Protobuf.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Protobuf.xcconfig; sourceTree = "<group>"; };
 		021F740F17FE43009BB053D2E529C1CF /* FBSDKLoginConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLoginConstants.m; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginConstants.m; sourceTree = "<group>"; };
 		023E02DCFA9DB7C57DCB1213CDF6F8DD /* FBSDKMonotonicTime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKMonotonicTime.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKMonotonicTime.h; sourceTree = "<group>"; };
-		02701E47D2E8F7AC1552BE16F2699027 /* IQBarButtonItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQBarButtonItem.swift; path = IQKeyboardManagerSwift/IQToolbar/IQBarButtonItem.swift; sourceTree = "<group>"; };
 		02948DAE6327BDEA05E0E049B7FB5B31 /* el.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = el.lproj; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/el.lproj; sourceTree = "<group>"; };
 		029F7BA9E42DDDF9C8A0367B5D9599AC /* es-SV.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-SV.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-SV.lproj"; sourceTree = "<group>"; };
-		02C6D9BE1E3C0C6880A53D5EDF6BFB9C /* IQKeyboardManagerSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.xcconfig; sourceTree = "<group>"; };
 		02C7BDBC028E5A2B789724B1A3431FFA /* FBSDKLikeButtonPopWAV.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeButtonPopWAV.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeButtonPopWAV.h; sourceTree = "<group>"; };
 		03B8D76F038BB78FAAF1C832034D4F11 /* FBSDKKeychainStoreViaBundleID.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKKeychainStoreViaBundleID.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKKeychainStoreViaBundleID.m; sourceTree = "<group>"; };
 		03D19E9FC9CB4B947F09CF6AC086C9BA /* FBSDKAppEventsDeviceInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppEventsDeviceInfo.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsDeviceInfo.h; sourceTree = "<group>"; };
@@ -1384,7 +1380,6 @@
 		07F5918E53B2EA363CA5EC5E11509650 /* hr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = hr.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/hr.lproj; sourceTree = "<group>"; };
 		08066C30FAF57471D936DE230DD5D971 /* el.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = el.lproj; path = FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/el.lproj; sourceTree = "<group>"; };
 		080F524B611CF107384172AE6A7DA3D6 /* FirebaseNanoPB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseNanoPB.framework; path = Frameworks/FirebaseNanoPB.framework; sourceTree = "<group>"; };
-		084326ACD5FD803C06CE1CF8FC373AAE /* IQKeyboardManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManager.swift; path = IQKeyboardManagerSwift/IQKeyboardManager.swift; sourceTree = "<group>"; };
 		085DAA2537C343846DEAD6A9F0A60BE1 /* FBSDKSharePhoto.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSharePhoto.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKSharePhoto.m; sourceTree = "<group>"; };
 		08990BBB9AAFD64644F94B7EB1122CD6 /* pb.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb.h; sourceTree = "<group>"; };
 		08A17B32A198A9D58BBB0F5A981F8280 /* zh-Hant-TW.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hant-TW.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/zh-Hant-TW.lproj"; sourceTree = "<group>"; };
@@ -1395,6 +1390,7 @@
 		0A5C6561E6327CC723A2D32539691062 /* GPBUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUtilities.h; path = objectivec/GPBUtilities.h; sourceTree = "<group>"; };
 		0A7E6778FA2A742898164F4CE4BF77DF /* SDAnimatedImageRep.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDAnimatedImageRep.m; path = SDWebImage/SDAnimatedImageRep.m; sourceTree = "<group>"; };
 		0AC4A8C18AD0810BFAD7EC44CFAEC3C2 /* sr-Latn.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "sr-Latn.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/sr-Latn.lproj"; sourceTree = "<group>"; };
+		0AF943CB1E712807A7EC40A66BCE14AC /* IQUIScrollView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIScrollView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIScrollView+Additions.swift"; sourceTree = "<group>"; };
 		0B012857371E93C7C90E0916236763D0 /* es-BO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-BO.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-BO.lproj"; sourceTree = "<group>"; };
 		0B823CEAFFD6EE498FB0A66E7D4A1091 /* FirebaseStorageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseStorageUI.framework; path = FirebaseUIFrameworks/FirebaseStorageUI/Frameworks/FirebaseStorageUI.framework; sourceTree = "<group>"; };
 		0BD0387EAB7F36F1B1571562E65C3D4B /* GTMNSData+zlib.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "GTMNSData+zlib.m"; path = "Foundation/GTMNSData+zlib.m"; sourceTree = "<group>"; };
@@ -1469,11 +1465,9 @@
 		18A95057946C8977467DDCBCA56B2E10 /* SDWebImageManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageManager.m; path = SDWebImage/SDWebImageManager.m; sourceTree = "<group>"; };
 		18DD3888D8AD91CDE8C71878CE221BD9 /* zh.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = zh.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/zh.lproj; sourceTree = "<group>"; };
 		1949EBE3144C1193288CD70229F56F54 /* Pods-TelePatriot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TelePatriot.release.xcconfig"; sourceTree = "<group>"; };
-		195CFBDE2C50835ACE3A9A9ED13C68EC /* IQUIScrollView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIScrollView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIScrollView+Additions.swift"; sourceTree = "<group>"; };
 		196E8F22E4C3404F946E226886483016 /* bn.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = bn.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/bn.lproj; sourceTree = "<group>"; };
 		197D7B00414574419174F0BECC1181F2 /* NSButton+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSButton+WebCache.h"; path = "SDWebImage/NSButton+WebCache.h"; sourceTree = "<group>"; };
 		1990E49230C972D64468E9EB354F0DD1 /* th.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = th.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/th.lproj; sourceTree = "<group>"; };
-		199A98FD1D0086B38E2FF09D9DE6636B /* IQToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQToolbar.swift; path = IQKeyboardManagerSwift/IQToolbar/IQToolbar.swift; sourceTree = "<group>"; };
 		199E3D83C137FF8776DEE60179664C39 /* FBSDKMonotonicTime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKMonotonicTime.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKMonotonicTime.m; sourceTree = "<group>"; };
 		1A0A60FAFDB3407E8AC3A60FFA9B9456 /* options.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = options.cc; path = util/options.cc; sourceTree = "<group>"; };
 		1A212538D670B38FDC325BF4646A9F70 /* es-BO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-BO.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/es-BO.lproj"; sourceTree = "<group>"; };
@@ -1558,7 +1552,6 @@
 		2C50086C1E4779739336D84671725915 /* nn-NO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "nn-NO.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/nn-NO.lproj"; sourceTree = "<group>"; };
 		2C6235D4317399433BE1B627BD029426 /* GTMSessionFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionFetcher.m; path = Source/GTMSessionFetcher.m; sourceTree = "<group>"; };
 		2C63481BAFB63C1CAB6F60237DCF589F /* FUIInputTableViewCell.nib */ = {isa = PBXFileReference; includeInIndex = 1; name = FUIInputTableViewCell.nib; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIInputTableViewCell.nib; sourceTree = "<group>"; };
-		2CD10AA78D5A388995011530C983B059 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CE5D82D94347E589C694F11F4F01330 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hans.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/zh-Hans.lproj"; sourceTree = "<group>"; };
 		2CF52FD4BCC61B7154132AB85C4D1264 /* format.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = format.cc; path = table/format.cc; sourceTree = "<group>"; };
 		2D126B55AC91979FFE434E70762A2DA6 /* es-BO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-BO.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/es-BO.lproj"; sourceTree = "<group>"; };
@@ -1585,7 +1578,6 @@
 		2F9A39BA0EF490D9769392D3611C0BEC /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderOperation.m; path = SDWebImage/SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
 		2FBF1C08687E15D70E31C4077ED63056 /* BFExecutor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFExecutor.h; path = Bolts/Common/BFExecutor.h; sourceTree = "<group>"; };
 		2FC3B61BDD28406483212503C3C6A503 /* es-CO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-CO.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/es-CO.lproj"; sourceTree = "<group>"; };
-		2FFF30265328617BFFC0B2EB76CB2F63 /* IQPreviousNextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQPreviousNextView.swift; path = IQKeyboardManagerSwift/IQToolbar/IQPreviousNextView.swift; sourceTree = "<group>"; };
 		304DF67E55B4AE61F08F4E13C46918A5 /* es-HN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-HN.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-HN.lproj"; sourceTree = "<group>"; };
 		3085118FA29F6035991FC475A4CCAAE8 /* fil.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fil.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/fil.lproj; sourceTree = "<group>"; };
 		30BABEACD3161E0A4AFBC2F4E4DB50BE /* FBSDKAccessTokenCaching.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenCaching.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCaching.h; sourceTree = "<group>"; };
@@ -1623,6 +1615,7 @@
 		384316557C266173B685B59C8F35867A /* GPBUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBUtilities.m; path = objectivec/GPBUtilities.m; sourceTree = "<group>"; };
 		3850FF451C51432115D507F936334E69 /* log_format.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = log_format.h; path = db/log_format.h; sourceTree = "<group>"; };
 		38AE736C0DE34D820733E75DC6DE14F9 /* en-ZA.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-ZA.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/en-ZA.lproj"; sourceTree = "<group>"; };
+		3952EA216D0271A695BA0BE7BF4A7DB3 /* IQTitleBarButtonItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQTitleBarButtonItem.swift; path = IQKeyboardManagerSwift/IQToolbar/IQTitleBarButtonItem.swift; sourceTree = "<group>"; };
 		3956B46F8CA8BF74887C870159FFE17B /* FBSDKDialogConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKDialogConfiguration.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKDialogConfiguration.h; sourceTree = "<group>"; };
 		39857C4C606C89DE5D899AB6FC6C8E56 /* FUIAuthTableViewCell.nib */ = {isa = PBXFileReference; includeInIndex = 1; name = FUIAuthTableViewCell.nib; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIAuthTableViewCell.nib; sourceTree = "<group>"; };
 		399B326C1D516ABD516A6658E1EC7D8B /* FBSDKCoreKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FBSDKCoreKit.xcconfig; sourceTree = "<group>"; };
@@ -1633,6 +1626,7 @@
 		3B15A68F3547CE0BFF873F688ABF41A4 /* FBSDKMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKMacros.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKMacros.h; sourceTree = "<group>"; };
 		3B30C30DA7EC461899AE372FEF512167 /* FBSDKButton+Subclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKButton+Subclass.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKButton+Subclass.h"; sourceTree = "<group>"; };
 		3B8E3F6ADC5468E0135A515D8F39FB97 /* FBSDKShareCameraEffectContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareCameraEffectContent.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareCameraEffectContent.h; sourceTree = "<group>"; };
+		3B9F12319E079DDA31A428A143DCCBC7 /* IQBarButtonItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQBarButtonItem.swift; path = IQKeyboardManagerSwift/IQToolbar/IQBarButtonItem.swift; sourceTree = "<group>"; };
 		3BC4E9965205834F24EC397C5A9D4358 /* iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = iterator.cc; path = table/iterator.cc; sourceTree = "<group>"; };
 		3BF2E11B95CB77890BBFD50E676A1CEE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C02746BF9E9BC7B252F439ED88CDB43 /* FBSDKServerConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKServerConfiguration.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfiguration.h; sourceTree = "<group>"; };
@@ -1677,6 +1671,7 @@
 		454C89A85130BE0C6700E01F844C9CAD /* FBSDKGameRequestDialog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGameRequestDialog.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKGameRequestDialog.m; sourceTree = "<group>"; };
 		456C857B2BC7150FEF68FBE794A3E767 /* SDWebImageOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageOperation.h; path = SDWebImage/SDWebImageOperation.h; sourceTree = "<group>"; };
 		45938E9BA5A3018C6FCA081649A2C14E /* Pods-TelePatriot-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TelePatriot-umbrella.h"; sourceTree = "<group>"; };
+		45AF906C38D2FD246B0D3EEF54EC6CAB /* IQTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQTextView.swift; path = IQKeyboardManagerSwift/IQTextView/IQTextView.swift; sourceTree = "<group>"; };
 		45BCAB551E7B0152FC40C347B35B25CC /* es-PE.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-PE.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/es-PE.lproj"; sourceTree = "<group>"; };
 		45E35EA06841573C4188A4BEBEDE0BCE /* FBSDKLikeActionController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeActionController.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeActionController.h; sourceTree = "<group>"; };
 		45ED015EFDCF9093DFC72D71BFD57C71 /* block.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = block.cc; path = table/block.cc; sourceTree = "<group>"; };
@@ -1748,7 +1743,6 @@
 		545CB54F14891E99A48DEF7A241ADFAA /* bn.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = bn.lproj; path = FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/bn.lproj; sourceTree = "<group>"; };
 		54B1E91BC185F1CFD064261AC414732A /* sr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = sr.lproj; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/sr.lproj; sourceTree = "<group>"; };
 		54FF768006758DDA8DA2B428250310B8 /* FBSDKBridgeAPIProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBridgeAPIProtocol.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/FBSDKBridgeAPIProtocol.h; sourceTree = "<group>"; };
-		55051D9466548BE36E62BBEFC331C0DA /* IQUIViewController+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIViewController+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIViewController+Additions.swift"; sourceTree = "<group>"; };
 		55350828440D9598F414855BF4A7E04D /* es-MX.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-MX.lproj"; path = "FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/es-MX.lproj"; sourceTree = "<group>"; };
 		553BD29524669BB08E764B186D9E2C3B /* FBSDKWebDialogView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKWebDialogView.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/WebDialog/FBSDKWebDialogView.h; sourceTree = "<group>"; };
 		5550A5A5F2A145E721C86E8B60169791 /* FBSDKAppInviteDialog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppInviteDialog.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKAppInviteDialog.m; sourceTree = "<group>"; };
@@ -1789,6 +1783,7 @@
 		5C430FD408A2C3EAD74D9DA7C2A12BF7 /* es-NI.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-NI.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-NI.lproj"; sourceTree = "<group>"; };
 		5C4C09131839B4633A4ED95D40C3BB67 /* de-AT.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "de-AT.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/de-AT.lproj"; sourceTree = "<group>"; };
 		5C9FB14D8B8BE392717A4BB6E180F99E /* FBSDKShareKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSDKShareKit-prefix.pch"; sourceTree = "<group>"; };
+		5CABDFEB28120F0FD8DC938997105BAA /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		5CEAEF556528A8CFDEBFFA85B7EB9247 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
 		5D471A09582E3F0A9036197A5701F532 /* nn-NO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "nn-NO.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/nn-NO.lproj"; sourceTree = "<group>"; };
 		5D58FE5E93BEDCF000C13D0CD2829BA2 /* GTMGatherInputStream.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMGatherInputStream.m; path = Source/GTMGatherInputStream.m; sourceTree = "<group>"; };
@@ -1801,17 +1796,20 @@
 		5E10CCE9DC5963116C03BFC42BDEE3E0 /* tr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = tr.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/tr.lproj; sourceTree = "<group>"; };
 		5E57B5A9EBA30DE914CED7216B72F9BE /* es-PE.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-PE.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-PE.lproj"; sourceTree = "<group>"; };
 		5EAFA8D8AAE368206146B6E4F83EC1A8 /* bg.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = bg.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/bg.lproj; sourceTree = "<group>"; };
+		5EEDC366A2F52136088B5510C369FBFD /* IQUITextFieldView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUITextFieldView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUITextFieldView+Additions.swift"; sourceTree = "<group>"; };
 		5F176E836C6343B6FD302DF19845A414 /* de-AT.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "de-AT.lproj"; path = "FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/de-AT.lproj"; sourceTree = "<group>"; };
 		5F25EC95FF9D1B39FC2B1958632C0F5E /* nanopb-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-prefix.pch"; sourceTree = "<group>"; };
 		5F29BC7A93E75F24DAB9371021C8CE1C /* FBSDKBridgeAPIProtocolType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBridgeAPIProtocolType.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/FBSDKBridgeAPIProtocolType.h; sourceTree = "<group>"; };
 		5F2B60526A4B2245FD3B4DD182D9DF57 /* port_posix_sse.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = port_posix_sse.cc; path = port/port_posix_sse.cc; sourceTree = "<group>"; };
 		5F52297EA9E281EC2812A7B3661DC511 /* FirebaseFacebookAuthUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseFacebookAuthUI.framework; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework; sourceTree = "<group>"; };
+		5FC26D4B220852CCBA0DAF26B60D113F /* IQUIView+Hierarchy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIView+Hierarchy.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIView+Hierarchy.swift"; sourceTree = "<group>"; };
 		6078A2F5C406EBFEE089843DDE174212 /* FBSDKGraphRequestConnection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequestConnection.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphRequestConnection.m; sourceTree = "<group>"; };
 		60B801027440165D9028ACE35CA5A5D4 /* GTLRQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLRQuery.h; path = Source/Objects/GTLRQuery.h; sourceTree = "<group>"; };
 		60D241EA8ED666A468A009531314E07E /* FBSDKLoginManagerLoginResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLoginManagerLoginResult.m; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManagerLoginResult.m; sourceTree = "<group>"; };
 		6105D75586CB0BB39EF4AB3C31A9C9A7 /* ta.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ta.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/ta.lproj; sourceTree = "<group>"; };
 		61169EEE7C82D9AE6DCACA3A0EF54855 /* FBSDKProfilePictureView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKProfilePictureView.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKProfilePictureView.m; sourceTree = "<group>"; };
 		616E93964F0AEFBCC09E30601FFE5855 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61985C2F55D7220281FB1C03305B98AB /* IQKeyboardReturnKeyHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardReturnKeyHandler.swift; path = IQKeyboardManagerSwift/IQKeyboardReturnKeyHandler.swift; sourceTree = "<group>"; };
 		61BF972AFC45A8F15A401AF32DFEECE4 /* version_edit.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = version_edit.cc; path = db/version_edit.cc; sourceTree = "<group>"; };
 		622D8C51C8E4D67064929DFB6A7517EF /* testutil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = testutil.h; path = util/testutil.h; sourceTree = "<group>"; };
 		62B52390F779EDF26989019375E3C99F /* es-VE.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-VE.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-VE.lproj"; sourceTree = "<group>"; };
@@ -1829,7 +1827,6 @@
 		64874F384DAAF2FC757FD06EEE44C923 /* id.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = id.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/id.lproj; sourceTree = "<group>"; };
 		6491D818B36D5BA1268EADE2AA4EB594 /* GTMMIMEDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMMIMEDocument.h; path = Source/GTMMIMEDocument.h; sourceTree = "<group>"; };
 		64AFAE341CB195EF33AC01F1F0D0476F /* FBSDKLoginUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLoginUtility.m; path = FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginUtility.m; sourceTree = "<group>"; };
-		64C744C6CA84FC9560782FF87157C40E /* IQKeyboardManagerSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManagerSwift-prefix.pch"; sourceTree = "<group>"; };
 		65568C8959E7BFC3C8685643CF715116 /* ar.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ar.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/ar.lproj; sourceTree = "<group>"; };
 		656F95AE1764497DDC1A5F13C7323AB4 /* FBSDKShareOpenGraphAction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareOpenGraphAction.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphAction.m; sourceTree = "<group>"; };
 		6580140DEF28808D0E707C6DCE402C65 /* FBSDKAccessTokenCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenCache.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCache.h; sourceTree = "<group>"; };
@@ -1846,6 +1843,7 @@
 		668A5FD9BB3B4A029D0228E3E87BE638 /* es-419.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-419.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/es-419.lproj"; sourceTree = "<group>"; };
 		66A855A72D66AC40D0E52C401425E481 /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ru.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/ru.lproj; sourceTree = "<group>"; };
 		66BD5D0A62704FE8A22A9A6BFED190D2 /* GPBDictionary.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBDictionary.m; path = objectivec/GPBDictionary.m; sourceTree = "<group>"; };
+		66D8B68F951662A99EE712D06E33E67A /* IQNSArray+Sort.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQNSArray+Sort.swift"; path = "IQKeyboardManagerSwift/Categories/IQNSArray+Sort.swift"; sourceTree = "<group>"; };
 		67221CD0E36B604F8413B9E528355208 /* en-IN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-IN.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/en-IN.lproj"; sourceTree = "<group>"; };
 		673F1F26D3769E982BB01279FCC8A320 /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = it.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/it.lproj; sourceTree = "<group>"; };
 		675CDA753449CB67954FF6F555FED3A8 /* ta.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ta.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ta.lproj; sourceTree = "<group>"; };
@@ -1881,7 +1879,6 @@
 		6D547DB8CE6020D6E181E43F3A886185 /* GTLRUploadParameters.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLRUploadParameters.m; path = Source/Objects/GTLRUploadParameters.m; sourceTree = "<group>"; };
 		6D7A6400780C619D7486320A83D42DFC /* GTMSessionFetcher.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GTMSessionFetcher.xcconfig; sourceTree = "<group>"; };
 		6DC92C2F290182E4A67ED46371C220C4 /* FBSDKAppGroupContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppGroupContent.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKAppGroupContent.m; sourceTree = "<group>"; };
-		6DE9BE7BAC6684DFC4C042A49CFFC57E /* IQKeyboardManagerConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManagerConstants.swift; path = IQKeyboardManagerSwift/Constants/IQKeyboardManagerConstants.swift; sourceTree = "<group>"; };
 		6E57284400B8607EB3ED7A14E64D1605 /* FBSDKBridgeAPICrypto.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKBridgeAPICrypto.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/FBSDKBridgeAPICrypto.m; sourceTree = "<group>"; };
 		6E5C95E3FF9D60911FDFBD378E9EE020 /* ms.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ms.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/ms.lproj; sourceTree = "<group>"; };
 		6E98B1702DABC1C0D40DA159038E6382 /* FBSDKLikeBoxBorderView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLikeBoxBorderView.m; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeBoxBorderView.m; sourceTree = "<group>"; };
@@ -1897,6 +1894,7 @@
 		70A8DCA3F6841EE33296862AF41675C9 /* ms.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ms.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ms.lproj; sourceTree = "<group>"; };
 		711D5749D1D3F4A82D819D45C91651C5 /* GPBMessage_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBMessage_PackagePrivate.h; path = objectivec/GPBMessage_PackagePrivate.h; sourceTree = "<group>"; };
 		711FE25AF6E0ADD61A6D1370FCDD5335 /* en-IN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-IN.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/en-IN.lproj"; sourceTree = "<group>"; };
+		71479E2A563FC2930073D40E31871184 /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIView+IQKeyboardToolbar.swift"; path = "IQKeyboardManagerSwift/IQToolbar/IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
 		7200C56E6A1A0E986B2CE222C16E8B2A /* es-SV.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-SV.lproj"; path = "FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/es-SV.lproj"; sourceTree = "<group>"; };
 		725468CBC1F5FC0F0D5AA7DB0C81BEA4 /* GPBExtensionInternals.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBExtensionInternals.m; path = objectivec/GPBExtensionInternals.m; sourceTree = "<group>"; };
 		72B170119CD37EC83E2323606C42A0B7 /* GTMSessionFetcher-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GTMSessionFetcher-dummy.m"; sourceTree = "<group>"; };
@@ -1922,6 +1920,7 @@
 		766F06C2DE703F573ACE433E995B6845 /* el.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = el.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/el.lproj; sourceTree = "<group>"; };
 		76817BC3C12E7218028751554614CA2C /* FBSDKShareMessengerContentUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareMessengerContentUtility.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareMessengerContentUtility.h; sourceTree = "<group>"; };
 		7699613AC9C09F71D1D8E6891F268B01 /* env.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = env.h; path = include/leveldb/env.h; sourceTree = "<group>"; };
+		76C5CACCCB3876413ED32FDD5B7F4CCD /* IQInvocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQInvocation.swift; path = IQKeyboardManagerSwift/IQToolbar/IQInvocation.swift; sourceTree = "<group>"; };
 		76C6367B92BD00F3F40DB06E209230D6 /* en-CA.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-CA.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/en-CA.lproj"; sourceTree = "<group>"; };
 		76FFD7AD7A608B9796AA3F3442567C2F /* ro.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ro.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/ro.lproj; sourceTree = "<group>"; };
 		7763AC61DD87242D69481C25CDFD4879 /* GPBArray.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBArray.m; path = objectivec/GPBArray.m; sourceTree = "<group>"; };
@@ -1932,9 +1931,9 @@
 		78586BFCA3816DC85ED40810D32EAA61 /* es-VE.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-VE.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-VE.lproj"; sourceTree = "<group>"; };
 		785FD5AD7B51D92A33DCFCB8FD19C2DF /* FBSDKGraphRequestDataAttachment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequestDataAttachment.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphRequestDataAttachment.m; sourceTree = "<group>"; };
 		786BAC0A0702E8F3123C4385D7DCB784 /* es-CR.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-CR.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-CR.lproj"; sourceTree = "<group>"; };
+		786DC45A5B16AE094EC3C7DC90A6D6CE /* IQKeyboardManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManager.swift; path = IQKeyboardManagerSwift/IQKeyboardManager.swift; sourceTree = "<group>"; };
 		789C8FD4652BC23DC592B19E1677D3EB /* zh.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = zh.lproj; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/zh.lproj; sourceTree = "<group>"; };
 		78C1CF7F10E8CCECD79507F98C08D7A8 /* FBSDKProfile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKProfile.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKProfile.h; sourceTree = "<group>"; };
-		78CCCB26B9E1321C090CF05342CAAC03 /* IQTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQTextView.swift; path = IQKeyboardManagerSwift/IQTextView/IQTextView.swift; sourceTree = "<group>"; };
 		78D61A44644D4A400C05E104077CC8AF /* GPBUnknownFieldSet_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUnknownFieldSet_PackagePrivate.h; path = objectivec/GPBUnknownFieldSet_PackagePrivate.h; sourceTree = "<group>"; };
 		79706B16FFE607766A085439D5830829 /* FBSDKAppInviteContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppInviteContent.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKAppInviteContent.m; sourceTree = "<group>"; };
 		79A1B5DB18A186E23ACF9EE4E25C2701 /* es-UY.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-UY.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/es-UY.lproj"; sourceTree = "<group>"; };
@@ -1959,7 +1958,6 @@
 		7C27604454C3C4BE438D9B21B83C2EDB /* es-419.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-419.lproj"; path = "FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/es-419.lproj"; sourceTree = "<group>"; };
 		7C36B76E7805220E6F8813BA16E0D25D /* FBSDKShareOpenGraphContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareOpenGraphContent.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphContent.h; sourceTree = "<group>"; };
 		7C4552C8EFD3EE6C5C2B2BDFF454E3B3 /* FBSDKAppEventsStateManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppEventsStateManager.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsStateManager.h; sourceTree = "<group>"; };
-		7CEE6437F16D67AEF485ED0784919E41 /* IQKeyboardManagerSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManagerSwift-umbrella.h"; sourceTree = "<group>"; };
 		7D1810EB236B6DC08FF61BFF0E88F78C /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSDKLoginKit.framework; path = FBSDKLoginKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D42B01AC731FFA493AF7F9B23C5D185 /* FBSDKCoreKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FBSDKCoreKit-dummy.m"; sourceTree = "<group>"; };
 		7DE6E5ACBAE7F5D81DAD1CB0B6F8A68C /* FieldMask.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FieldMask.pbobjc.m; path = objectivec/google/protobuf/FieldMask.pbobjc.m; sourceTree = "<group>"; };
@@ -2004,6 +2002,7 @@
 		882572329A811CDEA62366ED11B2D657 /* lt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = lt.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/lt.lproj; sourceTree = "<group>"; };
 		888843DAA5972CB460173B9430A3002B /* FBSDKUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKUtility.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKUtility.m; sourceTree = "<group>"; };
 		888BEB71F42241EE76ACDD8EB963B39E /* GoogleAPIClientForREST-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleAPIClientForREST-dummy.m"; sourceTree = "<group>"; };
+		890A15217456513CC5C9F86B2FDAB4B0 /* IQToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQToolbar.swift; path = IQKeyboardManagerSwift/IQToolbar/IQToolbar.swift; sourceTree = "<group>"; };
 		89122611A4BA6BA7C42EB9803E5CC51C /* Wrappers.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Wrappers.pbobjc.h; path = objectivec/google/protobuf/Wrappers.pbobjc.h; sourceTree = "<group>"; };
 		897C03696D3F05E605E7E607F0324235 /* GTMNSDictionary+URLArguments.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "GTMNSDictionary+URLArguments.m"; path = "Foundation/GTMNSDictionary+URLArguments.m"; sourceTree = "<group>"; };
 		899BF6EDB7B5A81C1A9D553D3DBEEEBF /* SDWebImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloader.h; path = SDWebImage/SDWebImageDownloader.h; sourceTree = "<group>"; };
@@ -2012,6 +2011,7 @@
 		8A5EA78A999F61B7077FF776D467CF77 /* GPBArray_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBArray_PackagePrivate.h; path = objectivec/GPBArray_PackagePrivate.h; sourceTree = "<group>"; };
 		8A63782924BA566DDEDE331AA7C139F2 /* en-GB.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-GB.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/en-GB.lproj"; sourceTree = "<group>"; };
 		8A68D8079603B5F6238F95CB8E813960 /* FBSDKAccessTokenCacheV3_21.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAccessTokenCacheV3_21.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCacheV3_21.m; sourceTree = "<group>"; };
+		8AAEE500FB131E956D56A6F167131D5E /* IQPreviousNextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQPreviousNextView.swift; path = IQKeyboardManagerSwift/IQToolbar/IQPreviousNextView.swift; sourceTree = "<group>"; };
 		8AB4D3C7E6E20DB41A06BA061D1E3CF4 /* GINInviteResources.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GINInviteResources.bundle; path = Resources/GINInviteResources.bundle; sourceTree = "<group>"; };
 		8AB54CE953A237684FD7FE2E14633280 /* GPBWellKnownTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBWellKnownTypes.h; path = objectivec/GPBWellKnownTypes.h; sourceTree = "<group>"; };
 		8B191B83829D26A05C497A446D470BBD /* FBSDKInternalUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKInternalUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKInternalUtility.h; sourceTree = "<group>"; };
@@ -2089,15 +2089,17 @@
 		9AE91DC17258FC0FE0C79ABC1C469B32 /* UIImageView+HighlightedWebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+HighlightedWebCache.m"; path = "SDWebImage/UIImageView+HighlightedWebCache.m"; sourceTree = "<group>"; };
 		9B1B01753C4DC780D7A75BD7B61777CC /* GTLRObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLRObject.h; path = Source/Objects/GTLRObject.h; sourceTree = "<group>"; };
 		9B3AC93E3503EEEEA1B179D959E571B7 /* SDWebImageGIFCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageGIFCoder.h; path = SDWebImage/SDWebImageGIFCoder.h; sourceTree = "<group>"; };
-		9BAAEDA562CBA98F985BC32157E6F6C2 /* IQKeyboardReturnKeyHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardReturnKeyHandler.swift; path = IQKeyboardManagerSwift/IQKeyboardReturnKeyHandler.swift; sourceTree = "<group>"; };
+		9B6810C4572AB2CE8AB570548CBD71CA /* IQKeyboardManagerConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManagerConstants.swift; path = IQKeyboardManagerSwift/Constants/IQKeyboardManagerConstants.swift; sourceTree = "<group>"; };
 		9BF7EFCDA0F676EB0851B729ADC49661 /* gsw.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = gsw.lproj; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/gsw.lproj; sourceTree = "<group>"; };
 		9BFC44E7AA44551859E280418E8A2E0F /* FBSDKLikeControl+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKLikeControl+Internal.h"; path = "FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeControl+Internal.h"; sourceTree = "<group>"; };
 		9C1424A0B5BCF59CDCFB88604F290195 /* GoogleToolboxForMac-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-prefix.pch"; sourceTree = "<group>"; };
+		9C1D29A3EE466AC37864D346BE3982D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CDE000D462924FD12B10CE3EF8321B2 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/en.lproj; sourceTree = "<group>"; };
 		9D4A4AEAC7FA6D7B9849FD1260F6BBCD /* cs.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = cs.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/cs.lproj; sourceTree = "<group>"; };
 		9D986A7CB566E48A3E29FD0B5CF6F6B9 /* FirebaseRemoteConfig.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseRemoteConfig.framework; path = Frameworks/FirebaseRemoteConfig.framework; sourceTree = "<group>"; };
 		9D9BDCBEE112C6C8DF91703C6F85CD84 /* FBSDKShareDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareDefines.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareDefines.h; sourceTree = "<group>"; };
 		9DB17C09879CDD71300442C6CCBC88F1 /* de-AT.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "de-AT.lproj"; path = "FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/de-AT.lproj"; sourceTree = "<group>"; };
+		9DC4837F794F2BF9DDA0FC38554F18BE /* IQUIViewController+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIViewController+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIViewController+Additions.swift"; sourceTree = "<group>"; };
 		9DCD9848D55EE8CC6154EDFC556C4CB0 /* testharness.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = testharness.cc; path = util/testharness.cc; sourceTree = "<group>"; };
 		9E754E352B832178D867B89B2DE26746 /* FBSDKPaymentObserver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKPaymentObserver.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKPaymentObserver.h; sourceTree = "<group>"; };
 		9ECD40B9A9A12B372AE70222A5B6091D /* SDWebImageGIFCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageGIFCoder.m; path = SDWebImage/SDWebImageGIFCoder.m; sourceTree = "<group>"; };
@@ -2112,8 +2114,6 @@
 		9F9AC211114FDABEC70AA5E52F541A48 /* FBSDKSendButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSendButton.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKSendButton.m; sourceTree = "<group>"; };
 		9FDCDFB3455D7C6E454EC8DA47D09E19 /* GTMSessionFetcher.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = GTMSessionFetcher.modulemap; sourceTree = "<group>"; };
 		A011EF0EB2FF58990527FFDEF1A73F23 /* FBSDKLoginUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginUtility.h; path = FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginUtility.h; sourceTree = "<group>"; };
-		A016067FA60411AC9F4501A3DB811CF2 /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIView+IQKeyboardToolbar.swift"; path = "IQKeyboardManagerSwift/IQToolbar/IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
-		A0648085F535A38A128BEF9C78689812 /* IQKeyboardManagerConstantsInternal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManagerConstantsInternal.swift; path = IQKeyboardManagerSwift/Constants/IQKeyboardManagerConstantsInternal.swift; sourceTree = "<group>"; };
 		A08699435319EB7F1CAC031228469AE5 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		A0C2439021A873951ACFA84D81C76965 /* FBSDKBridgeAPIProtocolWebV1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBridgeAPIProtocolWebV1.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/ProtocolVersions/FBSDKBridgeAPIProtocolWebV1.h; sourceTree = "<group>"; };
 		A0E2D17FF5660AB7A90625A9578BE32D /* es-UY.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-UY.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-UY.lproj"; sourceTree = "<group>"; };
@@ -2131,6 +2131,7 @@
 		A25E29DFE1F8B25A2AE655FFAD31DD8A /* FBSDKLoginKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSDKLoginKit-umbrella.h"; sourceTree = "<group>"; };
 		A28F5E3C18C01FBB3749999C9D4AA715 /* write_batch_internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = write_batch_internal.h; path = db/write_batch_internal.h; sourceTree = "<group>"; };
 		A2AC73923C8EA2D7DBFE47C356624443 /* GTLRRuntimeCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLRRuntimeCommon.h; path = Source/Objects/GTLRRuntimeCommon.h; sourceTree = "<group>"; };
+		A3A497E31E2B44752C094D612D3ADCE1 /* IQKeyboardManagerSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManagerSwift-prefix.pch"; sourceTree = "<group>"; };
 		A3BB1F8B54F2412ECEDDBDBF58757D0B /* FUIPasswordVerificationViewController.nib */ = {isa = PBXFileReference; includeInIndex = 1; name = FUIPasswordVerificationViewController.nib; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordVerificationViewController.nib; sourceTree = "<group>"; };
 		A3BE3C165A1C4DA1B32612B2AF57F6BE /* cache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cache.h; path = include/leveldb/cache.h; sourceTree = "<group>"; };
 		A3D2A8B52D8C709EC4CB01893B49203B /* es-SV.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-SV.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-SV.lproj"; sourceTree = "<group>"; };
@@ -2156,7 +2157,6 @@
 		A7418B4EE940824838AAC2447EE6367E /* FBSDKLikeActionController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLikeActionController.m; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeActionController.m; sourceTree = "<group>"; };
 		A78376A8048C0A98DB32DF10EDE68ACA /* FBSDKTimeSpentData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKTimeSpentData.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKTimeSpentData.h; sourceTree = "<group>"; };
 		A785795B56095D16B7C14F4B1D30D529 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/es.lproj; sourceTree = "<group>"; };
-		A7891CDD6AE7DC1FE168E178DBA689CC /* IQKeyboardManagerSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManagerSwift-dummy.m"; sourceTree = "<group>"; };
 		A79A087916E7750F09E314DFEC569D18 /* nl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = nl.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/nl.lproj; sourceTree = "<group>"; };
 		A7B47491908D8263A0913B4A6CA26325 /* BFCancellationTokenSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFCancellationTokenSource.m; path = Bolts/Common/BFCancellationTokenSource.m; sourceTree = "<group>"; };
 		A7C5333F6C5387F114026034B0D672DB /* BFCancellationToken.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFCancellationToken.m; path = Bolts/Common/BFCancellationToken.m; sourceTree = "<group>"; };
@@ -2302,6 +2302,7 @@
 		C2F8B5E84DE7778ECFE9734F55F013CC /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_common.c; sourceTree = "<group>"; };
 		C3521073DE5D509F64474FC19E728006 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/NSData+ImageContentType.h"; sourceTree = "<group>"; };
 		C355C3CA63A1A68CDA79597A1F38A567 /* FBSDKShareAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareAPI.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareAPI.h; sourceTree = "<group>"; };
+		C390F687660D67D748090D78B41CB62E /* IQKeyboardManagerConstantsInternal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManagerConstantsInternal.swift; path = IQKeyboardManagerSwift/Constants/IQKeyboardManagerConstantsInternal.swift; sourceTree = "<group>"; };
 		C40B157FC12B79CE86E023008AED9408 /* ro.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ro.lproj; path = FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/ro.lproj; sourceTree = "<group>"; };
 		C40BA49A9F1CB9716780AD55EA4B657F /* FBSDKCameraEffectArguments+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKCameraEffectArguments+Internal.h"; path = "FBSDKShareKit/FBSDKShareKit/Internal/FBSDKCameraEffectArguments+Internal.h"; sourceTree = "<group>"; };
 		C45BB91DA14B4E817024B4A9AE32D3BF /* leveldb-library.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "leveldb-library.xcconfig"; sourceTree = "<group>"; };
@@ -2323,14 +2324,12 @@
 		C9469416B19740B08EED5C5A201B3D79 /* pb_encode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = pb_encode.h; sourceTree = "<group>"; };
 		C96881B9DD152FC20D068BF668A75019 /* fi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fi.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/fi.lproj; sourceTree = "<group>"; };
 		C99255CA920C305A4C5522E5BE592A46 /* es-419.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-419.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/es-419.lproj"; sourceTree = "<group>"; };
-		CA1190A756730C86C5166D2BDA9CA33D /* IQUITextFieldView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUITextFieldView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUITextFieldView+Additions.swift"; sourceTree = "<group>"; };
 		CA3D9AFD2912FFA710A48C28CC52A671 /* FBSDKGraphErrorRecoveryProcessor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphErrorRecoveryProcessor.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphErrorRecoveryProcessor.m; sourceTree = "<group>"; };
 		CA8ABCFB58EE3E47F0AFDEA9D3160A91 /* GPBUtilities_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUtilities_PackagePrivate.h; path = objectivec/GPBUtilities_PackagePrivate.h; sourceTree = "<group>"; };
 		CAA006BB71B4CE9D89E39EAD462C7B03 /* thread_annotations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = thread_annotations.h; path = port/thread_annotations.h; sourceTree = "<group>"; };
 		CB0E922DC4F51C1E966B348CD3F1BC85 /* GPBCodedInputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedInputStream.h; path = objectivec/GPBCodedInputStream.h; sourceTree = "<group>"; };
 		CB20202AC3BB3D1F573B8CC54FB65CD4 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ja.lproj; path = FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/ja.lproj; sourceTree = "<group>"; };
 		CB2B4EF138A298CFDB6498C091BD9405 /* coding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = coding.h; path = util/coding.h; sourceTree = "<group>"; };
-		CB2E2E2D5449C9D63EED7C378C31B9EE /* IQNSArray+Sort.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQNSArray+Sort.swift"; path = "IQKeyboardManagerSwift/Categories/IQNSArray+Sort.swift"; sourceTree = "<group>"; };
 		CB5AEEBF9D8DC03F7689AE3800F84E91 /* FBSDKAccessTokenCacheV3_17.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenCacheV3_17.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCacheV3_17.h; sourceTree = "<group>"; };
 		CBA52439E7DBA03EBF0F5369B03F7121 /* es-GT.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-GT.lproj"; path = "FirebaseUIFrameworks/FirebaseFacebookAuthUI/Frameworks/FirebaseFacebookAuthUI.framework/es-GT.lproj"; sourceTree = "<group>"; };
 		CBAF5FA22ABFB41D40196B242156205B /* GPPACLPickerResources.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GPPACLPickerResources.bundle; path = Resources/GPPACLPickerResources.bundle; sourceTree = "<group>"; };
@@ -2352,7 +2351,6 @@
 		CD427EFC57EA025661657D6EFE0ADDFD /* FBSDKLikeBoxBorderView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeBoxBorderView.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeBoxBorderView.h; sourceTree = "<group>"; };
 		CD56C20042AD1DDA22268A601ACF938E /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/es.lproj; sourceTree = "<group>"; };
 		CD95F23D66DC6EE24153232AED5FF068 /* sl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = sl.lproj; path = FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/sl.lproj; sourceTree = "<group>"; };
-		CDF25643FE6B47E29E9D74D1B888A075 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		CE0DC6017FF1E1FB0F498B7DC9FA0AAB /* _FBSDKTemporaryErrorRecoveryAttempter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _FBSDKTemporaryErrorRecoveryAttempter.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ErrorRecovery/_FBSDKTemporaryErrorRecoveryAttempter.m; sourceTree = "<group>"; };
 		CE455D047BB00BC07654291F742C18AF /* FBSDKAccessTokenCacheV4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenCacheV4.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCacheV4.h; sourceTree = "<group>"; };
 		CE52C99491C0E667920B70F6F862E809 /* FBSDKErrorRecoveryConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKErrorRecoveryConfiguration.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKErrorRecoveryConfiguration.h; sourceTree = "<group>"; };
@@ -2397,6 +2395,7 @@
 		D58DE21DCE607F3838AAB5B90A97396F /* memtable.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = memtable.cc; path = db/memtable.cc; sourceTree = "<group>"; };
 		D65214E68722C01AD2335518625D629B /* FBSDKShareMessengerMediaTemplateContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareMessengerMediaTemplateContent.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareMessengerMediaTemplateContent.h; sourceTree = "<group>"; };
 		D65FF37C8A2A0A1F864739D8E684F705 /* GPBRootObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBRootObject.m; path = objectivec/GPBRootObject.m; sourceTree = "<group>"; };
+		D6C42573BB97CBA1AB26B7CDA3B34EAF /* IQKeyboardManagerSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManagerSwift-dummy.m"; sourceTree = "<group>"; };
 		D6DDA1BC65542913F007B39E495D9A96 /* SDWebImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-umbrella.h"; sourceTree = "<group>"; };
 		D71E1A5F0A52065495D08F8967939170 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+WebCacheOperation.m"; path = "SDWebImage/UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		D73A180D8DF235F51A9113019AB2B436 /* el.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = el.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/el.lproj; sourceTree = "<group>"; };
@@ -2445,14 +2444,13 @@
 		E23A3202404448F65473376591D85A26 /* ro.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ro.lproj; path = FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/ro.lproj; sourceTree = "<group>"; };
 		E24300FBA7FF931D52D76880C862A7B1 /* GPBUnknownField_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUnknownField_PackagePrivate.h; path = objectivec/GPBUnknownField_PackagePrivate.h; sourceTree = "<group>"; };
 		E266DC04C41D2FFB1EB1903547C66D95 /* FBSDKCameraEffectArguments.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKCameraEffectArguments.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKCameraEffectArguments.h; sourceTree = "<group>"; };
+		E27726BA3D0F8219F1B38A0DAC6A6C3F /* IQKeyboardManagerSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManagerSwift-umbrella.h"; sourceTree = "<group>"; };
 		E2BF96FCAACE3A5F51B7AC9F50614D4D /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+WebCacheOperation.h"; path = "SDWebImage/UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
-		E310A1B1F73D7BEFB11EC6C77CB49FE8 /* IQKeyboardManagerSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = IQKeyboardManagerSwift.modulemap; sourceTree = "<group>"; };
 		E3249C4F6189568551AA27B0A1852138 /* gsw.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = gsw.lproj; path = FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/gsw.lproj; sourceTree = "<group>"; };
 		E353095C4B94BE688014F72CB6FC9CCC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		E37462E6C6E259AD8508D80EF7708E26 /* en-IN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "en-IN.lproj"; path = "FirebaseUIFrameworks/FirebaseTwitterAuthUI/Frameworks/FirebaseTwitterAuthUI.framework/en-IN.lproj"; sourceTree = "<group>"; };
 		E3777D08D49FB56DF76F5A99ADF691F6 /* FBSDKShareCameraEffectContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareCameraEffectContent.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareCameraEffectContent.m; sourceTree = "<group>"; };
 		E3964FB0CB49DA01D08E117BBB54B486 /* FBSDKMessageDialog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKMessageDialog.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKMessageDialog.m; sourceTree = "<group>"; };
-		E3B64906F6495FBF8F8F9CA6FB5EC68B /* IQTitleBarButtonItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQTitleBarButtonItem.swift; path = IQKeyboardManagerSwift/IQToolbar/IQTitleBarButtonItem.swift; sourceTree = "<group>"; };
 		E41EE26F67011384FCC481D9A66D9037 /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hant.lproj"; path = "FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/zh-Hant.lproj"; sourceTree = "<group>"; };
 		E4412B0E4A754D5A749CB25D00A8F41D /* es-BO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-BO.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-BO.lproj"; sourceTree = "<group>"; };
 		E4436474C8BEB0422C2B7982C0ED732C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2539,6 +2537,7 @@
 		F4B600CF93F54CFF2A71520DB24FCF5E /* ln.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ln.lproj; path = FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ln.lproj; sourceTree = "<group>"; };
 		F4CA256DD5CDE1ACFEF2AD6985509A3F /* GPBCodedInputStream_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedInputStream_PackagePrivate.h; path = objectivec/GPBCodedInputStream_PackagePrivate.h; sourceTree = "<group>"; };
 		F54425F54409687D6B6A41794386AB49 /* es-CO.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-CO.lproj"; path = "FirebaseUIFrameworks/FirebasePhoneAuthUI/Frameworks/FirebasePhoneAuthUI.framework/es-CO.lproj"; sourceTree = "<group>"; };
+		F560B936DB475163EA81972AF57FD730 /* IQKeyboardManagerSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = IQKeyboardManagerSwift.modulemap; sourceTree = "<group>"; };
 		F5A6F439AC87A52CABB18BD85ADA0214 /* FBSDKKeychainStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKKeychainStore.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKKeychainStore.m; sourceTree = "<group>"; };
 		F5A98A07E90D74420A93C3D207306D88 /* dumpfile.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = dumpfile.cc; path = db/dumpfile.cc; sourceTree = "<group>"; };
 		F5AC6FF95978CF11B8B4EF089024F970 /* es-GT.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-GT.lproj"; path = "FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-GT.lproj"; sourceTree = "<group>"; };
@@ -2547,6 +2546,7 @@
 		F6222C1EBD959BF6EC45F033B2E614A1 /* FBSDKShareButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareButton.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareButton.h; sourceTree = "<group>"; };
 		F622DB3E933DB8C1921E22319A48BC32 /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
 		F668D0D6D09A758DCE78B7FB2C7F7938 /* GPBBootstrap.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBBootstrap.h; path = objectivec/GPBBootstrap.h; sourceTree = "<group>"; };
+		F681EC71814B68FCC57F78F504987047 /* IQKeyboardManagerSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.xcconfig; sourceTree = "<group>"; };
 		F69F9AD02347836867213C2180E1F8AB /* GTMNSString+URLArguments.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "GTMNSString+URLArguments.m"; path = "Foundation/GTMNSString+URLArguments.m"; sourceTree = "<group>"; };
 		F6C497E6A25F58418AA9117E6988B209 /* db.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = db.h; path = include/leveldb/db.h; sourceTree = "<group>"; };
 		F715F044F9B2BC1C46179860021CEA0E /* SDWebImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageManager.h; path = SDWebImage/SDWebImageManager.h; sourceTree = "<group>"; };
@@ -2773,20 +2773,6 @@
 			name = Full;
 			sourceTree = "<group>";
 		};
-		000CD46CBBF7970FB585CF985DC0F7A2 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				2CD10AA78D5A388995011530C983B059 /* Info.plist */,
-				E310A1B1F73D7BEFB11EC6C77CB49FE8 /* IQKeyboardManagerSwift.modulemap */,
-				02C6D9BE1E3C0C6880A53D5EDF6BFB9C /* IQKeyboardManagerSwift.xcconfig */,
-				A7891CDD6AE7DC1FE168E178DBA689CC /* IQKeyboardManagerSwift-dummy.m */,
-				64C744C6CA84FC9560782FF87157C40E /* IQKeyboardManagerSwift-prefix.pch */,
-				7CEE6437F16D67AEF485ED0784919E41 /* IQKeyboardManagerSwift-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/IQKeyboardManagerSwift";
-			sourceTree = "<group>";
-		};
 		005683A0AD26E53D9CABB8CD20E46050 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2808,14 +2794,6 @@
 				9D986A7CB566E48A3E29FD0B5CF6F6B9 /* FirebaseRemoteConfig.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		048F66DC6EA9F90184DC8AB13E9A7706 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				CDF25643FE6B47E29E9D74D1B888A075 /* IQKeyboardManager.bundle */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		06AB0B71760A7628549F1D3E73F61EF3 /* Core */ = {
@@ -2891,6 +2869,14 @@
 				7B3FCD5875903A98E47786C9A463FAC0 /* Resources */,
 			);
 			name = Twitter;
+			sourceTree = "<group>";
+		};
+		0C0919B9B847D362C0DB9A6292111024 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5CABDFEB28120F0FD8DC938997105BAA /* IQKeyboardManager.bundle */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		135F7CF67469F50FE6BE0408C1579994 /* Frameworks */ = {
@@ -3501,7 +3487,7 @@
 				F3AD1BB5BFE68AF23C1459FD9405D1D9 /* GoogleToolboxForMac */,
 				F615398AE492C2C3EF99BBD9200F3108 /* GTMOAuth2 */,
 				F8D77AE2057EC4A3561AD5A11240C070 /* GTMSessionFetcher */,
-				BAEE87E0E15E854F3148D6D15C0439D5 /* IQKeyboardManagerSwift */,
+				9D4B1654C1F52C5B5ADE2507B12CD010 /* IQKeyboardManagerSwift */,
 				D3B2FC0D7AFEA2233C1B3CF8DA98E81F /* leveldb-library */,
 				6EE7A729A6BD7CD8080FDF2684CCFFD4 /* nanopb */,
 				16682F5B422AC5361AE8E786BCF73EC4 /* Protobuf */,
@@ -3580,6 +3566,20 @@
 			);
 			name = FBSDKLoginKit;
 			path = FBSDKLoginKit;
+			sourceTree = "<group>";
+		};
+		60140CE9FB5DD7D6CF68FD6DB7D33CB0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				9C1D29A3EE466AC37864D346BE3982D3 /* Info.plist */,
+				F560B936DB475163EA81972AF57FD730 /* IQKeyboardManagerSwift.modulemap */,
+				F681EC71814B68FCC57F78F504987047 /* IQKeyboardManagerSwift.xcconfig */,
+				D6C42573BB97CBA1AB26B7CDA3B34EAF /* IQKeyboardManagerSwift-dummy.m */,
+				A3A497E31E2B44752C094D612D3ADCE1 /* IQKeyboardManagerSwift-prefix.pch */,
+				E27726BA3D0F8219F1B38A0DAC6A6C3F /* IQKeyboardManagerSwift-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/IQKeyboardManagerSwift";
 			sourceTree = "<group>";
 		};
 		6320FD1D445AB29CFA215FC7EEF3EFD8 /* FirebaseAnalytics */ = {
@@ -4099,6 +4099,32 @@
 			path = FirebaseCore;
 			sourceTree = "<group>";
 		};
+		9D4B1654C1F52C5B5ADE2507B12CD010 /* IQKeyboardManagerSwift */ = {
+			isa = PBXGroup;
+			children = (
+				3B9F12319E079DDA31A428A143DCCBC7 /* IQBarButtonItem.swift */,
+				76C5CACCCB3876413ED32FDD5B7F4CCD /* IQInvocation.swift */,
+				786DC45A5B16AE094EC3C7DC90A6D6CE /* IQKeyboardManager.swift */,
+				9B6810C4572AB2CE8AB570548CBD71CA /* IQKeyboardManagerConstants.swift */,
+				C390F687660D67D748090D78B41CB62E /* IQKeyboardManagerConstantsInternal.swift */,
+				61985C2F55D7220281FB1C03305B98AB /* IQKeyboardReturnKeyHandler.swift */,
+				66D8B68F951662A99EE712D06E33E67A /* IQNSArray+Sort.swift */,
+				8AAEE500FB131E956D56A6F167131D5E /* IQPreviousNextView.swift */,
+				45AF906C38D2FD246B0D3EEF54EC6CAB /* IQTextView.swift */,
+				3952EA216D0271A695BA0BE7BF4A7DB3 /* IQTitleBarButtonItem.swift */,
+				890A15217456513CC5C9F86B2FDAB4B0 /* IQToolbar.swift */,
+				0AF943CB1E712807A7EC40A66BCE14AC /* IQUIScrollView+Additions.swift */,
+				5EEDC366A2F52136088B5510C369FBFD /* IQUITextFieldView+Additions.swift */,
+				5FC26D4B220852CCBA0DAF26B60D113F /* IQUIView+Hierarchy.swift */,
+				71479E2A563FC2930073D40E31871184 /* IQUIView+IQKeyboardToolbar.swift */,
+				9DC4837F794F2BF9DDA0FC38554F18BE /* IQUIViewController+Additions.swift */,
+				0C0919B9B847D362C0DB9A6292111024 /* Resources */,
+				60140CE9FB5DD7D6CF68FD6DB7D33CB0 /* Support Files */,
+			);
+			name = IQKeyboardManagerSwift;
+			path = IQKeyboardManagerSwift;
+			sourceTree = "<group>";
+		};
 		A371A52A07FB47A50A40C776951F7229 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -4333,32 +4359,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/FBSDKLoginKit";
-			sourceTree = "<group>";
-		};
-		BAEE87E0E15E854F3148D6D15C0439D5 /* IQKeyboardManagerSwift */ = {
-			isa = PBXGroup;
-			children = (
-				02701E47D2E8F7AC1552BE16F2699027 /* IQBarButtonItem.swift */,
-				084326ACD5FD803C06CE1CF8FC373AAE /* IQKeyboardManager.swift */,
-				6DE9BE7BAC6684DFC4C042A49CFFC57E /* IQKeyboardManagerConstants.swift */,
-				A0648085F535A38A128BEF9C78689812 /* IQKeyboardManagerConstantsInternal.swift */,
-				9BAAEDA562CBA98F985BC32157E6F6C2 /* IQKeyboardReturnKeyHandler.swift */,
-				CB2E2E2D5449C9D63EED7C378C31B9EE /* IQNSArray+Sort.swift */,
-				2FFF30265328617BFFC0B2EB76CB2F63 /* IQPreviousNextView.swift */,
-				78CCCB26B9E1321C090CF05342CAAC03 /* IQTextView.swift */,
-				E3B64906F6495FBF8F8F9CA6FB5EC68B /* IQTitleBarButtonItem.swift */,
-				199A98FD1D0086B38E2FF09D9DE6636B /* IQToolbar.swift */,
-				195CFBDE2C50835ACE3A9A9ED13C68EC /* IQUIScrollView+Additions.swift */,
-				CA1190A756730C86C5166D2BDA9CA33D /* IQUITextFieldView+Additions.swift */,
-				00E5F19770762290F1EF06F47A26B1D3 /* IQUIView+Hierarchy.swift */,
-				A016067FA60411AC9F4501A3DB811CF2 /* IQUIView+IQKeyboardToolbar.swift */,
-				55051D9466548BE36E62BBEFC331C0DA /* IQUIViewController+Additions.swift */,
-				010C315CE8055A34A00A58686D68B573 /* IQUIWindow+Hierarchy.swift */,
-				048F66DC6EA9F90184DC8AB13E9A7706 /* Resources */,
-				000CD46CBBF7970FB585CF985DC0F7A2 /* Support Files */,
-			);
-			name = IQKeyboardManagerSwift;
-			path = IQKeyboardManagerSwift;
 			sourceTree = "<group>";
 		};
 		BEF90E7709E2D040D1EDBFBB0112C9B3 /* Frameworks */ = {
@@ -5585,7 +5585,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8C5CE05A712EF50BB123A41D8EFC0CB /* Build configuration list for PBXNativeTarget "IQKeyboardManagerSwift" */;
 			buildPhases = (
-				B0CAA73D50E134E589B648ABF6682839 /* Sources */,
+				6AE8A1A8C31E2BAC9BF0840594A72CEB /* Sources */,
 				81A5C814ACEB86CB06CD6C51383982FE /* Frameworks */,
 				918D58E08AC7FD6CC66B75FF048005F7 /* Resources */,
 				C82B5F04767CB991E84734A54D0ABA5B /* Headers */,
@@ -6437,6 +6437,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6AE8A1A8C31E2BAC9BF0840594A72CEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6BAE070E573E1FABA820360F22737B /* IQBarButtonItem.swift in Sources */,
+				E8F5CC4714C4AB1D6FE8FC85651DF3A3 /* IQInvocation.swift in Sources */,
+				E1892F605D93810A9FBE0902043EB8AF /* IQKeyboardManager.swift in Sources */,
+				598527A1D24BD6C0C9F741E8F84DFE17 /* IQKeyboardManagerConstants.swift in Sources */,
+				E1E729DD19EDA12DF13E1A4CF6D748C8 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
+				64F354609DA76AD80DD40850DB763562 /* IQKeyboardManagerSwift-dummy.m in Sources */,
+				1E66A4899FC855FC61F13721CF63EB35 /* IQKeyboardReturnKeyHandler.swift in Sources */,
+				3D77B7DC6449E6CC41C0FF73714B6BE9 /* IQNSArray+Sort.swift in Sources */,
+				1DF0DEB77D26401892D4E76463DD3949 /* IQPreviousNextView.swift in Sources */,
+				4B0F9347718263C67557054C2E15DE61 /* IQTextView.swift in Sources */,
+				BB4FCDEB31262E21F9021F22B2A73FAC /* IQTitleBarButtonItem.swift in Sources */,
+				83B0E4A33786C45550CBAA86DD9E400B /* IQToolbar.swift in Sources */,
+				5939499A16FC0C349C94A634D25C4EE7 /* IQUIScrollView+Additions.swift in Sources */,
+				EEC5EE727FA2DF9D913B4E2A48B57DAD /* IQUITextFieldView+Additions.swift in Sources */,
+				3EDA7575644614ACD562D23759D18DE8 /* IQUIView+Hierarchy.swift in Sources */,
+				3285188513F859E100A7BBE29B36599D /* IQUIView+IQKeyboardToolbar.swift in Sources */,
+				7FE321828ECA1D78CCF8A2892A30438B /* IQUIViewController+Additions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		828790FFCC3B7540020A9F3396C6546C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6580,30 +6604,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2450FB1829D0D9674FF71FFBD0E569C3 /* Pods-TelePatriot-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B0CAA73D50E134E589B648ABF6682839 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F48DD4AF7C254B7A2F67A690AF8EF143 /* IQBarButtonItem.swift in Sources */,
-				4882783C5576C5D43CE79C03DE33C3DD /* IQKeyboardManager.swift in Sources */,
-				9B9C1A095D68E3B91BD38F910C6F2E7F /* IQKeyboardManagerConstants.swift in Sources */,
-				EC2CCB07B8CCEF669FAF345D29691030 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
-				B0EF72D8E2CB6594FEE4DB2600B32650 /* IQKeyboardManagerSwift-dummy.m in Sources */,
-				C40F6D2FE20755C045864C23F73260C8 /* IQKeyboardReturnKeyHandler.swift in Sources */,
-				CC93854C66A808596F5A3B58FDB49BF8 /* IQNSArray+Sort.swift in Sources */,
-				CB29E86F679E9DDC5C5A1C89482701CA /* IQPreviousNextView.swift in Sources */,
-				88A25F661A4435D57041D21700515CC6 /* IQTextView.swift in Sources */,
-				1F0F49D029C4471F2AE3712D1FCB1D8A /* IQTitleBarButtonItem.swift in Sources */,
-				02A8CD406255AE081E99A62241BAC587 /* IQToolbar.swift in Sources */,
-				2384AC373E752D55842F37DE4F2CE2A7 /* IQUIScrollView+Additions.swift in Sources */,
-				B1A7ADAE2CAEDA5D703CE5C6A6DA405B /* IQUITextFieldView+Additions.swift in Sources */,
-				3077B4186B916A8DB980BBB72DF7FFB9 /* IQUIView+Hierarchy.swift in Sources */,
-				9C178A996A6A0F14CF4B1F1D1BA4B2EB /* IQUIView+IQKeyboardToolbar.swift in Sources */,
-				866952184CCB9236E8D567A97A7C3224 /* IQUIViewController+Additions.swift in Sources */,
-				64FFC1F647245F61C405AE7AC1DA9D31 /* IQUIWindow+Hierarchy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7080,7 +7080,7 @@
 		};
 		314362E8707D72D034FEC8CFBFB11726 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 02C6D9BE1E3C0C6880A53D5EDF6BFB9C /* IQKeyboardManagerSwift.xcconfig */;
+			baseConfigurationReference = F681EC71814B68FCC57F78F504987047 /* IQKeyboardManagerSwift.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7857,7 +7857,7 @@
 		};
 		DDCD46C296262746A887ADB55B1EFAC5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 02C6D9BE1E3C0C6880A53D5EDF6BFB9C /* IQKeyboardManagerSwift.xcconfig */;
+			baseConfigurationReference = F681EC71814B68FCC57F78F504987047 /* IQKeyboardManagerSwift.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

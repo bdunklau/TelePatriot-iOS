@@ -34,5 +34,7 @@ target 'TelePatriot' do
     pod 'FBSDKShareKit'
     pod 'FBSDKLoginKit'
     
+    pod 'FirebaseInstanceID', '= 2.0.0'
+    
 end
 

@@ -28,6 +28,10 @@ class BaseViewController: UIViewController {
         //self.addBackbutton(title: backTitle)
         
     }
+    
+    func getAppDelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

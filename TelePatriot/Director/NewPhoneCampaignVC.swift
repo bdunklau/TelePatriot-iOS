@@ -54,7 +54,7 @@ class NewPhoneCampaignVC: BaseViewController {
     
     
     // https://www.youtube.com/watch?v=joVi3thZOqc
-    let rootRef = Database.database().reference()
+    //let rootRef = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +105,7 @@ class NewPhoneCampaignVC: BaseViewController {
         guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
             return
         }
+        let rootRef = Database.database().reference()
         let key = rootRef.child("teams/\(team)/\(missionNode)").childByAutoId().key
         let uid : String = Auth.auth().currentUser!.uid
         let name : String = Auth.auth().currentUser!.displayName!

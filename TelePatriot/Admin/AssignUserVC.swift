@@ -274,7 +274,7 @@ class AssignUserVC: BaseViewController {
         
         view.addSubview(okButton)
         okButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        okButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
+        okButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
         
         puser.currentlyBeingReviewed(by: TPUser.sharedInstance)
         

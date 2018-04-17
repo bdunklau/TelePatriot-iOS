@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class VideoChatVC: BaseViewController, VCConnectorIConnect, VCConnectorIRegisterRemoteCameraEventListener,
-VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener
+VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate
 {
 
     var databaseRef : DatabaseReference?
@@ -22,7 +22,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     
     var remoteViews: UIView!
     //var selfView = UIView()
-    var micButton: UIButton!
+    var micButton : UIButton!
     var callButton: UIButton!
     var cameraButton: UIButton!
     private var remoteViewsMap:[String:UIView] = [:]
@@ -33,7 +33,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     var cameraMuted         = false
     //var expandedSelfView    = true //false
     var connected = false
-    
+
     
     
     let descriptionLabel : UILabel = {
@@ -262,15 +262,29 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             connector?.registerParticipantEventListener(self)
         }
         
-        /***************
-        if let w = selfView?.frame.size.width, let h = selfView?.frame.size.height {
-            connector?.showView(at: &selfView,
-                                x: 0,
-                                y: 0,
-                                width: UInt32(w / 2),
-                                height: UInt32(h))
-        }
-        ************/
+        
+        callButton = UIButton(type: UIButtonType.custom)
+        callButton.frame = CGRect(x: 8, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        callButton.backgroundColor = UIColor.clear
+        callButton.setImage(UIImage(named: "callStart.png"), for: UIControlState.normal)
+        //callButton.addTarget(self, action: #selector(XXXXXXX(_:)), for: .touchUpInside)
+        
+        
+        cameraButton = UIButton(type: UIButtonType.custom)
+        cameraButton.frame = CGRect(x: 64, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        cameraButton.backgroundColor = UIColor.clear
+        cameraButton.setImage(UIImage(named: "cameraOn.png"), for: UIControlState.normal)
+        cameraButton.addTarget(self, action: #selector(cameraClicked(_:)), for: .touchUpInside)
+        
+        
+        micButton = UIButton(type: UIButtonType.custom)
+        micButton.frame = CGRect(x: 120, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        micButton.backgroundColor = UIColor.clear
+        micButton.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControlState.normal)
+        micButton.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
+        // The below line will give you what you want
+        //micButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+
         
         
         selfView?.backgroundColor = UIColor.red
@@ -279,13 +293,30 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         remoteViews?.backgroundColor = UIColor.blue
         view.addSubview(remoteViews!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
+        view.addSubview(micButton)
+        //micButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.view.bounds.height / 3).isActive = true
+        //micButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        //micButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0.1).isActive = true
+        //micButton.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 0.1).isActive = true
+        
+        view.addSubview(cameraButton)
+        //cameraButton.centerYAnchor.constraint(equalTo: micButton.centerYAnchor, constant: 0).isActive = true
+        //cameraButton.leadingAnchor.constraint(equalTo: micButton.trailingAnchor, constant: 16).isActive = true
+        
+        view.addSubview(callButton)
+        
         view.addSubview(connectionButton)
         connectionButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.view.bounds.height / 3 + 60).isActive = true
-        connectionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        connectionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         
         scrollView.addSubview(descriptionLabel)
         descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 8).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(edit_video_mission_description_button)
+        edit_video_mission_description_button.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 4).isActive = true
+        edit_video_mission_description_button.leadingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 16).isActive = true
+        
         
         scrollView.addSubview(video_mission_description)
         video_mission_description.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8).isActive = true
@@ -368,7 +399,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     }
     
     private func createVideoNode() -> VideoNode? {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let appDelegate = getAppDelegate()
         
         // hardcode for now...
         let theType = "Video Petition"
@@ -509,7 +540,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
                 self.connector?.showView(at: UnsafeMutableRawPointer(&remoteView),
                                          x: 0,
                                          y: 0,
-                                         width: UInt32(w), // change this
+                                         width: UInt32(w),
                                          height: UInt32(h))
                 
                 // updating label location
@@ -540,9 +571,10 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         
         numberOfRemoteViews += 1
         DispatchQueue.main.async {
-            var newRemoteView = UIView()
+            let rec = self.remoteViews.bounds
+            var newRemoteView = UIView(frame: rec)
             newRemoteView.layer.borderColor = UIColor.black.cgColor
-            newRemoteView.layer.borderWidth = 1.0
+            newRemoteView.layer.borderWidth = 0.0
             self.remoteViews.addSubview(newRemoteView)
             self.remoteViewsMap[participant.getId()] = newRemoteView
             self.connector?.assignView(toRemoteCamera: UnsafeMutableRawPointer(&newRemoteView),
@@ -693,6 +725,59 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     @objc private func editVideoMissionDescription(_ sender: UIButton) {
         // pop up a dialog with a text field showing the video mission description
         // and save, cancel buttons
+        if let vc = getAppDelegate().editVideoMissionDescriptionVC {
+            vc.modalPresentationStyle = .popover
+            let popover = vc.popoverPresentationController!
+            popover.delegate = self
+            popover.permittedArrowDirections = .up
+            popover.sourceView = sender as? UIView
+            //popover.sourceRect = sender.bounds
+            popover.sourceRect = CGRect(x: 64, y: 64, width: 110, height: 110)
+            
+            let w = sender.frame.width - 144
+            let h = sender.frame.height - 144
+            //vc.preferredContentSize = CGSize(width: 200, height: 100)
+            present(vc, animated: true, completion:nil)
+        }
+    }
+    
+    // because of UIPopoverPresentationControllerDelegate
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        /*********
+        if segue.identifier == "pop" {
+            let dest = segue.destination
+            if let pop = dest.popoverPresentationController {
+                pop.delegate = self
+            }
+        }
+        *********/
+    }
+    
+    
+    @objc func micClicked(_ sender: Any) {
+        if micMuted {
+            micMuted = !micMuted
+            self.micButton.setImage(UIImage(named: "microphoneOnWhite.png"), for: .normal)
+            connector?.setMicrophonePrivacy(micMuted)
+        } else {
+            micMuted = !micMuted
+            self.micButton.setImage(UIImage(named: "microphoneOff.png"), for: .normal)
+            connector?.setMicrophonePrivacy(micMuted)
+        }
+    }
+    
+    @objc func cameraClicked(_ sender: Any) {
+        if cameraMuted {
+            cameraMuted = !cameraMuted
+            self.cameraButton.setImage(UIImage(named: "cameraOn.png"), for: .normal)
+            connector?.setCameraPrivacy(cameraMuted)
+            self.selfView?.isHidden = cameraMuted
+        } else {
+            cameraMuted = !cameraMuted
+            self.cameraButton.setImage(UIImage(named: "cameraOff.png"), for: .normal)
+            connector?.setCameraPrivacy(cameraMuted)
+            self.selfView?.isHidden = cameraMuted
+        }
     }
 
 }
