@@ -171,7 +171,9 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
             
             //print("User: "+user!.displayName!)
             //name.text = user!.displayName!
-            
+            for pr in authUI.providers {
+                print("\(pr.shortName) : accessToken: \(pr.accessToken), idToken: \(pr.idToken)")
+            }
             /**
              Now find out if user has any roles yet, or if he has to be sent to the "limbo" screen
              **/

@@ -61,6 +61,9 @@ class TPUser {
     var currentMissionItem : MissionItem?
     var currentMissionItem2 : MissionItem2?
     
+    var currentVideoNodeKey : String?
+    
+    
     private let appDelegate : AppDelegate
     
     
@@ -437,88 +440,6 @@ class TPUser {
     }
     
     
-    // DON'T USE THIS - USE create() INSTEAD ***************************************************
-    // this should replace the other fetchXxxx() functions at some point
-    // Right now, all we're getting are the residential address fields
-    /*******
-    private func fetchUser(uid: String) {
-        
-        // the thing is - we don't ever want this to be nil.  So how do we ensure it's always not nil?
-        guard let theref = databaseRef else {
-            return }
-        
-        theref.child("users").child(uid).observe(.value, with: {(snapshot) in
-            guard let userNode = snapshot.value as? [String: Any] else {
-                return
-            }
-            
-            // account_status_events ?
-            
-            if let created = userNode["created"] as? String {
-                self.created = created
-            }
-            if let lat = userNode["current_latitude"] as? Double {
-                self.current_latitude = lat
-            }
-            if let lng = userNode["current_longitude"] as? Double {
-                self.current_longitude = lng
-            }
-            
-            // current_team ?
-            
-            if let email = userNode["email"] as? String {
-                self.email = email
-            }
-            if let has_signed_confidentiality_agreement = userNode["has_signed_confidentiality_agreement"] as? Bool {
-                self.has_signed_confidentiality_agreement = has_signed_confidentiality_agreement
-            }
-            if let has_signed_petition = userNode["has_signed_petition"] as? Bool {
-                self.has_signed_petition = has_signed_petition
-            }
-            if let is_banned = userNode["is_banned"] as? Bool {
-                self.is_banned = is_banned
-            }
-            if let hd = userNode["legislative_house_district"] as? String {
-                self.legislative_house_district = hd
-            }
-            if let sd = userNode["legislative_senate_district"] as? String {
-                self.legislative_senate_district = sd
-            }
-            if let name = userNode["name"] as? String {
-                self.name = name
-            }
-            if let phone = userNode["phone"] as? String {
-                self.phone = phone
-            }
-            if let photoUrl = userNode["photoUrl"] as? URL {
-                self.photoUrl = photoUrl
-            }
-            if let recruiter_id = userNode["recruiter_id"] as? String {
-                self.recruiter_id = recruiter_id
-            }
-            if let rac = userNode["residential_address_city"] as? String {
-                self.residential_address_city = rac
-            }
-            if let rad1 = userNode["residential_address_line1"] as? String {
-                self.residential_address_line1 = rad1
-            }
-            if let rad2 = userNode["residential_address_line2"] as? String {
-                self.residential_address_line2 = rad2
-            }
-            if let ras = userNode["residential_address_state_abbrev"] as? String {
-                self.residential_address_state_abbrev = ras
-            }
-            if let raz = userNode["residential_address_zip"] as? String {
-                self.residential_address_zip = raz
-            }
-            
-            // roles?
-            // teams?
-            // topics?
-            
-        })
-    }
-     *************/
     
     private func fetchCurrentTeam(uid: String) {
         
@@ -751,6 +672,8 @@ class TPUser {
         // both are reset to nil in WrapUpViewController.submitWrapUp()
         currentMissionItem = nil
         currentMissionItem2 = nil
+        
+        currentVideoNodeKey = nil
     }
     
     

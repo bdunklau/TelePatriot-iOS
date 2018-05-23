@@ -61,28 +61,27 @@ class OfficeTableViewCell: UITableViewCell {
         self.legislator = legislator
         self.backgroundColor = .clear
         
+        self.addSubview(phoneButton)
+        
+        // to test calling legislators without actually calling them, comment out office.phone and replace with 555-555-5555
+        phoneButton.phone = office.phone
+        phoneButton.setTitle(office.phone, for: .normal)
+        phoneButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        phoneButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
+        phoneButton.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
+        
         self.addSubview(nameLabel)
         nameLabel.text = office.name
-        nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: phoneButton.bottomAnchor, constant: -8).isActive = true
         //teamNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         //teamNameLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         //teamNameLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
         
-        
-        self.addSubview(phoneButton)
-        
-        // to test calling legislators without actually calling them, comment out office.phone and replace with 555-555-5555
-        phoneButton.phone = "555-555-5555"//office.phone
-        phoneButton.setTitle(office.phone, for: .normal)
-        phoneButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
-        phoneButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 0).isActive = true
-        phoneButton.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
-        
         self.addSubview(addressView)
         addressView.text = office.address
-        addressView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -4).isActive = true
-        addressView.topAnchor.constraint(equalTo: phoneButton.bottomAnchor, constant: -8).isActive = true
+        addressView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor, constant: -4).isActive = true
+        addressView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0).isActive = true
         
         /**********
         self.addSubview(emailLabel)

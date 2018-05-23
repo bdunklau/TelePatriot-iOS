@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class VideoChatVC: BaseViewController, VCConnectorIConnect, VCConnectorIRegisterRemoteCameraEventListener,
-VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate
+VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate, EditSocialMediaDelegate
 {
 
     var databaseRef : DatabaseReference?
@@ -18,8 +18,6 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     // Vidyo code ref:   https://vidyo.io/blog/how-to/vidyo-io-using-swift-build-ios-video-chat-app/
     private var connector:VCConnector?
     var selfView : UIView?
-    
-    
     var remoteViews: UIView!
     //var selfView = UIView()
     var micButton : UIButton!
@@ -33,7 +31,9 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     var cameraMuted         = false
     //var expandedSelfView    = true //false
     var connected = false
-
+    
+    var videoNode : VideoNode?
+    var legislator : Legislator?
     
     
     let descriptionLabel : UILabel = {
@@ -77,12 +77,18 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     }()
     
     
-    let legislator : UILabel = {
+    let edit_legislator_button : BaseButton = {
+        let button = BaseButton(text: "Choose")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(editLegislator(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    let legislatorName : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "Rep Noncommittal Fence Sitter"
+        // l.text = "Rep Noncommittal Fence Sitter"
         return l
     }()
     
@@ -92,7 +98,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "XX"
+        //l.text = "TX"
         return l
     }()
     
@@ -102,7 +108,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "HD"
+        //l.text = "HD"
         return l
     }()
     
@@ -112,8 +118,44 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "200"
+        //l.text = "200"
         return l
+    }()
+    
+    
+    let facebookButton : UIButton = {
+        let button = UIButton(type: .system)
+        //button.setTitle("FB: -", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(openFacebook(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let editFacebookButton : UIButton = {
+        let button = UIButton(type: .system)
+        //icons come from material.io/icons
+        //button.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)   // set below if legislator exists
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(editFacebook(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    let twitterButton : UIButton = {
+        let button = UIButton(type: .system)
+        //button.setTitle("TW: -", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(openTwitter(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let editTwitterButton : UIButton = {
+        let button = UIButton(type: .system)
+        //icons come from material.io/icons
+        //button.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal) // set below if legislator exists
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(editTwitter(_:)), for: .touchUpInside)
+        return button
     }()
     
     
@@ -122,7 +164,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "FB:"
+        //l.text = "FB:"
         return l
     }()
     
@@ -132,9 +174,11 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "@RepHaventMadeUpMyMind"
+        //l.text = "@RepHaventMadeUpMyMind"
         return l
     }()
+    
+    var fbId : String? // legislator's FB ID
     
     
     let twLabel : UILabel = {
@@ -164,6 +208,14 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
         l.text = "YouTube Video Description"
         return l
+    }()
+    
+    
+    let edit_youtube_video_description_button : BaseButton = {
+        let button = BaseButton(text: "Edit")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(editYoutubeDescription(_:)), for: .touchUpInside)
+        return button
     }()
     
     
@@ -314,7 +366,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         
         scrollView.addSubview(edit_video_mission_description_button)
-        edit_video_mission_description_button.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 4).isActive = true
+        edit_video_mission_description_button.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8).isActive = true
         edit_video_mission_description_button.leadingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 16).isActive = true
         
         
@@ -329,41 +381,52 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         legislatorLabel.topAnchor.constraint(equalTo: video_mission_description.bottomAnchor, constant: 16).isActive = true
         legislatorLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         
-        scrollView.addSubview(legislator)
-        legislator.topAnchor.constraint(equalTo: legislatorLabel.bottomAnchor, constant: 8).isActive = true
-        legislator.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(edit_legislator_button)
+        edit_legislator_button.centerYAnchor.constraint(equalTo: legislatorLabel.centerYAnchor, constant: 0).isActive = true
+        edit_legislator_button.leadingAnchor.constraint(equalTo: legislatorLabel.trailingAnchor, constant: 16).isActive = true
+        
+        scrollView.addSubview(legislatorName)
+        legislatorName.topAnchor.constraint(equalTo: legislatorLabel.bottomAnchor, constant: 8).isActive = true
+        legislatorName.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         
         scrollView.addSubview(state)
-        state.bottomAnchor.constraint(equalTo: legislator.bottomAnchor, constant: 0).isActive = true
-        state.leadingAnchor.constraint(equalTo: legislator.trailingAnchor, constant: 8).isActive = true
+        state.bottomAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 0).isActive = true
+        state.leadingAnchor.constraint(equalTo: legislatorName.trailingAnchor, constant: 8).isActive = true
         
         scrollView.addSubview(chamber)
-        chamber.bottomAnchor.constraint(equalTo: legislator.bottomAnchor, constant: 0).isActive = true
+        chamber.bottomAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 0).isActive = true
         chamber.leadingAnchor.constraint(equalTo: state.trailingAnchor, constant: 4).isActive = true
         
         scrollView.addSubview(district)
-        district.bottomAnchor.constraint(equalTo: legislator.bottomAnchor, constant: 0).isActive = true
+        district.bottomAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 0).isActive = true
         district.leadingAnchor.constraint(equalTo: chamber.trailingAnchor, constant: 4).isActive = true
         
-        scrollView.addSubview(fbLabel)
-        fbLabel.topAnchor.constraint(equalTo: legislator.bottomAnchor, constant: 8).isActive = true
-        fbLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(facebookButton)
+        facebookButton.topAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 8).isActive = true
+        facebookButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         
-        scrollView.addSubview(fbHandle)
-        fbHandle.bottomAnchor.constraint(equalTo: fbLabel.bottomAnchor, constant: 0).isActive = true
-        fbHandle.leadingAnchor.constraint(equalTo: fbLabel.trailingAnchor, constant: 4).isActive = true
+        scrollView.addSubview(editFacebookButton)
+        editFacebookButton.centerYAnchor.constraint(equalTo: facebookButton.centerYAnchor, constant: 0).isActive = true
+        editFacebookButton.leadingAnchor.constraint(equalTo: facebookButton.trailingAnchor, constant: 16).isActive = true
         
-        scrollView.addSubview(twLabel)
-        twLabel.topAnchor.constraint(equalTo: fbLabel.bottomAnchor, constant: 8).isActive = true
-        twLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(twitterButton)
+        twitterButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 8).isActive = true
+        twitterButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         
-        scrollView.addSubview(twHandle)
-        twHandle.bottomAnchor.constraint(equalTo: twLabel.bottomAnchor, constant: 0).isActive = true
-        twHandle.leadingAnchor.constraint(equalTo: twLabel.trailingAnchor, constant: 4).isActive = true
+        scrollView.addSubview(editTwitterButton)
+        editTwitterButton.centerYAnchor.constraint(equalTo: twitterButton.centerYAnchor, constant: 0).isActive = true
+        editTwitterButton.leadingAnchor.constraint(equalTo: twitterButton.trailingAnchor, constant: 16).isActive = true
+        
         
         scrollView.addSubview(youtubeVideoDescriptionLabel)
-        youtubeVideoDescriptionLabel.topAnchor.constraint(equalTo: twHandle.bottomAnchor, constant: 16).isActive = true
+        youtubeVideoDescriptionLabel.topAnchor.constraint(equalTo: twitterButton.bottomAnchor, constant: 16).isActive = true
         youtubeVideoDescriptionLabel.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
+        
+        
+        scrollView.addSubview(edit_youtube_video_description_button)
+        edit_youtube_video_description_button.centerYAnchor.constraint(equalTo: youtubeVideoDescriptionLabel.centerYAnchor, constant: 0).isActive = true
+        edit_youtube_video_description_button.leadingAnchor.constraint(equalTo: youtubeVideoDescriptionLabel.trailingAnchor, constant: 8).isActive = true
+        
         
         scrollView.addSubview(youtubeVideoDescriptionSubtitle)
         youtubeVideoDescriptionSubtitle.topAnchor.constraint(equalTo: youtubeVideoDescriptionLabel.bottomAnchor, constant: 8).isActive = true
@@ -380,42 +443,94 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         youtubeVideoDescription.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
         
         view.addSubview(scrollView)
-        //scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).isActive = true
-        //scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         
-        /*************************
-         not ready for primetime
-        statePicker.frame = CGRect(x: 0, y: self.view.bounds.height/3 + 20, width: self.view.bounds.width, height: 200.0)
-        statePicker.delegate = self
-        statePicker.dataSource = self
-        //statePicker.selectRow(-1, inComponent: 0, animated: false)
+        /**
+        what we need is the key of the video node so that we can do a realtime query using that key
+        **/
         
-        scrollView.addSubview(statePicker)
-         ******************/
+        let videoNodeKey = getVideoNodeKey()
         
-        if let vn = createVideoNode() {
-            video_mission_description.text = vn.video_mission_description
+        // the initial query...
+        Database.database().reference().child("video/list").child(videoNodeKey).observe(.value, with: {(snapshot) in
+            self.videoNode = VideoNode(snapshot: snapshot)
+            if let vmd = self.videoNode?.video_mission_description { self.video_mission_description.text = vmd }
+            if let legislator = self.videoNode?.legislator {
+                self.editFacebookButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
+                self.editTwitterButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
+                self.legislator = legislator
+                self.legislatorName.text = legislator.full_name
+                self.state.text = legislator.state.uppercased()
+                self.chamber.text = legislator.chamber == "lower" ? "HD" : (legislator.chamber == "upper" ? "SD" : "")
+                self.district.text = legislator.district
+                let fbButtonText = legislator.legislator_facebook=="" ? "FB: -" : "FB: @\(legislator.legislator_facebook)"
+                self.facebookButton.setTitle(fbButtonText, for: .normal)
+                self.fbId = legislator.legislator_facebook_id
+                let twButtonText = legislator.legislator_twitter=="" ? "TW: -" : "TW: @\(legislator.legislator_twitter)"
+                self.twitterButton.setTitle(twButtonText, for: .normal)
+                self.youtubeVideoDescription.text = self.videoNode?.youtube_video_description
+            }
+        })
+    }
+    
+    private func getVideoNodeKey() -> String {
+        if let key = TPUser.sharedInstance.currentVideoNodeKey {
+            return key
+        }
+        else {
+            let vn = createVideoNode()
+            TPUser.sharedInstance.currentVideoNodeKey = vn.getKey()
+            return TPUser.sharedInstance.currentVideoNodeKey!
         }
     }
     
-    private func createVideoNode() -> VideoNode? {
+    private func createVideoNode() -> VideoNode {
         let appDelegate = getAppDelegate()
         
         // hardcode for now...
         let theType = "Video Petition"
         // appDelegate.videoTypes is created in AppDelegate: func application(_ application: UIApplication, didFinishLaunchingWithOptions...)
         let videoType = appDelegate.videoTypes.filter{ $0.type == theType }.first
-        if let vt = videoType {
-            let videoNode = VideoNode(creator: TPUser.sharedInstance, type: vt)
-            videoNode.save()
-            return videoNode
-        }
-        else { return nil }
+        
+        return VideoNode(creator: TPUser.sharedInstance, type: videoType)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @objc func editFacebook(_ sender: Any) {
+        editSocialMedia(legislator: legislator, handle: legislator?.legislator_facebook, handleType: "Facebook")
+    }
+    
+    private func editSocialMedia(legislator: Legislator?, handle: String?, handleType: String?) {
+        if let handle = handle,
+            let vc = getAppDelegate().editSocialMediaVC,
+            let legislator = legislator
+        {
+            vc.modalPresentationStyle = .popover
+            vc.socialMediaDelegate = self
+            vc.handle = handle
+            vc.handleType = handleType
+            vc.legislator = legislator
+            present(vc, animated: true, completion:nil)
+        }
+    }
+    
+    
+    @objc func editTwitter(_ sender: Any) {
+        editSocialMedia(legislator: legislator, handle: legislator?.legislator_twitter, handleType: "Twitter")
+    }
+    
+    
+    @objc func openFacebook(_ sender: Any) {
+        Util.openFacebook(legislator: legislator)
+    }
+    
+    
+    @objc func openTwitter(_ sender: Any) {
+        Util.openTwitter(legislator: legislator)
     }
     
     
@@ -500,34 +615,11 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     func refreshUI() {
         DispatchQueue.main.async {
             
-            // Updating local (self) view
-            /*************
-            if self.expandedSelfView {
-                self.selfView?.frame.size.width  = UIScreen.main.bounds.size.width / 2
-                self.selfView?.frame.size.height = UIScreen.main.bounds.size.height / 2
-            } else {
-                self.selfView?.frame.size.width  = UIScreen.main.bounds.size.width / 4
-                self.selfView?.frame.size.height = UIScreen.main.bounds.size.height / 4
-            }
-            self.selfView?.frame.origin.x = UIScreen.main.bounds.size.width - (self.selfView?.frame.size.width)! - 10
-            self.selfView?.frame.origin.y = UIScreen.main.bounds.size.height - (self.selfView?.frame.size.height)! - 0
-            
-             ***********/
             
             guard let w = self.selfView?.frame.size.width,
                 let h = self.selfView?.frame.size.height else {
                     return
             }
-            
-            /***********
-            if let x = self.selfView?.frame.size.width {
-                self.connector?.showView(at: UnsafeMutableRawPointer(&self.remoteViews),
-                                         x: Int32(x) / 2,
-                                         y: 0,
-                                         width: UInt32(w),
-                                         height: UInt32(h))
-            }
-            ***********/
             
             
             // Updating remote views
@@ -723,34 +815,43 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
 
     
     @objc private func editVideoMissionDescription(_ sender: UIButton) {
+        let data: [String:Any] = ["videoNode": videoNode,
+                                  "heading": "Video Mission Description",
+                                  "video_mission_description": videoNode?.video_mission_description,
+                                  "database_attribute": "video_mission_description"]
         // pop up a dialog with a text field showing the video mission description
         // and save, cancel buttons
         if let vc = getAppDelegate().editVideoMissionDescriptionVC {
             vc.modalPresentationStyle = .popover
-            let popover = vc.popoverPresentationController!
-            popover.delegate = self
-            popover.permittedArrowDirections = .up
-            popover.sourceView = sender as? UIView
-            //popover.sourceRect = sender.bounds
-            popover.sourceRect = CGRect(x: 64, y: 64, width: 110, height: 110)
-            
-            let w = sender.frame.width - 144
-            let h = sender.frame.height - 144
-            //vc.preferredContentSize = CGSize(width: 200, height: 100)
+            vc.data = data
             present(vc, animated: true, completion:nil)
         }
     }
     
-    // because of UIPopoverPresentationControllerDelegate
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*********
-        if segue.identifier == "pop" {
-            let dest = segue.destination
-            if let pop = dest.popoverPresentationController {
-                pop.delegate = self
-            }
+    
+    @objc private func editLegislator(_ sender: UIButton) {
+        // pop up a dialog with a text field showing the legislator's information
+        // and save, cancel buttons
+        if let vc = getAppDelegate().editLegislatorForVideoVC {
+            vc.modalPresentationStyle = .popover
+            vc.videoNode = videoNode
+            present(vc, animated: true, completion:nil)
         }
-        *********/
+    }
+    
+    
+    @objc private func editYoutubeDescription(_ sender: UIButton) {
+        let data: [String:Any] = ["videoNode": videoNode,
+                                  "heading": "YouTube Video Description",
+                                  "youtube_video_description": videoNode?.youtube_video_description,
+                                  "database_attribute": "youtube_video_description"]
+        // pop up a dialog with a text field showing the video mission description
+        // and save, cancel buttons
+        if let vc = getAppDelegate().editVideoMissionDescriptionVC {
+            vc.modalPresentationStyle = .popover
+            vc.data = data
+            present(vc, animated: true, completion:nil)
+        }
     }
     
     
@@ -778,6 +879,94 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             connector?.setCameraPrivacy(cameraMuted)
             self.selfView?.isHidden = cameraMuted
         }
+    }
+    
+    // required by EditSocialMediaDelegate
+    // probably going to have a lot of code that looks really similar in LegislatorUI because
+    // that view also has edit buttons/pencils for facebook and twitter handles
+    func socialMediaSaved(data: [String : Any]) {
+        guard let type = data["type"] as? String,
+            let id = data["id"] as? String,
+            var legislator = data["legislator"] as? Legislator
+            else { return }
+        
+        legislator.legislator_facebook = id
+        
+        // This method is where we know most things.  The only things we don't know
+        // come from EditSocialMediaVC:  type/handleType (i.e. Facebook) and id/handle (i.e. FB username, not FB ID)
+        
+        Database.database().reference().child(("states/legislators/\(legislator.leg_id)/channels"))
+            .observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+                
+                let channel : [String:Any] = [
+                    "type": type,
+                    "id": id,
+                    "source": "user"
+                ]
+                
+                // find out if a facebook or twitter handle already exists...
+                var xxxx : Any?
+                let children = snapshot.children
+                while let snap = children.nextObject() as? DataSnapshot {
+                    //print("looking for type: \(type)")
+                    if let channelStuff = snap.value as? [String:Any],
+                        let channelType = channelStuff["type"] as? String {
+                        //print("channelType: \(channelType)")
+                        if (xxxx == nil && channelType.lowercased() == type.lowercased()) {
+                            xxxx = snap.key
+                        }
+                    }
+                }
+                
+                if xxxx == nil {
+                    xxxx = snapshot.childrenCount
+                }
+                
+                var updates : [String:Any] = [:]
+                if let xxxxx = xxxx {
+                    updates["states/legislators/\(legislator.leg_id)/channels/\(xxxxx)"] = channel
+                }
+                
+                // what is the video node key?
+                // Ans:  TPUser.sharedInstance.currentVideoNodeKey
+                if let videoNodeKey = TPUser.sharedInstance.currentVideoNodeKey {
+                    if type.lowercased() == "facebook" {
+                        updates["video/list/\(videoNodeKey)/legislator_facebook"] = id
+                    }
+                    else if type.lowercased() == "twitter" {
+                        updates["video/list/\(videoNodeKey)/legislator_twitter"] = id
+                    }
+                }
+                
+                // we need to save the new social media handle to video/list/{key}/legislator_facebook_id
+                // we need to save the new social media handle to video/list/{key}/legislator_facebook
+                // we need to save the new social media handle to video/list/{key}/legislator_twitter
+                // we need to save the new social media handle to states/legislators/{leg_id}/channels - taken care of
+                
+                let userUpdate : [String:Any] = [
+                    "leg_id": legislator.leg_id,
+                    "type": type,
+                    "id": id, // This is the @handle, not some numeric Facebook ID
+                    "legislator_full_name": legislator.full_name,
+                    "state_abbrev": legislator.state,
+                    "state_chamber": "\(legislator.state)-\(legislator.chamber)",
+                    "state_chamber_district": "\(legislator.state)-\(legislator.chamber)-\(legislator.district)",
+                    "updating_user_id": TPUser.sharedInstance.getUid(),
+                    "updating_user_name": TPUser.sharedInstance.getName(),
+                    "updating_user_emali": TPUser.sharedInstance.getEmail(),
+                    "updated_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+                    "updated_date_ms": Util.getDate_as_millis()
+                ]
+                snapshot.ref.root.child("social_media/user_updates").childByAutoId().setValue(userUpdate)
+                
+                snapshot.ref.root.updateChildValues(updates, withCompletionBlock: { (error:Error?, ref:DatabaseReference) in
+                    // not sure how to handle the NSError yet
+                    // just handle success for now
+                    // do something here if you want like update the UI or dismiss a view controller
+                }) //as! (Error?, DatabaseReference) -> Void)
+                
+                self.dismiss(animated: true, completion: nil)
+            })
     }
 
 }

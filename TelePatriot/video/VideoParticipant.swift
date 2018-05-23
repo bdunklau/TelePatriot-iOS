@@ -38,6 +38,72 @@ struct VideoParticipant {
     }
     
     
+    // use then when working with database results
+    init(data: [String:Any]) {
+        if let userId = data["uid"] as? String {
+            uid = userId
+        }
+        else { uid = "-" }
+        
+        if let nm = data["name"] as? String {
+            name = nm
+        }
+        else { name = "-" }
+        
+        if let em = data["email"] as? String {
+            email = em
+        }
+        else { email = "-" }
+        
+        if let ph = data["phone"] as? String {
+            phone = ph
+        }
+        else { phone = "-" }
+        
+        if let sd = data["start_date"] as? String {
+            start_date = sd
+        }
+        else { start_date = "-" }
+        
+        if let sdm = data["start_date_ms"] as? Int64 {
+            start_date_ms = sdm
+        }
+        else { start_date_ms = 0 }
+        
+        if let cd = data["connect_date"] as? String {
+            connect_date = cd
+        }
+        if let cdm = data["connect_date_ms"] as? Int64 {
+            connect_date_ms = cdm
+        }
+        if let dd = data["disconnect_date"] as? String {
+            disconnect_date = dd
+        }
+        if let ddm = data["disconnect_date_ms"] as? Int64 {
+            disconnect_date_ms = ddm
+        }
+        if let ed = data["end_date"] as? String {
+            end_date = ed
+        }
+        if let edm = data["end_date_ms"] as? Int64 {
+            end_date_ms = edm
+        }
+        if let r = data["role"] as? String {
+            role = r
+        }
+    }
+    
+    
+    static func parseParticipants(list: [[String:Any]]) -> [VideoParticipant] {
+        var p = [VideoParticipant]()
+        for item in list {
+            let participant = VideoParticipant(data: item)
+            p.append(participant)
+        }
+        return p
+    }
+    
+    
     func dictionary() -> [String: Any] {
         return [
             "uid": uid,

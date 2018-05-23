@@ -31,4 +31,50 @@ class Util {
         dateFormatter.dateFormat = withFormat
         return dateFormatter.string(from: date)
     }
+    
+    
+    static func openFacebook(legislator: Legislator?) {
+        let fbInstalled = schemeAvailable(scheme: "fb://")
+        if fbInstalled {
+            if let fbHandle = legislator?.legislator_facebook_id {
+                open(scheme: "fb://profile/\(fbHandle)")
+            }
+        }
+        else {
+            if let fbHandle = legislator?.legislator_facebook_id {
+                open(scheme: "https://www.facebook.com/\(fbHandle)")
+            }
+        }
+    }
+    
+    
+    static func openTwitter(legislator: Legislator?) {
+        let twInstalled = schemeAvailable(scheme: "twitter://")
+        if twInstalled {
+            if let twHandle = legislator?.legislator_twitter {
+                open(scheme: "twitter://user?screen_name=\(twHandle)")
+            }
+        }
+        else {
+            if let twHandle = legislator?.legislator_twitter {
+                open(scheme: "https://www.twitter.com/\(twHandle)")
+            }
+        }
+    }
+    
+    private static func schemeAvailable(scheme: String) -> Bool {
+        if let url = URL(string: scheme) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
+    }
+    
+    private static func open(scheme: String) {
+        if let url = URL(string: scheme) {
+            UIApplication.shared.open(url, options: [:], completionHandler: {
+                (success) in
+                print("Open \(scheme): \(success)")
+            })
+        }
+    }
 }

@@ -27,7 +27,6 @@
 		A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A126AE1A1F8B1D860096714B /* Assets.xcassets */; };
 		A126AE1E1F8B1D860096714B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A126AE1C1F8B1D860096714B /* LaunchScreen.storyboard */; };
 		A126AE281F8B25B40096714B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A126AE271F8B25B40096714B /* GoogleService-Info.plist */; };
-		A128BDB32070361200EC28A4 /* StatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128BDB22070361200EC28A4 /* StatePicker.swift */; };
 		A12CDB321FAE1605003DE424 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17C7FAF1FAC1B8200430C05 /* FBSDKLoginKit.framework */; };
 		A12CDB331FAE160A003DE424 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17C7FAD1FAC1B6700430C05 /* FBSDKCoreKit.framework */; };
 		A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB361FAF6495003DE424 /* NewPhoneCampaignVC.swift */; };
@@ -69,10 +68,12 @@
 		A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */; };
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
 		A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */; };
+		A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
 		A15DDE43207513D6005331D5 /* VidyoClientIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15DDE4020750EDE005331D5 /* VidyoClientIOS.framework */; };
+		A171C802208BC2900017892A /* EditLegislatorForVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171C801208BC2900017892A /* EditLegislatorForVideoVC.swift */; };
 		A17B6ED41FD14EB300A3325C /* WrapUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */; };
 		A17B6ED61FD1EA7100A3325C /* MissionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B6ED51FD1EA7100A3325C /* MissionItem.swift */; };
 		A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B6ED71FD2195F00A3325C /* AppDelegateDelegate.swift */; };
@@ -126,7 +127,6 @@
 		A126AE1D1F8B1D860096714B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A126AE1F1F8B1D860096714B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A126AE271F8B25B40096714B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A128BDB22070361200EC28A4 /* StatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePicker.swift; sourceTree = "<group>"; };
 		A12CDB361FAF6495003DE424 /* NewPhoneCampaignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhoneCampaignVC.swift; sourceTree = "<group>"; };
 		A12CDB3C1FAF77FE003DE424 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolunteerViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +166,7 @@
 		A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeTableViewCell.swift; sourceTree = "<group>"; };
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
 		A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNeededView.swift; sourceTree = "<group>"; };
+		A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialMediaVC.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84631FA92976007EE77C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = TelePatriot/SWRevealViewController.h; sourceTree = SOURCE_ROOT; };
@@ -174,6 +175,7 @@
 		A15DDE3920746091005331D5 /* VidyoClientIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VidyoClientIOS.framework; sourceTree = "<group>"; };
 		A15DDE3C2074909E005331D5 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IQKeyboardManagerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15DDE4020750EDE005331D5 /* VidyoClientIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VidyoClientIOS.framework; sourceTree = "<group>"; };
+		A171C801208BC2900017892A /* EditLegislatorForVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLegislatorForVideoVC.swift; sourceTree = "<group>"; };
 		A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapUpViewController.swift; sourceTree = "<group>"; };
 		A17B6ED51FD1EA7100A3325C /* MissionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionItem.swift; sourceTree = "<group>"; };
 		A17B6ED71FD2195F00A3325C /* AppDelegateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateDelegate.swift; sourceTree = "<group>"; };
@@ -299,7 +301,6 @@
 				A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */,
 				A1217E301FCA199A0007ABF8 /* Call.swift */,
 				A1217E341FCA24150007ABF8 /* CallButton.swift */,
-				A128BDB22070361200EC28A4 /* StatePicker.swift */,
 				A134C1AD2017ECD000B64939 /* Util.swift */,
 			);
 			path = misc;
@@ -381,6 +382,8 @@
 		A1E8D8692075A90800E4F720 /* video */ = {
 			isa = PBXGroup;
 			children = (
+				A171C801208BC2900017892A /* EditLegislatorForVideoVC.swift */,
+				A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */,
 				A13187B82078555E0048FE95 /* EditVideoMissionDescriptionVC.swift */,
 				A134E53D206C66AB00FEDBE6 /* RemoteViewLayout.swift */,
 				A134E52F206B20D800FEDBE6 /* VideoChatVC.swift */,
@@ -630,6 +633,7 @@
 				A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */,
 				A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
+				A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */,
 				A13187B92078555E0048FE95 /* EditVideoMissionDescriptionVC.swift in Sources */,
 				A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
@@ -639,6 +643,7 @@
 				A134C1B220183CD100B64939 /* MissionItem2.swift in Sources */,
 				A1B55464202A64B20083C066 /* MissionDetailsVC.swift in Sources */,
 				A12CDB4E1FAFF537003DE424 /* MissionSummaryCellTableViewCell.swift in Sources */,
+				A171C802208BC2900017892A /* EditLegislatorForVideoVC.swift in Sources */,
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,
 				A13187B3207730690048FE95 /* VideoType.swift in Sources */,
 				A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */,
@@ -655,7 +660,6 @@
 				A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */,
 				A109E8B51FC7DEFC0005517A /* MyMissionViewController.swift in Sources */,
 				A109E8A91FC5623E0005517A /* MenuCell.swift in Sources */,
-				A128BDB32070361200EC28A4 /* StatePicker.swift in Sources */,
 				A12CDB5B1FB020B8003DE424 /* MissionSummary.swift in Sources */,
 				A1FD73381FE0725100A1B383 /* MissionItemEvent.swift in Sources */,
 				A109E8BB1FC7E1F60005517A /* BaseButton.swift in Sources */,

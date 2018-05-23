@@ -12,6 +12,7 @@ import UIKit
 // The static methods in MenuItem made it so we couldn't listen for these events
 class MenuItems {
     
+    // icons came from material.io/icons
     static let teamIcon : UIImageView = {
         let img = UIImage(named: "ic_people_18pt.png")
         let imgView = UIImageView(image: img)
@@ -20,6 +21,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let myMissionIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -28,6 +30,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let directorsIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -36,6 +39,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let newPhoneCampaignIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -44,6 +48,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let allMissionsIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -52,6 +57,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let allActivityIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -60,6 +66,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let adminsIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -68,6 +75,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let myProfileIcon : UIImageView = {
         let img = UIImage(named: "ic_person_18pt.png")
         let imgView = UIImageView(image: img)
@@ -76,6 +84,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let myLegislatorsIcon : UIImageView = {
         let img = UIImage(named: "ic_people_18pt.png")
         let imgView = UIImageView(image: img)
@@ -84,6 +93,7 @@ class MenuItems {
         return imgView
     }()
     
+    // icons came from material.io/icons
     static let logoutIcon : UIImageView = {
         let img = UIImage(named: "ic_power_settings_new_18pt.png")
         let imgView = UIImageView(image: img)

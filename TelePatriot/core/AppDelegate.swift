@@ -35,7 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var allActivityVC : AllActivityVC?
     var assignUserVC : AssignUserVC?
     var chooseSpreadsheetTypeVC : ChooseSpreadsheetTypeVC?
+    var editSocialMediaVC : EditSocialMediaVC?
     var editVideoMissionDescriptionVC : EditVideoMissionDescriptionVC?
+    var editLegislatorForVideoVC : EditLegislatorForVideoVC?
     var myMissionViewController : MyMissionViewController?
     var missionDetailsVC : MissionDetailsVC?
     var missionSummaryTVC : MissionSummaryTVC?
@@ -73,7 +75,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         allActivityVC = AllActivityVC()
         assignUserVC = AssignUserVC()
         chooseSpreadsheetTypeVC = ChooseSpreadsheetTypeVC()
+        editSocialMediaVC = EditSocialMediaVC()
         editVideoMissionDescriptionVC = EditVideoMissionDescriptionVC()
+        editLegislatorForVideoVC = EditLegislatorForVideoVC()
         myMissionViewController = MyMissionViewController()
         missionDetailsVC = MissionDetailsVC()
         myLegislatorsVC = MyLegislatorsVC()
@@ -188,8 +192,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load a named file for switching between dev and prod firebase instances
         // see https://firebase.google.com/docs/configure/
-        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        //let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+        //let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
             else { assert(false, "Couldn't load config file")
                 return false

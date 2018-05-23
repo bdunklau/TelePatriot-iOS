@@ -345,11 +345,62 @@ extension UIImageView {
         }
         theTask.resume()
     }
+    
+    // made this just for legislators so I could play around with their images without
+    // impacting the user's profile pic.  Once I get this working, I can consolidate these methods
+    public func legislatorImage(fromUrl urlString: String) {
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        let theTask = URLSession.shared.dataTask(with: url) {
+            data, response, error in
+            if let response = data {
+                DispatchQueue.main.async {
+                    self.image = UIImage(data: response)?.resizedImageForLegislators(newSize: CGSize(width: 50, height: 50))
+                }
+            }
+        }
+        theTask.resume()
+    }
 }
 
 
 // source:  http://samwize.com/2016/06/01/resize-uiimage-in-swift/
 extension UIImage {
+    
+    /// Returns a image that fills in newSize
+    func resizedImageForLegislators(newSize: CGSize) -> UIImage {
+        // Guard newSize is different
+        guard self.size != newSize else { return self }
+        let originalSize = self.size
+        let targetSize = CGSize(width:100, height:100)
+        let widthRatio = targetSize.width / originalSize.width
+        let heightRatio = targetSize.height / originalSize.height
+        var newSize:CGSize
+        if widthRatio > heightRatio {
+            newSize = CGSize(width: originalSize.width * heightRatio, height: originalSize.height * heightRatio)
+        }
+        else {
+            newSize = CGSize(width: originalSize.width * widthRatio, height: originalSize.height * widthRatio)
+        }
+        
+        // Notice how the rect below is newSize.height tall
+        // But the UIGraphicsBeginImageContextWithOptions is init-ed with height that
+        // is only 80% of newSize.height
+        let newSize2 = CGSize(width: newSize.width, height: newSize.height * 0.8) // <-- this fraction is the magic part, it's what crops off the bottom!
+        
+        // preparing rect for new image size
+        let rect = CGRect(x:0, y:0, width:newSize.width, height: newSize.height)
+        
+        //actually do the resizing to the rect using the ImageContext stuff
+        //UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(newSize2, false, UIScreen.main.scale)
+        self.draw(in: rect)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!.circle
+    }
     
     /// Returns a image that fills in newSize
     func resizedImage(newSize: CGSize) -> UIImage {

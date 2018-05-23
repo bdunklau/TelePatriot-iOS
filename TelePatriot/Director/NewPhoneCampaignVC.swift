@@ -122,6 +122,7 @@ class NewPhoneCampaignVC: BaseViewController {
                     "uid_and_active": uid_and_active]
         
         let mission = ["teams/\(team)/\(missionNode)/\(key)": missionVals]
+        // example of multi-path update
         rootRef.updateChildValues(mission, withCompletionBlock: { (error:Error?, ref:DatabaseReference) in
                 // not sure how to handle the NSError yet
                 // just handle success for now

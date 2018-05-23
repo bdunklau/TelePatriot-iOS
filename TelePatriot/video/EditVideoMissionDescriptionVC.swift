@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
-class EditVideoMissionDescriptionVC: /*Base*/UIViewController {
+class EditVideoMissionDescriptionVC: BaseViewController {
 
+    var videoNode : VideoNode?
+    var database_attribute = "youtube_video_description" // just a default value - real value is passed in by VideoChatVC
+    var data : [String:Any]?
     
     let descriptionLabel : UILabel = {
         let l = UILabel()
@@ -21,7 +25,7 @@ class EditVideoMissionDescriptionVC: /*Base*/UIViewController {
     }()
     
     
-    let video_mission_description : UITextView = {
+    let big_text_field : UITextView = {
         let textView = UITextView()
         textView.text = "(video mission description)"
         //textView.font = UIFont(name: "fontname", size: 18)
@@ -31,10 +35,12 @@ class EditVideoMissionDescriptionVC: /*Base*/UIViewController {
         //var frame = textView.frame
         //frame.size.height = 200
         //textView.frame = frame
-        textView.backgroundColor = UIColor.clear
+        textView.layer.borderWidth = 0.5
+        textView.layer.cornerRadius = 5.0
+        textView.backgroundColor = UIColor.white
         textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
+        textView.isEditable = true
+        textView.isScrollEnabled = true
         return textView
     }()
     
@@ -42,7 +48,7 @@ class EditVideoMissionDescriptionVC: /*Base*/UIViewController {
     let save_button : BaseButton = {
         let button = BaseButton(text: "Save")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(saveVideoMissionDescription(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveVerbiage(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -50,51 +56,71 @@ class EditVideoMissionDescriptionVC: /*Base*/UIViewController {
     let cancel_button : BaseButton = {
         let button = BaseButton(text: "Cancel")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(cancelVideoMissionDescription(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(cancelVerbiage(_:)), for: .touchUpInside)
         return button
     }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        self.preferredContentSize = CGSize(width:240, height:185)
-        // REST ARE COSMETIC CHANGES
-        self.view.backgroundColor = UIColor.clear
-        self.view.isOpaque = true
-        self.view.layer.masksToBounds = false
-        self.view.layer.shadowOffset = CGSize(width: 0, height: 5)
-        self.view.layer.shadowColor = UIColor(red:0, green:0, blue:0, alpha:1).cgColor
-        self.view.layer.shadowOpacity = 0.5
-        self.view.layer.shadowRadius = 20
-        
-        /*******
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named: "usflag")?.draw(in: self.view.bounds)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        self.view.backgroundColor = UIColor(patternImage: image)
-        ********/
-        
 
         // Do any additional setup after loading the view.
         
-        view.addSubview(descriptionLabel)
-        descriptionLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32).isActive = true
-        descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        
-        view.addSubview(video_mission_description)
-        video_mission_description.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8).isActive = true
-        video_mission_description.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        view.addSubview(cancel_button)
+        cancel_button.topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
+        cancel_button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         
         view.addSubview(save_button)
-        save_button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
-        save_button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        save_button.topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
+        save_button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         
-        view.addSubview(cancel_button)
-        cancel_button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
-        cancel_button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        view.addSubview(descriptionLabel)
+        descriptionLabel.topAnchor.constraint(equalTo: cancel_button.bottomAnchor, constant: 16).isActive = true
+        descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        
+        view.addSubview(big_text_field)
+        big_text_field.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8).isActive = true
+        big_text_field.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        big_text_field.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        big_text_field.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive = true
+        //big_text_field.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 100).isActive = true
+        let ht = view.frame.height - descriptionLabel.frame.origin.y - descriptionLabel.frame.height - 150
+        big_text_field.heightAnchor.constraint(equalToConstant: ht).isActive = true
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        /**********
+         if let videoNode = videoNode {
+         video_mission_description.text = videoNode.video_mission_description
+         }
+         ***********/
+        descriptionLabel.text = ""
+        big_text_field.text = ""
+        
+        /************************************************
+         VideoChatVC contains two Edit links that each open this screen.  We are making this screen do
+         double duty because both the Video Mission Description section and the YouTube Video Description
+         have the same basic need: a screen with a text area and a save button
+         ************************************************/
+        if let data = data, let vn = data["videoNode"] as? VideoNode {
+            videoNode = vn
+            if let heading = data["heading"] as? String {
+                descriptionLabel.text = heading
+            } else {
+                descriptionLabel.text = "Description"
+            }
+            
+            if let dba = data["database_attribute"] as? String {
+                database_attribute = dba
+            }
+            
+            if let video_mission_description = data["video_mission_description"] as? String {
+                big_text_field.text = video_mission_description
+            } else if let youtube_video_description = data["youtube_video_description"] as? String {
+                big_text_field.text = vn.youtube_video_description
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,11 +129,21 @@ class EditVideoMissionDescriptionVC: /*Base*/UIViewController {
     }
     
     
-    @objc private func saveVideoMissionDescription(_ sender: UIButton) {
+    @objc private func saveVerbiage(_ sender: UIButton) {
+        if let vn = videoNode {
+            // example of multi-path update even thought we're only updating one path
+            let updatedData = ["video/list/\(vn.getKey())/\(database_attribute)": big_text_field.text]
+            
+            Database.database().reference().updateChildValues(updatedData, withCompletionBlock: { (error, ref) -> Void in
+                // don't really need to do anything on successful save except dismiss this view
+                self.dismiss(animated: true, completion: nil)
+            })
+        }
     }
     
     
-    @objc private func cancelVideoMissionDescription(_ sender: UIButton) {
+    @objc private func cancelVerbiage(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
 
