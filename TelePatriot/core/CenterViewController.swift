@@ -263,7 +263,12 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         else if(menuItem.title == "Video Chat") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoChatViewController() else { return }
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+        }
+        else if(menuItem.title == "Video Invitations") {
+            // delegate is probably ContainerViewController
+            guard let vc = delegate?.getVideoInvitationsViewController() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         /*********
         else if(menuItem.title == "Chat/Help") {
@@ -325,6 +330,14 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         viewController.viewDidLoad() // creative or hacky?  I need to run the code in this function whenever the view becomes visible again
         self.view.bringSubview(toFront: viewController.view)
         if track { BackTracker.sharedInstance.onChoose(vc: vc) }
+    }
+    
+    func doView(vc: UIViewController) {
+        doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+    }
+    
+    func doView(vc: UIViewController, track: Bool) {
+        doView(vc: vc, viewControllers: self.childViewControllers, track: track)
     }
     
     func unassignMissionItem() {
@@ -418,12 +431,7 @@ extension CenterViewController : UnassignedUsersDelegate {
 
 extension CenterViewController : SearchUsersDelegate {
     func userSelected(user: TPUser) {
-        /******
-         The user could be banned, or maybe hasn't signed the conf agreement.
-         We have to know this stuff because if they shouldn't be let in, we need to send them
-         to another screen...
-         ********/
-        
+        // BIG DESIGN FLAW - the AssignUserVC screen is not always the next place we want to go after selecting a user
         guard let normalVC = delegate?.getAssignUserVC() else {return}
         //normalVC.uid = user.getUid()
         normalVC.passedInUser = user
@@ -517,6 +525,16 @@ extension CenterViewController : MissionListDelegate {
 extension CenterViewController : MissionDetailsDelegate {
     func missionDeleted(mission: MissionSummary) {
         guard let vc = delegate?.getMissionSummaryTVC() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+
+extension CenterViewController : VideoInvitationDelegate {
+    func videoInvitationSelected(invitation: [String:Any]) {
+        guard let vc = delegate?.getVideoChatViewController(),
+            let room_id = invitation["room_id"] as? String
+            else { return }
+        vc.room_id = room_id
         doView(vc: vc, viewControllers: self.childViewControllers)
     }
 }

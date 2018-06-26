@@ -47,7 +47,7 @@ class CannotApproveUserVC: BaseViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        guard let usr = user else {
+        guard let _ = user else {
             return
         }
         

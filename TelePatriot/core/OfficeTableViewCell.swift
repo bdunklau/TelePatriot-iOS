@@ -114,7 +114,7 @@ class OfficeTableViewCell: UITableViewCell {
                                  volunteer_name: TPUser.sharedInstance.getName(),
                                  mission_name: "no mission",
                                  phone: ph,
-                                 volunteer_phone: "phone number not available", // <- this sucks https://stackoverflow.com/a/40719308
+                                 volunteer_phone: "iPhone number n/a", // <- this sucks https://stackoverflow.com/a/40719308
             legislator_name: legfirstname+" "+leglastname,
             legislator_state_abbrev: legstate.uppercased(),
             legislator_chamber: legchamber,

@@ -33,5 +33,6 @@ protocol CenterViewControllerDelegate {
     func getUserIsBannedVC() -> UserIsBannedVC?
     func getUserMustSignCAViewController() -> UserMustSignCAViewController?
     func getVideoChatViewController() -> VideoChatVC?
+    func getVideoInvitationsViewController() -> VideoInvitationsVC?
     func viewChosen()
 }

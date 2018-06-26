@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+// Android equiv:  EditVideoMissionDescriptionDlg
 class EditVideoMissionDescriptionVC: BaseViewController {
 
     var videoNode : VideoNode?

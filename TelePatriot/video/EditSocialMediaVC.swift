@@ -122,85 +122,82 @@ class EditSocialMediaVC: BaseViewController, EditSocialMediaDelegate {
     
     
     // per EditSocialMediaDelegate
-    // very similar to socialMediaSaved() in VideoChatVC
+    // TODO CODE DUPLICATION HERE
+    // IDENTICAL to socialMediaSaved() in VideoChatVC
+    /******************************************************
+     NEED TO RETHINK THIS...
+     How to update legislators social media handles without letting incorrect data overwrite good data
+     
+     Step 1:  Write a record to social_media/user_updates:
+             id (the facebook or twitter handle)
+             leg_id  (the open states leg_id)
+             legislator_full_name  (maybe)
+             legislator_first_name
+             legislator_last_name
+             state_abbrev
+             state_chamber
+             state_chamber_district
+             type  ("Facebook" or "Twitter")
+             updated_date  (i.e.  Jun 25, 2018 9:05 AM CDT)
+             updated_date_ms
+             updating_user_email  (current user's email)
+             updating_user_id
+             updating_user_name  (i.e.  Brent Dunklau)
+     
+     Step 2:  Trigger that listens for writes to social_media/user_updates/{key}
+        The trigger will write to 2 places - states/legislators/{leg_id}/channels/{idx} and video/list
+        The trigger will query states/legislators/{leg_id} to see if there is a "channels" node and under that,
+        a channel with the right "type" value (Facebook or Twitter).
+        The trigger will update the channel node if it exists and create one if it doesn't.
+        In either case, the trigger will also write a "user_update" node with value equal to the key value
+        from social_media/user_updates/{key}
+     
+        The trigger will also update legislator_facebook or legislator_twitter for all nodes under
+        video/list where leg_id = the legislator's leg_id.  So older videos will be kept up to date as social handles change.
+        And one of those nodes will be the one you're currently looking at.
+     
+     Step 3:  Prevent overwriting good data with bad data.  Need a trigger to watch what gets written
+        to states/legislators/{leg_id}/channels/{idx}.  If a value is written to
+        states/legislators/{leg_id}/channels/{idx}, the "restore" trigger will check for the existence of this
+        attribute: states/legislators/{leg_id}/channels/{idx}/user_update
+     
+        If this attribute exists, the "restore" trigger will query social_media/user_updates for a node with this key.
+        The "id" value under this social_media/user_updates/{key} node will be compared to the "id" value under
+        states/legislators/{leg_id}/channels/{idx}.  If the two id's are the same, no action.  But if they are different,
+        we interpret that as bad data attempting to overwrite good data.  In that case, the trigger will update
+        states/legislators/{leg_id}/channels/{idx}/id=social_media/user_updates/{key}/id
+     
+     And because all this is done with triggers, all we have to do in the mobile code is do one write to
+     social_media/user_updates and the triggers do all the rest.  We can even test this just using the firebase database client
+     ******************************************************/
     func socialMediaSaved(data: [String : Any]) {
         guard let type = data["type"] as? String,
             let id = data["id"] as? String,
-            let legislator = data["legislator"] as? Legislator
+            var legislator = data["legislator"] as? Legislator
             else { return }
         
+        // See the triggers in legislators.js:
+        // updateLegislatorSocialMedia, updateVideoNodeSocialMedia, overwriteBadWithGoodData
         
-        //Here's what VideoChatVC does...
+        let userUpdate : [String:Any] = [
+            "leg_id": legislator.leg_id,
+            "type": type,
+            "id": id, // This is the @handle, not some numeric Facebook ID
+            "legislator_full_name": legislator.full_name,
+            "state_abbrev": legislator.state,
+            "state_chamber": "\(legislator.state)-\(legislator.chamber)",
+            "state_chamber_district": "\(legislator.state)-\(legislator.chamber)-\(legislator.district)",
+            "updating_user_id": TPUser.sharedInstance.getUid(),
+            "updating_user_name": TPUser.sharedInstance.getName(),
+            "updating_user_email": TPUser.sharedInstance.getEmail(),
+            "updated_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+            "updated_date_ms": Util.getDate_as_millis()
+        ]
         
-        // This method is where we know most things.  The only things we don't know
-        // come from EditSocialMediaVC:  type/handleType (i.e. Facebook) and id/handle (i.e. FB username, not FB ID)
+        Database.database().reference().child("social_media/user_updates").childByAutoId().setValue(userUpdate)
         
-        Database.database().reference().child(("states/legislators/\(legislator.leg_id)/channels"))
-            .observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
-                
-                let channel : [String:Any] = [
-                    "type": type,
-                    "id": id,
-                    "source": "user"
-                ]
-                
-                // find out if a facebook or twitter handle already exists...
-                var xxxx : Any?
-                let children = snapshot.children
-                while let snap = children.nextObject() as? DataSnapshot {
-                    //print("looking for type: \(type)")
-                    if let channelStuff = snap.value as? [String:Any],
-                        let channelType = channelStuff["type"] as? String {
-                        //print("channelType: \(channelType)")
-                        if (xxxx == nil && channelType.lowercased() == type.lowercased()) {
-                            xxxx = snap.key
-                        }
-                    }
-                }
-                
-                if xxxx == nil {
-                    xxxx = snapshot.childrenCount
-                }
-                
-                var updates : [String:Any] = [:]
-                if let xxxxx = xxxx {
-                    updates["states/legislators/\(legislator.leg_id)/channels/\(xxxxx)"] = channel
-                }
-                
-                // what is the video node key?
-                // Ans:  TPUser.sharedInstance.currentVideoNodeKey
-                if let videoNodeKey = TPUser.sharedInstance.currentVideoNodeKey {
-                    if type.lowercased() == "facebook" {
-                        updates["video/list/\(videoNodeKey)/legislator_facebook"] = id
-                    }
-                    else if type.lowercased() == "twitter" {
-                        updates["video/list/\(videoNodeKey)/legislator_twitter"] = id
-                    }
-                }
-                
-                let userUpdate : [String:Any] = [
-                    "leg_id": legislator.leg_id,
-                    "type": type,
-                    "id": id, // This is the @handle, not some numeric Facebook ID
-                    "legislator_full_name": legislator.full_name,
-                    "state_abbrev": legislator.state,
-                    "state_chamber": "\(legislator.state)-\(legislator.chamber)",
-                    "state_chamber_district": "\(legislator.state)-\(legislator.chamber)-\(legislator.district)",
-                    "updating_user_id": TPUser.sharedInstance.getUid(),
-                    "updating_user_name": TPUser.sharedInstance.getName(),
-                    "updating_user_emali": TPUser.sharedInstance.getEmail(),
-                    "updated_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
-                    "updated_date_ms": Util.getDate_as_millis()
-                ]
-                snapshot.ref.root.child("social_media/user_updates").childByAutoId().setValue(userUpdate)
-                
-                snapshot.ref.root.updateChildValues(updates, withCompletionBlock: { (error:Error?, ref:DatabaseReference) in
-                    // not sure how to handle the NSError yet
-                    // just handle success for now
-                    // do something here if you want like update the UI or dismiss a view controller
-                }) //as! (Error?, DatabaseReference) -> Void)
-                
-            })
+        // should this be in a callback/completion block of the setValue() call above?
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {

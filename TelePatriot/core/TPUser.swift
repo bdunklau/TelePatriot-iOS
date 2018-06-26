@@ -61,7 +61,7 @@ class TPUser {
     var currentMissionItem : MissionItem?
     var currentMissionItem2 : MissionItem2?
     
-    var currentVideoNodeKey : String?
+    var current_video_node_key : String?
     
     
     private let appDelegate : AppDelegate
@@ -237,6 +237,9 @@ class TPUser {
                 self.isVolunteer = true
             }
         }
+        if let cvk = dictionary["current_video_node_key"] as? String {
+            self.current_video_node_key = cvk
+        }
         
         // teams?
         // topics?
@@ -351,6 +354,7 @@ class TPUser {
                                "users/\(uid)/legislative_senate_district": legislative_senate_district,
                                "users/\(uid)/current_latitude": current_latitude,
                                "users/\(uid)/current_longitude": current_longitude,
+                               "users/\(uid)/current_video_node_key": current_video_node_key,
                                "users/\(uid)/has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
                                "users/\(uid)/has_signed_petition": has_signed_petition,
                                "users/\(uid)/is_banned": is_banned] as [String : Any]
@@ -393,43 +397,6 @@ class TPUser {
         account_dispositioned_on_ms = Util.getDate_as_millis()
     }
     
-    /*******************
-    func activate(activatedBy: TPUser, callback: @escaping (_ err: NSError?) -> Void) {
-        
-        let evt = ["date": Util.getDate_MMM_d_yyyy_hmm_am_z(), "event": "Admin (\(activatedBy.getName())) has activated your account"]
-        Database.database().reference().child("users/\(getUid())/account_status_events/").childByAutoId().setValue(evt)
-        
-        account_disposition = "activated"
-        account_dispositioned_by = TPUser.sharedInstance.getName()
-        account_dispositioned_by_uid = TPUser.sharedInstance.getUid()
-        account_dispositioned_on = Util.getDate_MMM_d_yyyy_hmm_am_z()
-        account_dispositioned_on_ms = Util.getDate_as_millis()
-        
-        update(callback: callback)
-    }
-    
-    func deactivate(deactivatedBy: TPUser, callback: @escaping (_ err: NSError?) -> Void) {
-        
-        let evt = ["date": Util.getDate_MMM_d_yyyy_hmm_am_z(), "event": "Admin (\(deactivatedBy.getName())) has deactivated your account"]
-        Database.database().reference().child("users/\(getUid())/account_status_events/").childByAutoId().setValue(evt)
-        
-        // will cause teams to be removed...
-        teams = [Team]()
-        
-        isAdmin = false
-        isDirector = false
-        isVolunteer = false
-        
-        account_disposition = "deactivated"
-        account_dispositioned_by = TPUser.sharedInstance.getName()
-        account_dispositioned_by_uid = TPUser.sharedInstance.getUid()
-        account_dispositioned_on = Util.getDate_MMM_d_yyyy_hmm_am_z()
-        account_dispositioned_on_ms = Util.getDate_as_millis()
-        
-        update(callback: callback)
-    }
-    *****************/
-    
     func isDisabled() -> Bool {
         if let disp = account_disposition {
             return disp == "disabled"
@@ -439,6 +406,18 @@ class TPUser {
         }
     }
     
+    
+    func setCurrent_video_node_key(current_video_node_key: String) {
+        if let uid = uid {
+            var data = ["users/\(uid)/current_video_node_key": current_video_node_key] as [String : String]
+            // Do a multi-path update even though just one path
+            databaseRef?.updateChildValues(data, withCompletionBlock: { (error, ref) -> Void in
+                if error == nil {
+                    self.current_video_node_key = current_video_node_key
+                }
+            })
+        }
+    }
     
     
     private func fetchCurrentTeam(uid: String) {
@@ -596,7 +575,7 @@ class TPUser {
                 return
         }
         
-        // better way than this would be to do multi-path updates.  There are examples somewhere in xcode
+        // TODO better way than this would be to do multi-path updates.  There are examples somewhere in xcode
         // and/or Android studio
         Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
         Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
@@ -673,7 +652,7 @@ class TPUser {
         currentMissionItem = nil
         currentMissionItem2 = nil
         
-        currentVideoNodeKey = nil
+        current_video_node_key = nil
     }
     
     

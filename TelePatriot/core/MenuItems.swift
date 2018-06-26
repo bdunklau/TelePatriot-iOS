@@ -85,6 +85,24 @@ class MenuItems {
     }()
     
     // icons came from material.io/icons
+    static let videoChatIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    // icons came from material.io/icons
+    static let videoInvitationsIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    // icons came from material.io/icons
     static let myLegislatorsIcon : UIImageView = {
         let img = UIImage(named: "ic_people_18pt.png")
         let imgView = UIImageView(image: img)
@@ -122,13 +140,15 @@ class MenuItems {
         mainMenu = [mainSection0,
                     
                     // Communicate section - ICONS AREN'T RIGHT - FIX LATER
-                    [MenuItem(icon: MenuItems.allActivityIcon, title: "Video Chat")
+                    [MenuItem(icon: MenuItems.videoChatIcon, title: "Video Chat"),
+                     MenuItem(icon: MenuItems.videoInvitationsIcon, title: "Video Invitations")
                     /*MenuItem(icon: MenuItems.allActivityIcon, title: "Share Petition (coming soon)"),
                      MenuItem(icon: MenuItems.allActivityIcon, title: "Chat/Help (coming soon)")*/ ],
             
                     // My Account section
                     [MenuItem(icon: MenuItems.myProfileIcon, title: "My Profile"),
-                     MenuItem(icon: MenuItems.myLegislatorsIcon, title: "My Legislators"),
+                     //MenuItem(icon: MenuItems.myLegislatorsIcon, title: "My Legislators"), put this back in once it's working better
+                            // This screen is messed up and it never handled districts that had more than one rep - NJ, NH, MA
                      MenuItem(icon: MenuItems.logoutIcon, title: "Sign Out")]
                 ]
         directorItems = [

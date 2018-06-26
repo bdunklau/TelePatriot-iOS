@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var userIsBannedVC : UserIsBannedVC?
     var userMustSignCAViewController : UserMustSignCAViewController?
     var videoChatVC : VideoChatVC?
+    var videoInvitationsVC : VideoInvitationsVC?
     var videoTypes = [VideoType]()
     
     var myDelegate : AppDelegateDelegate?
@@ -91,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         userIsBannedVC = UserIsBannedVC()
         userMustSignCAViewController = UserMustSignCAViewController()
         videoChatVC = VideoChatVC()
+        videoInvitationsVC = VideoInvitationsVC()
         
         MissionItem.nextViewController = myMissionViewController
         MissionItem2.nextViewController = myLegislatorsVC

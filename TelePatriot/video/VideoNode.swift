@@ -122,6 +122,7 @@ class VideoNode {
             return key
         }
         else {
+            // this is how you get the auto-generated key
             let reference = Database.database().reference().child("video/list").childByAutoId()
             reference.setValue(dictionary())
             key = reference.key

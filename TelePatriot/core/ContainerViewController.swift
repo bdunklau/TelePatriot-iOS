@@ -40,6 +40,7 @@ class ContainerViewController: UIViewController {
     var switchTeamsVC: SwitchTeamsVC!
     var unassignedUsersVC: UnassignedUsersVC!
     var videoChatVC: VideoChatVC!
+    var videoInvitationsVC: VideoInvitationsVC!
     
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -120,10 +121,12 @@ class ContainerViewController: UIViewController {
         unassignedUsersVC = getUnassignedUsersVC()
         unassignedUsersVC?.unassignedUsersDelegate = centerViewController
         
-        ////////////////////////////////////////
-        // VideoChatVC - at some point, we'll probably need to do something similar to above
-        // for the VideoChatVC
         
+        videoChatVC = getVideoChatViewController()
+        videoChatVC.centerViewController = centerViewController
+        
+        videoInvitationsVC = getVideoInvitationsViewController()
+        videoInvitationsVC.invitationDelegate = centerViewController
         
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
@@ -298,6 +301,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getVideoChatViewController() -> VideoChatVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.videoChatVC
+    }
+    
+    func getVideoInvitationsViewController() -> VideoInvitationsVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.videoInvitationsVC
     }
     
     func toggleLeftPanel() {

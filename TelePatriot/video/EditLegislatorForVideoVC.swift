@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+// Android equiv:  EditLegislatorForVideoDlg
 class EditLegislatorForVideoVC: BaseViewController, UIPickerViewDelegate, UIPickerViewDataSource, LegislatorDelegate {
     
     

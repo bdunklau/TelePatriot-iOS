@@ -10,7 +10,8 @@ import UIKit
 import Firebase
 
 class VideoChatVC: BaseViewController, VCConnectorIConnect, VCConnectorIRegisterRemoteCameraEventListener,
-VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate, EditSocialMediaDelegate
+VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate, EditSocialMediaDelegate,
+    SearchUsersDelegate
 {
 
     var databaseRef : DatabaseReference?
@@ -31,9 +32,51 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     var cameraMuted         = false
     //var expandedSelfView    = true //false
     var connected = false
+    var room_id : String?
     
     var videoNode : VideoNode?
     var legislator : Legislator?
+    
+    // not sure if I like it being this explicit but I need a way to get to CenterViewController.doView()
+    // specifically in findSomeone() at the very bottom
+    var centerViewController : CenterViewController?
+    
+    
+    let searchIcon : UIImageView = {
+        let img = UIImage(named: "baseline_search_black_36dp.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    
+    let find_someone_btn : BaseButton = {
+        let button = BaseButton(text: "find someone")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(findSomeone(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    // Once an invitation has been extended to someone, and before they accept it, that person's name will appear
+    // in the remote view pane as a sort of confirmation that you have successfully invited someone to participate
+    // in a video chat with you
+    let guest_name : UITextView = {
+        let textView = UITextView()
+        textView.text = ""
+        textView.font = UIFont.systemFont(ofSize: 16) // just example
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        //var frame = textView.frame
+        //frame.size.height = 200
+        //textView.frame = frame
+        //textView.layer.borderWidth = 0.5
+        //textView.layer.cornerRadius = 5.0
+        textView.backgroundColor = UIColor.clear
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
     
     
     let descriptionLabel : UILabel = {
@@ -342,7 +385,9 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         selfView?.backgroundColor = UIColor.red
         view.addSubview(selfView!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
-        remoteViews?.backgroundColor = UIColor.blue
+        
+        remoteViews?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
+        unrid()
         view.addSubview(remoteViews!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
         view.addSubview(micButton)
@@ -472,14 +517,39 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         })
     }
     
+    private func rid() {
+        searchIcon.removeFromSuperview()
+        find_someone_btn.removeFromSuperview()
+        guest_name.removeFromSuperview()
+    }
+    
+    // the opposite of rid()  LOL
+    private func unrid() {
+        remoteViews?.addSubview(searchIcon)
+        searchIcon.trailingAnchor.constraint(equalTo: (remoteViews?.trailingAnchor)!, constant:-16).isActive = true
+        searchIcon.topAnchor.constraint(equalTo: (remoteViews?.topAnchor)!, constant:16).isActive = true
+        
+        remoteViews?.addSubview(find_someone_btn)
+        find_someone_btn.centerYAnchor.constraint(equalTo: searchIcon.centerYAnchor, constant:0).isActive = true
+        find_someone_btn.trailingAnchor.constraint(equalTo: searchIcon.leadingAnchor, constant:-8).isActive = true
+        
+        // guest_name is filled in at very bottom in userSelected()
+        remoteViews?.addSubview(guest_name)
+        guest_name.leadingAnchor.constraint(equalTo: find_someone_btn.leadingAnchor, constant:-8).isActive = true
+        //guest_name.trailingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant:0).isActive = true
+        guest_name.widthAnchor.constraint(equalTo: (remoteViews?.widthAnchor)!, constant:0.85).isActive = true
+        guest_name.heightAnchor.constraint(equalTo: (remoteViews?.heightAnchor)!, constant:0.5).isActive = true
+        guest_name.topAnchor.constraint(equalTo: find_someone_btn.bottomAnchor, constant:24).isActive = true
+    }
+    
     private func getVideoNodeKey() -> String {
-        if let key = TPUser.sharedInstance.currentVideoNodeKey {
+        if let key = TPUser.sharedInstance.current_video_node_key {
             return key
         }
         else {
             let vn = createVideoNode()
-            TPUser.sharedInstance.currentVideoNodeKey = vn.getKey()
-            return TPUser.sharedInstance.currentVideoNodeKey!
+            TPUser.sharedInstance.setCurrent_video_node_key(current_video_node_key: vn.getKey())
+            return vn.getKey()
         }
     }
     
@@ -539,6 +609,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             connector?.disconnect()
             connectionButton.setTitle("Connect", for: .normal)
             connected = false
+            unrid()
         }
         else {
             connectClicked(sender)
@@ -551,9 +622,18 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     // https://support.vidyocloud.com/hc/en-us/sections/115000596414-Testing-and-Troubleshooting
     // https://support.vidyocloud.com/hc/en-us/articles/218309687-I-see-no-video-just-a-black-window-or-receive-a-DirectX-error
     @objc func connectClicked(_ sender: Any) {
+        doConnect()
+    }
+    
+    private func doConnect() {
+        rid()
         connectionButton.setTitle("Connecting...", for: .normal)
-        let room = "demoRoom" // TODO make this dynamic based on who the participants are
-        let name = "Brent" //TPUser.sharedInstance.getName()
+        // The room_id will NOT be nil if the user is coming to this screen from accepting a video invitation
+        // See extension CenterViewController : VideoInvitationDelegate
+        if room_id == nil {
+            room_id = TPUser.sharedInstance.getUid()
+        }
+        let name = TPUser.sharedInstance.getUid()
         guard let escapedString = name.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return }
         let urlString = "https://us-central1-telepatriot-bd737.cloudfunctions.net/generateVidyoToken?userName=\(escapedString)"
@@ -580,7 +660,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
                 self.connector?.connect("prod.vidyo.io",
                                         token: token,
                                         displayName: name,
-                                        resourceId: room,
+                                        resourceId: /*self.room_id*/"aaa",
                                         connectorIConnect: self)
                 
                 self.connectionButton.setTitle("Disconnect", for: .normal)
@@ -714,6 +794,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         self.selfView?.isHidden = true
     }
     
+    // Equiv in Android is VidyoChatFragment.onLocalCameraAdded()
     func onLocalCameraAdded(_ localCamera: VCLocalCamera!) {
         if ((localCamera) != nil) {
             self.selfView?.isHidden = false
@@ -890,83 +971,52 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             var legislator = data["legislator"] as? Legislator
             else { return }
         
-        legislator.legislator_facebook = id
+        // See the triggers in legislators.js:
+        // updateLegislatorSocialMedia, updateVideoNodeSocialMedia, overwriteBadWithGoodData
         
-        // This method is where we know most things.  The only things we don't know
-        // come from EditSocialMediaVC:  type/handleType (i.e. Facebook) and id/handle (i.e. FB username, not FB ID)
+        let userUpdate : [String:Any] = [
+            "leg_id": legislator.leg_id,
+            "type": type,
+            "id": id, // This is the @handle, not some numeric Facebook ID
+            "legislator_full_name": legislator.full_name,
+            "state_abbrev": legislator.state,
+            "state_chamber": "\(legislator.state)-\(legislator.chamber)",
+            "state_chamber_district": "\(legislator.state)-\(legislator.chamber)-\(legislator.district)",
+            "updating_user_id": TPUser.sharedInstance.getUid(),
+            "updating_user_name": TPUser.sharedInstance.getName(),
+            "updating_user_email": TPUser.sharedInstance.getEmail(),
+            "updated_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+            "updated_date_ms": Util.getDate_as_millis()
+        ]
         
-        Database.database().reference().child(("states/legislators/\(legislator.leg_id)/channels"))
-            .observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
-                
-                let channel : [String:Any] = [
-                    "type": type,
-                    "id": id,
-                    "source": "user"
-                ]
-                
-                // find out if a facebook or twitter handle already exists...
-                var xxxx : Any?
-                let children = snapshot.children
-                while let snap = children.nextObject() as? DataSnapshot {
-                    //print("looking for type: \(type)")
-                    if let channelStuff = snap.value as? [String:Any],
-                        let channelType = channelStuff["type"] as? String {
-                        //print("channelType: \(channelType)")
-                        if (xxxx == nil && channelType.lowercased() == type.lowercased()) {
-                            xxxx = snap.key
-                        }
-                    }
-                }
-                
-                if xxxx == nil {
-                    xxxx = snapshot.childrenCount
-                }
-                
-                var updates : [String:Any] = [:]
-                if let xxxxx = xxxx {
-                    updates["states/legislators/\(legislator.leg_id)/channels/\(xxxxx)"] = channel
-                }
-                
-                // what is the video node key?
-                // Ans:  TPUser.sharedInstance.currentVideoNodeKey
-                if let videoNodeKey = TPUser.sharedInstance.currentVideoNodeKey {
-                    if type.lowercased() == "facebook" {
-                        updates["video/list/\(videoNodeKey)/legislator_facebook"] = id
-                    }
-                    else if type.lowercased() == "twitter" {
-                        updates["video/list/\(videoNodeKey)/legislator_twitter"] = id
-                    }
-                }
-                
-                // we need to save the new social media handle to video/list/{key}/legislator_facebook_id
-                // we need to save the new social media handle to video/list/{key}/legislator_facebook
-                // we need to save the new social media handle to video/list/{key}/legislator_twitter
-                // we need to save the new social media handle to states/legislators/{leg_id}/channels - taken care of
-                
-                let userUpdate : [String:Any] = [
-                    "leg_id": legislator.leg_id,
-                    "type": type,
-                    "id": id, // This is the @handle, not some numeric Facebook ID
-                    "legislator_full_name": legislator.full_name,
-                    "state_abbrev": legislator.state,
-                    "state_chamber": "\(legislator.state)-\(legislator.chamber)",
-                    "state_chamber_district": "\(legislator.state)-\(legislator.chamber)-\(legislator.district)",
-                    "updating_user_id": TPUser.sharedInstance.getUid(),
-                    "updating_user_name": TPUser.sharedInstance.getName(),
-                    "updating_user_emali": TPUser.sharedInstance.getEmail(),
-                    "updated_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
-                    "updated_date_ms": Util.getDate_as_millis()
-                ]
-                snapshot.ref.root.child("social_media/user_updates").childByAutoId().setValue(userUpdate)
-                
-                snapshot.ref.root.updateChildValues(updates, withCompletionBlock: { (error:Error?, ref:DatabaseReference) in
-                    // not sure how to handle the NSError yet
-                    // just handle success for now
-                    // do something here if you want like update the UI or dismiss a view controller
-                }) //as! (Error?, DatabaseReference) -> Void)
-                
-                self.dismiss(animated: true, completion: nil)
-            })
+        Database.database().reference().child("social_media/user_updates").childByAutoId().setValue(userUpdate)
+        
+        // should this be in a callback/completion block of the setValue() call above?
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // These next two functions kinda go together.  This first one pops up the Search Users screen
+    @objc private func findSomeone(_ sender: UIButton) {
+        // pop up the same Search Users screen that Admins see
+        if let vc = getAppDelegate().searchUsersVC {
+            vc.modalPresentationStyle = .popover
+            vc.searchUsersDelegate = self
+            centerViewController?.doView(vc: vc)
+        }
+    }
+    
+    // This second function is what gets called when you choose a user from SearchUsersVC
+    // Notice in the method above that we made 'self' the delegate of SearchUsersVC
+    // per SearchUsersDelegate
+    func userSelected(user: TPUser) {
+        // We want to write this user and the current user to /video/invitations
+        if let vid = TPUser.sharedInstance.current_video_node_key {
+            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guest: user, video_node_id: vid)
+            videoInvitation.save()
+            centerViewController?.doView(vc: self)
+            guest_name.text = "You have invited \(user.getName()) to participate in a video chat"
+        }
     }
 
 }
