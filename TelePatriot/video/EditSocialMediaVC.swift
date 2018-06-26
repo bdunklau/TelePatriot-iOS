@@ -174,7 +174,7 @@ class EditSocialMediaVC: BaseViewController, EditSocialMediaDelegate {
         guard let type = data["type"] as? String,
             let id = data["id"] as? String,
             var legislator = data["legislator"] as? Legislator
-            else { return }
+            else { return } // just a comment - problem pushing to github ?!
         
         // See the triggers in legislators.js:
         // updateLegislatorSocialMedia, updateVideoNodeSocialMedia, overwriteBadWithGoodData
