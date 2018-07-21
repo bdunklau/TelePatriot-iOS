@@ -240,6 +240,11 @@ class TPUser {
         if let cvk = dictionary["current_video_node_key"] as? String {
             self.current_video_node_key = cvk
         }
+        else {
+            // keeps the TPUser object in sync with the database.  We don't want the user object
+            // on the iPhone to think it has a current_video_node_key when that node has actually been deleted
+            self.current_video_node_key = nil
+        }
         
         // teams?
         // topics?
