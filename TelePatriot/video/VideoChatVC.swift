@@ -20,19 +20,15 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     private var connector:VCConnector?
     var selfView : UIView?
     var remoteViews: UIView!
-    //var selfView = UIView()
-    var micButton : UIButton!
-    var callButton: UIButton!
-    var cameraButton: UIButton!
     private var remoteViewsMap:[String:UIView] = [:]
     private var numberOfRemoteViews = 0   
     var resourceID          = ""
     var displayName         = ""
     var micMuted            = false
     var cameraMuted         = false
-    //var expandedSelfView    = true //false
     var connected = false
-    var room_id : String?
+    var recording = false
+    var room_id : String? // we want the room_id to be the same as the video_node_key
     
     var videoNode : VideoNode?
     var legislator : Legislator?
@@ -55,6 +51,40 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         let button = BaseButton(text: "find someone")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(findSomeone(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let connect_button : UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        // have to do this in viewDidLoad() I think - because 'self' isn't available here
+        //button.frame = CGRect(x: 8, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "callStart.png"), for: UIControlState.normal)
+        button.addTarget(self, action: #selector(connectionClicked(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let cameraButton : UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "cameraOn.png"), for: UIControlState.normal)
+        button.addTarget(self, action: #selector(cameraClicked(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let micButton : UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControlState.normal)
+        button.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let recordButton : UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
+        button.addTarget(self, action: #selector(recordClicked(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -287,43 +317,6 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         return l
     }()
     
-    /*******************
-     not ready for primetime - this might even go on another screen, maybe a popup/popover dialog
-    var statePicker: UIPickerView = {
-        let p = UIPickerView()
-        //p.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS - EXCEPT IN THIS CASE
-        return p
-    }()
-    ****************/
-    
-    
-    // this is for connecting AND disconnecting
-    let connectionButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Connect", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(connectionClicked(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    /***************
-    let connectButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Connect", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(connectClicked(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let disconnectButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Disconnect", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(disconnectClicked(_:)), for: .touchUpInside)
-        return button
-    }()
-    *****************/
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -358,25 +351,12 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         }
         
         
-        callButton = UIButton(type: UIButtonType.custom)
-        callButton.frame = CGRect(x: 8, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
-        callButton.backgroundColor = UIColor.clear
-        callButton.setImage(UIImage(named: "callStart.png"), for: UIControlState.normal)
-        //callButton.addTarget(self, action: #selector(XXXXXXX(_:)), for: .touchUpInside)
+        connect_button.frame = CGRect(x: 8, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        cameraButton.frame = CGRect(x: 68, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        micButton.frame = CGRect(x: 128, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        recordButton.frame = CGRect(x: 188, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        recordButton.isHidden = true
         
-        
-        cameraButton = UIButton(type: UIButtonType.custom)
-        cameraButton.frame = CGRect(x: 64, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
-        cameraButton.backgroundColor = UIColor.clear
-        cameraButton.setImage(UIImage(named: "cameraOn.png"), for: UIControlState.normal)
-        cameraButton.addTarget(self, action: #selector(cameraClicked(_:)), for: .touchUpInside)
-        
-        
-        micButton = UIButton(type: UIButtonType.custom)
-        micButton.frame = CGRect(x: 120, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
-        micButton.backgroundColor = UIColor.clear
-        micButton.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControlState.normal)
-        micButton.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
         // The below line will give you what you want
         //micButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
 
@@ -391,21 +371,15 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         view.addSubview(remoteViews!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
         view.addSubview(micButton)
-        //micButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.view.bounds.height / 3).isActive = true
-        //micButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        //micButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0.1).isActive = true
-        //micButton.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 0.1).isActive = true
-        
         view.addSubview(cameraButton)
-        //cameraButton.centerYAnchor.constraint(equalTo: micButton.centerYAnchor, constant: 0).isActive = true
-        //cameraButton.leadingAnchor.constraint(equalTo: micButton.trailingAnchor, constant: 16).isActive = true
+        view.addSubview(connect_button)
+        view.addSubview(recordButton)
         
-        view.addSubview(callButton)
-        
+        /****** getting rid of this in favor of the green call button and red hang up button
         view.addSubview(connectionButton)
         connectionButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.view.bounds.height / 3 + 60).isActive = true
         connectionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-        
+        *****/
         scrollView.addSubview(descriptionLabel)
         descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 8).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
@@ -603,18 +577,45 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         Util.openTwitter(legislator: legislator)
     }
     
+    @objc func recordClicked(_ sender: Any) {
+        if recording {
+            stopRecording()
+        }
+        else {
+            startRecording()
+        }
+    }
+    
     
     @objc func connectionClicked(_ sender: Any) {
         if connected {
+            if recording {
+                stopRecording()
+            }
+            // hide the record button
+            self.recordButton.isHidden = true
+            
             connector?.disconnect()
-            connectionButton.setTitle("Connect", for: .normal)
+            connect_button.setImage(UIImage(named: "callStart.png"), for: UIControlState.normal)
             connected = false
             unrid()
         }
         else {
             connectClicked(sender)
             connected = true
+            // show the record button
+            self.recordButton.isHidden = false
         }
+    }
+    
+    private func startRecording() {
+        recording = true
+        recordButton.setImage(UIImage(named: "recordstop.png"), for: UIControlState.normal)
+    }
+    
+    private func stopRecording() {
+        recording = false
+        recordButton.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
     }
     
     
@@ -627,11 +628,10 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     
     private func doConnect() {
         rid()
-        connectionButton.setTitle("Connecting...", for: .normal)
         // The room_id will NOT be nil if the user is coming to this screen from accepting a video invitation
         // See extension CenterViewController : VideoInvitationDelegate
         if room_id == nil {
-            room_id = TPUser.sharedInstance.getUid()
+            room_id = TPUser.sharedInstance.current_video_node_key
         }
         let name = TPUser.sharedInstance.getUid()
         guard let escapedString = name.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
@@ -645,6 +645,8 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
+        // TODO need to handle errors.  If there's an error, we want the green call button back
+        // We don't want the UI to show the red hang up button if we aren't actually connected
         let task = session.dataTask(with: request) { (data, response, responseError) in
             
             let str = String(describing: type(of: data))
@@ -660,22 +662,15 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
                 self.connector?.connect("prod.vidyo.io",
                                         token: token,
                                         displayName: name,
-                                        resourceId: /*self.room_id*/"aaa",
+                                        resourceId: self.room_id,
                                         connectorIConnect: self)
                 
-                self.connectionButton.setTitle("Disconnect", for: .normal)
+                self.connect_button.setImage(UIImage(named: "callEnd.png"), for: UIControlState.normal)
             }
         }
         
         task.resume()
     }
-    
-    /***********
-    @objc func disconnectClicked(_ sender: Any) {
-        connector?.disconnect()
-        connectButton.setTitle("Connect", for: .normal)
-    }
-    ************/
     
     // MARK: - VCIConnect delegate methods
     
