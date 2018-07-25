@@ -51,7 +51,7 @@ class ContainerViewController: UIViewController {
     
     var leftViewController: SidePanelViewController?
     var rightViewController: SidePanelViewController?
-    let centerPanelExpandedOffset: CGFloat = 60
+    var centerPanelExpandedOffset: CGFloat = 60
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +140,28 @@ class ContainerViewController: UIViewController {
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // TODO do we need to do something here or not when orientation changes between landscap and portrait?
+        //view.invalidateIntrinsicContentSize()
+    }
+    
+    // We need to know landscape/portrait orientation
+    // because that affects how far the main window should slide over to the right and whether or not we
+    // need to allow scrolling of the menu
+    // AppDelegate is where this function is referenced
+    func rotated() {
+        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+            //print("Landscape")
+            centerPanelExpandedOffset = 120
+        }
+        else {
+            //print("Portrait")
+            centerPanelExpandedOffset = 60
+        }
+        
+    }
+    
     func showShadowForCenterViewController(shouldShowShadow: Bool) {
         
         if shouldShowShadow {
@@ -161,12 +183,6 @@ private extension UIStoryboard {
     
     class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }
     
-    /******
-    class func leftViewController() -> SidePanelViewController? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "LeftViewController") as? SidePanelViewController
-    }
-     ********/
-    
     class func rightViewController() -> SidePanelViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "RightViewController") as? SidePanelViewController
     }
@@ -178,22 +194,6 @@ private extension UIStoryboard {
     class func directorViewController() -> DirectorViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "DirectorViewController") as? DirectorViewController
     }
-    
-    /**********
-    class func newPhoneCampaignVC() -> NewPhoneCampaignVC? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "NewPhoneCampaignVC") as? NewPhoneCampaignVC
-    }
-     
-     class func missionSummaryTVC() -> MissionSummaryTVC? {
-     return mainStoryboard().instantiateViewController(withIdentifier: "MissionSummaryTVC") as? MissionSummaryTVC
-     }
-     **********/
-    
-    /***********
-    class func chooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
-        return mainStoryboard().instantiateViewController(withIdentifier: "ChooseSpreadsheetTypeVC") as? ChooseSpreadsheetTypeVC
-    }
-     ***********/
     
 }
 
@@ -354,16 +354,9 @@ extension ContainerViewController: CenterViewControllerDelegate {
         
         // leftViewController is instantiated now in AppDelegate
         leftViewController = appDelegate?.leftViewController  // accessed in CenterViewController.checkLoggedIn()
+        print("self.view.frame.height = \(self.view.frame.height)")
         addChildSidePanelController(leftViewController!)
         
-        /*****
-        if let vc = UIStoryboard.leftViewController() {
-            vc.menuItems = MenuItems.sharedInstance.mainMenu
-            vc.sections = MenuItems.sharedInstance.mainSections
-            addChildSidePanelController(vc)
-            leftViewController = vc
-        }
-         *****/
     }
     
     func addRightPanelViewController() {
@@ -396,6 +389,12 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func addChildSidePanelController(_ sidePanelController: SidePanelViewController) {
         
         sidePanelController.sidePanelDelegate = centerViewController
+        
+        // this is the magic right here on the next line.  Together with tableView?.frame = self.view.frame
+        // in SidePanelViewController.viewDidLayoutSubviews(), we achieve a side menu that takes up the whole height
+        // of the screen and adjusts to either portrait or landscape mode
+        sidePanelController.view.frame = CGRect(x: 0, y: 0, width: 315, height: self.view.frame.height)
+        print("self.view.frame.height = \(self.view.frame.height)")
         view.insertSubview(sidePanelController.view, at: 0)
         
         addChildViewController(sidePanelController)
@@ -405,7 +404,9 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func animateLeftPanel(shouldExpand: Bool) {
         if shouldExpand {
             currentState = .leftPanelExpanded
-            animateCenterPanelXPosition(targetPosition: centerNavigationController.view.frame.width - centerPanelExpandedOffset)
+            print("centerNavigationController.view.frame.width = \(centerNavigationController.view.frame.width)")
+            print("centerNavigationController.view.frame.height = \(centerNavigationController.view.frame.height)")
+            animateCenterPanelXPosition(targetPosition: 315 /*centerNavigationController.view.frame.width - centerPanelExpandedOffset*/)
             
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
@@ -430,7 +431,7 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
         let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
         let gestureIsDraggingFromRightToLeft = !gestureIsDraggingFromLeftToRight
         
-        var panAllowed = (gestureIsDraggingFromRightToLeft && allowPanningFromRightToLeft) || (gestureIsDraggingFromLeftToRight)
+        let panAllowed = (gestureIsDraggingFromRightToLeft && allowPanningFromRightToLeft) || (gestureIsDraggingFromLeftToRight)
         
         if !panAllowed {
             return

@@ -30,7 +30,7 @@ class VideoInvitation {
     var invitation_create_date : String?
     var invitation_create_date_ms : Int64?
     
-    // room (userId of person who sent invitation)
+    // room (the video_node_key)
     var room_id : String?
     
     // time room was entered by initiator
@@ -45,23 +45,23 @@ class VideoInvitation {
     // time_ms room was entered by guest
     var guest_enter_room_date_ms : Int64?
     
-    var video_node_id : String?
+    var video_node_key : String?
     
     var key : String? // the key/primary key of the node
     
-    init(creator: TPUser, guest: TPUser, video_node_id: String) {
+    init(creator: TPUser, guest: TPUser, video_node_key: String) {
         initiator_id = creator.getUid()
         initiator_name = creator.getName()
         initiator_email = creator.getEmail()
         initiator_photo_url = creator.getPhotoURL().absoluteString
         invitation_create_date = Util.getDate_Day_MMM_d_hmmss_am_z_yyyy()
         invitation_create_date_ms = Util.getDate_as_millis()
-        room_id = creator.getUid()
+        room_id = video_node_key
         guest_id = guest.getUid()
         guest_name = guest.getName()
         guest_email = guest.getEmail()
         guest_photo_url = guest.getPhotoURL().absoluteString
-        self.video_node_id = video_node_id
+        self.video_node_key = video_node_key
     }
     
     func updateWith(invitation: VideoInvitation) {
@@ -80,7 +80,7 @@ class VideoInvitation {
         initiator_enter_room_date_ms = invitation.initiator_enter_room_date_ms
         guest_enter_room_date = invitation.guest_enter_room_date
         guest_enter_room_date_ms = invitation.guest_enter_room_date_ms
-        video_node_id = invitation.video_node_id
+        video_node_key = invitation.video_node_key
         key = invitation.key
         
     }
@@ -134,8 +134,8 @@ class VideoInvitation {
         if let val = dictionary["guest_enter_room_date_ms"] as? Int64 {
             guest_enter_room_date_ms = val
         }
-        if let val = dictionary["video_node_id"] as? String {
-            video_node_id = val
+        if let val = dictionary["video_node_key"] as? String {
+            video_node_key = val
         }
     }
     
@@ -159,7 +159,7 @@ class VideoInvitation {
             "guest_photo_url": guest_photo_url,
             "guest_email": guest_email,
             "room_id": room_id,
-            "video_node_id": video_node_id
+            "video_node_key": video_node_key
         ]
         
         if let ierd = initiator_enter_room_date {

@@ -117,6 +117,11 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView?.frame = self.view.frame // here's the magic right here
+    }
+    
     func putTheCorrectStuffInThisView(user: TPUser) {
         usernameLabel.text = TPUser.sharedInstance.getName()
         emailLabel.text = TPUser.sharedInstance.getEmail()
@@ -139,16 +144,6 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
             items.remove(at: found)
         }
     }
-    
-    /*****
-    private func insert(item: MenuItem, at: Int) {
-        guard menuItems.count > 0 else { return }
-        //guard menuItems[0].count > 0 else { return }
-        menuItems[0].insert(item, at: at)
-        let insertionIndexPath = IndexPath(row: at, section: 0)
-        tableView?.insertRows(at: [insertionIndexPath], with: .automatic)
-    }
-     *******/
     
     func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView?.indexPath(for: cell) {

@@ -611,11 +611,25 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     private func startRecording() {
         recording = true
         recordButton.setImage(UIImage(named: "recordstop.png"), for: UIControlState.normal)
+        createRecordingEvent(request_type: "start recording")
     }
     
     private func stopRecording() {
         recording = false
         recordButton.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
+        createRecordingEvent(request_type: "stop recording")
+    }
+    
+    private func createRecordingEvent(request_type: String) {
+        // write at least this much to /video/video_events
+        let recording_request = ["request_type": request_type,
+                               "video_node_key": TPUser.sharedInstance.current_video_node_key,
+                               "room_id": TPUser.sharedInstance.current_video_node_key]
+        // might also want to capture who made the request and when
+        
+        // There's a trigger function: exports.dockerRequest that listens for writes to this node
+        // and selects a docker instance that can serve as "recording secretary" for the call
+        Database.database().reference().child("video/video_events").childByAutoId().setValue(recording_request)
     }
     
     
@@ -1007,7 +1021,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     func userSelected(user: TPUser) {
         // We want to write this user and the current user to /video/invitations
         if let vid = TPUser.sharedInstance.current_video_node_key {
-            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guest: user, video_node_id: vid)
+            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guest: user, video_node_key: vid)
             videoInvitation.save()
             centerViewController?.doView(vc: self)
             guest_name.text = "You have invited \(user.getName()) to participate in a video chat"

@@ -50,8 +50,8 @@ class VideoNode {
     
     // See also EditLegislatorForVideoVC.legislatorSelected()
     init(snapshot: DataSnapshot) {
-        if let video_node_id = snapshot.key as? String {
-            key = video_node_id
+        if let video_node_key = snapshot.key as? String {
+            key = video_node_key
         }
         
         if let dictionary = snapshot.value as? [String : Any] {

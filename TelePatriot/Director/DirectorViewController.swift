@@ -26,6 +26,13 @@ class DirectorViewController: BaseViewController {
         tableView?.register(MenuCell.self, forCellReuseIdentifier: "thecell")
         self.view.addSubview(tableView!)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // TODO do we need to do something here or not when orientation changes between landscap and portrait?
+        //view.invalidateIntrinsicContentSize()
+        tableView?.frame = self.view.bounds
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

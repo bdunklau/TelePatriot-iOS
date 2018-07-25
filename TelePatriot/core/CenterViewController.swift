@@ -344,6 +344,12 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         TPUser.sharedInstance.unassignCurrentMissionItem()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // TODO do we need to do something here or not when orientation changes between landscap and portrait?
+        //view.invalidateIntrinsicContentSize()
+    }
+    
 }
 
 extension CenterViewController : NoRoleAssignedDelegate {

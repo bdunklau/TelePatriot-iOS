@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var callObserver : CXCallObserver? // not sure if we need this to log call activity
     
     // all viewcontrollers declared here
+    let containerViewController = ContainerViewController()
     var adminVC : AdminVC?
     var allActivityVC : AllActivityVC?
     var assignUserVC : AssignUserVC?
@@ -211,8 +212,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let containerViewController = ContainerViewController()
-        
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
@@ -244,7 +243,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
         
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        
         return true
+    }
+    
+    // We need to know landscape/portrait orientation
+    // because that affects how far the main window should slide over to the right and whether or not we
+    // need to allow scrolling of the menu
+    // AppDelegate is where this function is referenced
+    @objc func rotated() {
+        containerViewController.rotated()
+        /*********
+        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+            print("Landscape")
+            //centerPanelExpandedOffset = 30
+        }
+        else {
+            print("Portrait")
+            //centerPanelExpandedOffset = 60
+        }
+        *********/
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
