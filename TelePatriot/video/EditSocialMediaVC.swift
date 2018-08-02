@@ -75,7 +75,7 @@ class EditSocialMediaVC: BaseViewController, EditSocialMediaDelegate {
         view.addSubview(socialMediaField)
         socialMediaField.topAnchor.constraint(equalTo: editSocialMediaHeading.topAnchor, constant: 24).isActive = true
         socialMediaField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        socialMediaField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
+        socialMediaField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
         socialMediaField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive = true
         
     }

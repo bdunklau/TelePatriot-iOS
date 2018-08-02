@@ -18,15 +18,17 @@ class VideoNode {
     
     var video_participants = [VideoParticipant]()
     
-    var youtube_url : String?
+    var video_type : String?
+    var video_id : String?
+    var video_title : String?
     var youtube_video_description : String?
     var youtube_video_description_unevaluated : String?
     
     var video_mission_description : String
-    var video_recording_begin_date : String?
-    var video_recording_begin_date_ms : Int64?
-    var video_recording_end_date : String?
-    var video_recording_end_date_ms : Int64?
+    var recording_started : String?
+    var recording_started_ms : Int64?
+    var recording_stopped : String?
+    var recording_stopped_ms : Int64?
     
     var legislator : Legislator?
     
@@ -36,6 +38,7 @@ class VideoNode {
         node_create_date_ms = Util.getDate_as_millis()
         video_participants.append(VideoParticipant(user: creator))
         if let t = type {
+            video_type = t.type
             video_mission_description = t.video_mission_description
             youtube_video_description = t.youtube_video_description
             youtube_video_description_unevaluated = t.youtube_video_description
@@ -49,7 +52,7 @@ class VideoNode {
     }
     
     // See also EditLegislatorForVideoVC.legislatorSelected()
-    init(snapshot: DataSnapshot) {
+    init(snapshot: DataSnapshot, vc: VideoChatVC /*refactor VideoChatVC into a delegate if we ever need some other 'listener'*/ ) {
         if let video_node_key = snapshot.key as? String {
             key = video_node_key
         }
@@ -70,8 +73,28 @@ class VideoNode {
             }
             // no else required, the list is initialized not nil and empty
             
-            if let yu = dictionary["youtube_url"] as? String {
-                youtube_url = yu
+            if let vt = dictionary["video_type"] as? String {
+                video_type = vt
+            }
+            
+            if let yu = dictionary["video_id"] as? String {
+                video_id = yu
+                vc.publishingStarted()
+            }
+            
+            /****
+             Sample email subject: Video message from a constituent, Brent Dunklau
+             Sample video title:  Video Petition to Rep Justin Holland (TX HD 33) from Constituent Brent Dunklau
+                "Video Petition" = /video/types/{key}/type
+                "Rep" - based on chamber
+                "Justin Holland" - probably first + last because fullname is sometimes last, first
+                "TX" - state_abbrev to upper case
+                "HD" - based on chamber
+                "33" - district_number
+                "Brent Dunklau" - if there are 2 participants, assume the second one
+            ****/
+            if let yvt = dictionary["video_title"] as? String {
+                video_title = yvt
             }
             
             if let yvd = dictionary["youtube_video_description"] as? String {
@@ -87,20 +110,21 @@ class VideoNode {
             }
             else { video_mission_description = "-" }
             
-            if let vrbd = dictionary["video_recording_begin_date"] as? String {
-                video_recording_begin_date = vrbd
+            if let vrbd = dictionary["recording_started"] as? String {
+                recording_started = vrbd
+                vc.recordingStarted()
             }
             
-            if let vrbdm = dictionary["video_recording_begin_date_ms"] as? Int64 {
-                video_recording_begin_date_ms = vrbdm
+            if let vrbdm = dictionary["recording_started_ms"] as? Int64 {
+                recording_started_ms = vrbdm
             }
             
-            if let vred = dictionary["video_recording_end_date"] as? String {
-                video_recording_end_date = vred
+            if let vred = dictionary["recording_stopped"] as? String {
+                recording_stopped = vred
             }
             
-            if let vredm = dictionary["video_recording_end_date_ms"] as? Int64 {
-                video_recording_end_date_ms = vredm
+            if let vredm = dictionary["recording_stopped_ms"] as? Int64 {
+                recording_stopped_ms = vredm
             }
             
             // don't create the legislator object if this attribute doesn't exist
@@ -135,14 +159,15 @@ class VideoNode {
             "node_create_date": node_create_date,
             "node_create_date_ms": node_create_date_ms,
             "video_participants": dictionaries(list: video_participants),
-            "youtube_url": youtube_url,
+            "video_type": video_type,
+            "video_id": video_id,
             "youtube_video_description": youtube_video_description,
             "youtube_video_description_unevaluated": youtube_video_description_unevaluated,
             "video_mission_description": video_mission_description,
-            "video_recording_begin_date": video_recording_begin_date,
-            "video_recording_begin_date_ms": video_recording_begin_date_ms,
-            "video_recording_end_date": video_recording_end_date,
-            "video_recording_end_date_ms": video_recording_end_date_ms,
+            "video_recording_begin_date": recording_started,
+            "video_recording_begin_date_ms": recording_started_ms,
+            "video_recording_end_date": recording_stopped,
+            "video_recording_end_date_ms": recording_stopped_ms,
             "legislator_name" : legislator?.full_name,
             //"legislator_title" : legislator_title,
             "leg_id" : legislator?.leg_id,

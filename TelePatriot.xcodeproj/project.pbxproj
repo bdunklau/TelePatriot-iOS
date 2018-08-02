@@ -72,6 +72,7 @@
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
 		A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */; };
 		A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */; };
+		A149B9A5210B55B500ACE10C /* VideoChatInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
@@ -173,6 +174,7 @@
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
 		A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNeededView.swift; sourceTree = "<group>"; };
 		A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialMediaVC.swift; sourceTree = "<group>"; };
+		A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatInstructionsView.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
 		A15D845C1FA8D04D007EE77C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A15D84631FA92976007EE77C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = TelePatriot/SWRevealViewController.h; sourceTree = SOURCE_ROOT; };
@@ -392,6 +394,7 @@
 				A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */,
 				A13187B82078555E0048FE95 /* EditVideoMissionDescriptionVC.swift */,
 				A134E53D206C66AB00FEDBE6 /* RemoteViewLayout.swift */,
+				A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */,
 				A134E52F206B20D800FEDBE6 /* VideoChatVC.swift */,
 				A1E8D86A2075A94D00E4F720 /* VideoNode.swift */,
 				A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */,
@@ -634,6 +637,7 @@
 				A134E53E206C66AB00FEDBE6 /* RemoteViewLayout.swift in Sources */,
 				A17B6ED61FD1EA7100A3325C /* MissionItem.swift in Sources */,
 				A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */,
+				A149B9A5210B55B500ACE10C /* VideoChatInstructionsView.swift in Sources */,
 				A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
 				A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */,

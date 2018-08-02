@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var unassignedUsersVC : UnassignedUsersVC?
     var userIsBannedVC : UserIsBannedVC?
     var userMustSignCAViewController : UserMustSignCAViewController?
+    //var videoChatInstructionsVC : VideoChatInstructionsView?
     var videoChatVC : VideoChatVC?
     var videoInvitationsVC : VideoInvitationsVC?
     var videoTypes = [VideoType]()
@@ -92,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         missionSummaryTVC = MissionSummaryTVC()
         userIsBannedVC = UserIsBannedVC()
         userMustSignCAViewController = UserMustSignCAViewController()
+        //videoChatInstructionsVC = VideoChatInstructionsView()
         videoChatVC = VideoChatVC()
         videoInvitationsVC = VideoInvitationsVC()
         
@@ -254,16 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // AppDelegate is where this function is referenced
     @objc func rotated() {
         containerViewController.rotated()
-        /*********
-        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
-            print("Landscape")
-            //centerPanelExpandedOffset = 30
-        }
-        else {
-            print("Portrait")
-            //centerPanelExpandedOffset = 60
-        }
-        *********/
+        videoChatVC?.rotated()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

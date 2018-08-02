@@ -13,7 +13,7 @@ import Firebase
 class EditVideoMissionDescriptionVC: BaseViewController {
 
     var videoNode : VideoNode?
-    var database_attribute = "youtube_video_description" // just a default value - real value is passed in by VideoChatVC
+    var database_attribute = "youtube_video_description" // just a default value - real value is passed in by VideoChatInstructionsView
     var data : [String:Any]?
     
     let descriptionLabel : UILabel = {

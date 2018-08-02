@@ -10,20 +10,21 @@ import UIKit
 import Firebase
 
 class VideoChatVC: BaseViewController, VCConnectorIConnect, VCConnectorIRegisterRemoteCameraEventListener,
-VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate, EditSocialMediaDelegate,
-    SearchUsersDelegate
+VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEventListener, VCConnectorIRegisterLocalMicrophoneEventListener, VCConnectorIRegisterParticipantEventListener, UIPopoverPresentationControllerDelegate
+    //, EditSocialMediaDelegate
+    , SearchUsersDelegate
 {
+    
 
     var databaseRef : DatabaseReference?
     
     // Vidyo code ref:   https://vidyo.io/blog/how-to/vidyo-io-using-swift-build-ios-video-chat-app/
     private var connector:VCConnector?
-    var selfView : UIView?
+    var localCameraView : UIView?
     var remoteViews: UIView!
     private var remoteViewsMap:[String:UIView] = [:]
     private var numberOfRemoteViews = 0   
     var resourceID          = ""
-    var displayName         = ""
     var micMuted            = false
     var cameraMuted         = false
     var connected = false
@@ -32,11 +33,15 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     
     var videoNode : VideoNode?
     var legislator : Legislator?
+    var videoChatInstructionsView : VideoChatInstructionsView?
     
     // not sure if I like it being this explicit but I need a way to get to CenterViewController.doView()
     // specifically in findSomeone() at the very bottom
     var centerViewController : CenterViewController?
+    var spinnerView : UIView?
+    let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
     
+    var rotateToLandscapeView : UIView?
     
     let searchIcon : UIImageView = {
         let img = UIImage(named: "baseline_search_black_36dp.png")
@@ -47,10 +52,11 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     }()
     
     
-    let find_someone_btn : BaseButton = {
-        let button = BaseButton(text: "find someone")
+    let invite_someone_button : BaseButton = {
+        let button = BaseButton(text: "invite someone")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(findSomeone(_:)), for: .touchUpInside)
+        button.titleLabel?.font = UIFont(name: "Verdana", size: 16)
+        button.addTarget(self, action: #selector(inviteSomeone(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -64,6 +70,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         return button
     }()
     
+    /********** DON'T DELETE THESE these work but let's take them out for now
     let cameraButton : UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.backgroundColor = UIColor.clear
@@ -79,12 +86,21 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         button.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
         return button
     }()
+     *********/
     
     let recordButton : UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.backgroundColor = UIColor.clear
         button.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
         button.addTarget(self, action: #selector(recordClicked(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let publishButton : UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "arrow-upload-icon.png"), for: UIControlState.normal)
+        button.addTarget(self, action: #selector(publishClicked(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -108,232 +124,44 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         return textView
     }()
     
-    
-    let descriptionLabel : UILabel = {
+    let rotateToLandscapeMessage : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "Description"
+        l.text = "Rotate to Landscape to shoot videos"
         return l
     }()
     
     
-    let video_mission_description : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        
-        // this setting, plus the widthAnchor constraint below is how we achieve word wrapping inside the scrollview
-        l.numberOfLines = 0
-        l.text = "This is where we describe what kind of video we're shooting.  Is it a Video Petition or something else?  The people shooting the video are going to be reading this to find out."
-        return l
-    }()
-    
-    
-    let edit_video_mission_description_button : BaseButton = {
-        let button = BaseButton(text: "Edit")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(editVideoMissionDescription(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    let legislatorLabel : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "Legislator"
-        return l
-    }()
-    
-    
-    let edit_legislator_button : BaseButton = {
-        let button = BaseButton(text: "Choose")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(editLegislator(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    let legislatorName : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        // l.text = "Rep Noncommittal Fence Sitter"
-        return l
-    }()
-    
-    
-    let state : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        //l.text = "TX"
-        return l
-    }()
-    
-    
-    let chamber : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        //l.text = "HD"
-        return l
-    }()
-    
-    
-    let district : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        //l.text = "200"
-        return l
-    }()
-    
-    
-    let facebookButton : UIButton = {
-        let button = UIButton(type: .system)
-        //button.setTitle("FB: -", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(openFacebook(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let editFacebookButton : UIButton = {
-        let button = UIButton(type: .system)
-        //icons come from material.io/icons
-        //button.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)   // set below if legislator exists
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(editFacebook(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    let twitterButton : UIButton = {
-        let button = UIButton(type: .system)
-        //button.setTitle("TW: -", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(openTwitter(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let editTwitterButton : UIButton = {
-        let button = UIButton(type: .system)
-        //icons come from material.io/icons
-        //button.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal) // set below if legislator exists
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(editTwitter(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    let fbLabel : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        //l.text = "FB:"
-        return l
-    }()
-    
-    
-    let fbHandle : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        //l.text = "@RepHaventMadeUpMyMind"
-        return l
-    }()
-    
-    var fbId : String? // legislator's FB ID
-    
-    
-    let twLabel : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "TW:"
-        return l
-    }()
-    
-    
-    let twHandle : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "@RepFenceSitter"
-        return l
-    }()
-    
-    
-    let youtubeVideoDescriptionLabel : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "YouTube Video Description"
-        return l
-    }()
-    
-    
-    let edit_youtube_video_description_button : BaseButton = {
-        let button = BaseButton(text: "Edit")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(editYoutubeDescription(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    let youtubeVideoDescriptionSubtitle : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        
-        // this setting, plus the widthAnchor constraint below is how we achieve word wrapping inside the scrollview
-        l.numberOfLines = 0
-        l.text = "(This is what people will see in the video description field on YouTube)"
-        return l
-    }()
-    
-    
-    let youtubeVideoDescription : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        
-        // this setting, plus the widthAnchor constraint below is how we achieve word wrapping inside the scrollview
-        l.numberOfLines = 0
-        l.text = "A conversation with Xxxxx Xxxxx, a constituent of Rep Fence Sitter, asking the Rep Fence Sitter to support the Convention of States resolution.\n\nSign the petition here: https://www.conventionofstates.com and become part of the solution that's as big as the problem"
-        return l
-    }()
+    override func viewDidAppear(_ animated:Bool) {
+        print("view appeared")
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-        let scrollView = UIScrollView(frame: CGRect(x: 0, y: self.view.bounds.height / 3 + 96, width: self.view.frame.width, height: self.view.frame.height))
-        scrollView.contentSize = CGSize(width: self.view.frame.width, height: 1450)
+        let topMargin : CGFloat = 30
+        let localCameraXPos : CGFloat = 0
+        let localCameraYPos : CGFloat = topMargin
+        let localHeight : CGFloat = self.view.bounds.height / 2 - topMargin / 2
+        let localCameraWidth : CGFloat = 16 / 9 * localHeight
         
-        selfView = UIView(frame: CGRect(x: 0, y: 60, width: self.view.bounds.width / 2, height: self.view.bounds.height / 3))
-        remoteViews = UIView(frame: CGRect(x: self.view.bounds.width / 2, y: 60, width: self.view.bounds.width / 2, height: self.view.bounds.height / 3))
+        let remoteXPos = localCameraXPos
+        let remoteYPos : CGFloat = localCameraYPos + localHeight
+        let remoteWidth = localCameraWidth
+        let remoteHeight = localHeight
+        
+        localCameraView = UIView(frame: CGRect(x: 0, y: localCameraYPos, width: localCameraWidth, height: localHeight))
+        remoteViews = UIView(frame: CGRect(x: remoteXPos, y: remoteYPos, width: remoteWidth, height: remoteHeight))
         
         
         // Vidyo code ref:   https://vidyo.io/blog/how-to/vidyo-io-using-swift-build-ios-video-chat-app/
         VCConnectorPkg.vcInitialize()
         connector = VCConnector(nil, // For custom handling of views, set this to nil.  See:  https://github.com/Vidyo/customview-swift-ios/blob/master/CustomLayoutSample/CustomViewController.swift
                                 viewStyle: .default,
-                                remoteParticipants: 4,
+                                remoteParticipants: 1,
                                 logFileFilter: UnsafePointer("warning"),
                                 logFileName: UnsafePointer(""),
                                 userData: 0)
@@ -350,170 +178,147 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             connector?.registerParticipantEventListener(self)
         }
         
+        let buttonWidth : CGFloat = 48
+        let buttonHeight : CGFloat = buttonWidth
+        //let bottomAreaHeight = self.view.frame.height - remoteYPos - remoteHeight
+        let buttonYPos : CGFloat = localCameraYPos + localHeight - buttonHeight / 2
+        let spacingConstant : CGFloat = 24
+        var buttonSpacing : CGFloat = spacingConstant
         
-        connect_button.frame = CGRect(x: 8, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
-        cameraButton.frame = CGRect(x: 68, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
-        micButton.frame = CGRect(x: 128, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
-        recordButton.frame = CGRect(x: 188, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
+        connect_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+//        buttonSpacing += buttonWidth + spacingConstant
+//        cameraButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+//        buttonSpacing += buttonWidth + spacingConstant
+//        micButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+        buttonSpacing += buttonWidth + spacingConstant
+        recordButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+        buttonSpacing += buttonWidth + spacingConstant
+        publishButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
         recordButton.isHidden = true
+        publishButton.isHidden = true
         
         // The below line will give you what you want
         //micButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
 
         
-        
-        selfView?.backgroundColor = UIColor.red
-        view.addSubview(selfView!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
+        localCameraView?.backgroundColor = UIColor.red
+        view.addSubview(localCameraView!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
         
         remoteViews?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
         unrid()
         view.addSubview(remoteViews!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
-        view.addSubview(micButton)
-        view.addSubview(cameraButton)
         view.addSubview(connect_button)
+//        DON'T DELETE THESE 2
+//        view.addSubview(cameraButton)
+//        view.addSubview(micButton)
         view.addSubview(recordButton)
+        view.addSubview(publishButton)
         
-        /****** getting rid of this in favor of the green call button and red hang up button
-        view.addSubview(connectionButton)
-        connectionButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.view.bounds.height / 3 + 60).isActive = true
-        connectionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-        *****/
-        scrollView.addSubview(descriptionLabel)
-        descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 8).isActive = true
-        descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        if let videoChatInstructionsView = videoChatInstructionsView {
+            videoChatInstructionsView.removeFromSuperview()
+        }
         
-        scrollView.addSubview(edit_video_mission_description_button)
-        edit_video_mission_description_button.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8).isActive = true
-        edit_video_mission_description_button.leadingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 16).isActive = true
+        let instructionsXPos = localCameraXPos + localCameraWidth
+        let instructionsYPos = localCameraYPos
+        let instructionsWidth = self.view.bounds.width - instructionsXPos
+        let instructionsHeight = self.view.bounds.height - instructionsYPos
+        let bounds = CGRect(x: instructionsXPos, y: instructionsYPos, width: instructionsWidth, height: instructionsHeight)
+        videoChatInstructionsView = VideoChatInstructionsView.init(frame: bounds)
         
-        
-        scrollView.addSubview(video_mission_description)
-        video_mission_description.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8).isActive = true
-        video_mission_description.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        // this constraint plus this attribute setting above: l.numberOfLines = 0
-        // is how we achieve word wrapping inside the scrollview
-        video_mission_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
-        
-        scrollView.addSubview(legislatorLabel)
-        legislatorLabel.topAnchor.constraint(equalTo: video_mission_description.bottomAnchor, constant: 16).isActive = true
-        legislatorLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        
-        scrollView.addSubview(edit_legislator_button)
-        edit_legislator_button.centerYAnchor.constraint(equalTo: legislatorLabel.centerYAnchor, constant: 0).isActive = true
-        edit_legislator_button.leadingAnchor.constraint(equalTo: legislatorLabel.trailingAnchor, constant: 16).isActive = true
-        
-        scrollView.addSubview(legislatorName)
-        legislatorName.topAnchor.constraint(equalTo: legislatorLabel.bottomAnchor, constant: 8).isActive = true
-        legislatorName.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        
-        scrollView.addSubview(state)
-        state.bottomAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 0).isActive = true
-        state.leadingAnchor.constraint(equalTo: legislatorName.trailingAnchor, constant: 8).isActive = true
-        
-        scrollView.addSubview(chamber)
-        chamber.bottomAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 0).isActive = true
-        chamber.leadingAnchor.constraint(equalTo: state.trailingAnchor, constant: 4).isActive = true
-        
-        scrollView.addSubview(district)
-        district.bottomAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 0).isActive = true
-        district.leadingAnchor.constraint(equalTo: chamber.trailingAnchor, constant: 4).isActive = true
-        
-        scrollView.addSubview(facebookButton)
-        facebookButton.topAnchor.constraint(equalTo: legislatorName.bottomAnchor, constant: 8).isActive = true
-        facebookButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        
-        scrollView.addSubview(editFacebookButton)
-        editFacebookButton.centerYAnchor.constraint(equalTo: facebookButton.centerYAnchor, constant: 0).isActive = true
-        editFacebookButton.leadingAnchor.constraint(equalTo: facebookButton.trailingAnchor, constant: 16).isActive = true
-        
-        scrollView.addSubview(twitterButton)
-        twitterButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 8).isActive = true
-        twitterButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        
-        scrollView.addSubview(editTwitterButton)
-        editTwitterButton.centerYAnchor.constraint(equalTo: twitterButton.centerYAnchor, constant: 0).isActive = true
-        editTwitterButton.leadingAnchor.constraint(equalTo: twitterButton.trailingAnchor, constant: 16).isActive = true
-        
-        
-        scrollView.addSubview(youtubeVideoDescriptionLabel)
-        youtubeVideoDescriptionLabel.topAnchor.constraint(equalTo: twitterButton.bottomAnchor, constant: 16).isActive = true
-        youtubeVideoDescriptionLabel.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
-        
-        
-        scrollView.addSubview(edit_youtube_video_description_button)
-        edit_youtube_video_description_button.centerYAnchor.constraint(equalTo: youtubeVideoDescriptionLabel.centerYAnchor, constant: 0).isActive = true
-        edit_youtube_video_description_button.leadingAnchor.constraint(equalTo: youtubeVideoDescriptionLabel.trailingAnchor, constant: 8).isActive = true
-        
-        
-        scrollView.addSubview(youtubeVideoDescriptionSubtitle)
-        youtubeVideoDescriptionSubtitle.topAnchor.constraint(equalTo: youtubeVideoDescriptionLabel.bottomAnchor, constant: 8).isActive = true
-        youtubeVideoDescriptionSubtitle.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
-        // this constraint plus this attribute setting above: l.numberOfLines = 0
-        // is how we achieve word wrapping inside the scrollview
-        youtubeVideoDescriptionSubtitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
-        
-        scrollView.addSubview(youtubeVideoDescription)
-        youtubeVideoDescription.topAnchor.constraint(equalTo: youtubeVideoDescriptionSubtitle.bottomAnchor, constant: 8).isActive = true
-        youtubeVideoDescription.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
-        // this constraint plus this attribute setting above: l.numberOfLines = 0
-        // is how we achieve word wrapping inside the scrollview
-        youtubeVideoDescription.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
-        
-        view.addSubview(scrollView)
-        
-        /**
-        what we need is the key of the video node so that we can do a realtime query using that key
-        **/
+        if let esm = getAppDelegate().editSocialMediaVC,
+            let evmd = getAppDelegate().editVideoMissionDescriptionVC,
+            let elv = getAppDelegate().editLegislatorForVideoVC {
+            videoChatInstructionsView?.buildView(editSocialMediaVC: esm,
+                                                 videoChatVC: self,
+                                                 editVideoMissionDescriptionVC: evmd,
+                                                 editLegislatorForVideoVC: elv)
+            view.addSubview(videoChatInstructionsView!)
+            
+            videoChatInstructionsView?.topAnchor.constraint(equalTo: view.topAnchor, constant: instructionsYPos).isActive = true
+            videoChatInstructionsView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: instructionsXPos).isActive = true
+        }
         
         let videoNodeKey = getVideoNodeKey()
         
         // the initial query...
         Database.database().reference().child("video/list").child(videoNodeKey).observe(.value, with: {(snapshot) in
-            self.videoNode = VideoNode(snapshot: snapshot)
-            if let vmd = self.videoNode?.video_mission_description { self.video_mission_description.text = vmd }
-            if let legislator = self.videoNode?.legislator {
-                self.editFacebookButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
-                self.editTwitterButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
-                self.legislator = legislator
-                self.legislatorName.text = legislator.full_name
-                self.state.text = legislator.state.uppercased()
-                self.chamber.text = legislator.chamber == "lower" ? "HD" : (legislator.chamber == "upper" ? "SD" : "")
-                self.district.text = legislator.district
-                let fbButtonText = legislator.legislator_facebook=="" ? "FB: -" : "FB: @\(legislator.legislator_facebook)"
-                self.facebookButton.setTitle(fbButtonText, for: .normal)
-                self.fbId = legislator.legislator_facebook_id
-                let twButtonText = legislator.legislator_twitter=="" ? "TW: -" : "TW: @\(legislator.legislator_twitter)"
-                self.twitterButton.setTitle(twButtonText, for: .normal)
-                self.youtubeVideoDescription.text = self.videoNode?.youtube_video_description
+            self.videoNode = VideoNode(snapshot: snapshot, vc: self)
+            
+            if let vc = self.videoChatInstructionsView {
+                vc.setVideoNode(videoNode: self.videoNode!)
             }
+            
+            // TODO pass the whole videoNode object to videoChatInstructionsVC
+            
+//            if let vmd = self.videoNode?.video_mission_description { self.video_mission_description.text = vmd }
+//            if let legislator = self.videoNode?.legislator {
+//                self.editFacebookButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
+//                self.editTwitterButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
+//                self.legislator = legislator
+//                self.legislatorName.text = legislator.full_name
+//                self.state.text = legislator.state.uppercased()
+//                self.chamber.text = legislator.chamber == "lower" ? "HD" : (legislator.chamber == "upper" ? "SD" : "")
+//                self.district.text = legislator.district
+//                let fbButtonText = legislator.legislator_facebook=="" ? "FB: -" : "FB: @\(legislator.legislator_facebook)"
+//                self.facebookButton.setTitle(fbButtonText, for: .normal)
+//                self.fbId = legislator.legislator_facebook_id
+//                let twButtonText = legislator.legislator_twitter=="" ? "TW: -" : "TW: @\(legislator.legislator_twitter)"
+//                self.twitterButton.setTitle(twButtonText, for: .normal)
+//                self.youtubeVideoDescription.text = self.videoNode?.youtube_video_description
+//            }
         })
+    }
+    
+    // See AppDelegate: NotificationCenter.default.addObserver(self, selector: #selector(VideoChatVC.rotated), ....
+    func rotated() {
+        /********** not working yet - still buggy
+        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+            dismissRotateToLandscapeView()
+        }
+        else {
+            rotateToLandscapeView = UIView.init(frame: view.bounds)
+            rotateToLandscapeView?.backgroundColor = UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            self.view.addSubview(self.rotateToLandscapeView!)
+            self.rotateToLandscapeView?.addSubview(self.rotateToLandscapeMessage)
+            
+            rotateToLandscapeMessage.centerYAnchor.constraint(equalTo: (rotateToLandscapeView?.centerYAnchor)!, constant: 0).isActive = true
+            rotateToLandscapeMessage.centerXAnchor.constraint(equalTo: (rotateToLandscapeView?.centerXAnchor)!, constant: 0).isActive = true
+        }
+        **********/
+    }
+    
+    private func dismissRotateToLandscapeView() {
+        //DispatchQueue.main.async {
+        self.rotateToLandscapeMessage.removeFromSuperview()
+        self.rotateToLandscapeView?.removeFromSuperview()
+        //}
     }
     
     private func rid() {
         searchIcon.removeFromSuperview()
-        find_someone_btn.removeFromSuperview()
+        invite_someone_button.removeFromSuperview()
         guest_name.removeFromSuperview()
     }
     
     // the opposite of rid()  LOL
     private func unrid() {
-        remoteViews?.addSubview(searchIcon)
-        searchIcon.trailingAnchor.constraint(equalTo: (remoteViews?.trailingAnchor)!, constant:-16).isActive = true
-        searchIcon.topAnchor.constraint(equalTo: (remoteViews?.topAnchor)!, constant:16).isActive = true
+        remoteViews?.addSubview(invite_someone_button)
+        invite_someone_button.centerYAnchor.constraint(equalTo: remoteViews.centerYAnchor, constant:-16).isActive = true
+        invite_someone_button.centerXAnchor.constraint(equalTo: remoteViews.centerXAnchor, constant:0).isActive = true
         
-        remoteViews?.addSubview(find_someone_btn)
-        find_someone_btn.centerYAnchor.constraint(equalTo: searchIcon.centerYAnchor, constant:0).isActive = true
-        find_someone_btn.trailingAnchor.constraint(equalTo: searchIcon.leadingAnchor, constant:-8).isActive = true
+        remoteViews?.addSubview(searchIcon)
+        searchIcon.leadingAnchor.constraint(equalTo: invite_someone_button.trailingAnchor, constant: 16).isActive = true
+        searchIcon.centerYAnchor.constraint(equalTo: invite_someone_button.centerYAnchor, constant: 0).isActive = true
         
         // guest_name is filled in at very bottom in userSelected()
         remoteViews?.addSubview(guest_name)
-        guest_name.leadingAnchor.constraint(equalTo: find_someone_btn.leadingAnchor, constant:-8).isActive = true
+        guest_name.leadingAnchor.constraint(equalTo: invite_someone_button.leadingAnchor, constant:-8).isActive = true
         //guest_name.trailingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant:0).isActive = true
         guest_name.widthAnchor.constraint(equalTo: (remoteViews?.widthAnchor)!, constant:0.85).isActive = true
         guest_name.heightAnchor.constraint(equalTo: (remoteViews?.heightAnchor)!, constant:0.5).isActive = true
-        guest_name.topAnchor.constraint(equalTo: find_someone_btn.bottomAnchor, constant:24).isActive = true
+        guest_name.topAnchor.constraint(equalTo: invite_someone_button.bottomAnchor, constant:24).isActive = true
     }
     
     private func getVideoNodeKey() -> String {
@@ -544,38 +349,38 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     }
     
     
-    @objc func editFacebook(_ sender: Any) {
-        editSocialMedia(legislator: legislator, handle: legislator?.legislator_facebook, handleType: "Facebook")
-    }
-    
-    private func editSocialMedia(legislator: Legislator?, handle: String?, handleType: String?) {
-        if let handle = handle,
-            let vc = getAppDelegate().editSocialMediaVC,
-            let legislator = legislator
-        {
-            vc.modalPresentationStyle = .popover
-            vc.socialMediaDelegate = self
-            vc.handle = handle
-            vc.handleType = handleType
-            vc.legislator = legislator
-            present(vc, animated: true, completion:nil)
-        }
-    }
-    
-    
-    @objc func editTwitter(_ sender: Any) {
-        editSocialMedia(legislator: legislator, handle: legislator?.legislator_twitter, handleType: "Twitter")
-    }
-    
-    
-    @objc func openFacebook(_ sender: Any) {
-        Util.openFacebook(legislator: legislator)
-    }
-    
-    
-    @objc func openTwitter(_ sender: Any) {
-        Util.openTwitter(legislator: legislator)
-    }
+//    @objc func editFacebook(_ sender: Any) {
+//        editSocialMedia(legislator: legislator, handle: legislator?.legislator_facebook, handleType: "Facebook")
+//    }
+//
+//    private func editSocialMedia(legislator: Legislator?, handle: String?, handleType: String?) {
+//        if let handle = handle,
+//            let vc = getAppDelegate().editSocialMediaVC,
+//            let legislator = legislator
+//        {
+//            vc.modalPresentationStyle = .popover
+//            vc.socialMediaDelegate = self
+//            vc.handle = handle
+//            vc.handleType = handleType
+//            vc.legislator = legislator
+//            present(vc, animated: true, completion:nil)
+//        }
+//    }
+//
+//
+//    @objc func editTwitter(_ sender: Any) {
+//        editSocialMedia(legislator: legislator, handle: legislator?.legislator_twitter, handleType: "Twitter")
+//    }
+//
+//
+//    @objc func openFacebook(_ sender: Any) {
+//        Util.openFacebook(legislator: legislator)
+//    }
+//
+//
+//    @objc func openTwitter(_ sender: Any) {
+//        Util.openTwitter(legislator: legislator)
+//    }
     
     @objc func recordClicked(_ sender: Any) {
         if recording {
@@ -586,9 +391,29 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         }
     }
     
+    @objc func publishClicked(_ sender: Any) {
+        showSpinner()
+        // write to /video/video_events.  There's a trigger listening for writes to that node
+        // When a "start publishing" record is written, the trigger will call the virtual machine
+        // which in turn calls the appropriate docker instance and executes the python script in
+        // that docker instance
+        
+        let startPublishingRequest : [String:Any] = [
+            "request_type": "start publishing",
+            "video_node_key": TPUser.sharedInstance.current_video_node_key,
+            // not sure if we need room_id here - it's the same as the video_node_key anyway
+            "uid": TPUser.sharedInstance.getUid(),
+            "date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+            "date_ms": Util.getDate_as_millis()
+        ]
+        Database.database().reference().child("video/video_events").childByAutoId().setValue(startPublishingRequest)
+    }
+    
     
     @objc func connectionClicked(_ sender: Any) {
+        publishButton.isHidden = true
         if connected {
+            showSpinner()
             if recording {
                 stopRecording()
             }
@@ -596,6 +421,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             self.recordButton.isHidden = true
             
             connector?.disconnect()
+            DispatchQueue.main.async { self.dismissSpinner() }
             connect_button.setImage(UIImage(named: "callStart.png"), for: UIControlState.normal)
             connected = false
             unrid()
@@ -603,28 +429,45 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         else {
             connectClicked(sender)
             connected = true
-            // show the record button
-            self.recordButton.isHidden = false
         }
+    }
+    
+    // result of the callback from the docker container.  The docker container makes
+    // a GET request on recording_has_started() which sets recording_started on the video node
+    // The constructor of VideoNode here in Swift calls this method to dismiss the spinner
+    //   - lot of work just to activate and dismiss a spinner
+    func recordingStarted() {
+        DispatchQueue.main.async { self.dismissSpinner() }
+    }
+    // works just like recordingStarted()
+    func publishingStarted() {
+        DispatchQueue.main.async { self.dismissSpinner() }
     }
     
     private func startRecording() {
         recording = true
+        showSpinner()
         recordButton.setImage(UIImage(named: "recordstop.png"), for: UIControlState.normal)
         createRecordingEvent(request_type: "start recording")
+        publishButton.isHidden = true
     }
     
     private func stopRecording() {
         recording = false
         recordButton.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
         createRecordingEvent(request_type: "stop recording")
+        publishButton.isHidden = false
     }
     
     private func createRecordingEvent(request_type: String) {
         // write at least this much to /video/video_events
-        let recording_request = ["request_type": request_type,
+        let recording_request : [String:Any] = [
+                               "request_type": request_type,
                                "video_node_key": TPUser.sharedInstance.current_video_node_key,
-                               "room_id": TPUser.sharedInstance.current_video_node_key]
+                               "room_id": TPUser.sharedInstance.current_video_node_key,
+                               "uid": TPUser.sharedInstance.getUid(),
+                               "date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+                               "date_ms": Util.getDate_as_millis()]
         // might also want to capture who made the request and when
         
         // There's a trigger function: exports.dockerRequest that listens for writes to this node
@@ -640,8 +483,31 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         doConnect()
     }
     
+    private func getSpinner() {
+        spinnerView = UIView.init(frame: view.bounds)
+        spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        ai.startAnimating()
+        ai.center = (spinnerView?.center)!
+    }
+    
+    private func showSpinner() {
+        DispatchQueue.main.async {
+            self.spinnerView?.addSubview(self.ai)
+            self.view.addSubview(self.spinnerView!)
+        }
+    }
+    
+    private func dismissSpinner() {
+        self.ai.removeFromSuperview()
+        self.spinnerView?.removeFromSuperview()
+    }
+    
     private func doConnect() {
         rid()
+        
+        getSpinner()
+        showSpinner()
+        
         // The room_id will NOT be nil if the user is coming to this screen from accepting a video invitation
         // See extension CenterViewController : VideoInvitationDelegate
         if room_id == nil {
@@ -675,11 +541,15 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
                 
                 self.connector?.connect("prod.vidyo.io",
                                         token: token,
-                                        displayName: name,
+                                        displayName: TPUser.sharedInstance.getName(),
                                         resourceId: self.room_id,
                                         connectorIConnect: self)
                 
                 self.connect_button.setImage(UIImage(named: "callEnd.png"), for: UIControlState.normal)
+                
+                // show the record button
+                self.recordButton.isHidden = false
+                self.dismissSpinner()
             }
         }
         
@@ -705,8 +575,8 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         DispatchQueue.main.async {
             
             
-            guard let w = self.selfView?.frame.size.width,
-                let h = self.selfView?.frame.size.height else {
+            guard let w = self.localCameraView?.frame.size.width,
+                let h = self.localCameraView?.frame.size.height else {
                     return
             }
             
@@ -760,7 +630,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             self.remoteViewsMap[participant.getId()] = newRemoteView
             self.connector?.assignView(toRemoteCamera: UnsafeMutableRawPointer(&newRemoteView),
                                        remoteCamera: remoteCamera,
-                                       displayCropped: true,
+                                       displayCropped: false,
                                        allowZoom: /*true*/false)
             self.connector?.showViewLabel(UnsafeMutableRawPointer(&newRemoteView),
                                           showLabel: false)
@@ -800,23 +670,23 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     // MARK: - IRegisterLocalCameraEventListener delegate methods
     
     func onLocalCameraRemoved(_ localCamera: VCLocalCamera!) {
-        self.selfView?.isHidden = true
+        self.localCameraView?.isHidden = true
     }
     
     // Equiv in Android is VidyoChatFragment.onLocalCameraAdded()
     func onLocalCameraAdded(_ localCamera: VCLocalCamera!) {
         if ((localCamera) != nil) {
-            self.selfView?.isHidden = false
+            self.localCameraView?.isHidden = false
             DispatchQueue.main.async {
                 
-                if let w = self.selfView?.frame.size.width, let h = self.selfView?.frame.size.height {
-                    self.connector?.assignView(toLocalCamera: UnsafeMutableRawPointer(&self.selfView),
+                if let w = self.localCameraView?.frame.size.width, let h = self.localCameraView?.frame.size.height {
+                    self.connector?.assignView(toLocalCamera: UnsafeMutableRawPointer(&self.localCameraView),
                                                localCamera: localCamera,
-                                               displayCropped: true,
+                                               displayCropped: false,
                                                allowZoom: false)
-                    self.connector?.showViewLabel(UnsafeMutableRawPointer(&self.selfView),
+                    self.connector?.showViewLabel(UnsafeMutableRawPointer(&self.localCameraView),
                                                   showLabel: false)
-                    self.connector?.showView(at: UnsafeMutableRawPointer(&self.selfView),
+                    self.connector?.showView(at: UnsafeMutableRawPointer(&self.localCameraView),
                                              x: 0,
                                              y: 0,
                                              width: UInt32(w),
@@ -902,111 +772,39 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     func onRemoteMicrophoneStateUpdated(_ remoteMicrophone: VCRemoteMicrophone!, participant: VCParticipant!, state: VCDeviceState) {
         
     }
-
+ 
     
-    @objc private func editVideoMissionDescription(_ sender: UIButton) {
-        let data: [String:Any] = ["videoNode": videoNode,
-                                  "heading": "Video Mission Description",
-                                  "video_mission_description": videoNode?.video_mission_description,
-                                  "database_attribute": "video_mission_description"]
-        // pop up a dialog with a text field showing the video mission description
-        // and save, cancel buttons
-        if let vc = getAppDelegate().editVideoMissionDescriptionVC {
-            vc.modalPresentationStyle = .popover
-            vc.data = data
-            present(vc, animated: true, completion:nil)
-        }
-    }
+//    DON'T DELETE THESE
+//    @objc func micClicked(_ sender: Any) {
+//        if micMuted {
+//            micMuted = !micMuted
+//            self.micButton.setImage(UIImage(named: "microphoneOnWhite.png"), for: .normal)
+//            connector?.setMicrophonePrivacy(micMuted)
+//        } else {
+//            micMuted = !micMuted
+//            self.micButton.setImage(UIImage(named: "microphoneOff.png"), for: .normal)
+//            connector?.setMicrophonePrivacy(micMuted)
+//        }
+//    }
+//
+//    @objc func cameraClicked(_ sender: Any) {
+//        if cameraMuted {
+//            cameraMuted = !cameraMuted
+//            self.cameraButton.setImage(UIImage(named: "cameraOn.png"), for: .normal)
+//            connector?.setCameraPrivacy(cameraMuted)
+//            self.selfView?.isHidden = cameraMuted
+//        } else {
+//            cameraMuted = !cameraMuted
+//            self.cameraButton.setImage(UIImage(named: "cameraOff.png"), for: .normal)
+//            connector?.setCameraPrivacy(cameraMuted)
+//            self.selfView?.isHidden = cameraMuted
+//        }
+//    }
     
-    
-    @objc private func editLegislator(_ sender: UIButton) {
-        // pop up a dialog with a text field showing the legislator's information
-        // and save, cancel buttons
-        if let vc = getAppDelegate().editLegislatorForVideoVC {
-            vc.modalPresentationStyle = .popover
-            vc.videoNode = videoNode
-            present(vc, animated: true, completion:nil)
-        }
-    }
-    
-    
-    @objc private func editYoutubeDescription(_ sender: UIButton) {
-        let data: [String:Any] = ["videoNode": videoNode,
-                                  "heading": "YouTube Video Description",
-                                  "youtube_video_description": videoNode?.youtube_video_description,
-                                  "database_attribute": "youtube_video_description"]
-        // pop up a dialog with a text field showing the video mission description
-        // and save, cancel buttons
-        if let vc = getAppDelegate().editVideoMissionDescriptionVC {
-            vc.modalPresentationStyle = .popover
-            vc.data = data
-            present(vc, animated: true, completion:nil)
-        }
-    }
-    
-    
-    @objc func micClicked(_ sender: Any) {
-        if micMuted {
-            micMuted = !micMuted
-            self.micButton.setImage(UIImage(named: "microphoneOnWhite.png"), for: .normal)
-            connector?.setMicrophonePrivacy(micMuted)
-        } else {
-            micMuted = !micMuted
-            self.micButton.setImage(UIImage(named: "microphoneOff.png"), for: .normal)
-            connector?.setMicrophonePrivacy(micMuted)
-        }
-    }
-    
-    @objc func cameraClicked(_ sender: Any) {
-        if cameraMuted {
-            cameraMuted = !cameraMuted
-            self.cameraButton.setImage(UIImage(named: "cameraOn.png"), for: .normal)
-            connector?.setCameraPrivacy(cameraMuted)
-            self.selfView?.isHidden = cameraMuted
-        } else {
-            cameraMuted = !cameraMuted
-            self.cameraButton.setImage(UIImage(named: "cameraOff.png"), for: .normal)
-            connector?.setCameraPrivacy(cameraMuted)
-            self.selfView?.isHidden = cameraMuted
-        }
-    }
-    
-    // required by EditSocialMediaDelegate
-    // probably going to have a lot of code that looks really similar in LegislatorUI because
-    // that view also has edit buttons/pencils for facebook and twitter handles
-    func socialMediaSaved(data: [String : Any]) {
-        guard let type = data["type"] as? String,
-            let id = data["id"] as? String,
-            var legislator = data["legislator"] as? Legislator
-            else { return }
-        
-        // See the triggers in legislators.js:
-        // updateLegislatorSocialMedia, updateVideoNodeSocialMedia, overwriteBadWithGoodData
-        
-        let userUpdate : [String:Any] = [
-            "leg_id": legislator.leg_id,
-            "type": type,
-            "id": id, // This is the @handle, not some numeric Facebook ID
-            "legislator_full_name": legislator.full_name,
-            "state_abbrev": legislator.state,
-            "state_chamber": "\(legislator.state)-\(legislator.chamber)",
-            "state_chamber_district": "\(legislator.state)-\(legislator.chamber)-\(legislator.district)",
-            "updating_user_id": TPUser.sharedInstance.getUid(),
-            "updating_user_name": TPUser.sharedInstance.getName(),
-            "updating_user_email": TPUser.sharedInstance.getEmail(),
-            "updated_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
-            "updated_date_ms": Util.getDate_as_millis()
-        ]
-        
-        Database.database().reference().child("social_media/user_updates").childByAutoId().setValue(userUpdate)
-        
-        // should this be in a callback/completion block of the setValue() call above?
-        self.dismiss(animated: true, completion: nil)
-    }
     
     
     // These next two functions kinda go together.  This first one pops up the Search Users screen
-    @objc private func findSomeone(_ sender: UIButton) {
+    @objc private func inviteSomeone(_ sender: UIButton) {
         // pop up the same Search Users screen that Admins see
         if let vc = getAppDelegate().searchUsersVC {
             vc.modalPresentationStyle = .popover

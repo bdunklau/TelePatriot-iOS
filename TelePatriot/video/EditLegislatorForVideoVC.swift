@@ -366,7 +366,7 @@ class EditLegislatorForVideoVC: BaseViewController, UIPickerViewDelegate, UIPick
                 phone = legislator.phone
             }
             
-            var updatedData = ["video/list/\(vn.getKey())/legislator_first_name": legislator.first_name,
+            let updatedData = ["video/list/\(vn.getKey())/legislator_first_name": legislator.first_name,
                                 "video/list/\(vn.getKey())/legislator_last_name": legislator.last_name,
                                 "video/list/\(vn.getKey())/legislator_full_name": "\(legislator.first_name) \(legislator.last_name)",
                                 "video/list/\(vn.getKey())/leg_id": legislator.leg_id,
