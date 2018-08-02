@@ -121,6 +121,9 @@ class EditVideoMissionDescriptionVC: BaseViewController {
             } else if let youtube_video_description = data["youtube_video_description"] as? String {
                 big_text_field.text = vn.youtube_video_description
             }
+            else if let video_title = data["video_title"] as? String {
+                big_text_field.text = video_title
+            }
         }
     }
 

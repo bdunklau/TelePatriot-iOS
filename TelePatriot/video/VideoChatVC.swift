@@ -348,40 +348,6 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         // Dispose of any resources that can be recreated.
     }
     
-    
-//    @objc func editFacebook(_ sender: Any) {
-//        editSocialMedia(legislator: legislator, handle: legislator?.legislator_facebook, handleType: "Facebook")
-//    }
-//
-//    private func editSocialMedia(legislator: Legislator?, handle: String?, handleType: String?) {
-//        if let handle = handle,
-//            let vc = getAppDelegate().editSocialMediaVC,
-//            let legislator = legislator
-//        {
-//            vc.modalPresentationStyle = .popover
-//            vc.socialMediaDelegate = self
-//            vc.handle = handle
-//            vc.handleType = handleType
-//            vc.legislator = legislator
-//            present(vc, animated: true, completion:nil)
-//        }
-//    }
-//
-//
-//    @objc func editTwitter(_ sender: Any) {
-//        editSocialMedia(legislator: legislator, handle: legislator?.legislator_twitter, handleType: "Twitter")
-//    }
-//
-//
-//    @objc func openFacebook(_ sender: Any) {
-//        Util.openFacebook(legislator: legislator)
-//    }
-//
-//
-//    @objc func openTwitter(_ sender: Any) {
-//        Util.openTwitter(legislator: legislator)
-//    }
-    
     @objc func recordClicked(_ sender: Any) {
         if recording {
             stopRecording()
