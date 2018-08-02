@@ -305,8 +305,8 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     // the opposite of rid()  LOL
     private func unrid() {
         remoteViews?.addSubview(invite_someone_button)
-        invite_someone_button.centerYAnchor.constraint(equalTo: remoteViews.centerYAnchor, constant:-16).isActive = true
-        invite_someone_button.centerXAnchor.constraint(equalTo: remoteViews.centerXAnchor, constant:0).isActive = true
+        invite_someone_button.topAnchor.constraint(equalTo: remoteViews.topAnchor, constant: 16).isActive = true
+        invite_someone_button.centerXAnchor.constraint(equalTo: remoteViews.centerXAnchor, constant: 0).isActive = true
         
         remoteViews?.addSubview(searchIcon)
         searchIcon.leadingAnchor.constraint(equalTo: invite_someone_button.trailingAnchor, constant: 16).isActive = true
@@ -314,11 +314,11 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         
         // guest_name is filled in at very bottom in userSelected()
         remoteViews?.addSubview(guest_name)
-        guest_name.leadingAnchor.constraint(equalTo: invite_someone_button.leadingAnchor, constant:-8).isActive = true
+        guest_name.topAnchor.constraint(equalTo: invite_someone_button.topAnchor, constant:24).isActive = true
+        guest_name.centerXAnchor.constraint(equalTo: invite_someone_button.centerXAnchor, constant:0).isActive = true
         //guest_name.trailingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant:0).isActive = true
         guest_name.widthAnchor.constraint(equalTo: (remoteViews?.widthAnchor)!, constant:0.85).isActive = true
         guest_name.heightAnchor.constraint(equalTo: (remoteViews?.heightAnchor)!, constant:0.5).isActive = true
-        guest_name.topAnchor.constraint(equalTo: invite_someone_button.bottomAnchor, constant:24).isActive = true
     }
     
     private func getVideoNodeKey() -> String {
