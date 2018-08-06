@@ -139,11 +139,13 @@ class VideoInvitation {
         }
     }
     
-    func save() {
+    func save() -> String? {
         if let initiator_id = initiator_id, let guest_id = guest_id {
             let key = "initiator\(initiator_id)guest\(guest_id)"
             Database.database().reference().child("video/invitations/\(key)").setValue(dictionary())
+            return key
         }
+        return nil
     }
     
     private func dictionary() -> [String: Any] {

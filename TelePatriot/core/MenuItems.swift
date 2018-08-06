@@ -124,6 +124,7 @@ class MenuItems {
     static let myMission = MenuItem(icon: MenuItems.myMissionIcon, title: "My Mission")
     static let directors = MenuItem(icon: MenuItems.directorsIcon, title: "Directors")
     static let admins = MenuItem(icon: MenuItems.adminsIcon, title: "Admins")
+    static let videoChat = MenuItem(icon: MenuItems.videoChatIcon, title: "Video Chat")
     var mainSection0 : [MenuItem]
     var mainMenu : [[MenuItem]]
     var directorItems : [[MenuItem]]
@@ -132,6 +133,7 @@ class MenuItems {
     
     private init() {
         
+        // See SidePanelViewController - doRoleAdded() and doRoleRemoved()
         mainSection0 = [MenuItems.team,
                         MenuItems.myMission,
                         MenuItems.directors,
@@ -172,6 +174,7 @@ class MenuItems {
             items["My Mission"] = myMission
             items["Directors"] = directors
             items["Admins"] = admins
+            items["Video Chat"] = videoChat
             return items
         }()
         

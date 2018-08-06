@@ -256,17 +256,74 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
     }()
     
     
-    let youtubeVideoDescription : UILabel = {
+    let what_do_you_want_to_do_with_your_video : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "What do you want to do with your video?"
+        return l
+    }()
+    
+    
+    let email_to_legislator_label : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
         //l.font = l.font.withSize(18)
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        
-        // this setting, plus the widthAnchor constraint below is how we achieve word wrapping inside the scrollview
-        l.numberOfLines = 0
-        l.text = "A conversation with Xxxxx Xxxxx, a constituent of Rep Fence Sitter, asking the Rep Fence Sitter to support the Convention of States resolution.\n\nSign the petition here: https://www.conventionofstates.com and become part of the solution that's as big as the problem"
+        l.text = "Email to Legislator"
         return l
     }()
+    
+    let email_to_legislator : UISwitch = {
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .touchUpInside)
+        return s
+    }()
+    
+    let post_to_facebook_label : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Post to Facebook"
+        return l
+    }()
+    
+    let post_to_facebook : UISwitch = {
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .touchUpInside)
+        return s
+    }()
+    
+    let post_to_twitter_label : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Post to Twitter"
+        return l
+    }()
+    
+    let post_to_twitter : UISwitch = {
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .touchUpInside)
+        return s
+    }()
+    
+    @objc func switchValueDidChange(_ sender:UISwitch!) {
+        let m : [UISwitch : String] = [
+            email_to_legislator: "email_to_legislator",
+            post_to_facebook: "post_to_facebook",
+            post_to_twitter: "post_to_twitter",
+        ]
+        if let videoNode = videoNode, let attribute = m[sender] {
+            Database.database().reference().child("video/list/\(videoNode.getKey())/\(attribute)").setValue(sender.isOn)
+        }
+    }
     
     
     func buildView(editSocialMediaVC: EditSocialMediaVC, videoChatVC: VideoChatVC, editVideoMissionDescriptionVC : EditVideoMissionDescriptionVC,
@@ -379,12 +436,36 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         // is how we achieve word wrapping inside the scrollview
         youtube_video_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
         
-        scrollView.addSubview(youtubeVideoDescription)
-        youtubeVideoDescription.topAnchor.constraint(equalTo: youtube_video_description.bottomAnchor, constant: 8).isActive = true
-        youtubeVideoDescription.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(what_do_you_want_to_do_with_your_video)
+        what_do_you_want_to_do_with_your_video.topAnchor.constraint(equalTo: youtube_video_description.bottomAnchor, constant: 48).isActive = true
+        what_do_you_want_to_do_with_your_video.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         // this constraint plus this attribute setting above: l.numberOfLines = 0
         // is how we achieve word wrapping inside the scrollview
-        youtubeVideoDescription.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
+        youtube_video_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
+        
+        scrollView.addSubview(email_to_legislator_label)
+        email_to_legislator_label.topAnchor.constraint(equalTo: what_do_you_want_to_do_with_your_video.bottomAnchor, constant: 16).isActive = true
+        email_to_legislator_label.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(email_to_legislator)
+        email_to_legislator.centerYAnchor.constraint(equalTo: email_to_legislator_label.centerYAnchor, constant: 0).isActive = true
+        email_to_legislator.leadingAnchor.constraint(equalTo: email_to_legislator_label.trailingAnchor, constant: 24).isActive = true
+        
+        scrollView.addSubview(post_to_facebook_label)
+        post_to_facebook_label.topAnchor.constraint(equalTo: email_to_legislator_label.bottomAnchor, constant: 16).isActive = true
+        post_to_facebook_label.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(post_to_facebook)
+        post_to_facebook.centerYAnchor.constraint(equalTo: post_to_facebook_label.centerYAnchor, constant: 0).isActive = true
+        post_to_facebook.leadingAnchor.constraint(equalTo: email_to_legislator.leadingAnchor, constant: 0).isActive = true
+        
+        scrollView.addSubview(post_to_twitter_label)
+        post_to_twitter_label.topAnchor.constraint(equalTo: post_to_facebook_label.bottomAnchor, constant: 16).isActive = true
+        post_to_twitter_label.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(post_to_twitter)
+        post_to_twitter.centerYAnchor.constraint(equalTo: post_to_twitter_label.centerYAnchor, constant: 0).isActive = true
+        post_to_twitter.leadingAnchor.constraint(equalTo: email_to_legislator.leadingAnchor, constant: 0).isActive = true
         
         addSubview(scrollView)
         
@@ -411,7 +492,16 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
             let twButtonText = legislator.legislator_twitter=="" ? "TW: -" : "TW: @\(legislator.legislator_twitter)"
             self.twitterButton.setTitle(twButtonText, for: .normal)
             self.video_title.text = self.videoNode?.video_title
-            self.youtubeVideoDescription.text = self.videoNode?.youtube_video_description
+            self.youtube_video_description.text = self.videoNode?.youtube_video_description
+        }
+        if let email_to_legislator = self.videoNode?.email_to_legislator {
+            self.email_to_legislator.isOn = email_to_legislator
+        }
+        if let post_to_facebook = self.videoNode?.post_to_facebook {
+            self.post_to_facebook.isOn = post_to_facebook
+        }
+        if let post_to_twitter = self.videoNode?.post_to_twitter {
+            self.post_to_twitter.isOn = post_to_twitter
         }
     }
     

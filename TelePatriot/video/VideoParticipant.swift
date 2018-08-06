@@ -10,6 +10,7 @@ import Foundation
 
 struct VideoParticipant {
     
+    
     var uid : String
     var name : String
     var email : String
@@ -23,6 +24,9 @@ struct VideoParticipant {
     var end_date : String?   // finally the person ends his video session
     var end_date_ms : Int64?
     var role : String? //(interviewer, interviewee, other?)
+    var present = true // indicates that the user is "present" on the video chat screen
+    var vidyo_token : String?
+    
     
     // this custom init method makes it so that...
     //  - we can pass in a TPUser object
@@ -91,14 +95,21 @@ struct VideoParticipant {
         if let r = data["role"] as? String {
             role = r
         }
+        if let p = data["present"] as? Bool {
+            present = p
+        }
+        if let tk = data["vidyo_token"] as? String {
+            vidyo_token = tk
+        }
     }
     
     
-    static func parseParticipants(list: [[String:Any]]) -> [VideoParticipant] {
-        var p = [VideoParticipant]()
-        for item in list {
+    static func parseParticipants(list: [String:[String:Any]]) -> [String: VideoParticipant] {
+        var p = [String: VideoParticipant]()
+        for item in list.values {
             let participant = VideoParticipant(data: item)
-            p.append(participant)
+            let uid = participant.uid
+            p[uid] = participant
         }
         return p
     }
@@ -118,7 +129,9 @@ struct VideoParticipant {
             "disconnect_date_ms": disconnect_date_ms,
             "end_date": end_date,
             "end_date_ms": end_date_ms,
-            "role": role
+            "role": role,
+            "present": present,
+            "vidyo_token": vidyo_token
         ]
     }
 }

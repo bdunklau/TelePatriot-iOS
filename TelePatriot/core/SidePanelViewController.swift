@@ -145,9 +145,9 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
-    func deleteCell(cell: UITableViewCell) {
+    func deleteCell(cell: UITableViewCell, section: Int) {
         if let deletionIndexPath = tableView?.indexPath(for: cell) {
-            menuItems[0].remove(at: deletionIndexPath.row);
+            menuItems[section].remove(at: deletionIndexPath.row);
             print("delete cell = \(cell.textLabel): deletionIndexPath.row = \(deletionIndexPath.row)")
             //tableView?.deleteRows(at: [deletionIndexPath], with: .automatic)
             tableView?.reloadData()
@@ -166,34 +166,42 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    // See TPUser.fetchRoles()
     // required by AccountStatusEventListener
     func roleAssigned(role: String) {
         if( role == "Volunteer" ) {
             // the & before menuItems is required to pass this list as an "inout" parameter
             // see doRoleAdded() and doRoleRemoved()
             //doRoleAdded(role: role, menuText: "My Mission", index: 0, items: menuItems[0])
-            doRoleAdded(menuText: "My Mission", items: menuItems[0])
+            doRoleAdded(menuText: "My Mission", section: 0)//items: menuItems[0])
         }
         if( role == "Director" ) {
             //doRoleAdded(role: role, menuText: "Directors", index: 1, items: menuItems[0])
-            doRoleAdded(menuText: "Directors", items: menuItems[0])
+            doRoleAdded(menuText: "Directors", section: 0)//items: menuItems[0])
         }
         if( role == "Admin" ) {
             //doRoleAdded(role: role, menuText: "Admins", index: 2, items: menuItems[0])
-            doRoleAdded(menuText: "Admins", items: menuItems[0])
+            doRoleAdded(menuText: "Admins", section: 0)//items: menuItems[0])
+        }
+        if( role == "Video Creator" ) {
+            doRoleAdded(menuText: "Video Chat", section: 1)//items: menuItems[0])
         }
     }
     
+    // See TPUser.fetchRoles()
     // required by AccountStatusEventListener
     func roleRemoved(role: String) {
         if( role == "Volunteer" ) {
-            doRoleRemoved(menuText: "My Mission", items: menuItems[0])
+            doRoleRemoved(menuText: "My Mission", section: 0)//items: menuItems[0])
         }
         if( role == "Director" ) {
-            doRoleRemoved(menuText: "Directors", items: menuItems[0])
+            doRoleRemoved(menuText: "Directors", section: 0)//items: menuItems[0])
         }
         if( role == "Admin" ) {
-            doRoleRemoved(menuText: "Admins", items: menuItems[0])
+            doRoleRemoved(menuText: "Admins", section: 0)//items: menuItems[0])
+        }
+        if( role == "Video Creator" ) {
+            doRoleRemoved(menuText: "Video Chat", section: 1)//items: menuItems[0])
         }
     }
     
@@ -225,13 +233,33 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         tableView?.reloadData()
     }
     
-    // Note the inout modifier below - that's how you can modify a list passed to a function
     // WHY DO WE NEED 'index' ?  AREN'T WE JUST ADDING WHATEVER ITEM TO THE END OF THE LIST
     // REGARDLESS OF HOW BIG THE LIST IS?  (I think so)
-    private func doRoleAdded(menuText: String, items: Array<MenuItem>) {
+//    private func doRoleAdded(menuText: String, items: Array<MenuItem>) {
+//        let itemText = menuText
+//        var alreadyGranted = false
+//        let loop = items
+//        for mi in loop {
+//            if(mi.title == itemText) {
+//                alreadyGranted = true
+//            }
+//        }
+//        if(!alreadyGranted) {
+//            guard let theItem = MenuItems.getItem(withText: itemText) else { //MenuItem(title: itemText)
+//                // TODO this is a problem - no error handling here
+//                return
+//            }
+//            guard menuItems.count > 0 else { return }
+//            menuItems[0].append(theItem)
+//            tableView?.reloadData()
+//        }
+//
+//    }
+    
+    private func doRoleAdded(menuText: String, section: Int) {
         let itemText = menuText
         var alreadyGranted = false
-        let loop = items
+        let loop = menuItems[section]
         for mi in loop {
             if(mi.title == itemText) {
                 alreadyGranted = true
@@ -243,29 +271,52 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
                 return
             }
             guard menuItems.count > 0 else { return }
-            menuItems[0].append(theItem)
+            menuItems[section].append(theItem)
             tableView?.reloadData()
         }
         
     }
     
-    // Note the inout modifier below - that's how you can modify a list passed to a function
-    private func doRoleRemoved(menuText: String, items: Array<MenuItem>) {
+//    private func doRoleRemoved(menuText: String, items: Array<MenuItem>) {
+//        // var cell:Cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section))?
+//        var i = 0
+//        var found = -1
+//        var foundCell : UITableViewCell?
+//        for mi in items {
+//            if(mi.title == menuText) {
+//                found = i
+//                // We either need to put the Video Chat menu item in section 0, or replace the
+//                // hard-coded 0 below with a variable and then figure out what section the removed menu item is in
+//                foundCell = tableView?.cellForRow(at: IndexPath(row: found, section: 0))
+//                break
+//            }
+//            i = i + 1
+//        }
+//
+//        if let fc = foundCell {
+//            self.deleteCell(cell: fc)
+//        }
+//    }
+    
+    private func doRoleRemoved(menuText: String, section: Int) {
         // var cell:Cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section))?
         var i = 0
         var found = -1
         var foundCell : UITableViewCell?
+        let items = menuItems[section]
         for mi in items {
             if(mi.title == menuText) {
                 found = i
-                foundCell = tableView?.cellForRow(at: IndexPath(row: found, section: 0))
+                // We either need to put the Video Chat menu item in section 0, or replace the
+                // hard-coded 0 below with a variable and then figure out what section the removed menu item is in
+                foundCell = tableView?.cellForRow(at: IndexPath(row: found, section: section))
                 break
             }
             i = i + 1
         }
-     
+        
         if let fc = foundCell {
-            self.deleteCell(cell: fc)
+            self.deleteCell(cell: fc, section: section)
         }
     }
 }

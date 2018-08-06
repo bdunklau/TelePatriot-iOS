@@ -62,11 +62,36 @@ class AssignUserVC: BaseViewController {
         return label
     }()
     
+    let volunteerSwitch : UISwitch = {
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        return s
+    }()
+    
     let directorLabel : UILabel = {
         let label = UILabel()
         label.text = "Director"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let directorSwitch : UISwitch = {
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        return s
+    }()
+    
+    let videoCreatorLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Video Creator"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let videoCreatorSwitch : UISwitch = {
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        return s
     }()
     
     let adminLabel : UILabel = {
@@ -76,18 +101,9 @@ class AssignUserVC: BaseViewController {
         return label
     }()
     
-    let volunteerSwitch : UISwitch = {
-        let s = UISwitch(frame: CGRect(x: 200, y: 245, width: 30, height: 10))
-        return s
-    }()
-    
-    let directorSwitch : UISwitch = {
-        let s = UISwitch(frame: CGRect(x: 200, y: 295, width: 30, height: 10))
-        return s
-    }()
-    
     let adminSwitch : UISwitch = {
-        let s = UISwitch(frame: CGRect(x: 200, y: 345, width: 30, height: 10))
+        let s = UISwitch()
+        s.translatesAutoresizingMaskIntoConstraints = false
         return s
     }()
     
@@ -189,11 +205,13 @@ class AssignUserVC: BaseViewController {
         
         view.addSubview(enabledDisabledLabel)
         enabledDisabledLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        enabledDisabledLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 24).isActive = true
+        enabledDisabledLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 16).isActive = true
         
         // just being careful.  We enable this below once the user has been loaded
         enabledDisabledSwitch.isEnabled = false
         view.addSubview(enabledDisabledSwitch)
+        enabledDisabledSwitch.centerYAnchor.constraint(equalTo: enabledDisabledLabel.centerYAnchor, constant: 0).isActive = true
+        enabledDisabledSwitch.leadingAnchor.constraint(equalTo: enabledDisabledLabel.trailingAnchor, constant: 48).isActive = true
         
         /*************
         view.addSubview(deactivateButton)
@@ -203,32 +221,44 @@ class AssignUserVC: BaseViewController {
         
         view.addSubview(instructionsLabel)
         instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        instructionsLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
+        instructionsLabel.topAnchor.constraint(equalTo: enabledDisabledLabel.bottomAnchor, constant: 32).isActive = true
         //instructionsLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         
         view.addSubview(volunteerLabel)
         volunteerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        volunteerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
-        volunteerLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
+        volunteerLabel.topAnchor.constraint(equalTo: instructionsLabel.bottomAnchor, constant: 16).isActive = true
+        //volunteerLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
         
         view.addSubview(volunteerSwitch)
-        // switch placement is done in the declaration of the switch
+        volunteerSwitch.centerYAnchor.constraint(equalTo: volunteerLabel.centerYAnchor, constant: 0).isActive = true
+        volunteerSwitch.leadingAnchor.constraint(equalTo: enabledDisabledSwitch.leadingAnchor, constant: 0).isActive = true
         
         view.addSubview(directorLabel)
         directorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        directorLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 300).isActive = true
+        directorLabel.topAnchor.constraint(equalTo: volunteerLabel.bottomAnchor, constant: 16).isActive = true
         //directorLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
         
         view.addSubview(directorSwitch)
-        // switch placement is done in the declaration of the switch
+        directorSwitch.centerYAnchor.constraint(equalTo: directorLabel.centerYAnchor, constant: 0).isActive = true
+        directorSwitch.leadingAnchor.constraint(equalTo: volunteerSwitch.leadingAnchor, constant: 0).isActive = true
+        
+        view.addSubview(videoCreatorLabel)
+        videoCreatorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        videoCreatorLabel.topAnchor.constraint(equalTo: directorLabel.bottomAnchor, constant: 16).isActive = true
+        
+        view.addSubview(videoCreatorSwitch)
+        videoCreatorSwitch.centerYAnchor.constraint(equalTo: videoCreatorLabel.centerYAnchor, constant: 0).isActive = true
+        videoCreatorSwitch.leadingAnchor.constraint(equalTo: volunteerSwitch.leadingAnchor, constant: 0).isActive = true
+        
         
         view.addSubview(adminLabel)
         adminLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        adminLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 350).isActive = true
+        adminLabel.topAnchor.constraint(equalTo: videoCreatorLabel.bottomAnchor, constant: 16).isActive = true
         //adminLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
         
         view.addSubview(adminSwitch)
-        // switch placement is done in the declaration of the switch
+        adminSwitch.centerYAnchor.constraint(equalTo: adminLabel.centerYAnchor, constant: 0).isActive = true
+        adminSwitch.leadingAnchor.constraint(equalTo: volunteerSwitch.leadingAnchor, constant: 0).isActive = true
         
         
         view.addSubview(has_user_satisfied_legal_label)
@@ -289,6 +319,7 @@ class AssignUserVC: BaseViewController {
             // NOTE: In the database, these are actually stored as strings "true" and "false" - oops
             self.volunteerSwitch.setOn(user.isVolunteer, animated: true)
             self.directorSwitch.setOn(user.isDirector, animated: true)
+            self.videoCreatorSwitch.setOn(user.isVideoCreator, animated: true)
             self.adminSwitch.setOn(user.isAdmin, animated: true)
             
             self.has_signed_petition_segmented_control.selectedSegmentIndex = AssignUserVC.UNKNOWN
@@ -408,6 +439,7 @@ class AssignUserVC: BaseViewController {
         usr.isAdmin = adminSwitch.isOn
         usr.isDirector = directorSwitch.isOn
         usr.isVolunteer = volunteerSwitch.isOn
+        usr.isVideoCreator = videoCreatorSwitch.isOn
         
         if has_signed_petition_segmented_control.selectedSegmentIndex == AssignUserVC.YES {
             usr.has_signed_petition = true

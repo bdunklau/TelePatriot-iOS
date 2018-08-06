@@ -44,9 +44,10 @@ class TPUser {
     var residential_address_zip : String?
     var teams : [Team]?
     
-    var isAdmin = false
-    var isDirector = false
     var isVolunteer = false
+    var isDirector = false
+    var isVideoCreator = false
+    var isAdmin = false
     
     // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
     var accountStatusEventListeners = [AccountStatusEventListener]()
@@ -227,14 +228,17 @@ class TPUser {
             self.residential_address_zip = raz
         }
         if let roles = dictionary["roles"] as? [String:String] {
-            if let adm = roles["Admin"] as? String, adm == "true" {
+            if let adm = roles["Admin"], adm == "true" {
                 self.isAdmin = true
             }
-            if let dir = roles["Director"] as? String, dir == "true" {
+            if let dir = roles["Director"], dir == "true" {
                 self.isDirector = true
             }
-            if let vol = roles["Volunteer"] as? String, vol == "true" {
+            if let vol = roles["Volunteer"], vol == "true" {
                 self.isVolunteer = true
+            }
+            if let r = roles["Video Creator"], r == "true" {
+                self.isVideoCreator = true
             }
         }
         if let cvk = dictionary["current_video_node_key"] as? String {
@@ -382,6 +386,12 @@ class TPUser {
             updatedUserData["users/\(uid)/roles/Volunteer"] = NSNull()
         }
         
+        if isVideoCreator {
+            updatedUserData["users/\(uid)/roles/Video Creator"] = "true"
+        } else {
+            updatedUserData["users/\(uid)/roles/Video Creator"] = NSNull()
+        }
+        
         if let teams = teams, teams.isEmpty {
             // very specific case of deactivating users...
             updatedUserData["users/\(uid)/teams"] = NSNull()
@@ -493,6 +503,11 @@ class TPUser {
                     self.isVolunteer = true
                     self.roleAssigned(role: role)
                 }
+                
+                if (role == "Video Creator" && val?.lowercased() == "true") {
+                    self.isVideoCreator = true
+                    self.roleAssigned(role: role)
+                }
             }
             
         }, withCancel: nil) // not sure what withCancel:nil does.  I know it's saying "no callback".  But when would we cancel this action?
@@ -522,6 +537,11 @@ class TPUser {
                 
                 if (role == "Volunteer") {
                     self.isVolunteer = false
+                    self.roleRemoved(role: role)
+                }
+                
+                if (role == "Video Creator") {
+                    self.isVideoCreator = false
                     self.roleRemoved(role: role)
                 }
                 

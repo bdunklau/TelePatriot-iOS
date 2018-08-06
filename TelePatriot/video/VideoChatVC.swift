@@ -60,6 +60,14 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         return button
     }()
     
+    let revoke_invitation_button : BaseButton = {
+        let button = BaseButton(text: "cancel invitation")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont(name: "Verdana", size: 16)
+        button.addTarget(self, action: #selector(revokeInvitation(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     let connect_button : UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         // have to do this in viewDidLoad() I think - because 'self' isn't available here
@@ -70,25 +78,24 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         return button
     }()
     
-    /********** DON'T DELETE THESE these work but let's take them out for now
-    let cameraButton : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
-        button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named: "cameraOn.png"), for: UIControlState.normal)
-        button.addTarget(self, action: #selector(cameraClicked(_:)), for: .touchUpInside)
-        return button
-    }()
+    /********** DON'T DELETE THESE these work but let's take them out for now  **********/
+//    let cameraButton : UIButton = {
+//        let button = UIButton(type: UIButtonType.custom)
+//        button.backgroundColor = UIColor.clear
+//        button.setImage(UIImage(named: "cameraOn.png"), for: UIControlState.normal)
+//        button.addTarget(self, action: #selector(cameraClicked(_:)), for: .touchUpInside)
+//        return button
+//    }()
+//
+//    let micButton : UIButton = {
+//        let button = UIButton(type: UIButtonType.custom)
+//        button.backgroundColor = UIColor.clear
+//        button.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControlState.normal)
+//        button.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
+//        return buttonf
+//    }()
     
-    let micButton : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
-        button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControlState.normal)
-        button.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
-        return button
-    }()
-     *********/
-    
-    let recordButton : UIButton = {
+    let record_button : UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.backgroundColor = UIColor.clear
         button.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
@@ -96,7 +103,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         return button
     }()
     
-    let publishButton : UIButton = {
+    let publish_button : UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.backgroundColor = UIColor.clear
         button.setImage(UIImage(named: "arrow-upload-icon.png"), for: UIControlState.normal)
@@ -191,11 +198,11 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
 //        buttonSpacing += buttonWidth + spacingConstant
 //        micButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
         buttonSpacing += buttonWidth + spacingConstant
-        recordButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+        record_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
         buttonSpacing += buttonWidth + spacingConstant
-        publishButton.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
-        recordButton.isHidden = true
-        publishButton.isHidden = true
+        publish_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+        record_button.isHidden = true
+        publish_button.isHidden = true
         
         // The below line will give you what you want
         //micButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -206,15 +213,15 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         
         
         remoteViews?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
-        unrid()
+        //unrid()
         view.addSubview(remoteViews!) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
         
         view.addSubview(connect_button)
 //        DON'T DELETE THESE 2
 //        view.addSubview(cameraButton)
 //        view.addSubview(micButton)
-        view.addSubview(recordButton)
-        view.addSubview(publishButton)
+        view.addSubview(record_button)
+        view.addSubview(publish_button)
         
         if let videoChatInstructionsView = videoChatInstructionsView {
             videoChatInstructionsView.removeFromSuperview()
@@ -243,31 +250,27 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         let videoNodeKey = getVideoNodeKey()
         
         // the initial query...
-        Database.database().reference().child("video/list").child(videoNodeKey).observe(.value, with: {(snapshot) in
-            self.videoNode = VideoNode(snapshot: snapshot, vc: self)
-            
-            if let vc = self.videoChatInstructionsView {
-                vc.setVideoNode(videoNode: self.videoNode!)
-            }
-            
-            // TODO pass the whole videoNode object to videoChatInstructionsVC
-            
-//            if let vmd = self.videoNode?.video_mission_description { self.video_mission_description.text = vmd }
-//            if let legislator = self.videoNode?.legislator {
-//                self.editFacebookButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
-//                self.editTwitterButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
-//                self.legislator = legislator
-//                self.legislatorName.text = legislator.full_name
-//                self.state.text = legislator.state.uppercased()
-//                self.chamber.text = legislator.chamber == "lower" ? "HD" : (legislator.chamber == "upper" ? "SD" : "")
-//                self.district.text = legislator.district
-//                let fbButtonText = legislator.legislator_facebook=="" ? "FB: -" : "FB: @\(legislator.legislator_facebook)"
-//                self.facebookButton.setTitle(fbButtonText, for: .normal)
-//                self.fbId = legislator.legislator_facebook_id
-//                let twButtonText = legislator.legislator_twitter=="" ? "TW: -" : "TW: @\(legislator.legislator_twitter)"
-//                self.twitterButton.setTitle(twButtonText, for: .normal)
-//                self.youtubeVideoDescription.text = self.videoNode?.youtube_video_description
-//            }
+        Database.database()
+            .reference()
+            .child("video/list")
+            .child(videoNodeKey)
+            .observe(.value, with: {(snapshot) in
+                
+                self.videoNode = VideoNode(snapshot: snapshot, vc: self)
+                if let vc = self.videoChatInstructionsView {
+                    vc.setVideoNode(videoNode: self.videoNode!)
+                }
+                
+                if let bothPresent = self.videoNode?.bothParticipantsPresent() {
+                    if bothPresent {
+                        print("BOTH PARTICIPANTS READY !!!!!!");
+                        // connect automatically !!!
+                        self.connectIfNotConnected();
+                    }
+                    else {
+                        print("BOTH PARTICIPANTS >>>NOT<<< READY");
+                    }
+                }
         })
     }
     
@@ -289,36 +292,35 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         **********/
     }
     
+    /*****
+     The point of setting 'present' for the participants is so that both participants can know if the other is actually on the
+     VideoChatVC screen.  When both people are on the VideoChatVC screen, we can automatically connect the two people ...because
+     users aren't going to understand the need to connect ...that's a "Vidyo thing".  But if we know both people are actually on
+     the VideoChatVC screen at the same time, we can actually trigger a connect for both of them so they will just instantly see
+     each other
+    ******/
+    override func viewWillAppear(_ animated: Bool) {
+        if let video_node_key = TPUser.sharedInstance.current_video_node_key {
+            let updates = ["present" : true,
+                           "vidyo_token_requested" : true
+            ]
+            Database.database().reference()
+                .child("video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())").updateChildValues(updates)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let video_node_key = TPUser.sharedInstance.current_video_node_key {
+            let path = "video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/present"
+            Database.database().reference().child(path).setValue(false)
+        }
+    }
+    
     private func dismissRotateToLandscapeView() {
         //DispatchQueue.main.async {
         self.rotateToLandscapeMessage.removeFromSuperview()
         self.rotateToLandscapeView?.removeFromSuperview()
         //}
-    }
-    
-    private func rid() {
-        searchIcon.removeFromSuperview()
-        invite_someone_button.removeFromSuperview()
-        guest_name.removeFromSuperview()
-    }
-    
-    // the opposite of rid()  LOL
-    private func unrid() {
-        remoteViews?.addSubview(invite_someone_button)
-        invite_someone_button.topAnchor.constraint(equalTo: remoteViews.topAnchor, constant: 16).isActive = true
-        invite_someone_button.centerXAnchor.constraint(equalTo: remoteViews.centerXAnchor, constant: 0).isActive = true
-        
-        remoteViews?.addSubview(searchIcon)
-        searchIcon.leadingAnchor.constraint(equalTo: invite_someone_button.trailingAnchor, constant: 16).isActive = true
-        searchIcon.centerYAnchor.constraint(equalTo: invite_someone_button.centerYAnchor, constant: 0).isActive = true
-        
-        // guest_name is filled in at very bottom in userSelected()
-        remoteViews?.addSubview(guest_name)
-        guest_name.topAnchor.constraint(equalTo: invite_someone_button.topAnchor, constant:24).isActive = true
-        guest_name.centerXAnchor.constraint(equalTo: invite_someone_button.centerXAnchor, constant:0).isActive = true
-        //guest_name.trailingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant:0).isActive = true
-        guest_name.widthAnchor.constraint(equalTo: (remoteViews?.widthAnchor)!, constant:0.85).isActive = true
-        guest_name.heightAnchor.constraint(equalTo: (remoteViews?.heightAnchor)!, constant:0.5).isActive = true
     }
     
     private func getVideoNodeKey() -> String {
@@ -377,14 +379,14 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     
     
     @objc func connectionClicked(_ sender: Any) {
-        publishButton.isHidden = true
+        publish_button.isHidden = true
         if connected {
             showSpinner()
             if recording {
                 stopRecording()
             }
             // hide the record button
-            self.recordButton.isHidden = true
+            self.record_button.isHidden = true
             
             connector?.disconnect()
             DispatchQueue.main.async { self.dismissSpinner() }
@@ -393,8 +395,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             unrid()
         }
         else {
-            connectClicked(sender)
-            connected = true
+            doConnect()
         }
     }
     
@@ -413,16 +414,16 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     private func startRecording() {
         recording = true
         showSpinner()
-        recordButton.setImage(UIImage(named: "recordstop.png"), for: UIControlState.normal)
+        record_button.setImage(UIImage(named: "recordstop.png"), for: UIControlState.normal)
         createRecordingEvent(request_type: "start recording")
-        publishButton.isHidden = true
+        publish_button.isHidden = true
     }
     
     private func stopRecording() {
         recording = false
-        recordButton.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
+        record_button.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
         createRecordingEvent(request_type: "stop recording")
-        publishButton.isHidden = false
+        publish_button.isHidden = false
     }
     
     private func createRecordingEvent(request_type: String) {
@@ -441,12 +442,11 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         Database.database().reference().child("video/video_events").childByAutoId().setValue(recording_request)
     }
     
-    
-    // TROUBLESHOOTING...
-    // https://support.vidyocloud.com/hc/en-us/sections/115000596414-Testing-and-Troubleshooting
-    // https://support.vidyocloud.com/hc/en-us/articles/218309687-I-see-no-video-just-a-black-window-or-receive-a-DirectX-error
-    @objc func connectClicked(_ sender: Any) {
-        doConnect()
+    private func connectIfNotConnected() {
+        if(!connected) {
+            doConnect();
+        }
+        else { print("already connected to Vidyo server") }
     }
     
     private func getSpinner() {
@@ -469,57 +469,104 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     }
     
     private func doConnect() {
-        rid()
-        
-        getSpinner()
-        showSpinner()
+        guard let videoNode = videoNode,
+              let me = videoNode.video_participants[TPUser.sharedInstance.getUid()],
+              let mytoken = me.vidyo_token
+            else {
+            return
+        }
         
         // The room_id will NOT be nil if the user is coming to this screen from accepting a video invitation
         // See extension CenterViewController : VideoInvitationDelegate
         if room_id == nil {
             room_id = TPUser.sharedInstance.current_video_node_key
         }
-        let name = TPUser.sharedInstance.getUid()
-        guard let escapedString = name.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            return }
-        let urlString = "https://us-central1-telepatriot-bd737.cloudfunctions.net/generateVidyoToken?userName=\(escapedString)"
-        guard let url = URL(string: urlString) else {
-            return }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
-        // TODO need to handle errors.  If there's an error, we want the green call button back
-        // We don't want the UI to show the red hang up button if we aren't actually connected
-        let task = session.dataTask(with: request) { (data, response, responseError) in
+        rid()
+    
+        getSpinner()
+        showSpinner()
+    
+        DispatchQueue.main.async {
             
-            let str = String(describing: type(of: data))
-            print( "data is: \(str)"  )
+            self.connector?.connect("prod.vidyo.io",
+                                    token: mytoken,
+                                    displayName: TPUser.sharedInstance.getName(),
+                                    resourceId: self.room_id,
+                                    connectorIConnect: self)
             
-            let decoder = JSONDecoder()
-            guard let tokenResponse = try? decoder.decode([String:String].self, from: data!) else {
-                return }
+            self.connect_button.setImage(UIImage(named: "callEnd.png"), for: UIControlState.normal)
             
-            DispatchQueue.main.async {
-                guard let token = tokenResponse["token"] else { return }
-                
-                self.connector?.connect("prod.vidyo.io",
-                                        token: token,
-                                        displayName: TPUser.sharedInstance.getName(),
-                                        resourceId: self.room_id,
-                                        connectorIConnect: self)
-                
-                self.connect_button.setImage(UIImage(named: "callEnd.png"), for: UIControlState.normal)
-                
-                // show the record button
-                self.recordButton.isHidden = false
-                self.dismissSpinner()
-            }
+            self.connected = true
+            self.connector?.setCameraPrivacy(false)
+            
+            // show the record button
+            self.record_button.isHidden = false
+            self.dismissSpinner()
         }
         
-        task.resume()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        // The room_id will NOT be nil if the user is coming to this screen from accepting a video invitation
+//        // See extension CenterViewController : VideoInvitationDelegate
+//        if room_id == nil {
+//            room_id = TPUser.sharedInstance.current_video_node_key
+//        }
+//        let name = TPUser.sharedInstance.getUid()
+//        guard let escapedString = name.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+//            return }
+//        let urlString = "https://us-central1-telepatriot-bd737.cloudfunctions.net/generateVidyoToken?userName=\(escapedString)"
+//        guard let url = URL(string: urlString) else {
+//            return }
+//        
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "GET"
+//        
+//        let config = URLSessionConfiguration.default
+//        let session = URLSession(configuration: config)
+//        // TODO need to handle errors.  If there's an error, we want the green call button back
+//        // We don't want the UI to show the red hang up button if we aren't actually connected
+//        let task = session.dataTask(with: request) { (data, response, responseError) in
+//            
+//            let str = String(describing: type(of: data))
+//            print( "data is: \(str)"  )
+//            
+//            let decoder = JSONDecoder()
+//            guard let tokenResponse = try? decoder.decode([String:String].self, from: data!) else {
+//                return }
+//            
+//            DispatchQueue.main.async {
+//                guard let token = tokenResponse["token"] else { return }
+//                
+//                self.connector?.connect("prod.vidyo.io",
+//                                        token: token,
+//                                        displayName: TPUser.sharedInstance.getName(),
+//                                        resourceId: self.room_id,
+//                                        connectorIConnect: self)
+//                
+//                self.connect_button.setImage(UIImage(named: "callEnd.png"), for: UIControlState.normal)
+//                
+//                self.connected = true
+//                self.connector?.setCameraPrivacy(false)
+//                
+//                // show the record button
+//                self.recordButton.isHidden = false
+//                self.dismissSpinner()
+//            }
+//        }
+//        
+//        task.resume()
     }
     
     // MARK: - VCIConnect delegate methods
@@ -610,6 +657,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
             newParticipantNameLabel.shadowOffset = CGSize(width: 1, height: 1)
             newParticipantNameLabel.font = newParticipantNameLabel.font.withSize(14)
             newRemoteView.addSubview(newParticipantNameLabel)
+            // still need to add constraints here - that's why it's not showing up yet
             
             self.refreshUI()
         }
@@ -643,6 +691,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     func onLocalCameraAdded(_ localCamera: VCLocalCamera!) {
         if ((localCamera) != nil) {
             self.localCameraView?.isHidden = false
+            localCamera.setPreviewLabel(TPUser.sharedInstance.getName())
             DispatchQueue.main.async {
                 
                 if let w = self.localCameraView?.frame.size.width, let h = self.localCameraView?.frame.size.height {
@@ -664,7 +713,7 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
     }
     
     func onLocalCameraSelected(_ localCamera: VCLocalCamera!) {
-        
+        print("onLocalCameraSelected")
     }
     
     func onLocalCameraStateUpdated(_ localCamera: VCLocalCamera!, state: VCDeviceState) {
@@ -758,15 +807,89 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
 //            cameraMuted = !cameraMuted
 //            self.cameraButton.setImage(UIImage(named: "cameraOn.png"), for: .normal)
 //            connector?.setCameraPrivacy(cameraMuted)
-//            self.selfView?.isHidden = cameraMuted
+//            self.localCameraView?.isHidden = cameraMuted
 //        } else {
 //            cameraMuted = !cameraMuted
 //            self.cameraButton.setImage(UIImage(named: "cameraOff.png"), for: .normal)
 //            connector?.setCameraPrivacy(cameraMuted)
-//            self.selfView?.isHidden = cameraMuted
+//            self.localCameraView?.isHidden = cameraMuted
 //        }
 //    }
     
+    private func rid() {
+        searchIcon.removeFromSuperview()
+        invite_someone_button.removeFromSuperview()
+        guest_name.removeFromSuperview()
+        revoke_invitation_button.removeFromSuperview()
+    }
+    
+    // the opposite of rid()  LOL
+    private func unrid() {
+        if let extended_to = videoNode?.video_invitation_extended_to {
+            invite_someone_button.removeFromSuperview()
+            searchIcon.removeFromSuperview()
+            
+            // guest_name is filled in at very bottom in userSelected()
+            remoteViews?.addSubview(guest_name)
+            guest_name.text = "You have invited \(extended_to) to participate in a video chat"
+            guest_name.topAnchor.constraint(equalTo: (remoteViews?.topAnchor)!, constant:24).isActive = true
+            guest_name.leadingAnchor.constraint(equalTo: (remoteViews?.leadingAnchor)!, constant:8).isActive = true
+            guest_name.widthAnchor.constraint(equalTo: (remoteViews?.widthAnchor)!, constant:0.85).isActive = true
+            //guest_name.heightAnchor.constraint(equalTo: (remoteViews?.heightAnchor)!, constant:0.5).isActive = true
+            
+            remoteViews?.addSubview(revoke_invitation_button)
+            revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
+            revoke_invitation_button.centerXAnchor.constraint(equalTo: guest_name.centerXAnchor, constant:0).isActive = true
+        }
+        else {
+            remoteViews?.addSubview(invite_someone_button)
+            invite_someone_button.topAnchor.constraint(equalTo: remoteViews.topAnchor, constant: 16).isActive = true
+            invite_someone_button.centerXAnchor.constraint(equalTo: remoteViews.centerXAnchor, constant: 0).isActive = true
+            
+            remoteViews?.addSubview(searchIcon)
+            searchIcon.leadingAnchor.constraint(equalTo: invite_someone_button.trailingAnchor, constant: 16).isActive = true
+            searchIcon.centerYAnchor.constraint(equalTo: invite_someone_button.centerYAnchor, constant: 0).isActive = true
+            
+            guest_name.removeFromSuperview()
+            revoke_invitation_button.removeFromSuperview()
+        }
+        
+        
+    }
+    
+    
+    // TODO these next 2 funcs are a lot like rid() and unrid() - need to consolidate
+    func videoInvitationExtended(name: String) {
+        // remove the "invite someone" button - because now an invitation has already been extended
+        invite_someone_button.removeFromSuperview()
+        searchIcon.removeFromSuperview() // remove this for the same reason
+        
+        remoteViews?.addSubview(guest_name)
+        guest_name.text = "You have invited \(name) to participate in a video chat"
+        guest_name.topAnchor.constraint(equalTo: (remoteViews?.topAnchor)!, constant:24).isActive = true
+        guest_name.leadingAnchor.constraint(equalTo: (remoteViews?.leadingAnchor)!, constant:8).isActive = true
+        guest_name.widthAnchor.constraint(equalTo: (remoteViews?.widthAnchor)!, constant:0.85).isActive = true
+        //guest_name.heightAnchor.constraint(equalTo: (remoteViews?.heightAnchor)!, constant:0.5).isActive = true
+        
+        remoteViews?.addSubview(revoke_invitation_button)
+        revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
+        revoke_invitation_button.centerXAnchor.constraint(equalTo: guest_name.centerXAnchor, constant:0).isActive = true
+    }
+    
+    
+    // TODO this func and the one above are a lot like rid() and unrid() - need to consolidate
+    func videoInvitationNotExtended() {
+        remoteViews?.addSubview(invite_someone_button)
+        invite_someone_button.topAnchor.constraint(equalTo: remoteViews.topAnchor, constant: 16).isActive = true
+        invite_someone_button.centerXAnchor.constraint(equalTo: remoteViews.centerXAnchor, constant: 0).isActive = true
+        
+        remoteViews?.addSubview(searchIcon)
+        searchIcon.leadingAnchor.constraint(equalTo: invite_someone_button.trailingAnchor, constant: 16).isActive = true
+        searchIcon.centerYAnchor.constraint(equalTo: invite_someone_button.centerYAnchor, constant: 0).isActive = true
+        
+        guest_name.removeFromSuperview()
+        revoke_invitation_button.removeFromSuperview()
+    }
     
     
     // These next two functions kinda go together.  This first one pops up the Search Users screen
@@ -775,21 +898,52 @@ VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLocalSpeakerEv
         if let vc = getAppDelegate().searchUsersVC {
             vc.modalPresentationStyle = .popover
             vc.searchUsersDelegate = self
-            centerViewController?.doView(vc: vc)
+//            centerViewController?.doView(vc: vc)
+            self.present(vc, animated: true, completion:nil)
         }
     }
+    
     
     // This second function is what gets called when you choose a user from SearchUsersVC
     // Notice in the method above that we made 'self' the delegate of SearchUsersVC
     // per SearchUsersDelegate
     func userSelected(user: TPUser) {
+        if let vc = getAppDelegate().searchUsersVC {
+            vc.dismiss(animated: false, completion: nil)
+        }
+        
         // We want to write this user and the current user to /video/invitations
         if let vid = TPUser.sharedInstance.current_video_node_key {
             let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guest: user, video_node_key: vid)
-            videoInvitation.save()
-            centerViewController?.doView(vc: self)
-            guest_name.text = "You have invited \(user.getName()) to participate in a video chat"
+            let video_invitation_key = videoInvitation.save()
+            videoNode?.video_invitation_key = video_invitation_key
+            
+            // now write the video_invitation_key to the video node so that we can revoke the invitation later if we want to
+            let data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
+                        "video/list/\(vid)/video_invitation_extended_to" : user.getName() ]
+            Database.database().reference().updateChildValues(data)
         }
     }
+    
+    
+    // revoke_invitation_button should only be displayed when an invitation has been extended
+    @objc private func revokeInvitation(_ sender: UIButton) {
+        
+        if let videoNode = videoNode, let video_invitation_key = videoNode.video_invitation_key {
+            let updatedData = ["video/list/\(videoNode.getKey())/video_invitation_key": nil,
+                               "video/list/\(videoNode.getKey())/video_invitation_extended_to": nil,
+                               "video/invitations/\(String(describing: video_invitation_key))": nil
+                ] as [String : Any?]
+            
+            // example of multi-path update
+            Database.database().reference().updateChildValues(updatedData, withCompletionBlock: { (error, ref) -> Void in
+                // don't really need to do anything on successful save - just left this as a reminder of how to do stuff on completion
+                self.dismiss(animated: true, completion: nil)
+            })
+            
+        }
+        
+    }
+    
 
 }

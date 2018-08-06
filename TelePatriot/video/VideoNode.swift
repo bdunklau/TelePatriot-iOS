@@ -16,7 +16,7 @@ class VideoNode {
     var node_create_date : String
     var node_create_date_ms : Int64
     
-    var video_participants = [VideoParticipant]()
+    var video_participants = [String:VideoParticipant]()
     
     var video_type : String?
     var video_id : String?
@@ -32,11 +32,20 @@ class VideoNode {
     
     var legislator : Legislator?
     
+    var video_invitation_key : String?
+    var video_invitation_extended_to : String? // someone's name
+    
+    // The "What do you want to do with your video" fields...
+    // all true by default and the user can set them to false in the VidyoChatFragment if he doesn't like them
+    var email_to_legislator = true;
+    var post_to_facebook = true;
+    var post_to_twitter = true;
+    
     // custom init method
     init(creator: TPUser, type: VideoType?) {
         node_create_date = Util.getDate_Day_MMM_d_hmmss_am_z_yyyy()
         node_create_date_ms = Util.getDate_as_millis()
-        video_participants.append(VideoParticipant(user: creator))
+        video_participants[creator.getUid()] = VideoParticipant(user: creator)
         if let t = type {
             video_type = t.type
             video_mission_description = t.video_mission_description
@@ -68,7 +77,7 @@ class VideoNode {
             }
             else { node_create_date_ms = 0 }
             
-            if let vps = dictionary["video_participants"] as? [[String:Any]] {
+            if let vps = dictionary["video_participants"] as? [String:[String:Any]] {
                 video_participants = VideoParticipant.parseParticipants(list: vps)
             }
             // no else required, the list is initialized not nil and empty
@@ -132,12 +141,51 @@ class VideoNode {
                 legislator = Legislator(data: dictionary)
             }
             
+            if let vik = dictionary["video_invitation_key"] as? String {
+                video_invitation_key = vik
+                
+                if let vie = dictionary["video_invitation_extended_to"] as? String {
+                    video_invitation_extended_to = vie
+                    vc.videoInvitationExtended(name: vie)
+                }
+                else {
+                    vc.videoInvitationExtended(name: "someone") // this doesn't make much sense and indicates an erroneous error state
+                }
+            }
+            else {
+                vc.videoInvitationNotExtended()
+            }
+            
+            if let x = dictionary["email_to_legislator"] as? Bool {
+                email_to_legislator = x
+            }
+            
+            if let x = dictionary["post_to_facebook"] as? Bool {
+                post_to_facebook = x
+            }
+            
+            if let x = dictionary["post_to_twitter"] as? Bool {
+                post_to_twitter = x
+            }
+            
+            
          }
         else {
             node_create_date = "-"
             node_create_date_ms = 0
             video_mission_description = "-"
         }
+    }
+    
+    
+    func bothParticipantsPresent() -> Bool {
+        var count = 0
+        for vp in video_participants {
+            if vp.value.present {
+                count += 1
+            }
+        }
+        return count == 2
     }
     
     
@@ -153,6 +201,7 @@ class VideoNode {
             return key!
         }
     }
+    
     
     func dictionary() -> [String: Any] {
         return [
@@ -179,15 +228,21 @@ class VideoNode {
             "legislator_facebook_id" : legislator?.legislator_facebook_id,
             "legislator_twitter" : legislator?.legislator_twitter,
             "legislator_email" : legislator?.email,
-            "legislator_phone" : legislator?.phone
+            "legislator_phone" : legislator?.phone,
+            "video_invitation_key" : video_invitation_key,
+            "email_to_legislator" : email_to_legislator,
+            "post_to_facebook" : post_to_facebook,
+            "post_to_twitter" : post_to_twitter
         ]
     }
     
     // returns an array/collection of dictionaries
-    private func dictionaries(list: [VideoParticipant]) -> [[String: Any]] {
-        var dictionaries = [Dictionary<String, Any>]()
-        for item in list {
-            dictionaries.append(item.dictionary())
+    private func dictionaries(list: [String: VideoParticipant]) -> [String: Any] {
+        var dictionaries = [String: Any]()
+        for key in list.keys {
+            if let vp = list[key] {
+                dictionaries[vp.uid] = vp.dictionary()
+            }
         }
         return dictionaries
     }
