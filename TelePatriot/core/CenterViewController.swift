@@ -536,9 +536,9 @@ extension CenterViewController : MissionDetailsDelegate {
 }
 
 extension CenterViewController : VideoInvitationDelegate {
-    func videoInvitationSelected(invitation: [String:Any]) {
+    func videoInvitationSelected(invitation: VideoInvitation) {
         guard let vc = delegate?.getVideoChatViewController(),
-            let room_id = invitation["room_id"] as? String
+            let room_id = invitation.room_id
             else { return }
         vc.room_id = room_id
         doView(vc: vc, viewControllers: self.childViewControllers)

@@ -424,11 +424,16 @@ class TPUser {
     
     func setCurrent_video_node_key(current_video_node_key: String) {
         if let uid = uid {
-            var data = ["users/\(uid)/current_video_node_key": current_video_node_key] as [String : String]
+            // TODO this is a hack I added so the the video_node_key would be immediately available when the user
+            // accepts a video invitation from VideoInvitationsVC.  If this field isn't set immediately, there's a possibility
+            // that a new video node will be created in VideoChatVC.getVideoNodeKey()
+            self.current_video_node_key = current_video_node_key
+            
+            let data = ["users/\(uid)/current_video_node_key": current_video_node_key] as [String : String]
             // Do a multi-path update even though just one path
             databaseRef?.updateChildValues(data, withCompletionBlock: { (error, ref) -> Void in
                 if error == nil {
-                    self.current_video_node_key = current_video_node_key
+                    self.current_video_node_key = current_video_node_key // unnecessary given the hack above
                 }
             })
         }
@@ -443,12 +448,12 @@ class TPUser {
         
         databaseRef?.child("users").child(uid).child("current_team").queryLimited(toFirst: 1).observe(.value, with: {(snapshot) in
             guard let teamNode = snapshot.value as? [String: [String:String]] else {
-                print(snapshot.value)
+                print(snapshot.value as Any)
                 print("snapshot.value above")
                 return
             }
             
-            for (team_name_as_key, teamAttributes) in teamNode {
+            for (_, teamAttributes) in teamNode {
                 guard let team_name = teamAttributes["team_name"] else {
                     return
                 }

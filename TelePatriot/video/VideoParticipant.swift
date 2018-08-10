@@ -25,7 +25,8 @@ struct VideoParticipant {
     var end_date_ms : Int64?
     var role : String? //(interviewer, interviewee, other?)
     var present = true // indicates that the user is "present" on the video chat screen
-    var vidyo_token : String?
+//    var vidyo_token : String? // don't use this anymore
+    var twilio_token : String?
     
     
     // this custom init method makes it so that...
@@ -98,8 +99,11 @@ struct VideoParticipant {
         if let p = data["present"] as? Bool {
             present = p
         }
-        if let tk = data["vidyo_token"] as? String {
-            vidyo_token = tk
+//        if let tk = data["vidyo_token"] as? String { // don't use anymore
+//            vidyo_token = tk
+//        }
+        if let val = data["twilio_token"] as? String {
+            twilio_token = val
         }
     }
     
@@ -131,7 +135,12 @@ struct VideoParticipant {
             "end_date_ms": end_date_ms,
             "role": role,
             "present": present,
-            "vidyo_token": vidyo_token
+//            "vidyo_token": vidyo_token  // don't use this anymore
+            "twilio_token": twilio_token
         ]
+    }
+    
+    func isConnected() -> Bool {
+        return connect_date != nil && disconnect_date == nil
     }
 }

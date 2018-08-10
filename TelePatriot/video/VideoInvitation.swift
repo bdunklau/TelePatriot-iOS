@@ -89,6 +89,7 @@ class VideoInvitation {
         guard let dictionary = snapshot.value as? [String : Any] else {
             return
         }
+        key = snapshot.key
         if let val = dictionary["guest_id"] as? String {
             guest_id = val
         }
@@ -139,6 +140,17 @@ class VideoInvitation {
         }
     }
     
+    static func createInvitations(snapshot: DataSnapshot) -> [VideoInvitation] {
+        var invitations = [VideoInvitation]()
+        let children = snapshot.children
+        var counter = 0
+        while let snap = children.nextObject() as? DataSnapshot {
+            let invitation = VideoInvitation(snapshot: snap)
+            invitations.append(invitation)
+        }
+        return invitations
+    }
+    
     func save() -> String? {
         if let initiator_id = initiator_id, let guest_id = guest_id {
             let key = "initiator\(initiator_id)guest\(guest_id)"
@@ -182,5 +194,49 @@ class VideoInvitation {
         
         return dict
         
+    }
+    
+    func delete() {
+        if let video_node_key = video_node_key,
+            let guest_id = guest_id,
+            let key = key {
+            
+            let updates = [
+                "video/list/\(video_node_key)/video_invitation_key":  nil,
+                "video/list/\(video_node_key)/video_invitation_extended_to":  nil,
+                "video/list/\(video_node_key)/video_participants/\(guest_id)":  nil,
+                "video/invitations/\(key)":  nil,
+                "users/\(guest_id)/current_video_node_key":  nil,
+            ] as [String : Any?]
+            
+            Database.database().reference().updateChildValues(updates)
+        }
+    }
+    
+    func decline() {
+        delete()
+    }
+    
+    func accept() {
+        if let video_node_key = video_node_key {
+            TPUser.sharedInstance.setCurrent_video_node_key(current_video_node_key: video_node_key)
+            
+            var updates : [String:Any] = [:]
+            // if user already has a current video node, set 'present' on that node to false
+            if let vk = TPUser.sharedInstance.current_video_node_key {
+                updates["video/list/\(vk)/video_participants/\(TPUser.sharedInstance.getUid())/present"] = false
+            }
+            
+            let vp = VideoParticipant(user: TPUser.sharedInstance)
+            for (key, value) in vp.dictionary() {
+                updates["video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/\(key)"] = value
+            }
+            // triggers creating of vidyo token...
+            updates["video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/present"] = true
+            updates["video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/vidyo_token_requested"] = true
+            
+            updates["video/list/\(video_node_key)/room_id"] = room_id
+            Database.database().reference().updateChildValues(updates)
+        }
     }
 }

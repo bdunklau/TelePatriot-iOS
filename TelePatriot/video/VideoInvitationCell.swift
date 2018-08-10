@@ -47,6 +47,25 @@ class VideoInvitationCell: UITableViewCell {
     }()
     
     
+    let decline_invitation_button : BaseButton = {
+        let button = BaseButton(text: "Decline")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        //button.addTarget(self, action: #selector(declineInvitation(_:)), for: .touchUpInside)
+        return button
+    }()
+
+
+    let accept_invitation_button : BaseButton = {
+        let button = BaseButton(text: "Accept")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        //button.addTarget(self, action: #selector(acceptInvitation(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    var invitation : VideoInvitation?
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -54,30 +73,37 @@ class VideoInvitationCell: UITableViewCell {
     }
     
     // In Android, the class is MissionHolder
-    func commonInit(invitation: [String:Any]) {
+//    func commonInit(invitation: [String:Any]) {
+    func commonInit(invitation: VideoInvitation) {
         
-        if let name = invitation["initiator_name"] as? String {
-            descr.text = "\(name) has invited you to participate in a video chat"
-        }
+        self.invitation = invitation
         
-        if let date = invitation["invitation_create_date"] as? String {
-            invdate.text = date
+        if let initiator_name = invitation.initiator_name {
+            descr.text = "\(initiator_name) has invited you to participate in a video chat"
+            invdate.text = invitation.invitation_create_date
         }
         
         self.addSubview(headerLabel)
+        headerLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
         headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
-        headerLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 32).isActive = true
         
         addSubview(invdate)
-        invdate.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-8).isActive = true
         invdate.bottomAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant:0).isActive = true
+        invdate.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-16).isActive = true
         
         self.addSubview(descr)
-        descr.leadingAnchor.constraint(equalTo: headerLabel.leadingAnchor, constant: -4).isActive = true
         descr.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 8).isActive = true
+        descr.leadingAnchor.constraint(equalTo: headerLabel.leadingAnchor, constant: -4).isActive = true
         descr.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
         //descr.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
         
+        self.addSubview(decline_invitation_button)
+        decline_invitation_button.topAnchor.constraint(equalTo: descr.bottomAnchor, constant: 8).isActive = true
+        decline_invitation_button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32).isActive = true
+        
+        self.addSubview(accept_invitation_button)
+        accept_invitation_button.topAnchor.constraint(equalTo: descr.bottomAnchor, constant: 8).isActive = true
+        accept_invitation_button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32).isActive = true
     }
     
 }

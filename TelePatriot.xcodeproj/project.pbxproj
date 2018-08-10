@@ -70,7 +70,9 @@
 		A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA72014031A00EF0766 /* LegislatorUI.swift */; };
 		A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */; };
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
+		A13F8263211E058E00300C01 /* VideoChatVC_Vidyo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F8262211E058E00300C01 /* VideoChatVC_Vidyo.swift */; };
 		A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */; };
+		A14187A52119F63E00524966 /* VideoEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14187A42119F63E00524966 /* VideoEvent.swift */; };
 		A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */; };
 		A149B9A5210B55B500ACE10C /* VideoChatInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
@@ -172,7 +174,9 @@
 		A13F7AA72014031A00EF0766 /* LegislatorUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegislatorUI.swift; sourceTree = "<group>"; };
 		A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeTableViewCell.swift; sourceTree = "<group>"; };
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
+		A13F8262211E058E00300C01 /* VideoChatVC_Vidyo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatVC_Vidyo.swift; sourceTree = "<group>"; };
 		A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNeededView.swift; sourceTree = "<group>"; };
+		A14187A42119F63E00524966 /* VideoEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEvent.swift; sourceTree = "<group>"; };
 		A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialMediaVC.swift; sourceTree = "<group>"; };
 		A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatInstructionsView.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
@@ -396,11 +400,13 @@
 				A134E53D206C66AB00FEDBE6 /* RemoteViewLayout.swift */,
 				A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */,
 				A134E52F206B20D800FEDBE6 /* VideoChatVC.swift */,
+				A13F8262211E058E00300C01 /* VideoChatVC_Vidyo.swift */,
+				A14187A42119F63E00524966 /* VideoEvent.swift */,
 				A1E8D86A2075A94D00E4F720 /* VideoNode.swift */,
-				A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */,
 				A137720420CCC77300566AFE /* VideoInvitation.swift */,
 				A137720820D086FF00566AFE /* VideoInvitationCell.swift */,
 				A137720620D0200000566AFE /* VideoInvitationsVC.swift */,
+				A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */,
 				A13187B2207730690048FE95 /* VideoType.swift */,
 			);
 			path = video;
@@ -622,6 +628,7 @@
 				A134C1B02017EFB500B64939 /* CallLegislatorEvent.swift in Sources */,
 				A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */,
 				A1369CAC1FE9C845008B426D /* NoMissionVC.swift in Sources */,
+				A13F8263211E058E00300C01 /* VideoChatVC_Vidyo.swift in Sources */,
 				A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */,
 				A137720920D086FF00566AFE /* VideoInvitationCell.swift in Sources */,
 				A109E8AD1FC565E60005517A /* MenuItem.swift in Sources */,
@@ -668,6 +675,7 @@
 				A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */,
 				A13118A01FE62B710031D9AE /* TeamTableViewCell.swift in Sources */,
 				A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */,
+				A14187A52119F63E00524966 /* VideoEvent.swift in Sources */,
 				A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */,
 				A1E8D86B2075A94D00E4F720 /* VideoNode.swift in Sources */,
 				A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */,

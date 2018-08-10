@@ -25,6 +25,8 @@ class VideoNode {
     var youtube_video_description_unevaluated : String?
     
     var video_mission_description : String
+    
+    var recording_requested : Bool? // See google-cloud:dockerRequest - for the spinner while the recorder is starting up
     var recording_started : String?
     var recording_started_ms : Int64?
     var recording_stopped : String?
@@ -119,9 +121,13 @@ class VideoNode {
             }
             else { video_mission_description = "-" }
             
+            if let val = dictionary["recording_requested"] as? Bool {
+                recording_requested = val
+            }
+            
             if let vrbd = dictionary["recording_started"] as? String {
                 recording_started = vrbd
-                vc.recordingStarted()
+                //vc.recordingStarted()
             }
             
             if let vrbdm = dictionary["recording_started_ms"] as? Int64 {

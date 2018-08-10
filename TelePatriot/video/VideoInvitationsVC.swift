@@ -19,7 +19,7 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
     //var ref: DatabaseReference!
     // your data source, you can replace this with your own model if you wish
     //var items = [DataSnapshot]()
-    var invitations = [[String:Any]]()
+    var invitations = [VideoInvitation]()
     
     var invitationDelegate : VideoInvitationDelegate? // defined at bottom
     
@@ -32,7 +32,24 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        query = Database.database().reference().child("video/invitations").queryOrdered(byChild: "guest_id").queryEqual(toValue: TPUser.sharedInstance.getUid())
+        //query =
+        Database.database().reference().child("video/invitations").queryOrdered(byChild: "guest_id").queryEqual(toValue: TPUser.sharedInstance.getUid())
+            .observe(.value, with: {(snapshot) in
+                guard let dictionary = snapshot.value as? [String : Any] else {
+                    self.invitations = [VideoInvitation]()
+                    DispatchQueue.main.async { self.invitationTable?.reloadData() }
+                    return
+                }
+                // dictionary is a collection of key value pairs.  The keys are the really long video invitation key
+                // The value mapped to each key is the itself a collection of key/value pairs - they are the attribute names
+                // and values of each invitation
+                self.invitations = VideoInvitation.createInvitations(snapshot: snapshot)
+                
+                DispatchQueue.main.async {
+                    self.invitationTable?.reloadData()
+                }
+                
+            }, withCancel: nil)
         
         invitationTable = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         invitationTable?.dataSource = self
@@ -40,72 +57,8 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
         invitationTable?.register(VideoInvitationCell.self, forCellReuseIdentifier: "cellId")
         invitationTable?.rowHeight = 120
         view.addSubview(invitationTable!)
-        
-        fetchInvitations()
     }
     
-    
-    // I don't know if we really need to have 3 separate queries.  I bet we can do a single query listening
-    // for .value
-    func fetchInvitations() {
-        
-        print("fetchInvitations: =======================")
-        invitations.removeAll() // start "fresh" each time - not every view controller does this - case by case basis - whatever works, ultimately
-        
-        // On this event, get the data out of the snapshot and update the corresponding Invitation
-        // item in the 'missions' list
-        query?.observe(.childChanged, with: {(snapshot) in
-            /*********
-            guard let missionFromSnapshot = self.getMissionSummaryFromSnapshot(snapshot: snapshot) else {
-                return
-            }
-            
-            guard let missionFromList = self.getMissionFromList(missions: self.missions, mission: missionFromSnapshot) else {
-                return
-            }
-            
-            missionFromList.updateWith(mission: missionFromSnapshot)
-            **********/
-            DispatchQueue.main.async{
-                self.invitationTable?.reloadData()
-            }
-            
-        }, withCancel: nil)
-        
-        
-        
-        query?.observe(.childAdded, with: {(snapshot) in
-            
-            print("fetchMissions: childAdded")
-            
-            guard let dictionary = snapshot.value as? [String : Any] else {
-                //print("getMissionSummaryFromSnapshot: could not get dictionary from snapshot.value, return nil early")
-                return
-            }
-            
-            self.invitations.insert(dictionary, at: 0)  // this is what makes the most recent missions show up at the top
-            DispatchQueue.main.async{
-                self.invitationTable?.reloadData()
-            }
-            
-        }, withCancel: nil)
-        
-        
-        // if an invitation is revoked...
-        query?.observe(.childRemoved, with: {(snapshot) in
-            /*************
-            guard let missionFromSnapshot = self.getMissionSummaryFromSnapshot(snapshot: snapshot),
-                let idx = self.getMissionIndex(missions: self.missions, mission: missionFromSnapshot) else {
-                    return
-            }
-            self.missions.remove(at: idx)
-             **********/
-            DispatchQueue.main.async{
-                self.invitationTable?.reloadData()
-            }
-            
-        }, withCancel: nil)
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invitations.count
@@ -116,9 +69,14 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
         let cell = invitationTable?.dequeueReusableCell(withIdentifier: "cellId",
                                                                 for: indexPath as IndexPath) as! VideoInvitationCell
         
-        
         let invitation = invitations[indexPath.row]
         cell.commonInit(invitation: invitation)
+        cell.accept_invitation_button.tag = indexPath.row
+        cell.accept_invitation_button.addTarget(self, action: #selector(acceptInvitation(_:)), for: .touchUpInside)
+        cell.decline_invitation_button.tag = indexPath.row
+        cell.decline_invitation_button.addTarget(self, action: #selector(declineInvitation(_:)), for: .touchUpInside)
+        
+        //button.addTarget(self, action: #selector(acceptInvitation(_:)), for: .touchUpInside)
         
         return cell
     }
@@ -129,8 +87,17 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
         invitationDelegate?.videoInvitationSelected(invitation: invitation)
     }
     
+    @objc func declineInvitation(_ sender:UIButton) {
+        invitations[sender.tag].delete()
+    }
+    
+    @objc func acceptInvitation(_ sender:UIButton) {
+        invitations[sender.tag].accept()
+        invitationDelegate?.videoInvitationSelected(invitation: invitations[sender.tag])
+    }
+    
 }
 
 protocol VideoInvitationDelegate {
-    func videoInvitationSelected(invitation: [String:Any])
+    func videoInvitationSelected(invitation: VideoInvitation)
 }
