@@ -23,14 +23,18 @@ class VideoNode {
     var video_title : String?
     var youtube_video_description : String?
     var youtube_video_description_unevaluated : String?
-    
     var video_mission_description : String
+    
+    var room_id : String?
+    var room_sid_record : String?
+    var room_sid : String? // the twilio RoomSid
     
     var recording_requested : Bool? // See google-cloud:dockerRequest - for the spinner while the recorder is starting up
     var recording_started : String?
     var recording_started_ms : Int64?
     var recording_stopped : String?
     var recording_stopped_ms : Int64?
+    var recording_completed = false
     
     var legislator : Legislator?
     
@@ -42,6 +46,13 @@ class VideoNode {
     var email_to_legislator = true;
     var post_to_facebook = true;
     var post_to_twitter = true;
+    
+    // These attributes are sent back to us from twilio.  Twilio calls twilioCallback() in twilio-telepatriot.js
+    // see video/video_events and /testViewVideoEvents
+    var composition_PercentageDone : Int?
+    var composition_SecondsRemaining : Int?
+    var composition_MediaUri : String?
+    var composition_CompositionSid : String?
     
     // custom init method
     init(creator: TPUser, type: VideoType?) {
@@ -62,6 +73,8 @@ class VideoNode {
         legislator = Legislator(data: data)
     }
     
+    // also have to update VideoChatInstructionsView.setVideoNode()
+    // to actually make the new field data appear on the screen
     // See also EditLegislatorForVideoVC.legislatorSelected()
     init(snapshot: DataSnapshot, vc: VideoChatVC /*refactor VideoChatVC into a delegate if we ever need some other 'listener'*/ ) {
         if let video_node_key = snapshot.key as? String {
@@ -125,6 +138,18 @@ class VideoNode {
                 recording_requested = val
             }
             
+            if let val = dictionary["room_id"] as? String {
+                room_id = val
+            }
+            
+            if let val = dictionary["room_sid_record"] as? String {
+                room_sid_record = val
+            }
+            
+            if let val = dictionary["room_sid"] as? String {
+                room_sid = val
+            }
+            
             if let vrbd = dictionary["recording_started"] as? String {
                 recording_started = vrbd
                 //vc.recordingStarted()
@@ -140,6 +165,10 @@ class VideoNode {
             
             if let vredm = dictionary["recording_stopped_ms"] as? Int64 {
                 recording_stopped_ms = vredm
+            }
+            
+            if let x = dictionary["recording_completed"] as? Bool {
+                recording_completed = x
             }
             
             // don't create the legislator object if this attribute doesn't exist
@@ -174,6 +203,25 @@ class VideoNode {
                 post_to_twitter = x
             }
             
+            if let x = dictionary["composition_PercentageDone"] as? String {
+                composition_PercentageDone = Int(x)
+            }
+            
+            if let x = dictionary["composition_SecondsRemaining"] as? String {
+                composition_SecondsRemaining = Int(x)
+            }
+            
+            if let x = dictionary["composition_MediaUri"] as? String {
+                composition_MediaUri = x
+            }
+            
+            if let x = dictionary["composition_CompositionSid"] as? String {
+                composition_CompositionSid = x
+            }
+            
+            // also have to update VideoChatInstructionsView.setVideoNode()
+            // to actually make the new field data appear on the screen
+            
             
          }
         else {
@@ -202,44 +250,66 @@ class VideoNode {
         else {
             // this is how you get the auto-generated key
             let reference = Database.database().reference().child("video/list").childByAutoId()
-            reference.setValue(dictionary())
             key = reference.key
+            room_id = key
+            reference.setValue(dictionary())
             return key!
         }
     }
     
-    
+    // also have to update VideoChatInstructionsView.setVideoNode()
+    // to actually make the new field data appear on the screen
     func dictionary() -> [String: Any] {
         return [
             "node_create_date": node_create_date,
             "node_create_date_ms": node_create_date_ms,
-            "video_participants": dictionaries(list: video_participants),
-            "video_type": video_type,
-            "video_id": video_id,
-            "youtube_video_description": youtube_video_description,
-            "youtube_video_description_unevaluated": youtube_video_description_unevaluated,
+            "video_participants": dictionaries(list: video_participants) as Any,
+            "video_type": video_type as Any,
+            "video_id": video_id as Any,
+            "youtube_video_description": youtube_video_description as Any,
+            "youtube_video_description_unevaluated": youtube_video_description_unevaluated as Any,
             "video_mission_description": video_mission_description,
-            "video_recording_begin_date": recording_started,
-            "video_recording_begin_date_ms": recording_started_ms,
-            "video_recording_end_date": recording_stopped,
-            "video_recording_end_date_ms": recording_stopped_ms,
-            "legislator_name" : legislator?.full_name,
-            //"legislator_title" : legislator_title,
-            "leg_id" : legislator?.leg_id,
-            "legislator_state" : legislator?.state,
-            "legislator_district" : legislator?.district,
-            "legislator_chamber" : legislator?.chamber,
-            "legislator_cos_position" : legislator?.legislator_cos_position,
-            "legislator_facebook" : legislator?.legislator_facebook,
-            "legislator_facebook_id" : legislator?.legislator_facebook_id,
-            "legislator_twitter" : legislator?.legislator_twitter,
-            "legislator_email" : legislator?.email,
-            "legislator_phone" : legislator?.phone,
-            "video_invitation_key" : video_invitation_key,
+            "recording_started": recording_started as Any,
+            "recording_started_ms": recording_started_ms as Any,
+            "recording_stopped": recording_stopped as Any,
+            "recording_stopped_ms": recording_stopped_ms as Any,
+            "recording_completed": recording_completed as Any,
+            "room_id": room_id as Any,
+            "room_sid_record": room_sid_record as Any,
+            "room_sid": room_sid as Any,
+            "legislator_name" : legislator?.full_name as Any,
+            //"legislator_title" : legislator_title as Any,
+            "leg_id" : legislator?.leg_id as Any,
+            "legislator_state" : legislator?.state as Any,
+            "legislator_district" : legislator?.district as Any,
+            "legislator_chamber" : legislator?.chamber as Any,
+            "legislator_cos_position" : legislator?.legislator_cos_position as Any,
+            "legislator_facebook" : legislator?.legislator_facebook as Any,
+            "legislator_facebook_id" : legislator?.legislator_facebook_id as Any,
+            "legislator_twitter" : legislator?.legislator_twitter as Any,
+            "legislator_email" : legislator?.email as Any,
+            "legislator_phone" : legislator?.phone as Any as Any,
+            "video_invitation_key" : video_invitation_key as Any,
             "email_to_legislator" : email_to_legislator,
             "post_to_facebook" : post_to_facebook,
-            "post_to_twitter" : post_to_twitter
+            "post_to_twitter" : post_to_twitter,
+            "composition_PercentageDone" : composition_PercentageDone as Any,
+            "composition_SecondsRemaining" : composition_SecondsRemaining as Any,
+            "composition_MediaUri" : composition_MediaUri as Any,
+            "composition_CompositionSid" : composition_CompositionSid as Any
         ]
+    }
+    
+    func recordingHasNotStarted() -> Bool {
+        return recording_started == nil
+    }
+    
+    func recordingHasStarted() -> Bool {
+        return recording_started != nil && recording_stopped == nil
+    }
+    
+    func recordingHasStopped() -> Bool {
+        return recording_started != nil && recording_stopped != nil
     }
     
     // returns an array/collection of dictionaries
@@ -252,4 +322,9 @@ class VideoNode {
         }
         return dictionaries
     }
+    
+    func getParticipant(uid: String) -> VideoParticipant? {
+        return video_participants[uid]
+    }
+    
 }

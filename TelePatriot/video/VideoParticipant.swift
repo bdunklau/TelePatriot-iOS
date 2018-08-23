@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct VideoParticipant {
     
@@ -27,6 +28,7 @@ struct VideoParticipant {
     var present = true // indicates that the user is "present" on the video chat screen
 //    var vidyo_token : String? // don't use this anymore
     var twilio_token : String?
+    var twilio_token_record : String?
     
     
     // this custom init method makes it so that...
@@ -99,11 +101,11 @@ struct VideoParticipant {
         if let p = data["present"] as? Bool {
             present = p
         }
-//        if let tk = data["vidyo_token"] as? String { // don't use anymore
-//            vidyo_token = tk
-//        }
         if let val = data["twilio_token"] as? String {
             twilio_token = val
+        }
+        if let val = data["twilio_token_record"] as? String {
+            twilio_token_record = val
         }
     }
     
@@ -135,12 +137,13 @@ struct VideoParticipant {
             "end_date_ms": end_date_ms,
             "role": role,
             "present": present,
-//            "vidyo_token": vidyo_token  // don't use this anymore
-            "twilio_token": twilio_token
+            "twilio_token": twilio_token,
+            "twilio_token_record": twilio_token_record
         ]
     }
     
+    // this function is really like "should we be connected"
     func isConnected() -> Bool {
-        return connect_date != nil && disconnect_date == nil
+        return connect_date != nil && (twilio_token != nil || twilio_token_record != nil) && disconnect_date == nil
     }
 }

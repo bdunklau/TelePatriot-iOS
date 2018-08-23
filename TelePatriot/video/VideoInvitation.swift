@@ -49,6 +49,17 @@ class VideoInvitation {
     
     var key : String? // the key/primary key of the node
     
+    
+    // convenience constructor for delete()
+    init(videoNode: VideoNode) {
+        video_node_key = videoNode.getKey()
+        key = videoNode.video_invitation_key
+        if let key = key {
+            guest_id = getGuestId(invitation: key)
+            initiator_id = getInitiatorId(invitation: key)
+        }
+    }
+    
     init(creator: TPUser, guest: TPUser, video_node_key: String) {
         initiator_id = creator.getUid()
         initiator_name = creator.getName()
@@ -238,5 +249,29 @@ class VideoInvitation {
             updates["video/list/\(video_node_key)/room_id"] = room_id
             Database.database().reference().updateChildValues(updates)
         }
+    }
+    
+    private func getGuestId(invitation: String) -> String? {
+        if let guestPos = invitation.range(of: "guest") {
+            let guestIdx = guestPos.lowerBound.encodedOffset
+            let len = "guest".count
+            let guestUidIdx = guestIdx+len
+            let n = invitation.index(invitation.startIndex, offsetBy: guestUidIdx)
+            let range = n..<invitation.endIndex
+            let s = invitation[range]
+            return String(s)
+        }
+        return nil
+    }
+    
+    
+    private func getInitiatorId(invitation: String) -> String? {
+        if let guestPos = invitation.range(of: "guest"),
+            let initiatorPos = invitation.range(of: "initiator") {
+            let range = initiatorPos.upperBound..<guestPos.lowerBound
+            let s = invitation[range]
+            return String(s)
+        }
+        return nil
     }
 }

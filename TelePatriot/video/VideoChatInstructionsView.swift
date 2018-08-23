@@ -326,6 +326,34 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
     }
     
     
+    let composition_status : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Composition Status"
+        return l
+    }()
+    
+    let composition_PercentageDone : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = ""
+        return l
+    }()
+    
+    let composition_SecondsRemaining : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = ""
+        return l
+    }()
+    
+    
     func buildView(editSocialMediaVC: EditSocialMediaVC, videoChatVC: VideoChatVC, editVideoMissionDescriptionVC : EditVideoMissionDescriptionVC,
                    editLegislatorForVideoVC: EditLegislatorForVideoVC) {
     //override func viewDidLoad() {
@@ -467,6 +495,18 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         post_to_twitter.centerYAnchor.constraint(equalTo: post_to_twitter_label.centerYAnchor, constant: 0).isActive = true
         post_to_twitter.leadingAnchor.constraint(equalTo: email_to_legislator.leadingAnchor, constant: 0).isActive = true
         
+        scrollView.addSubview(composition_status)
+        composition_status.topAnchor.constraint(equalTo: post_to_twitter_label.bottomAnchor, constant: 32).isActive = true
+        composition_status.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(composition_PercentageDone)
+        composition_PercentageDone.topAnchor.constraint(equalTo: composition_status.bottomAnchor, constant: 16).isActive = true
+        composition_PercentageDone.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(composition_SecondsRemaining)
+        composition_SecondsRemaining.bottomAnchor.constraint(equalTo: composition_PercentageDone.bottomAnchor, constant: 0).isActive = true
+        composition_SecondsRemaining.leadingAnchor.constraint(equalTo: composition_PercentageDone.trailingAnchor, constant: 8).isActive = true
+        
         addSubview(scrollView)
         
         if let videoNode = videoNode {
@@ -502,6 +542,16 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         }
         if let post_to_twitter = self.videoNode?.post_to_twitter {
             self.post_to_twitter.isOn = post_to_twitter
+        }
+        if let composition_PercentageDone = self.videoNode?.composition_PercentageDone {
+            self.composition_PercentageDone.text = "\(composition_PercentageDone)% complete"
+        }
+        if let composition_SecondsRemaining = self.videoNode?.composition_SecondsRemaining,
+            composition_SecondsRemaining != 0 {
+            self.composition_SecondsRemaining.text = "(\(composition_SecondsRemaining) secs)"
+        }
+        else {
+            self.composition_SecondsRemaining.text = ""
         }
     }
     

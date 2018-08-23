@@ -121,10 +121,6 @@ Copyright 2018 Google
 
 Copyright 2018 Google
 
-## FirebaseCrash
-
-Copyright 2017 Google
-
 ## FirebaseDatabase
 
 Copyright 2018 Google
@@ -1214,17 +1210,7 @@ SOFTWARE.
 
 ## Protobuf
 
-This license applies to all parts of Protocol Buffers except the following:
-
-  - Atomicops support for generic gcc, located in
-    src/google/protobuf/stubs/atomicops_internals_generic_gcc.h.
-    This file is copyrighted by Red Hat Inc.
-
-  - Atomicops support for AIX/POWER, located in
-    src/google/protobuf/stubs/atomicops_internals_power.h.
-    This file is copyrighted by Bloomberg Finance LP.
-
-Copyright 2014, Google Inc.  All rights reserved.
+Copyright 2008 Google Inc.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -1281,6 +1267,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+
+## TwilioVideo
+
+Copyright 2011-2018 Twilio, Inc. All rights reserved. Use of this software is subject to the terms and conditions of the Twilio Terms of Service located at http://www.twilio.com/legal/tos
 
 ## TwitterCore
 
