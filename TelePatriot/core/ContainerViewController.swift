@@ -32,6 +32,7 @@ class ContainerViewController: UIViewController {
     var centerViewController: CenterViewController!
     var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
     var directorViewController: DirectorViewController!
+    var limboViewController: LimboViewController!
     var missionDetailsVC: MissionDetailsVC!
     var myMissionViewController: MyMissionViewController!
     var newPhoneCampaignVC: NewPhoneCampaignVC!
@@ -95,6 +96,9 @@ class ContainerViewController: UIViewController {
         // modeled after the centerViewController stuff above
         directorViewController = getDirectorViewController()
         directorViewController.delegate = centerViewController
+        
+        limboViewController = getLimboViewController()
+        limboViewController?.addAccountStatusEventListener(user: TPUser.sharedInstance)
         
         missionDetailsVC = getMissionDetailsVC()
         missionDetailsVC.missionDetailsDelegate = centerViewController
@@ -250,6 +254,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getChooseSpreadsheetTypeVC() -> ChooseSpreadsheetTypeVC? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.chooseSpreadsheetTypeVC
+    }
+    
+    func getLimboViewController() -> LimboViewController? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.limboViewController
     }
     
     func getMyMissionViewController() -> MyMissionViewController? {

@@ -24,7 +24,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     var local_camera_view: TVIVideoView!
     
     //var remote_view : UIView!
-    //var empty_remote_view : UIView!
+//    var empty_remote_view : UIView!
     var remote_camera_view: TVIVideoView?
     var remoteParticipant: TVIRemoteParticipant?
     var remoteCameraVisible = false
@@ -149,7 +149,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         localCameraXPos = 0 // why do we have to go negative to flush left?
         localCameraYPos = topMargin
         localHeight = self.view.bounds.height / 2 - topMargin / 2
-        localCameraWidth = 16 / 9 * localHeight! //- 76 // substract 38 on both sides because twilio TVIVideoView isn't actually 9/16 - geez
+        localCameraWidth = 16 / 9 * localHeight!
         
         remoteXPos = localCameraXPos
         remoteYPos = localCameraYPos! + localHeight!
@@ -161,10 +161,10 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
 //        remote_view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         // add the remote_view when the remote camera comes online - see below setupRemoteVideoView() and where it's called from
         self.remote_camera_view = TVIVideoView.init(frame: CGRect(x: remoteXPos!, y: remoteYPos!, width: remoteWidth!, height: remoteHeight!), delegate:self)
+        remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
 //        remote_view.addSubview(remote_camera_view!)
 //        remote_view.isHidden = true
 //        view.addSubview(remote_view)
-        view.addSubview(remote_camera_view!)
         
         // Need this way up here so that videoNode will be non nil when we need it
         // in videoChatInstructionsView?.buildView()
@@ -183,9 +183,10 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         // Preview our local camera track in the local video preview view.
         self.startPreview()
         
-//        empty_remote_view = UIView(frame: CGRect(x: remoteXPos!, y: remoteYPos, width: remoteWidth!, height: remoteHeight!))
+//        empty_remote_view = UIView(frame: CGRect(x: remoteXPos!, y: remoteYPos!, width: remoteWidth!, height: remoteHeight!))
 //        empty_remote_view.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
 //        view.addSubview(empty_remote_view) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
+        view.addSubview(remote_camera_view!) // put this on top of the empty_remote_view so that it will "appear" when we connect
         
 //        self.view.insertSubview(self.remote_view!, at: 0)
 //        remote_view.addSubview(remote_camera_view!)
@@ -374,7 +375,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
         let request_type = video_participant.isConnected() ? "disconnect request" : "connect request"
         showSpinner() // dismissed in doConnect() and doDisconnect()
-        let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: vn.getKey(), room_id: room_id, request_type: request_type, RoomSid: vn.room_sid) /*keeps the server from trying to create a room that already exists - prevents js exception   see switchboard.js:connect() */
+        let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: vn.getKey(), room_id: room_id, request_type: request_type, RoomSid: vn.room_sid, MediaUri: vn.composition_MediaUri) /*keeps the server from trying to create a room that already exists - prevents js exception   see switchboard.js:connect() */
         ve.save()
     }
     
@@ -483,7 +484,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }
     
     func setupRemoteVideoView() {
-        remote_camera_view?.isHidden = false
+//        remote_camera_view?.isHidden = false
 //        remote_view.isHidden = false
 //        empty_remote_view.isHidden = true
     }
@@ -498,7 +499,9 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             print("localVideoTrack is nil - that's not good")
         } else {
             local_camera_view = TVIVideoView(frame: CGRect(x: localCameraXPos!, y: localCameraYPos!, width: localCameraWidth!, height: localHeight!))
-            local_view.addSubview(local_camera_view)
+            local_camera_view.backgroundColor = .black
+            /*local_*/view.addSubview(local_camera_view)
+            
             // doesn't do what I want - goes full screen regardless of height and width anchors
             local_camera_view.topAnchor.constraint(equalTo: local_view.topAnchor, constant: 0).isActive = true
             local_camera_view.leadingAnchor.constraint(equalTo: local_view.leadingAnchor, constant: 0).isActive = true
@@ -584,6 +587,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             if ((self.remoteParticipant?.videoTracks.count)! > 0) {
                 let remoteVideoTrack = self.remoteParticipant?.remoteVideoTracks[0].remoteTrack
                 remoteVideoTrack?.removeRenderer(self.remote_camera_view!)
+                remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
 //                self.remote_camera_view?.removeFromSuperview()
 //                self.remote_camera_view = nil
             }
@@ -650,7 +654,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             let video_node_key = vn.getKey()
             let request_type = vn.recordingHasStarted() ? "stop recording" : "start recording"
             showSpinner() // dismissed in doConnect() and doDisconnect()
-            let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: video_node_key, room_id: room_id, request_type: request_type, RoomSid: vn.room_sid)
+            let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: video_node_key, room_id: room_id, request_type: request_type, RoomSid: vn.room_sid, MediaUri: vn.composition_MediaUri)
             ve.save()
         }
         else {
@@ -659,17 +663,17 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
     }
     
-    private func recordingHasNotStarted() {
-        publish_button.isHidden = true
-    }
-    
-    private func recordingHasStarted() {
-        publish_button.isHidden = true
-    }
-    
-    private func recordingHasStopped() {
-        publish_button.isHidden = false
-    }
+//    private func recordingHasNotStarted() {
+//        publish_button.isHidden = true
+//    }
+//
+//    private func recordingHasStarted() {
+//        publish_button.isHidden = true
+//    }
+//
+//    private func recordingHasStopped() {
+//        publish_button.isHidden = false
+//    }
     
     private func simpleOKDialog(message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -703,7 +707,8 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
                                 video_node_key: video_node_key,
                                 room_id: room_id,
                                 request_type: request_type,
-                                RoomSid: vn.room_sid_record)
+                                RoomSid: vn.room_sid_record,
+                                MediaUri: vn.composition_MediaUri)
             ve.save()
         }
         else {
@@ -722,27 +727,31 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         else if let video_invitation_extended_to = videoNode?.video_invitation_extended_to {
             invite_someone_button.removeFromSuperview()
             if TPUser.sharedInstance.getName() == video_invitation_extended_to {
-                guest_name.removeFromSuperview() // don't show this label when it looks like you invited yourself
+                guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
                 revoke_invitation_button.removeFromSuperview() // or this one
             }
             else {
-//                empty_remote_view.addSubview(guest_name)
-//                guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
-//                guest_name.topAnchor.constraint(equalTo: empty_remote_view.topAnchor, constant:24).isActive = true
-//                guest_name.leadingAnchor.constraint(equalTo: empty_remote_view.leadingAnchor, constant:8).isActive = true
-//                guest_name.widthAnchor.constraint(equalTo: empty_remote_view.widthAnchor, constant:0.85).isActive = true
-//                empty_remote_view.addSubview(revoke_invitation_button)
-//                revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
-//                revoke_invitation_button.centerXAnchor.constraint(equalTo: guest_name.centerXAnchor, constant:0).isActive = true
+                if let remote_camera_view = remote_camera_view {
+                    view.addSubview(guest_name)
+                    guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
+                    guest_name.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 48).isActive = true
+                    guest_name.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+                    guest_name.trailingAnchor.constraint(equalTo: (videoChatInstructionsView?.leadingAnchor)!, constant:-24).isActive = true
+                    view.addSubview(revoke_invitation_button)
+                    revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
+                    revoke_invitation_button.centerXAnchor.constraint(equalTo: guest_name.centerXAnchor, constant:0).isActive = true
+                }
             }
         }
         else {
             // means the remote camera is not visible and there's no invitation extended yet
-//            empty_remote_view.addSubview(invite_someone_button)
-//            invite_someone_button.topAnchor.constraint(equalTo: empty_remote_view.topAnchor, constant: 16).isActive = true
-//            invite_someone_button.centerXAnchor.constraint(equalTo: empty_remote_view.centerXAnchor, constant: 0).isActive = true
-//            guest_name.removeFromSuperview()
-//            revoke_invitation_button.removeFromSuperview()
+            if let remote_camera_view = remote_camera_view {
+                view.addSubview(invite_someone_button)
+                invite_someone_button.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 48).isActive = true
+                invite_someone_button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 96).isActive = true
+                guest_name.removeFromSuperview()
+                revoke_invitation_button.removeFromSuperview()
+            }
         }
     }
     
@@ -753,7 +762,6 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         if let vc = getAppDelegate().searchUsersVC {
             vc.modalPresentationStyle = .popover
             vc.searchUsersDelegate = self
-            //            centerViewController?.doView(vc: vc)
             self.present(vc, animated: true, completion:nil)
         }
     }
@@ -903,6 +911,8 @@ extension VideoChatVC : TVIRemoteParticipantDelegate {
         if (self.remoteParticipant == participant) {
             setupRemoteVideoView()
             if let remote_camera_view = self.remote_camera_view {
+                inviteLinks()
+                remote_camera_view.backgroundColor = .black
                 videoTrack.addRenderer(remote_camera_view)
             }
         }
@@ -919,6 +929,8 @@ extension VideoChatVC : TVIRemoteParticipantDelegate {
 
         if (self.remoteParticipant == participant) {
             videoTrack.removeRenderer(self.remote_camera_view!)
+            inviteLinks()
+            remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
 //            self.remote_view?.removeFromSuperview()
 //            self.remote_camera_view = nil
 //            remote_view.isHidden = true

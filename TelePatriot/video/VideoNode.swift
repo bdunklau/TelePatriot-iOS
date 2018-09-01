@@ -25,6 +25,15 @@ class VideoNode {
     var youtube_video_description_unevaluated : String?
     var video_mission_description : String
     
+    var email_to_legislator_body: String?
+    var email_to_legislator_body_unevaluated: String?
+    var email_to_legislator_subject: String?
+    var email_to_legislator_subject_unevaluated: String?
+    var email_to_participant_body: String?
+    var email_to_participant_body_unevaluated: String?
+    var email_to_participant_subject: String?
+    var email_to_participant_subject_unevaluated: String?
+    
     var room_id : String?
     var room_sid_record : String?
     var room_sid : String? // the twilio RoomSid
@@ -52,7 +61,11 @@ class VideoNode {
     var composition_PercentageDone : Int?
     var composition_SecondsRemaining : Int?
     var composition_MediaUri : String?
-    var composition_CompositionSid : String?
+    var CompositionSid : String?
+    var CompositionUri : String?
+    var composition_Size : Int64?
+    
+    
     
     // custom init method
     init(creator: TPUser, type: VideoType?) {
@@ -61,6 +74,16 @@ class VideoNode {
         video_participants[creator.getUid()] = VideoParticipant(user: creator)
         if let t = type {
             video_type = t.type
+            
+            email_to_legislator_body = t.email_to_legislator_body
+            email_to_legislator_body_unevaluated = t.email_to_legislator_body
+            email_to_legislator_subject = t.email_to_legislator_subject
+            email_to_legislator_subject_unevaluated = t.email_to_legislator_subject
+            email_to_participant_body = t.email_to_participant_body
+            email_to_participant_body_unevaluated = t.email_to_participant_body
+            email_to_participant_subject = t.email_to_participant_subject
+            email_to_participant_subject_unevaluated = t.email_to_participant_subject
+            
             video_mission_description = t.video_mission_description
             youtube_video_description = t.youtube_video_description
             youtube_video_description_unevaluated = t.youtube_video_description
@@ -215,9 +238,51 @@ class VideoNode {
                 composition_MediaUri = x
             }
             
-            if let x = dictionary["composition_CompositionSid"] as? String {
-                composition_CompositionSid = x
+            if let x = dictionary["CompositionUri"] as? String {
+                CompositionUri = x
             }
+            
+            if let x = dictionary["CompositionSid"] as? String {
+                CompositionSid = x
+            }
+            
+            if let x = dictionary["composition_Size"] as? Int64 {
+                composition_Size = x
+            }
+            
+            if let x = dictionary["email_to_legislator_body"] as? String {
+                email_to_legislator_body = x
+            }
+            
+            if let x = dictionary["email_to_legislator_subject"] as? String {
+                email_to_legislator_subject = x
+            }
+            
+            if let x = dictionary["email_to_legislator_subject_unevaluated"] as? String {
+                email_to_legislator_subject_unevaluated = x
+            }
+            
+            if let x = dictionary["email_to_legislator_body_unevaluated"] as? String {
+                email_to_legislator_body_unevaluated = x
+            }
+            
+            if let x = dictionary["email_to_participant_body"] as? String {
+                email_to_participant_body = x
+            }
+            
+            if let x = dictionary["email_to_participant_body_unevaluated"] as? String {
+                email_to_participant_body_unevaluated = x
+            }
+            
+            if let x = dictionary["email_to_participant_subject"] as? String {
+                email_to_participant_subject = x
+            }
+            
+            if let x = dictionary["email_to_participant_subject_unevaluated"] as? String {
+                email_to_participant_subject_unevaluated = x
+            }
+            
+            
             
             // also have to update VideoChatInstructionsView.setVideoNode()
             // to actually make the new field data appear on the screen
@@ -296,7 +361,7 @@ class VideoNode {
             "composition_PercentageDone" : composition_PercentageDone as Any,
             "composition_SecondsRemaining" : composition_SecondsRemaining as Any,
             "composition_MediaUri" : composition_MediaUri as Any,
-            "composition_CompositionSid" : composition_CompositionSid as Any
+            "CompositionSid" : CompositionSid as Any
         ]
     }
     

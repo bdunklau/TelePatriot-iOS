@@ -38,6 +38,8 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         return button
     }()
     
+    //var limboViewController : LimboViewController?
+    var disabledViewController : DisabledViewController?
     
     @objc func toggleMainMenu(_ sender: Any) {
         delegate?.toggleLeftPanel?()
@@ -53,7 +55,8 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
             || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "CenterViewController" })) {
             TPUser.sharedInstance.accountStatusEventListeners.append(self)
-        } else { print("CenterViewController: NOT adding self to list of accountStatusEventListeners") }
+        } else {
+            print("CenterViewController: NOT adding self to list of accountStatusEventListeners") }
         
         
         // LimboViewController sets this in prepareForSegue
@@ -99,7 +102,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 
                 // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
                 let u = TPUser.sharedInstance
-                u.noRoleAssignedDelegate = self
+//                u.noRoleAssignedDelegate = self
                 
                 
                 
@@ -116,15 +119,9 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                     TPUser.sharedInstance.accountStatusEventListeners.append((appDelegate?.leftViewController!)!)
                 } else { print("SidePanelViewController: NOT adding self to list of accountStatusEventListeners") }
                 
-                
-                
                 print("CenterViewController.checkLoggedIn() -----------------")
                 // BUG: This setUser() call below has to notify the SidePanelViewController
                 u.setUser(u: user)
-                
-                // for starters, just leave the user here and show the logo and maybe a "Get Started" button
-                // that slides out the left menu
-                
                 
             } else {
                 // No user is signed in.
@@ -177,9 +174,9 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
             /**
              Now find out if user has any roles yet, or if he has to be sent to the "limbo" screen
              **/
-            let u = TPUser.sharedInstance
-            u.noRoleAssignedDelegate = self
-            u.setUser(u: user)
+//            let u = TPUser.sharedInstance
+//            u.noRoleAssignedDelegate = self
+//            u.setUser(u: user)
         }
     }
 }
@@ -352,15 +349,15 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
     
 }
 
-extension CenterViewController : NoRoleAssignedDelegate {
-    func theUserHasNoRoles() {
-        // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
-        // With it commented out, you'll always be sent to the Home screen where you can logout.
-        let limboViewController = LimboViewController()
-        let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
-        self.present(navViewController, animated: true, completion: nil)
-    }
-}
+//extension CenterViewController : NoRoleAssignedDelegate {
+//    func theUserHasNoRoles() {
+//        // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
+//        // With it commented out, you'll always be sent to the Home screen where you can logout.
+//        let limboViewController = LimboViewController()
+//        let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
+//        self.present(navViewController, animated: true, completion: nil)
+//    }
+//}
 
 extension CenterViewController : NewPhoneCampaignSubmittedHandler {
     func newPhoneCampaignSubmitted() {
@@ -475,13 +472,46 @@ extension CenterViewController : AccountStatusEventListener {
     func userSignedOut() {
         
         // remove all subviews and child view controllers so that we don't come back to the screen we were on - that's really confusing
-        for subview in view.subviews as! [UIView] {
+        for subview in view.subviews {
             subview.removeFromSuperview()
         }
-        for child in self.childViewControllers as! [UIViewController] {
+        for child in self.childViewControllers {
             child.removeFromParentViewController()
         }
         loadSplashscreen()
+    }
+    
+    func allowed() {
+        if let limboViewController = delegate?.getLimboViewController() {
+            limboViewController.dismiss(animated: true, completion: nil)
+            limboViewController.removeFromParentViewController()
+        }
+    }
+    
+    func notAllowed() {
+        if let limboViewController = delegate?.getLimboViewController() {
+            let is_ = limboViewController.viewIfLoaded?.window != nil
+            if !is_ { // bug fix - avoids a nasty "already presented" exception
+                limboViewController.modalPresentationStyle = .popover
+                self.present(limboViewController, animated: true, completion:nil)
+            }
+        }
+    }
+    
+    func accountDisabled() {
+        if disabledViewController == nil {
+            disabledViewController = DisabledViewController()
+            disabledViewController?.modalPresentationStyle = .popover
+            self.present(disabledViewController!, animated: true, completion:nil)
+        }
+    }
+    
+    // required by AccountStatusEventListener
+    func accountEnabled() {
+        if let disabledViewController = disabledViewController {
+            disabledViewController.dismiss(animated: true, completion: nil)
+            self.disabledViewController = nil
+        }
     }
 }
 

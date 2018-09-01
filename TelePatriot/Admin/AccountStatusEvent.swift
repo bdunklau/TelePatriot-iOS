@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ Not sure that we need this class anymore (8/28/18)  See LimboViewController
+ **/
 class AccountStatusEvent {
     var thedate: String?
     var event: String?
@@ -25,4 +28,11 @@ protocol AccountStatusEventListener {
     func teamSelected(team: Team, whileLoggingIn: Bool)
     
     func userSignedOut()
+    
+    func allowed()
+    
+    func notAllowed()
+    
+    func accountEnabled()
+    func accountDisabled()
 }

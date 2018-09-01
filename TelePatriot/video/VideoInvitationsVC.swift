@@ -35,7 +35,7 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
         //query =
         Database.database().reference().child("video/invitations").queryOrdered(byChild: "guest_id").queryEqual(toValue: TPUser.sharedInstance.getUid())
             .observe(.value, with: {(snapshot) in
-                guard let dictionary = snapshot.value as? [String : Any] else {
+                guard let /*dictionary*/ _ = snapshot.value as? [String : Any] else {
                     self.invitations = [VideoInvitation]()
                     DispatchQueue.main.async { self.invitationTable?.reloadData() }
                     return

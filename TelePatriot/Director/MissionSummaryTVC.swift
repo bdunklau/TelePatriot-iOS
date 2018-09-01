@@ -11,6 +11,7 @@ import Firebase
 
 class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewDelegate, AccountStatusEventListener {
     
+    
     // your firebase reference as a property
     //var rootRef: DatabaseReference!
     //var ref: DatabaseReference!
@@ -262,6 +263,25 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
+    // required by AccountStatusEventListener
+    func allowed() {
+        // do nothing?  reall?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func notAllowed() {
+        // do nothing?  reall?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func accountEnabled() {
+        // do nothing?  reall?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func accountDisabled() {
+        // do nothing?  reall?  if so, code smell
+    }
     
     // required by AccountStatusEventListener
     func roleAssigned(role: String) {

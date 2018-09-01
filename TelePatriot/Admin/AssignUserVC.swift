@@ -159,7 +159,7 @@ class AssignUserVC: BaseViewController {
         return s
     }()
     
-    let okButton : BaseButton = {
+    let okbutton : BaseButton = {
         let button = BaseButton(text: "") // we'll display the "OK" once the user data has been loaded, so the admin can't click prematurely
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(updateUser(_:)), for: .touchUpInside)
@@ -302,9 +302,9 @@ class AssignUserVC: BaseViewController {
         // switch placement is done in the declaration of the switch
         
         
-        view.addSubview(okButton)
-        okButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        okButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
+        view.addSubview(okbutton)
+        okbutton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        okbutton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
         
         puser.currentlyBeingReviewed(by: TPUser.sharedInstance)
         
@@ -347,7 +347,7 @@ class AssignUserVC: BaseViewController {
             }
             
             self.enabledDisabledSwitch.isEnabled = true
-            self.okButton.setTitle("OK", for: .normal)
+            self.okbutton.setTitle("OK", for: .normal)
         })
     }
     

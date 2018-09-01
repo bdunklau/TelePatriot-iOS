@@ -9,5 +9,5 @@
 import Foundation
 
 protocol NoRoleAssignedDelegate {
-    func theUserHasNoRoles()
+    //func theUserHasNoRoles()  // get rid of this whole file
 }

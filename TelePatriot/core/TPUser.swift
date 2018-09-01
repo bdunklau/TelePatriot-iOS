@@ -33,9 +33,9 @@ class TPUser {
     var is_banned : Bool?
     var legislative_house_district : String?   // WHY ARE SOME OF THESE PRIVATE AND OTHERS AREN'T
     var legislative_senate_district : String?  // I DON'T THINK THERE'S A GOOD REASON
-    private var name : String?
-    private var phone : String?
-    private var photoUrl : URL? // the FirebaseUser attribute is actually this: photoURL
+    var name : String?
+    var phone : String?
+    var photoUrl : URL? // the FirebaseUser attribute is actually this: photoURL
     var recruiter_id : String?
     var residential_address_city : String?
     var residential_address_line1 : String?
@@ -55,7 +55,7 @@ class TPUser {
     // don't set this to nil unless you know what you're doing.  See LESSON LEARNED at the very bottom
     var databaseRef : DatabaseReference?
     var rolesAlreadyFetched = false
-    var noRoleAssignedDelegate : NoRoleAssignedDelegate?
+//    var noRoleAssignedDelegate : NoRoleAssignedDelegate?
     
     // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
     // both are reset to nil in WrapUpViewController.submitWrapUp()
@@ -108,11 +108,38 @@ class TPUser {
             guard let dictionary = snapshot.value as? [String: Any] else {
                 return
             }
+            // TODO this is really bad form to be doing additional queries here...
             self.fetchRoles(uid: uid)
             self.fetchCurrentTeam(uid: uid)
             self.populate(uid: uid, dictionary: dictionary)
-            callback(self)
+            self.redirectIfNotAllowed()
+            callback(self) // search for "callback" above - does nothing
         })
+    }
+    
+    private func redirectIfNotAllowed() {
+        // make sure the user should be allowed in
+        if let has_signed_petition = self.has_signed_petition,
+            has_signed_petition,
+            let has_signed_confidentiality_agreement = self.has_signed_confidentiality_agreement,
+            has_signed_confidentiality_agreement,
+            let is_banned = self.is_banned,
+            !is_banned {
+            // good - let them in
+            fireAllowed()
+        }
+        else {
+            // bad - send them to the limbo screen
+            fireNotAllowed()
+        }
+        
+        if let account_disposition = self.account_disposition,
+            account_disposition == "enabled" {
+            fireAccountEnabled()
+        }
+        else {
+            fireAccountDisabled()
+        }
     }
     
     static func create(uid: String, callback: @escaping (TPUser) -> Void ) {
@@ -475,19 +502,19 @@ class TPUser {
             databaseRef = Database.database().reference()
         }
         
-        databaseRef?.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
-            guard let val = snapshot.value as? [String: Any] else {
-                return
-            }
-            guard let name = val["name"] as! String? else {
-                return
-            }
-            // If we get past the guard, it means there IS a node under /no_roles corresponding to
-            // the current user.  So in this case, we want to send them to the Limbo screen...
-            print("This user was found under the /no_roles node: name = \(name)") // <--- just FYI
-            print("This user was found under the /no_roles node: val = \(val)")
-            self.noRoleAssignedDelegate?.theUserHasNoRoles()
-        })
+//        databaseRef?.child("no_roles").child(uid).observe(.value, with: {(snapshot) in
+//            guard let val = snapshot.value as? [String: Any] else {
+//                return
+//            }
+//            guard let name = val["name"] as! String? else {
+//                return
+//            }
+//            // If we get past the guard, it means there IS a node under /no_roles corresponding to
+//            // the current user.  So in this case, we want to send them to the Limbo screen...
+//            print("This user was found under the /no_roles node: name = \(name)") // <--- just FYI
+//            print("This user was found under the /no_roles node: val = \(val)")
+//            self.noRoleAssignedDelegate?.theUserHasNoRoles()
+//        })
         
         databaseRef?.child("users").child(uid).child("roles").observe(.childAdded, with: {(snapshot) in
             
@@ -572,6 +599,34 @@ class TPUser {
         // we can now hide whatever role label corresponds to the role that was just removed
         for l in accountStatusEventListeners {
             l.roleRemoved(role: role)
+        }
+    }
+    
+    private func fireAllowed() {
+        // get rid of the limbo screen if it's currently being displayed
+        for l in self.accountStatusEventListeners {
+            l.allowed()
+        }
+    }
+    
+    private func fireNotAllowed() {
+        // send the user to the limbo screen because they are not allowed in
+        for l in self.accountStatusEventListeners {
+            l.notAllowed()
+        }
+    }
+    
+    private func fireAccountEnabled() {
+        // make sure the DisabledVC isn't showing if their account goes from account_disposition:disabled to :enabled
+        for l in self.accountStatusEventListeners {
+            l.accountEnabled()
+        }
+    }
+    
+    private func fireAccountDisabled() {
+        // make sure the DisabledVC is showing if their account is account_disposition:disabled
+        for l in self.accountStatusEventListeners {
+            l.accountDisabled()
         }
     }
     
@@ -676,7 +731,7 @@ class TPUser {
         // background AFTER logging out in order for this init() in this class to be called again.
         
         rolesAlreadyFetched = false
-        noRoleAssignedDelegate = nil
+//        noRoleAssignedDelegate = nil
         
         // both are reset to nil in WrapUpViewController.submitWrapUp()
         currentMissionItem = nil

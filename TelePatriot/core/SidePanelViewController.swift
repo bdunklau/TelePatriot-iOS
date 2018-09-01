@@ -10,6 +10,7 @@ import UIKit
 
 class SidePanelViewController: UIViewController, AccountStatusEventListener {
     
+    
     var tableView : UITableView?
     
     var menuItems = [[MenuItem]]()
@@ -203,6 +204,26 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         if( role == "Video Creator" ) {
             doRoleRemoved(menuText: "Video Chat", section: 1)//items: menuItems[0])
         }
+    }
+    
+    // required by AccountStatusEventListener
+    func allowed() {
+        // need to do anything here?  If not, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func notAllowed() {
+        // need to do anything here?  If not, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func accountEnabled() {
+        // need to do anything here?  If not, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func accountDisabled() {
+        // need to do anything here?  If not, code smell
     }
     
     // whileLoggingIn: If the team is selected by virtue of simply logging in,

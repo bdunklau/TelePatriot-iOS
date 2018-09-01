@@ -70,9 +70,9 @@
 		A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA72014031A00EF0766 /* LegislatorUI.swift */; };
 		A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */; };
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
-		A13F8263211E058E00300C01 /* VideoChatVC_Vidyo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F8262211E058E00300C01 /* VideoChatVC_Vidyo.swift */; };
 		A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */; };
 		A14187A52119F63E00524966 /* VideoEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14187A42119F63E00524966 /* VideoEvent.swift */; };
+		A144EB842137360300005BDF /* DisabledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A144EB832137360300005BDF /* DisabledViewController.swift */; };
 		A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */; };
 		A149B9A5210B55B500ACE10C /* VideoChatInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */; };
 		A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */; };
@@ -93,9 +93,12 @@
 		A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */; };
 		A190B47A20095B3000ED51D6 /* UserMustSignCAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */; };
 		A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */; };
+		A19F6C3A2139D91D00A140C2 /* ShowMeHowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F6C392139D91D00A140C2 /* ShowMeHowVC.swift */; };
+		A19F6C3C213A296C00A140C2 /* VideoOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F6C3B213A296C00A140C2 /* VideoOffer.swift */; };
 		A1AD5C462009AC1400CB113E /* BackTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C452009AC1400CB113E /* BackTracker.swift */; };
 		A1AD5C482011A32900CB113E /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C472011A32900CB113E /* MyProfileVC.swift */; };
 		A1B55464202A64B20083C066 /* MissionDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B55463202A64B20083C066 /* MissionDetailsVC.swift */; };
+		A1D37BB5213700C60059FFCD /* CBAPIEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D37BB4213700C60059FFCD /* CBAPIEvent.swift */; };
 		A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */; };
 		A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */; };
 		A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */; };
@@ -174,9 +177,9 @@
 		A13F7AA72014031A00EF0766 /* LegislatorUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegislatorUI.swift; sourceTree = "<group>"; };
 		A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeTableViewCell.swift; sourceTree = "<group>"; };
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
-		A13F8262211E058E00300C01 /* VideoChatVC_Vidyo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatVC_Vidyo.swift; sourceTree = "<group>"; };
 		A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNeededView.swift; sourceTree = "<group>"; };
 		A14187A42119F63E00524966 /* VideoEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEvent.swift; sourceTree = "<group>"; };
+		A144EB832137360300005BDF /* DisabledViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledViewController.swift; sourceTree = "<group>"; };
 		A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialMediaVC.swift; sourceTree = "<group>"; };
 		A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatInstructionsView.swift; sourceTree = "<group>"; };
 		A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRoleAssignedDelegate.swift; sourceTree = "<group>"; };
@@ -204,9 +207,12 @@
 		A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsBannedVC.swift; sourceTree = "<group>"; };
 		A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMustSignCAViewController.swift; sourceTree = "<group>"; };
 		A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotApproveUserVC.swift; sourceTree = "<group>"; };
+		A19F6C392139D91D00A140C2 /* ShowMeHowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMeHowVC.swift; sourceTree = "<group>"; };
+		A19F6C3B213A296C00A140C2 /* VideoOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOffer.swift; sourceTree = "<group>"; };
 		A1AD5C452009AC1400CB113E /* BackTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackTracker.swift; sourceTree = "<group>"; };
 		A1AD5C472011A32900CB113E /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		A1B55463202A64B20083C066 /* MissionDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDetailsVC.swift; sourceTree = "<group>"; };
+		A1D37BB4213700C60059FFCD /* CBAPIEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBAPIEvent.swift; sourceTree = "<group>"; };
 		A1D3919C1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedUsersVC.swift; sourceTree = "<group>"; };
 		A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUserTableViewCell.swift; sourceTree = "<group>"; };
@@ -327,6 +333,7 @@
 				A109E8BA1FC7E1F60005517A /* BaseButton.swift */,
 				A12CDB3C1FAF77FE003DE424 /* BaseViewController.swift */,
 				A134C1AF2017EFB500B64939 /* CallLegislatorEvent.swift */,
+				A1D37BB4213700C60059FFCD /* CBAPIEvent.swift */,
 				A109E8AA1FC564A50005517A /* CenterViewController.swift */,
 				A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */,
 				A109E8AE1FC6233F0005517A /* ContainerViewController.swift */,
@@ -364,9 +371,11 @@
 				A12CDB421FAF7902003DE424 /* AdminViewController.swift */,
 				A1DD805E1FE97173003F140C /* AssignUserVC.swift */,
 				A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */,
+				A144EB832137360300005BDF /* DisabledViewController.swift */,
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
 				A135C30020197AE500B50B49 /* SearchUsersVC.swift */,
+				A19F6C392139D91D00A140C2 /* ShowMeHowVC.swift */,
 				A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */,
 				A190B47720095B0400ED51D6 /* UserIsBannedVC.swift */,
 				A190B47920095B3000ED51D6 /* UserMustSignCAViewController.swift */,
@@ -400,12 +409,12 @@
 				A134E53D206C66AB00FEDBE6 /* RemoteViewLayout.swift */,
 				A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */,
 				A134E52F206B20D800FEDBE6 /* VideoChatVC.swift */,
-				A13F8262211E058E00300C01 /* VideoChatVC_Vidyo.swift */,
 				A14187A42119F63E00524966 /* VideoEvent.swift */,
 				A1E8D86A2075A94D00E4F720 /* VideoNode.swift */,
 				A137720420CCC77300566AFE /* VideoInvitation.swift */,
 				A137720820D086FF00566AFE /* VideoInvitationCell.swift */,
 				A137720620D0200000566AFE /* VideoInvitationsVC.swift */,
+				A19F6C3B213A296C00A140C2 /* VideoOffer.swift */,
 				A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */,
 				A13187B2207730690048FE95 /* VideoType.swift */,
 			);
@@ -638,10 +647,12 @@
 				A134C1B02017EFB500B64939 /* CallLegislatorEvent.swift in Sources */,
 				A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */,
 				A1369CAC1FE9C845008B426D /* NoMissionVC.swift in Sources */,
-				A13F8263211E058E00300C01 /* VideoChatVC_Vidyo.swift in Sources */,
+				A144EB842137360300005BDF /* DisabledViewController.swift in Sources */,
 				A13118A21FE6323F0031D9AE /* SwitchTeamsDelegate.swift in Sources */,
+				A1D37BB5213700C60059FFCD /* CBAPIEvent.swift in Sources */,
 				A137720920D086FF00566AFE /* VideoInvitationCell.swift in Sources */,
 				A109E8AD1FC565E60005517A /* MenuItem.swift in Sources */,
+				A19F6C3C213A296C00A140C2 /* VideoOffer.swift in Sources */,
 				A1217E311FCA199A0007ABF8 /* Call.swift in Sources */,
 				A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */,
 				A1E8D86D2075B24100E4F720 /* VideoParticipant.swift in Sources */,
@@ -667,6 +678,7 @@
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */,
 				A13187B92078555E0048FE95 /* EditVideoMissionDescriptionVC.swift in Sources */,
+				A19F6C3A2139D91D00A140C2 /* ShowMeHowVC.swift in Sources */,
 				A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
 				A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */,
