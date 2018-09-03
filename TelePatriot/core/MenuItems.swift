@@ -94,6 +94,15 @@ class MenuItems {
     }()
     
     // icons came from material.io/icons
+    static let videoOffersIcon : UIImageView = {
+        let img = UIImage(named: "ic_video_library_18pt.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    // icons came from material.io/icons
     static let videoInvitationsIcon : UIImageView = {
         let img = UIImage(named: "ic_video_library_18pt.png")
         let imgView = UIImageView(image: img)
@@ -125,6 +134,7 @@ class MenuItems {
     static let directors = MenuItem(icon: MenuItems.directorsIcon, title: "Directors")
     static let admins = MenuItem(icon: MenuItems.adminsIcon, title: "Admins")
     static let videoChat = MenuItem(icon: MenuItems.videoChatIcon, title: "Video Chat")
+    static let videoOffers = MenuItem(icon: MenuItems.videoChatIcon, title: "Video Offers")
     var mainSection0 : [MenuItem]
     var mainMenu : [[MenuItem]]
     var directorItems : [[MenuItem]]
@@ -143,6 +153,7 @@ class MenuItems {
                     
                     // Communicate section - ICONS AREN'T RIGHT - FIX LATER
                     [MenuItem(icon: MenuItems.videoChatIcon, title: "Video Chat"),
+                     MenuItem(icon: MenuItems.videoOffersIcon, title: "Video Offers"),
                      MenuItem(icon: MenuItems.videoInvitationsIcon, title: "Video Invitations")
                     /*MenuItem(icon: MenuItems.allActivityIcon, title: "Share Petition (coming soon)"),
                      MenuItem(icon: MenuItems.allActivityIcon, title: "Chat/Help (coming soon)")*/ ],
@@ -175,6 +186,7 @@ class MenuItems {
             items["Directors"] = directors
             items["Admins"] = admins
             items["Video Chat"] = videoChat
+            items["Video Offers"] = videoOffers
             return items
         }()
         

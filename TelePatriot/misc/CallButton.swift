@@ -8,6 +8,7 @@
 
 import Foundation
 
+// poorly named - there's nothing specific to calling in this button
 class CallButton : BaseButton {
     
     var phone : String?

@@ -42,6 +42,8 @@ class TPUser {
     var residential_address_line2 : String?
     var residential_address_state_abbrev : String?
     var residential_address_zip : String?
+    var state_upper_district: String?
+    var state_lower_district: String?
     var teams : [Team]?
     
     var isVolunteer = false
@@ -254,6 +256,12 @@ class TPUser {
         if let raz = dictionary["residential_address_zip"] as? String {
             self.residential_address_zip = raz
         }
+        if let val = dictionary["state_upper_district"] as? String {
+            self.state_upper_district = val
+        }
+        if let val = dictionary["state_lower_district"] as? String {
+            self.state_lower_district = val
+        }
         if let roles = dictionary["roles"] as? [String:String] {
             if let adm = roles["Admin"], adm == "true" {
                 self.isAdmin = true
@@ -376,24 +384,26 @@ class TPUser {
         let uid = getUid()
         // Create the data we want to update
         var updatedUserData = [
-                               "users/\(uid)/account_disposition": account_disposition,
-                               "users/\(uid)/account_dispositioned_by": account_dispositioned_by,
-                               "users/\(uid)/account_dispositioned_by_uid": account_dispositioned_by_uid,
-                               "users/\(uid)/account_dispositioned_on": account_dispositioned_on,
-                               "users/\(uid)/account_dispositioned_on_ms": account_dispositioned_on_ms,
-                               "users/\(uid)/residential_address_line1": residential_address_line1,
-                               "users/\(uid)/residential_address_line2": residential_address_line2,
-                               "users/\(uid)/residential_address_city": residential_address_city,
-                               "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
-                               "users/\(uid)/residential_address_zip": residential_address_zip,
-                               "users/\(uid)/legislative_house_district": legislative_house_district,
-                               "users/\(uid)/legislative_senate_district": legislative_senate_district,
-                               "users/\(uid)/current_latitude": current_latitude,
-                               "users/\(uid)/current_longitude": current_longitude,
-                               "users/\(uid)/current_video_node_key": current_video_node_key,
-                               "users/\(uid)/has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
-                               "users/\(uid)/has_signed_petition": has_signed_petition,
-                               "users/\(uid)/is_banned": is_banned] as [String : Any]
+                   "users/\(uid)/account_disposition": account_disposition,
+                   "users/\(uid)/account_dispositioned_by": account_dispositioned_by,
+                   "users/\(uid)/account_dispositioned_by_uid": account_dispositioned_by_uid,
+                   "users/\(uid)/account_dispositioned_on": account_dispositioned_on,
+                   "users/\(uid)/account_dispositioned_on_ms": account_dispositioned_on_ms,
+                   "users/\(uid)/residential_address_line1": residential_address_line1,
+                   "users/\(uid)/residential_address_line2": residential_address_line2,
+                   "users/\(uid)/residential_address_city": residential_address_city,
+                   "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
+                   "users/\(uid)/residential_address_zip": residential_address_zip,
+                   "users/\(uid)/legislative_house_district": legislative_house_district,
+                   "users/\(uid)/legislative_senate_district": legislative_senate_district,
+                   "users/\(uid)/state_upper_district": state_upper_district,
+                   "users/\(uid)/state_lower_district": state_lower_district,
+                   "users/\(uid)/current_latitude": current_latitude,
+                   "users/\(uid)/current_longitude": current_longitude,
+                   "users/\(uid)/current_video_node_key": current_video_node_key,
+                   "users/\(uid)/has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
+                   "users/\(uid)/has_signed_petition": has_signed_petition,
+                   "users/\(uid)/is_banned": is_banned] as [String : Any]
         
         if isAdmin {
             updatedUserData["users/\(uid)/roles/Admin"] = "true"
@@ -715,6 +725,8 @@ class TPUser {
         residential_address_line2  = nil
         residential_address_state_abbrev = nil
         residential_address_zip = nil
+        state_upper_district = nil
+        state_lower_district = nil
         
         // Not sure why these prevent their menu items from showing up.  I thought they
         // would re-appear whenever the user logs in.  But for some reason, they don't

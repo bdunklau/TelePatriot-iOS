@@ -15,7 +15,7 @@ class ShowMeHowVC: BaseViewController {
     
     var scrollView : UIScrollView?
     var states = [[String:String]]()
-    var selectedState : String?
+    var selectedState = "tx"
     
     
     let lights_camera_action_heading : UILabel = {
@@ -248,7 +248,7 @@ class ShowMeHowVC: BaseViewController {
             residential_address_city.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: widthMultiplier).isActive = true
             
             scrollView.addSubview(residential_address_state_abbrev)
-            residential_address_state_abbrev.topAnchor.constraint(equalTo: residential_address_city.bottomAnchor, constant: -16).isActive = true
+            residential_address_state_abbrev.topAnchor.constraint(equalTo: residential_address_city.bottomAnchor, constant: -8).isActive = true
             residential_address_state_abbrev.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
             residential_address_state_abbrev.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.15).isActive = true
             residential_address_state_abbrev.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.5).isActive = true
@@ -348,30 +348,6 @@ class ShowMeHowVC: BaseViewController {
         TPUser.sharedInstance.residential_address_zip = residential_address_zip.text
         let offer = VideoOffer(user: TPUser.sharedInstance)
         offer.save(f: success, e: error)
-        
-//        User.getInstance().setPhone(phone_number_field.getText().toString());
-//        User.getInstance().setResidential_address_line1(residential_address_line1.getText().toString());
-//        User.getInstance().setResidential_address_line2(residential_address_line2.getText().toString());
-//        User.getInstance().setResidential_address_city(residential_address_city.getText().toString());
-//        User.getInstance().setResidential_address_state_abbrev(selectedState);
-//        User.getInstance().setResidential_address_zip(residential_address_zip.getText().toString());
-//
-//        VideoOffer offer = new VideoOffer(User.getInstance());
-//        FirebaseDatabase.getInstance()
-//            .getReference("video/offers/" + User.getInstance().getUid())
-//            .setValue(offer)
-//            .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    Util.simpleOKDialog(ShowMeHowActivity.this, "Got it!\nSomeone will contact you soon", onPhoneEntered());
-//                }
-//            })
-//            .addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Util.simpleOKDialog(ShowMeHowActivity.this, "Uh Oh!\nWe didn't get your phone number\n(Error: " + e.getMessage() + ")", onPhoneEntered());
-//                }
-//            });
     }
     
     @objc private func clickCancel(_ sender:UIButton) {
@@ -411,6 +387,7 @@ extension ShowMeHowVC : UIPickerViewDelegate {
 
         if row < states.count {
             selectedState = states[row]["state_abbrev"]!
+            print(selectedState)
         }
     }
     

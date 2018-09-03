@@ -262,6 +262,11 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             guard let vc = delegate?.getVideoChatViewController() else { return }
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
+        else if(menuItem.title == "Video Offers") {
+            // delegate is probably ContainerViewController
+            guard let vc = delegate?.getVideoOffersVC() else { return }
+            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+        }
         else if(menuItem.title == "Video Invitations") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoInvitationsViewController() else { return }
@@ -490,7 +495,8 @@ extension CenterViewController : AccountStatusEventListener {
     
     func notAllowed() {
         if let limboViewController = delegate?.getLimboViewController() {
-            let is_ = limboViewController.viewIfLoaded?.window != nil
+            
+            let is_ = limboViewController.viewIfLoaded?.window != nil || limboViewController.isBeingPresented
             if !is_ { // bug fix - avoids a nasty "already presented" exception
                 limboViewController.modalPresentationStyle = .popover
                 self.present(limboViewController, animated: true, completion:nil)

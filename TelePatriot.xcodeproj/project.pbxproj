@@ -95,6 +95,8 @@
 		A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */; };
 		A19F6C3A2139D91D00A140C2 /* ShowMeHowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F6C392139D91D00A140C2 /* ShowMeHowVC.swift */; };
 		A19F6C3C213A296C00A140C2 /* VideoOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F6C3B213A296C00A140C2 /* VideoOffer.swift */; };
+		A19F6C3E213A4E8E00A140C2 /* VideoOffersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F6C3D213A4E8E00A140C2 /* VideoOffersVC.swift */; };
+		A19F6C40213A533900A140C2 /* VideoOfferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19F6C3F213A533900A140C2 /* VideoOfferCell.swift */; };
 		A1AD5C462009AC1400CB113E /* BackTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C452009AC1400CB113E /* BackTracker.swift */; };
 		A1AD5C482011A32900CB113E /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AD5C472011A32900CB113E /* MyProfileVC.swift */; };
 		A1B55464202A64B20083C066 /* MissionDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B55463202A64B20083C066 /* MissionDetailsVC.swift */; };
@@ -209,6 +211,8 @@
 		A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotApproveUserVC.swift; sourceTree = "<group>"; };
 		A19F6C392139D91D00A140C2 /* ShowMeHowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMeHowVC.swift; sourceTree = "<group>"; };
 		A19F6C3B213A296C00A140C2 /* VideoOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOffer.swift; sourceTree = "<group>"; };
+		A19F6C3D213A4E8E00A140C2 /* VideoOffersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOffersVC.swift; sourceTree = "<group>"; };
+		A19F6C3F213A533900A140C2 /* VideoOfferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOfferCell.swift; sourceTree = "<group>"; };
 		A1AD5C452009AC1400CB113E /* BackTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackTracker.swift; sourceTree = "<group>"; };
 		A1AD5C472011A32900CB113E /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
 		A1B55463202A64B20083C066 /* MissionDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDetailsVC.swift; sourceTree = "<group>"; };
@@ -415,6 +419,8 @@
 				A137720820D086FF00566AFE /* VideoInvitationCell.swift */,
 				A137720620D0200000566AFE /* VideoInvitationsVC.swift */,
 				A19F6C3B213A296C00A140C2 /* VideoOffer.swift */,
+				A19F6C3F213A533900A140C2 /* VideoOfferCell.swift */,
+				A19F6C3D213A4E8E00A140C2 /* VideoOffersVC.swift */,
 				A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */,
 				A13187B2207730690048FE95 /* VideoType.swift */,
 			);
@@ -656,6 +662,7 @@
 				A1217E311FCA199A0007ABF8 /* Call.swift in Sources */,
 				A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */,
 				A1E8D86D2075B24100E4F720 /* VideoParticipant.swift in Sources */,
+				A19F6C40213A533900A140C2 /* VideoOfferCell.swift in Sources */,
 				A1AD5C482011A32900CB113E /* MyProfileVC.swift in Sources */,
 				A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */,
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
@@ -667,6 +674,7 @@
 				A1D3919D1FCBD06700EA2CA2 /* DirectorViewControllerDelegate.swift in Sources */,
 				A149B9A5210B55B500ACE10C /* VideoChatInstructionsView.swift in Sources */,
 				A18565921FBC0523009EE57F /* LimboViewController.swift in Sources */,
+				A19F6C3E213A4E8E00A140C2 /* VideoOffersVC.swift in Sources */,
 				A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */,
 				A190B47C20095D3B00ED51D6 /* CannotApproveUserVC.swift in Sources */,
 				A109E8C31FC86DFC0005517A /* MenuItems.swift in Sources */,

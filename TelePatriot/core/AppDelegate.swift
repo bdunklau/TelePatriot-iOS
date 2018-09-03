@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //var videoChatInstructionsVC : VideoChatInstructionsView?
     var videoChatVC : VideoChatVC?
     var videoInvitationsVC : VideoInvitationsVC?
+    var videoOffersVC : VideoOffersVC?
     var videoTypes = [VideoType]()
     
     var myDelegate : AppDelegateDelegate?
@@ -98,6 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //videoChatInstructionsVC = VideoChatInstructionsView()
         videoChatVC = VideoChatVC()
         videoInvitationsVC = VideoInvitationsVC()
+        videoOffersVC = VideoOffersVC()
         
         MissionItem.nextViewController = myMissionViewController
         MissionItem2.nextViewController = myLegislatorsVC

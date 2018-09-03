@@ -374,8 +374,9 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         
         // Android: LimboActivity:show_me_how_button does this:  startActivity(new Intent(LimboActivity.this, ShowMeHowActivity.class));
         
-        let vc = ShowMeHowVC()
-        self.present(vc, animated: true, completion: nil)
+//        let vc = ShowMeHowVC()
+//        self.present(vc, animated: true, completion: nil)
+        showScreen(vc: ShowMeHowVC())
     }
     
     @objc private func clickDone(_ sender:UIButton) {

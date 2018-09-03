@@ -186,6 +186,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
         if( role == "Video Creator" ) {
             doRoleAdded(menuText: "Video Chat", section: 1)//items: menuItems[0])
+            doRoleAdded(menuText: "Video Offers", section: 1)//items: menuItems[0])
         }
     }
     
@@ -203,6 +204,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
         if( role == "Video Creator" ) {
             doRoleRemoved(menuText: "Video Chat", section: 1)//items: menuItems[0])
+            doRoleRemoved(menuText: "Video Offers", section: 1)//items: menuItems[0])
         }
     }
     

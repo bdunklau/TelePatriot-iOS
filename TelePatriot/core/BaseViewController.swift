@@ -29,6 +29,14 @@ class BaseViewController: UIViewController {
         
     }
     
+    func showScreen(vc: UIViewController) {
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func closeScreen() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func getAppDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }

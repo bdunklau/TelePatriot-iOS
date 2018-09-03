@@ -317,6 +317,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
         return appDelegate?.videoInvitationsVC
     }
     
+    func getVideoOffersVC() -> VideoOffersVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.videoOffersVC
+    }
+    
     func toggleLeftPanel() {
         let notAlreadyExpanded = (currentState != .leftPanelExpanded)
         

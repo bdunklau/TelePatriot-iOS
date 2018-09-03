@@ -203,46 +203,4 @@ struct Legislator : Decodable {
         return olist
     }
     
-    /*********
-    func dictionary() -> [String:Any] {
-        return [
-            "first_name":first_name,
-            "last_name":last_name,
-            "party":party,
-            "photo_url":photo_url,
-            "photoUrl":photoUrl,
-            "chamber":chamber,
-            "url":url,
-            "offices":officesAsDictionary(),
-            "district":district,
-            "state":state,
-            "legislator_cos_position":legislator_cos_position,
-            "legislator_facebook":legislator_facebook,
-            "legislator_facebook_id":legislator_facebook_id,
-            "legislator_twitter":legislator_twitter
-        ]
-    }
-    **********/
-    
-    /***********
-         chamber: String,
-         url: String,
-         offices: [Office],
-         district: String,
-         state: String,
-         legislator_cos_position:String? = nil,
-         legislator_facebook:String? = nil,
-         legislator_twitter:String? = nil) {
-        
-        self.first_name = first_name
-        self.last_name = last_name
-        self.party = party
-        self.photo_url = photo_url
-        self.chamber = chamber
-        self.url = url
-        self.offices = offices
-        self.district = district
-        self.state = state
-    }
-    **********/
 }
