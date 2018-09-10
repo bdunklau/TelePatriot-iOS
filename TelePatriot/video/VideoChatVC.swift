@@ -43,7 +43,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     var remoteWidth : CGFloat?
     var remoteHeight : CGFloat?
     
-    var videoNode : VideoNode?
+    var currentVideoNode : VideoNode?
     
     var audioCodec: TVIAudioCodec?
     var videoCodec: TVIVideoCodec?
@@ -84,7 +84,9 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         //l.font = l.font.withSize(18)
         l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
         l.textColor = .red
-        l.text = "" //"Recording..."
+        // this setting, plus the widthAnchor constraint below is how we achieve word wrapping inside the scrollview
+        l.numberOfLines = 0
+        l.text = ""
         return l
     }()
     
@@ -141,101 +143,134 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         return button
     }()
     
+    var portraitView: UIView?
+    var landscapeView: UIView?
+    
+    let flip_to_landscape_label : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = l.font.withSize(16)
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.textColor = .black
+        l.text = "Rotate your phone 90 degrees"
+        return l
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let topMargin : CGFloat = 30
-        localCameraXPos = 0 // why do we have to go negative to flush left?
-        localCameraYPos = topMargin
-        localHeight = self.view.bounds.height / 2 - topMargin / 2
-        localCameraWidth = 16 / 9 * localHeight!
-        
-        remoteXPos = localCameraXPos
-        remoteYPos = localCameraYPos! + localHeight!
-        remoteWidth = localCameraWidth
-        remoteHeight = localHeight
-        
-        // Creating `TVIVideoView` programmatically
-//        remote_view = UIView(frame: CGRect(x: remoteXPos!, y: remoteYPos, width: remoteWidth!, height: remoteHeight!))
-//        remote_view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        // add the remote_view when the remote camera comes online - see below setupRemoteVideoView() and where it's called from
-        self.remote_camera_view = TVIVideoView.init(frame: CGRect(x: remoteXPos!, y: remoteYPos!, width: remoteWidth!, height: remoteHeight!), delegate:self)
-        remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
-//        remote_view.addSubview(remote_camera_view!)
-//        remote_view.isHidden = true
-//        view.addSubview(remote_view)
-        
-        // Need this way up here so that videoNode will be non nil when we need it
-        // in videoChatInstructionsView?.buildView()
-        queryCurrentVideoNode()
-        
-        let buttonWidth : CGFloat = 48
-        let buttonHeight : CGFloat = buttonWidth
-        //let bottomAreaHeight = self.view.frame.height - remoteYPos - remoteHeight
-        let buttonYPos : CGFloat = localCameraYPos! + localHeight! - buttonHeight / 2
-        let spacingConstant : CGFloat = 24
-        
-        local_view = UIView(frame: CGRect(x: 0, y: localCameraYPos!, width: localCameraWidth!, height: localHeight!))
-        local_view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        view.addSubview(local_view)
-        
-        // Preview our local camera track in the local video preview view.
-        self.startPreview()
-        
-//        empty_remote_view = UIView(frame: CGRect(x: remoteXPos!, y: remoteYPos!, width: remoteWidth!, height: remoteHeight!))
-//        empty_remote_view.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
-//        view.addSubview(empty_remote_view) // placement is dictated by the dimensions of the CGRect in the UIView's constructor
-        view.addSubview(remote_camera_view!) // put this on top of the empty_remote_view so that it will "appear" when we connect
-        
-//        self.view.insertSubview(self.remote_view!, at: 0)
-//        remote_view.addSubview(remote_camera_view!)
-        
-        
-        var buttonSpacing : CGFloat = spacingConstant
-        connect_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
-        buttonSpacing += buttonWidth + spacingConstant
-        microphone_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
-        buttonSpacing += buttonWidth + spacingConstant
-        record_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
-        buttonSpacing += buttonWidth + spacingConstant
-        publish_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
-        
-        microphone_button.isHidden = true
-        record_button.isHidden = true
-        publish_button.isHidden = true
-        
-        view.addSubview(connect_button)
-        view.addSubview(microphone_button)
-        view.addSubview(record_button)
-        view.addSubview(publish_button)
-        
-        view.addSubview(record_label)
-        record_label.topAnchor.constraint(equalTo: view.topAnchor, constant: 48).isActive = true
-        record_label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
-        
-        if let videoChatInstructionsView = videoChatInstructionsView {
-            videoChatInstructionsView.removeFromSuperview()
+        if UIDevice.current.orientation.isLandscape {
+            queryCurrentVideoNode()
+            
+            if landscapeView == nil {
+                loadLandscapeView()
+            }
+            view.addSubview(landscapeView!)
+            if let portraitView = portraitView {
+                portraitView.removeFromSuperview()
+            }
         }
+        else if UIDevice.current.orientation.isPortrait {
+            if portraitView == nil {
+                loadPortraitView()
+            }
+            view.addSubview(portraitView!)
+            if let landscapeView = landscapeView {
+                landscapeView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func loadPortraitView() {
         
-        let instructionsXPos = localCameraXPos! + localCameraWidth!
-        let instructionsYPos = localCameraYPos
-        let instructionsWidth = self.view.bounds.width - instructionsXPos - 16
-        let instructionsHeight = self.view.bounds.height - instructionsYPos!
-        let bounds = CGRect(x: instructionsXPos, y: instructionsYPos!, width: instructionsWidth, height: instructionsHeight)
-        videoChatInstructionsView = VideoChatInstructionsView.init(frame: bounds)
+        portraitView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        if let portraitView = portraitView {
+            portraitView.addSubview(flip_to_landscape_label)
+            flip_to_landscape_label.centerXAnchor.constraint(equalTo: portraitView.centerXAnchor, constant: 0).isActive = true
+            flip_to_landscape_label.centerYAnchor.constraint(equalTo: portraitView.centerYAnchor, constant: 0).isActive = true
+        }
+    }
+    
+    func loadLandscapeView() {
         
-        if let esm = getAppDelegate().editSocialMediaVC,
-            let evmd = getAppDelegate().editVideoMissionDescriptionVC,
-            let elv = getAppDelegate().editLegislatorForVideoVC {
-            videoChatInstructionsView?.buildView(editSocialMediaVC: esm,
-                                                 videoChatVC: self,
-                                                 editVideoMissionDescriptionVC: evmd,
-                                                 editLegislatorForVideoVC: elv)
-            view.addSubview(videoChatInstructionsView!)
+        landscapeView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        if let landscapeView = landscapeView {
+            let topMargin : CGFloat = 30
+            localCameraXPos = 0 // why do we have to go negative to flush left?
+            localCameraYPos = topMargin
+            localHeight = landscapeView.bounds.height / 2 - topMargin / 2
+            localCameraWidth = 16 / 9 * localHeight!
+            
+            remoteXPos = localCameraXPos
+            remoteYPos = localCameraYPos! + localHeight!
+            remoteWidth = localCameraWidth
+            remoteHeight = localHeight
+            
+            // add the remote_view when the remote camera comes online - see below setupRemoteVideoView() and where it's called from
+            self.remote_camera_view = TVIVideoView.init(frame: CGRect(x: remoteXPos!, y: remoteYPos!, width: remoteWidth!, height: remoteHeight!), delegate:self)
+            remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
+            
+            let buttonWidth : CGFloat = 48
+            let buttonHeight : CGFloat = buttonWidth
+            let buttonYPos : CGFloat = localCameraYPos! + localHeight! - buttonHeight / 2
+            let spacingConstant : CGFloat = 24
+        
+            local_view = UIView(frame: CGRect(x: 0, y: localCameraYPos!, width: localCameraWidth!, height: localHeight!))
+            local_view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            landscapeView.addSubview(local_view)
+            
+            // Preview our local camera track in the local video preview view.
+            self.startPreview()
+            
+            landscapeView.addSubview(remote_camera_view!) // put this on top of the empty_remote_view so that it will "appear" when we connect
+            
+            var buttonSpacing : CGFloat = spacingConstant
+            connect_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+            buttonSpacing += buttonWidth + spacingConstant
+            microphone_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+            buttonSpacing += buttonWidth + spacingConstant
+            record_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+            buttonSpacing += buttonWidth + spacingConstant
+            publish_button.frame = CGRect(x: buttonSpacing, y: buttonYPos, width: buttonWidth, height: buttonHeight)
+            
+            microphone_button.isHidden = true
+            record_button.isHidden = true
+            publish_button.isHidden = true
+        
+            landscapeView.addSubview(connect_button)
+            landscapeView.addSubview(microphone_button)
+            landscapeView.addSubview(record_button)
+            landscapeView.addSubview(publish_button)
+            
+            landscapeView.addSubview(record_label)
+            record_label.topAnchor.constraint(equalTo: landscapeView.topAnchor, constant: 48).isActive = true
+            record_label.leadingAnchor.constraint(equalTo: landscapeView.leadingAnchor, constant: 72).isActive = true
+            record_label.widthAnchor.constraint(equalTo: landscapeView.widthAnchor, multiplier: 0.3).isActive = true
+            
+            if let videoChatInstructionsView = videoChatInstructionsView {
+                videoChatInstructionsView.removeFromSuperview()
+            }
+            
+            let instructionsXPos = localCameraXPos! + localCameraWidth!
+            let instructionsYPos = localCameraYPos
+            let instructionsWidth = landscapeView.bounds.width - instructionsXPos - 16
+            let instructionsHeight = landscapeView.bounds.height - instructionsYPos!
+            let bounds = CGRect(x: instructionsXPos, y: instructionsYPos!, width: instructionsWidth, height: instructionsHeight)
+            videoChatInstructionsView = VideoChatInstructionsView.init(frame: bounds)
+        
+            if let esm = getAppDelegate().editSocialMediaVC,
+                let evmd = getAppDelegate().editVideoMissionDescriptionVC,
+                let elv = getAppDelegate().editLegislatorForVideoVC {
+                videoChatInstructionsView?.buildView(editSocialMediaVC: esm,
+                                                     videoChatVC: self,
+                                                     editVideoMissionDescriptionVC: evmd,
+                                                     editLegislatorForVideoVC: elv)
+                landscapeView.addSubview(videoChatInstructionsView!)
 
-            videoChatInstructionsView?.topAnchor.constraint(equalTo: view.topAnchor, constant: instructionsYPos!).isActive = true
-            videoChatInstructionsView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: instructionsXPos).isActive = true
+                videoChatInstructionsView?.topAnchor.constraint(equalTo: landscapeView.topAnchor, constant: instructionsYPos!).isActive = true
+                videoChatInstructionsView?.leadingAnchor.constraint(equalTo: landscapeView.leadingAnchor, constant: instructionsXPos).isActive = true
+            }
         }
     }
     
@@ -261,41 +296,103 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             .child(videoNodeKey)
             .observe(.value, with: {(snapshot) in
 
-                self.videoNode = VideoNode(snapshot: snapshot, vc: self)
+                self.currentVideoNode = VideoNode(snapshot: snapshot, vc: self)
                 if let vc = self.videoChatInstructionsView {
-                    vc.setVideoNode(videoNode: self.videoNode!)
+                    vc.setVideoNode(videoNode: self.currentVideoNode!)
                 }
 
 //                // YOU HAVE TO KNOW IF THE STATE IS ACTUALLY CHANGING !!!  WE DON'T WANT TO ISSUE CONNECT
 //                // AND DISCONNECT CALLS WHEN THE STATE HASN'T CHANGED !
-//                // controls the connect_button - what image it displays...  what actions are taken client-side
-//                // when attributes of the video/list/{video_node_key}/video_participants/{uid} node are updated (connect_date and disconnect_date)
-//                if let vn = self.videoNode, let me = vn.video_participants[TPUser.sharedInstance.getUid()] {
-//                    if me.isConnected() {
-//                        // do we need this?...
-//                        //self.connect_button.setImage(UIImage(named: "callEnd.png"), for: UIControlState.normal)
-//                        self.doConnect()
-//                    }
-//                    else {
-//                        self.doDisconnect()
-//                    }
-//                }
-                // above replaced with...
                 self.figureOutConnectivity()
                 
-                if let vn = self.videoNode {
-                    if vn.recording_completed { self.publish_button.isHidden = false }
+                // Determine publish_button visibility:
+                // Hide if the video has been published (email_to_participant_send_date != null)
+                // Show if not published but twilio has called back to us with a recording-completed event
+                // see twilio-telepatriot.js:twilioCallback()
+                // Hide otherwise
+                if let vn = self.currentVideoNode {
+                    if vn.email_to_participant_send_date != nil { self.publish_button.isHidden = true }
+                    else if vn.recording_completed { self.publish_button.isHidden = false }
                     else { self.publish_button.isHidden = true }
                 }
+                
+                // notify the user when publishing is complete - 'cause that's the end
+                self.boomNotify()
                 
                 self.inviteLinks()
             })
     }
     
+    var notifiedOfEnd = false
+    private func boomNotify() {
+        guard let vn = currentVideoNode else { return }
+        let videoLifecycleComplete = vn.email_to_participant_send_date != nil
+        if videoLifecycleComplete && !notifiedOfEnd {
+           
+            notifiedOfEnd = true
+        
+            let title = "BOOM! You Did It!"
+            let message = "Mission Accomplished - Your video has been published.  What do you want to do now?"
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let stop = UIAlertAction(title: "Stop For Now", style: .default, handler: { action in
+                switch action.style {
+                case .default:
+                    self.stopForNow()
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            })
+        
+            let makeAnother = UIAlertAction(title: "Make Another Video", style: .default, handler: { action in
+                switch action.style {
+                case .default:
+                    self.makeAnotherVideo()
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            })
+        
+            alert.addAction(stop)
+            alert.addAction(makeAnother)
+        
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func stopForNow() {
+        disconnectIfConnected()
+        TPUser.sharedInstance.signOut()
+    }
+    
+    private func makeAnotherVideo() {
+        // Should create another video node
+        notifiedOfEnd = false
+        disconnectIfConnected()
+        createVideoNodeKey()
+        currentVideoNode = nil
+        queryCurrentVideoNode()
+    }
+    
+    private func disconnectIfConnected() {
+        if let vn = currentVideoNode,
+            let room_id = vn.room_id,
+            let room = room, room.state == TVIRoomState.connected || room.state == TVIRoomState.connecting {
+            
+            let request_type = "disconnect request"
+            showSpinner() // dismissed in doConnect() and doDisconnect()
+            let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: vn.getKey(), room_id: room_id, request_type: request_type, RoomSid: vn.room_sid, MediaUri: vn.composition_MediaUri) /*keeps the server from trying to create a room that already exists - prevents js exception   see switchboard.js:connect() */
+            ve.save()
+        }
+    }
+    
     var currentRoomId : String?
     private func figureOutConnectivity() {
         // Do I have a token?  -geez
-        guard let vn = videoNode,
+        guard let vn = currentVideoNode,
             let room_id = vn.room_id,
             let me = vn.getParticipant(uid: TPUser.sharedInstance.getUid()) else {
             return
@@ -362,13 +459,16 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     
     @objc func connectionClicked(_ sender: Any) {
-        guard let vn = videoNode,
+        guard let vn = currentVideoNode,
             let video_participant = vn.video_participants[TPUser.sharedInstance.getUid()],
             let room_id = vn.room_id
         else {
             simpleOKDialog(message: "Video chat is currently disabled")
             return
         }
+        
+        recordingWillStart = false // reset these value to false whenever
+        recordingWillStop = false  // the connect/disconnect button is clicked
         
         let img = connect_button.currentImage == UIImage(named: "callEnd.png") ? UIImage(named: "callStart.png") : UIImage(named: "callEnd.png")
         DispatchQueue.main.async { self.connect_button.setImage(img, for: UIControlState.normal) }
@@ -385,7 +485,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             return
         }
         
-        guard let videoNode = videoNode,
+        guard let videoNode = currentVideoNode,
             let me = videoNode.video_participants[TPUser.sharedInstance.getUid()],
             let room_id = videoNode.room_id
             else {
@@ -434,8 +534,13 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
         // Connect to the Room using the options we provided.
         room = TwilioVideo.connect(with: connectOptions, delegate: self)
-        print("[VideoChatVC]  connected to:  \(String(describing: room?.name)) (currentVideoNode.room_id = \(room_id)");
-        self.showRoomUI(inRoom: true)
+        if let room = room
+            //, room.isRecording // why doesn't THIS work?
+            , room.name.starts(with: "record")
+        {
+            DispatchQueue.main.async { self.record_label.text = "Recording..." }
+        }
+        self.buttonStates(inRoom: true)
     }
     
     private func doDisconnect() {
@@ -445,8 +550,14 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
         if let room = room {
             room.disconnect()
+            if recordingWillStop {
+                DispatchQueue.main.async { self.record_label.text = "Recording stopped" }
+            } else if recordingWillStart { /*noop*/ }
+            else {
+                DispatchQueue.main.async { self.record_label.text = "" }
+            }
             print("[VideoChatVC]  disconnected from:  \(String(describing: room.name)) (currentVideoNode.room_id = \(room_id)");
-            self.showRoomUI(inRoom: false)
+            self.buttonStates(inRoom: false)
         }
     }
     
@@ -455,10 +566,14 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             return key
         }
         else {
-            let vn = createVideoNode()
-            TPUser.sharedInstance.setCurrent_video_node_key(current_video_node_key: vn.getKey())
-            return vn.getKey()
+            return createVideoNodeKey()
         }
+    }
+    
+    private func createVideoNodeKey() -> String {
+        let vn = createVideoNode()
+        TPUser.sharedInstance.setCurrent_video_node_key(current_video_node_key: vn.getKey())
+        return vn.getKey()
     }
 
     private func createVideoNode() -> VideoNode {
@@ -494,13 +609,17 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         // Preview our local camera track in the local video preview view.
         camera = TVICameraCapturer(source: .frontCamera, delegate: self)
         localVideoTrack = TVILocalVideoTrack.init(capturer: camera!, enabled: true, constraints: nil, name: "Camera")
+        
+        // TODO sloppy. This will never be nil.  We just instantiated it.
         if (localVideoTrack == nil) {
             //logMessage(messageText: "Failed to create video track")
             print("localVideoTrack is nil - that's not good")
         } else {
             local_camera_view = TVIVideoView(frame: CGRect(x: localCameraXPos!, y: localCameraYPos!, width: localCameraWidth!, height: localHeight!))
             local_camera_view.backgroundColor = .black
-            /*local_*/view.addSubview(local_camera_view)
+            if let landscapeView = landscapeView {
+                /*local_*/landscapeView.addSubview(local_camera_view)
+            }
             
             // doesn't do what I want - goes full screen regardless of height and width anchors
             local_camera_view.topAnchor.constraint(equalTo: local_view.topAnchor, constant: 0).isActive = true
@@ -528,10 +647,6 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
     
-    func publishingStarted() {
-        print("publising started  ...not really")
-    }
-    
     func videoInvitationExtended(name: String) {
         print("videoInvitationExtended():  name = \(name)")
     }
@@ -542,6 +657,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     func rotated() {
         print("rotated():  phone orientation was just rotated")
+        viewDidLoad() // checks device orientation and only loads if in landscape mode
     }
     
     private func showSpinner() {
@@ -605,18 +721,18 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }
     
     // Update our UI based upon if we are in a Room or not
-    func showRoomUI(inRoom: Bool) {
-        // from the VideoQuickStart sample app - probably want to do something here - just not sure what
-        self.connect_button.setImage(UIImage(named: inRoom ? "callEnd.png" : "callStart.png"), for: UIControlState.normal)
-//        self.connectButton.isHidden = inRoom
-//        self.roomTextField.isHidden = inRoom
-//        self.roomLine.isHidden = inRoom
-//        self.roomLabel.isHidden = inRoom
-        self.microphone_button.isHidden = !inRoom
-        self.record_button.isHidden = !inRoom
-//        self.disconnectButton.isHidden = !inRoom
-//        self.navigationController?.setNavigationBarHidden(inRoom, animated: true)
-//        UIApplication.shared.isIdleTimerDisabled = inRoom
+    func buttonStates(inRoom: Bool) {
+        guard let vn = currentVideoNode else {
+            return
+        }
+        if recordingWillStart || recordingWillStop {
+            // prevent the buttons from changing state when the recording starts and stops - very confusing to the user
+            // The user doesn't know that they are actually being disconnected from one room and automatically connected to another room
+        } else {
+            self.connect_button.setImage(UIImage(named: inRoom ? "callEnd.png" : "callStart.png"), for: UIControlState.normal)
+            self.microphone_button.isHidden = !inRoom
+            self.record_button.isHidden = !inRoom
+        }
     }
     
     private func dismissSpinner() {
@@ -632,10 +748,12 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
 //        print("dismissSpinner():  self.spinning = \(self.spinning)")
     }
     
-    var recording = false
+    private var recording = false
+    private var recordingWillStart = false
+    private var recordingWillStop = false
     @objc func recordClicked(_ sender: Any) {
         
-        guard let vn = videoNode else {
+        guard let vn = currentVideoNode else {
             return
         }
         
@@ -644,13 +762,24 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             return
         }
         
-//        let img = record_button.currentImage == UIImage(named: "record.png") ? UIImage(named: "recordstop.png") : UIImage(named: "record.png")
-//        DispatchQueue.main.async { self.record_button.setImage(img, for: UIControlState.normal) }
-        DispatchQueue.main.async { self.record_label.text = self.record_label.text=="Recording..." ? "" : "Recording..." }
+        var rec_label = ""
+        if vn.recordingHasNotStarted() || vn.recordingHasStopped() {
+            rec_label = "Recording will start momentarily"
+            recordingWillStart = true
+            recordingWillStop = false
+        } else {
+            rec_label = "Recording will stop momentarily"
+            recordingWillStart = false
+            recordingWillStop = true
+        }
+        DispatchQueue.main.async {
+            self.record_label.text = rec_label
+        }
+        
+//        The red "Recording..." indicator is set in doConnect() and unset in doDisconnect()
         
         if let room_id = vn.room_id, let room_sid = vn.room_sid
         {
-            simpleOKDialog(message: "Recording will start as soon as you see \"Recording...\" across the top")
             let video_node_key = vn.getKey()
             let request_type = vn.recordingHasStarted() ? "stop recording" : "start recording"
             showSpinner() // dismissed in doConnect() and doDisconnect()
@@ -692,7 +821,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     @objc func publishClicked(_ sender: Any) {
         
-        guard let vn = videoNode else {
+        guard let vn = currentVideoNode else {
             return
         }
         
@@ -724,20 +853,20 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             guest_name.removeFromSuperview()
             revoke_invitation_button.removeFromSuperview()
         }
-        else if let video_invitation_extended_to = videoNode?.video_invitation_extended_to {
+        else if let video_invitation_extended_to = currentVideoNode?.video_invitation_extended_to {
             invite_someone_button.removeFromSuperview()
             if TPUser.sharedInstance.getName() == video_invitation_extended_to {
                 guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
                 revoke_invitation_button.removeFromSuperview() // or this one
             }
             else {
-                if let remote_camera_view = remote_camera_view {
-                    view.addSubview(guest_name)
+                if let remote_camera_view = remote_camera_view, let landscapeView = landscapeView {
+                    landscapeView.addSubview(guest_name)
                     guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
                     guest_name.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 48).isActive = true
                     guest_name.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
                     guest_name.trailingAnchor.constraint(equalTo: (videoChatInstructionsView?.leadingAnchor)!, constant:-24).isActive = true
-                    view.addSubview(revoke_invitation_button)
+                    landscapeView.addSubview(revoke_invitation_button)
                     revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
                     revoke_invitation_button.centerXAnchor.constraint(equalTo: guest_name.centerXAnchor, constant:0).isActive = true
                 }
@@ -745,8 +874,8 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
         else {
             // means the remote camera is not visible and there's no invitation extended yet
-            if let remote_camera_view = remote_camera_view {
-                view.addSubview(invite_someone_button)
+            if let remote_camera_view = remote_camera_view, let landscapeView = landscapeView {
+                landscapeView.addSubview(invite_someone_button)
                 invite_someone_button.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 48).isActive = true
                 invite_someone_button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 96).isActive = true
                 guest_name.removeFromSuperview()
@@ -763,6 +892,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             vc.modalPresentationStyle = .popover
             vc.searchUsersDelegate = self
             self.present(vc, animated: true, completion:nil)
+            // See extension VideoChatVC : SearchUsersDelegate below
         }
     }
 
@@ -786,7 +916,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
 //        }
         
         
-        guard let vn = videoNode else {
+        guard let vn = currentVideoNode else {
             return
         }
         let vi = VideoInvitation(videoNode: vn)
@@ -810,11 +940,14 @@ extension VideoChatVC : SearchUsersDelegate {
         if let vid = TPUser.sharedInstance.current_video_node_key {
             let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guest: user, video_node_key: vid)
             let video_invitation_key = videoInvitation.save()
-            videoNode?.video_invitation_key = video_invitation_key
+            currentVideoNode?.video_invitation_key = video_invitation_key
 
             // now write the video_invitation_key to the video node so that we can revoke the invitation later if we want to
             let data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
-                        "video/list/\(vid)/video_invitation_extended_to" : user.getName() ]
+                        "video/list/\(vid)/video_invitation_extended_to" : user.getName(),
+                        "users/\(user.getUid())/video_invitation_from" : TPUser.sharedInstance.getUid(),
+                        "users/\(user.getUid())/video_invitation_from_name" : TPUser.sharedInstance.getName(),
+                        "users/\(user.getUid())/current_video_node_key" : TPUser.sharedInstance.current_video_node_key]
             Database.database().reference().updateChildValues(data)
         }
     }
@@ -838,13 +971,13 @@ extension VideoChatVC : TVIRoomDelegate {
         print("Disconnected from room \(room.name), error = \(String(describing: error))")
         self.cleanupRemoteParticipant()
         self.room = nil
-        self.showRoomUI(inRoom: false)
+        self.buttonStates(inRoom: false)
     }
     
     func room(_ room: TVIRoom, didFailToConnectWithError error: Error) {
         print("Failed to connect to room with error")
         self.room = nil
-        self.showRoomUI(inRoom: false)
+        self.buttonStates(inRoom: false)
     }
     
     func room(_ room: TVIRoom, participantDidConnect participant: TVIRemoteParticipant) {

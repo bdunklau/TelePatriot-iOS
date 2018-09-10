@@ -175,6 +175,7 @@ class VideoOfferCell: UITableViewCell {
         let button = BaseButton(text: "Delete")
         button.titleLabel?.font = button.titleLabel?.font.withSize(16)
         button.setTitleColor(.red, for: .normal)
+        // the on-click action is set in VideoOffersVC
         return button
     }()
     

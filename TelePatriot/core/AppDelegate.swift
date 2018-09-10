@@ -258,9 +258,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // because that affects how far the main window should slide over to the right and whether or not we
     // need to allow scrolling of the menu
     // AppDelegate is where this function is referenced
+    var orientation : UIDeviceOrientation?
     @objc func rotated() {
+        if TPUser.sharedInstance.getUid() == "uid not available" {
+            return
+        }
+        // no-op when this method is called on startup.  We only want to call this when there is an actual change in orientation
         containerViewController.rotated()
-        videoChatVC?.rotated()
+        if let videoChatVC = videoChatVC, videoChatVC.isViewLoaded {
+            videoChatVC.rotated()
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

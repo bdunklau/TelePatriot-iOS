@@ -18,13 +18,6 @@ class VideoNode {
     
     var video_participants = [String:VideoParticipant]()
     
-    var video_type : String?
-    var video_id : String?
-    var video_title : String?
-    var youtube_video_description : String?
-    var youtube_video_description_unevaluated : String?
-    var video_mission_description : String
-    
     var email_to_legislator_body: String?
     var email_to_legislator_body_unevaluated: String?
     var email_to_legislator_subject: String?
@@ -33,7 +26,11 @@ class VideoNode {
     var email_to_participant_body_unevaluated: String?
     var email_to_participant_subject: String?
     var email_to_participant_subject_unevaluated: String?
-    
+    var email_to_legislator_send_date: String?
+    var email_to_legislator_send_date_ms: Int64?
+    var email_to_participant_send_date: String?
+    var email_to_participant_send_date_ms: Int64?
+    var facebook_post_id: String?
     var room_id : String?
     var room_sid_record : String?
     var room_sid : String? // the twilio RoomSid
@@ -44,6 +41,13 @@ class VideoNode {
     var recording_stopped : String?
     var recording_stopped_ms : Int64?
     var recording_completed = false
+    var twitter_post_id: String?
+    var video_type : String?
+    var video_id : String?
+    var video_title : String?
+    var youtube_video_description : String?
+    var youtube_video_description_unevaluated : String?
+    var video_mission_description : String
     
     var legislator : Legislator?
     
@@ -122,11 +126,6 @@ class VideoNode {
             
             if let vt = dictionary["video_type"] as? String {
                 video_type = vt
-            }
-            
-            if let yu = dictionary["video_id"] as? String {
-                video_id = yu
-                vc.publishingStarted()
             }
             
             /****
@@ -226,6 +225,14 @@ class VideoNode {
                 post_to_twitter = x
             }
             
+            if let x = dictionary["facebook_post_id"] as? String {
+                facebook_post_id = x
+            }
+            
+            if let x = dictionary["twitter_post_id"] as? String {
+                twitter_post_id = x
+            }
+            
             if let x = dictionary["composition_PercentageDone"] as? String {
                 composition_PercentageDone = Int(x)
             }
@@ -282,7 +289,21 @@ class VideoNode {
                 email_to_participant_subject_unevaluated = x
             }
             
+            if let x = dictionary["email_to_legislator_send_date"] as? String {
+                email_to_legislator_send_date = x
+            }
             
+            if let x = dictionary["email_to_legislator_send_date_ms"] as? Int64 {
+                email_to_legislator_send_date_ms = x
+            }
+            
+            if let x = dictionary["email_to_participant_send_date"] as? String {
+                email_to_participant_send_date = x
+            }
+            
+            if let x = dictionary["email_to_participant_send_date_ms"] as? Int64 {
+                email_to_participant_send_date_ms = x
+            }
             
             // also have to update VideoChatInstructionsView.setVideoNode()
             // to actually make the new field data appear on the screen
@@ -326,6 +347,18 @@ class VideoNode {
     // to actually make the new field data appear on the screen
     func dictionary() -> [String: Any] {
         return [
+            "email_to_legislator_body": email_to_legislator_body,
+            "email_to_legislator_body_unevaluated": email_to_legislator_body_unevaluated,
+            "email_to_legislator_subject": email_to_legislator_subject,
+            "email_to_legislator_subject_unevaluated": email_to_legislator_subject_unevaluated,
+            "email_to_participant_body": email_to_participant_body,
+            "email_to_participant_body_unevaluated": email_to_participant_body_unevaluated,
+            "email_to_participant_subject": email_to_participant_subject,
+            "email_to_participant_subject_unevaluated": email_to_participant_subject_unevaluated,
+            "email_to_legislator_send_date": email_to_legislator_send_date,
+            "email_to_legislator_send_date_ms": email_to_legislator_send_date_ms,
+            "email_to_participant_send_date": email_to_participant_send_date,
+            "email_to_participant_send_date_ms": email_to_participant_send_date_ms,
             "node_create_date": node_create_date,
             "node_create_date_ms": node_create_date_ms,
             "video_participants": dictionaries(list: video_participants) as Any,

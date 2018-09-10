@@ -23,15 +23,6 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
     var editLegislatorForVideoVC : EditLegislatorForVideoVC?
     
     
-    
-//    let close_button : BaseButton = {
-//        let button = BaseButton(text: "Close")
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(dismissThisScreen(_:)), for: .touchUpInside)
-//        return button
-//    }()
-    
-    
     let descriptionLabel : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -314,6 +305,102 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         return s
     }()
     
+    
+    let video_status : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Video Status"
+        return l
+    }()
+    
+    let youtube_status : UIImageView = {
+        let img = UIImage(named: "green_checkmark.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    let posted_to_youtube : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Posted to YouTube"
+        return l
+    }()
+    
+    let facebook_status : UIImageView = {
+        let img = UIImage(named: "gray_checkmark.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    let posted_to_facebook : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Posted to Facebook"
+        return l
+    }()
+    
+    let twitter_status : UIImageView = {
+        let img = UIImage(named: "gray_checkmark.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    let posted_to_twitter : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Posted to Twitter"
+        return l
+    }()
+    
+    let emailed_to_legislator_status : UIImageView = {
+        let img = UIImage(named: "gray_checkmark.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    let emailed_to_legislator : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "Emailed to Legislator"
+        return l
+    }()
+    
+    let emailed_to_participant_status : UIImageView = {
+        let img = UIImage(named: "gray_checkmark.png")
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .scaleAspectFit
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        return imgView
+    }()
+    
+    let emailed_to_participant : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.text = "You've got Mail!"
+        return l
+    }()
+    
+    
     @objc func switchValueDidChange(_ sender:UISwitch!) {
         let m : [UISwitch : String] = [
             email_to_legislator: "email_to_legislator",
@@ -324,34 +411,6 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
             Database.database().reference().child("video/list/\(videoNode.getKey())/\(attribute)").setValue(sender.isOn)
         }
     }
-    
-    
-    let composition_status : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = "Composition Status"
-        return l
-    }()
-    
-    let composition_PercentageDone : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = ""
-        return l
-    }()
-    
-    let composition_SecondsRemaining : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        //l.font = l.font.withSize(18)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        l.text = ""
-        return l
-    }()
     
     
     func buildView(editSocialMediaVC: EditSocialMediaVC, videoChatVC: VideoChatVC, editVideoMissionDescriptionVC : EditVideoMissionDescriptionVC,
@@ -387,7 +446,7 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         video_mission_description.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
         // this constraint plus this attribute setting above: l.numberOfLines = 0
         // is how we achieve word wrapping inside the scrollview
-        video_mission_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
+        video_mission_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
         
         scrollView.addSubview(legislatorLabel)
         legislatorLabel.topAnchor.constraint(equalTo: video_mission_description.bottomAnchor, constant: 16).isActive = true
@@ -444,7 +503,7 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         video_title.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
         // this constraint plus this attribute setting above: l.numberOfLines = 0
         // is how we achieve word wrapping inside the scrollview
-        video_title.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
+        video_title.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
         
         
         scrollView.addSubview(youtubeVideoDescriptionHeader)
@@ -462,7 +521,7 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         youtube_video_description.leadingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 8).isActive = true
         // this constraint plus this attribute setting above: l.numberOfLines = 0
         // is how we achieve word wrapping inside the scrollview
-        youtube_video_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0.95).isActive = true
+        youtube_video_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
         
         scrollView.addSubview(what_do_you_want_to_do_with_your_video)
         what_do_you_want_to_do_with_your_video.topAnchor.constraint(equalTo: youtube_video_description.bottomAnchor, constant: 48).isActive = true
@@ -495,17 +554,49 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         post_to_twitter.centerYAnchor.constraint(equalTo: post_to_twitter_label.centerYAnchor, constant: 0).isActive = true
         post_to_twitter.leadingAnchor.constraint(equalTo: email_to_legislator.leadingAnchor, constant: 0).isActive = true
         
-        scrollView.addSubview(composition_status)
-        composition_status.topAnchor.constraint(equalTo: post_to_twitter_label.bottomAnchor, constant: 32).isActive = true
-        composition_status.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(video_status)
+        video_status.leadingAnchor.constraint(equalTo: post_to_twitter_label.leadingAnchor, constant: 0).isActive = true
+        video_status.topAnchor.constraint(equalTo: post_to_twitter_label.bottomAnchor, constant: 32).isActive = true
         
-        scrollView.addSubview(composition_PercentageDone)
-        composition_PercentageDone.topAnchor.constraint(equalTo: composition_status.bottomAnchor, constant: 16).isActive = true
-        composition_PercentageDone.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(youtube_status)
+        youtube_status.leadingAnchor.constraint(equalTo: video_status.leadingAnchor, constant: 0).isActive = true
+        youtube_status.topAnchor.constraint(equalTo: video_status.bottomAnchor, constant: 8).isActive = true
         
-        scrollView.addSubview(composition_SecondsRemaining)
-        composition_SecondsRemaining.bottomAnchor.constraint(equalTo: composition_PercentageDone.bottomAnchor, constant: 0).isActive = true
-        composition_SecondsRemaining.leadingAnchor.constraint(equalTo: composition_PercentageDone.trailingAnchor, constant: 8).isActive = true
+        scrollView.addSubview(posted_to_youtube)
+        posted_to_youtube.leadingAnchor.constraint(equalTo: youtube_status.trailingAnchor, constant: 8).isActive = true
+        posted_to_youtube.centerYAnchor.constraint(equalTo: youtube_status.centerYAnchor, constant: 0).isActive = true
+        
+        scrollView.addSubview(facebook_status)
+        facebook_status.leadingAnchor.constraint(equalTo: video_status.leadingAnchor, constant: 0).isActive = true
+        facebook_status.topAnchor.constraint(equalTo: youtube_status.bottomAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(posted_to_facebook)
+        posted_to_facebook.leadingAnchor.constraint(equalTo: facebook_status.trailingAnchor, constant: 8).isActive = true
+        posted_to_facebook.centerYAnchor.constraint(equalTo: facebook_status.centerYAnchor, constant: 0).isActive = true
+        
+        scrollView.addSubview(twitter_status)
+        twitter_status.leadingAnchor.constraint(equalTo: video_status.leadingAnchor, constant: 0).isActive = true
+        twitter_status.topAnchor.constraint(equalTo: facebook_status.bottomAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(posted_to_twitter)
+        posted_to_twitter.leadingAnchor.constraint(equalTo: twitter_status.trailingAnchor, constant: 8).isActive = true
+        posted_to_twitter.centerYAnchor.constraint(equalTo: twitter_status.centerYAnchor, constant: 0).isActive = true
+
+        scrollView.addSubview(emailed_to_legislator_status)
+        emailed_to_legislator_status.leadingAnchor.constraint(equalTo: video_status.leadingAnchor, constant: 0).isActive = true
+        emailed_to_legislator_status.topAnchor.constraint(equalTo: twitter_status.bottomAnchor, constant: 8).isActive = true
+
+        scrollView.addSubview(emailed_to_legislator)
+        emailed_to_legislator.leadingAnchor.constraint(equalTo: emailed_to_legislator_status.trailingAnchor, constant: 8).isActive = true
+        emailed_to_legislator.centerYAnchor.constraint(equalTo: emailed_to_legislator_status.centerYAnchor, constant: 0).isActive = true
+        
+        scrollView.addSubview(emailed_to_participant_status)
+        emailed_to_participant_status.leadingAnchor.constraint(equalTo: video_status.leadingAnchor, constant: 0).isActive = true
+        emailed_to_participant_status.topAnchor.constraint(equalTo: emailed_to_legislator_status.bottomAnchor, constant: 8).isActive = true
+        
+        scrollView.addSubview(emailed_to_participant)
+        emailed_to_participant.leadingAnchor.constraint(equalTo: emailed_to_participant_status.trailingAnchor, constant: 8).isActive = true
+        emailed_to_participant.centerYAnchor.constraint(equalTo: emailed_to_participant_status.centerYAnchor, constant: 0).isActive = true
         
         addSubview(scrollView)
         
@@ -515,11 +606,27 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
     }
     
     
+    private func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage? {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
+    
     func setVideoNode(videoNode: VideoNode) {
         self.videoNode = videoNode
         self.video_mission_description.text = videoNode.video_mission_description
         if let legislator = videoNode.legislator {
+            self.editFacebookButton.isHidden = false
             self.editFacebookButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
+            self.editTwitterButton.isHidden = false
             self.editTwitterButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
             self.legislator = legislator
             self.legislatorName.text = legislator.full_name
@@ -534,6 +641,20 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
             self.video_title.text = self.videoNode?.video_title
             self.youtube_video_description.text = self.videoNode?.youtube_video_description
         }
+        else {
+            self.editFacebookButton.isHidden = true
+            self.editTwitterButton.isHidden = true
+            self.legislator = nil
+            self.legislatorName.text = ""
+            self.state.text = ""
+            self.chamber.text = ""
+            self.district.text = ""
+            self.facebookButton.setTitle("", for: .normal)
+            self.fbId = ""
+            self.twitterButton.setTitle("", for: .normal)
+            self.video_title.text = "(Choose a legislator first)"
+            self.youtube_video_description.text = "(Choose a legislator first)"
+        }
         if let email_to_legislator = self.videoNode?.email_to_legislator {
             self.email_to_legislator.isOn = email_to_legislator
         }
@@ -543,15 +664,35 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         if let post_to_twitter = self.videoNode?.post_to_twitter {
             self.post_to_twitter.isOn = post_to_twitter
         }
-        if let composition_PercentageDone = self.videoNode?.composition_PercentageDone {
-            self.composition_PercentageDone.text = "\(composition_PercentageDone)% complete"
-        }
-        if let composition_SecondsRemaining = self.videoNode?.composition_SecondsRemaining,
-            composition_SecondsRemaining != 0 {
-            self.composition_SecondsRemaining.text = "(\(composition_SecondsRemaining) secs)"
+        if self.videoNode?.facebook_post_id != nil {
+            DispatchQueue.main.async { self.facebook_status.image = UIImage(named: "green_checkmark.png") }
         }
         else {
-            self.composition_SecondsRemaining.text = ""
+            DispatchQueue.main.async { self.facebook_status.image = UIImage(named: "gray_checkmark.png") }
+        }
+        if self.videoNode?.twitter_post_id != nil {
+            DispatchQueue.main.async { self.twitter_status.image = UIImage(named: "green_checkmark.png") }
+        }
+        else {
+            DispatchQueue.main.async { self.twitter_status.image = UIImage(named: "gray_checkmark.png") }
+        }
+        if self.videoNode?.video_id != nil {
+            DispatchQueue.main.async { self.youtube_status.image = UIImage(named: "green_checkmark.png") }
+        }
+        else {
+            DispatchQueue.main.async { self.youtube_status.image = UIImage(named: "gray_checkmark.png") }
+        }
+        if self.videoNode?.email_to_legislator_send_date != nil {
+            DispatchQueue.main.async { self.emailed_to_legislator_status.image = UIImage(named: "green_checkmark.png") }
+        }
+        else {
+            DispatchQueue.main.async { self.emailed_to_legislator_status.image = UIImage(named: "gray_checkmark.png") }
+        }
+        if self.videoNode?.email_to_participant_send_date != nil {
+            DispatchQueue.main.async { self.emailed_to_participant_status.image = UIImage(named: "green_checkmark.png") }
+        }
+        else {
+            DispatchQueue.main.async { self.emailed_to_participant_status.image = UIImage(named: "gray_checkmark.png") }
         }
     }
     

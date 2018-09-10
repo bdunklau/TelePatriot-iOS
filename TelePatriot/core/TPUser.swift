@@ -44,6 +44,8 @@ class TPUser {
     var residential_address_zip : String?
     var state_upper_district: String?
     var state_lower_district: String?
+    var video_invitation_from: String?
+    var video_invitation_from_name: String?
     var teams : [Team]?
     
     var isVolunteer = false
@@ -303,6 +305,7 @@ class TPUser {
     
     func signOut() {
         try! Auth.auth().signOut()
+        setCurrent_video_node_key(current_video_node_key: nil)
         unassignCurrentMissionItem()
         user = nil
         rolesAlreadyFetched = false
@@ -459,14 +462,14 @@ class TPUser {
     }
     
     
-    func setCurrent_video_node_key(current_video_node_key: String) {
+    func setCurrent_video_node_key(current_video_node_key: String?) {
         if let uid = uid {
             // TODO this is a hack I added so the the video_node_key would be immediately available when the user
             // accepts a video invitation from VideoInvitationsVC.  If this field isn't set immediately, there's a possibility
             // that a new video node will be created in VideoChatVC.getVideoNodeKey()
             self.current_video_node_key = current_video_node_key
             
-            let data = ["users/\(uid)/current_video_node_key": current_video_node_key] as [String : String]
+            let data = ["users/\(uid)/current_video_node_key": current_video_node_key] as [String : String?]
             // Do a multi-path update even though just one path
             databaseRef?.updateChildValues(data, withCompletionBlock: { (error, ref) -> Void in
                 if error == nil {
@@ -727,6 +730,8 @@ class TPUser {
         residential_address_zip = nil
         state_upper_district = nil
         state_lower_district = nil
+        video_invitation_from = nil
+        video_invitation_from_name = nil
         
         // Not sure why these prevent their menu items from showing up.  I thought they
         // would re-appear whenever the user logs in.  But for some reason, they don't

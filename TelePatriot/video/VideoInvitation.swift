@@ -218,6 +218,8 @@ class VideoInvitation {
                 "video/list/\(video_node_key)/video_participants/\(guest_id)":  nil,
                 "video/invitations/\(key)":  nil,
                 "users/\(guest_id)/current_video_node_key":  nil,
+                "users/\(guest_id)/video_invitation_from":  nil,
+                "users/\(guest_id)/video_invitation_from_name":  nil
             ] as [String : Any?]
             
             Database.database().reference().updateChildValues(updates)
