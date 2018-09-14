@@ -200,18 +200,12 @@ class VideoNode {
             
             if let vik = dictionary["video_invitation_key"] as? String {
                 video_invitation_key = vik
-                
+
                 if let vie = dictionary["video_invitation_extended_to"] as? String {
                     video_invitation_extended_to = vie
-                    vc.videoInvitationExtended(name: vie)
-                }
-                else {
-                    vc.videoInvitationExtended(name: "someone") // this doesn't make much sense and indicates an erroneous error state
                 }
             }
-            else {
-                vc.videoInvitationNotExtended()
-            }
+            
             
             if let x = dictionary["email_to_legislator"] as? Bool {
                 email_to_legislator = x

@@ -770,13 +770,13 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         print("Connection Successful")
     }
     
-    func onFailure(_ reason: VCConnectorFailReason) {
-        print("Connection failed \(reason)")
-    }
-    
-    func onDisconnected(_ reason: VCConnectorDisconnectReason) {
-        print("Call Disconnected")
-    }
+//    func onFailure(_ reason: VCConnectorFailReason) {
+//        print("Connection failed \(reason)")
+//    }
+//    
+//    func onDisconnected(_ reason: VCConnectorDisconnectReason) {
+//        print("Call Disconnected")
+//    }
     
     
     @objc private func editVideoMissionDescription(_ sender: UIButton) {

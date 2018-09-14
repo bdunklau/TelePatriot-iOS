@@ -134,7 +134,7 @@ class MenuItems {
     static let directors = MenuItem(icon: MenuItems.directorsIcon, title: "Directors")
     static let admins = MenuItem(icon: MenuItems.adminsIcon, title: "Admins")
     static let videoChat = MenuItem(icon: MenuItems.videoChatIcon, title: "Video Chat")
-    static let videoOffers = MenuItem(icon: MenuItems.videoChatIcon, title: "Video Offers")
+    static let videoOffers = MenuItem(icon: MenuItems.videoOffersIcon, title: "Video Offers")
     var mainSection0 : [MenuItem]
     var mainMenu : [[MenuItem]]
     var directorItems : [[MenuItem]]
@@ -149,6 +149,9 @@ class MenuItems {
                         MenuItems.directors,
                         MenuItems.admins]
         
+        
+        // See also the end of SidePanelViewController.viewDidLoad() - that method removes all menu items.
+        // Then they are added back according to the roleAdded events
         mainMenu = [mainSection0,
                     
                     // Communicate section - ICONS AREN'T RIGHT - FIX LATER
@@ -179,6 +182,8 @@ class MenuItems {
     
     var mainSections : [String] = ["Act", "Communicate", "My Account"]
     
+    // See also the end of SidePanelViewController.viewDidLoad() - that method removes all menu items.
+    // Then they are added back according to the roleAdded events
     static func getItem(withText: String) -> MenuItem? {
         let roleItems : [String: MenuItem] = {
             var items = [String: MenuItem]()

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewDelegate, AccountStatusEventListener {
+class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     // your firebase reference as a property
@@ -263,46 +263,6 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
-    // required by AccountStatusEventListener
-    func allowed() {
-        // do nothing?  reall?  if so, code smell
-    }
-    
-    // required by AccountStatusEventListener
-    func notAllowed() {
-        // do nothing?  reall?  if so, code smell
-    }
-    
-    // required by AccountStatusEventListener
-    func accountEnabled() {
-        // do nothing?  reall?  if so, code smell
-    }
-    
-    // required by AccountStatusEventListener
-    func accountDisabled() {
-        // do nothing?  reall?  if so, code smell
-    }
-    
-    // required by AccountStatusEventListener
-    func roleAssigned(role: String) {
-        // do nothing
-    }
-    
-    // required by AccountStatusEventListener
-    func roleRemoved(role: String) {
-        // do nothing
-    }
-    
-    // required by AccountStatusEventListener
-    func teamSelected(team: Team, whileLoggingIn: Bool) {
-        missions.removeAll()
-    }
-    
-    // required by AccountStatusEventListener
-    func userSignedOut() {
-        // do nothing
-    }
-    
     // per UITableViewDelegate - This is what gets called when you click one of the users in the search results
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let mission = missions[indexPath.row]
@@ -317,4 +277,57 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewD
 
 protocol MissionListDelegate {
     func missionSelected(mission: MissionSummary, team: Team)
+}
+
+// all this just for the teamSelected() method ?  not the greatest
+extension MissionSummaryTVC : AccountStatusEventListener {
+    
+    
+    // required by AccountStatusEventListener
+    func allowed() {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func notAllowed() {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func accountEnabled() {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func accountDisabled() {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func roleAssigned(role: String) {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func roleRemoved(role: String) {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func teamSelected(team: Team, whileLoggingIn: Bool) {
+        missions.removeAll()
+    }
+    
+    // required by AccountStatusEventListener
+    func userSignedOut() {
+        // do nothing
+    }
+    
+    func videoInvitationExtended(vi: VideoInvitation) {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    func videoInvitationRevoked() {
+        // do nothing?  really?  if so, code smell
+    }
 }

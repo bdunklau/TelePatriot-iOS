@@ -6,6 +6,7 @@
 //  Copyright © 2017 Brent Dunklau. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 class MissionItem {

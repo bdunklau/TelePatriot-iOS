@@ -182,6 +182,10 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        inviteLinks()
+    }
+    
     func loadPortraitView() {
         
         portraitView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
@@ -207,7 +211,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             remoteWidth = localCameraWidth
             remoteHeight = localHeight
             
-            // add the remote_view when the remote camera comes online - see below setupRemoteVideoView() and where it's called from
+            // add the remote_view when the remote camera comes online
             self.remote_camera_view = TVIVideoView.init(frame: CGRect(x: remoteXPos!, y: remoteYPos!, width: remoteWidth!, height: remoteHeight!), delegate:self)
             remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
             
@@ -325,6 +329,15 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     var notifiedOfEnd = false
     private func boomNotify() {
+        if TPUser.sharedInstance.isAllowed() {
+            boomNotify1()
+        }
+        else {
+            boomNotify2()
+        }
+    }
+    
+    private func boomNotify1() {
         guard let vn = currentVideoNode else { return }
         let videoLifecycleComplete = vn.email_to_participant_send_date != nil
         if videoLifecycleComplete && !notifiedOfEnd {
@@ -359,6 +372,40 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             alert.addAction(stop)
             alert.addAction(makeAnother)
         
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // for users that aren't allowed in to the app yet.  We don't give them an option to do anything
+    // after the video has been published. They can hit ok and that sends them back to the limbo screen
+    private func boomNotify2() {
+        guard let vn = currentVideoNode else { return }
+        let videoLifecycleComplete = vn.email_to_participant_send_date != nil
+        if videoLifecycleComplete && !notifiedOfEnd {
+            
+            notifiedOfEnd = true
+            
+            let title = "BOOM! You Did It!"
+            let message = "Mission Accomplished - Your video has been published.  Check your email."
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let close = UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style {
+                case .default:
+                    var updates : [String:Any] = [:]
+                    updates["users/\(TPUser.sharedInstance.getUid())/current_video_node_key"] = NSNull()     // can't use nil
+                    updates["users/\(TPUser.sharedInstance.getUid())/video_invitation_from"] = NSNull()      // can't use nil
+                    updates["users/\(TPUser.sharedInstance.getUid())/video_invitation_from_name"] = NSNull() // can't use nil
+                    Database.database().reference().updateChildValues(updates)
+                    self.closeScreen()
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            })
+            
+            alert.addAction(close)
+            
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -550,6 +597,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
         if let room = room {
             room.disconnect()
+            remoteCameraVisible = false
             if recordingWillStop {
                 DispatchQueue.main.async { self.record_label.text = "Recording stopped" }
             } else if recordingWillStart { /*noop*/ }
@@ -598,12 +646,6 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
     
-    func setupRemoteVideoView() {
-//        remote_camera_view?.isHidden = false
-//        remote_view.isHidden = false
-//        empty_remote_view.isHidden = true
-    }
-    
     private func startPreview() {
         
         // Preview our local camera track in the local video preview view.
@@ -647,13 +689,13 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
     
-    func videoInvitationExtended(name: String) {
-        print("videoInvitationExtended():  name = \(name)")
-    }
+//    func videoInvitationExtended(name: String) {
+//        print("videoInvitationExtended():  name = \(name)")
+//    }
     
-    func videoInvitationNotExtended() {
-        print("videoInvitationNotExtended()")
-    }
+//    func videoInvitationNotExtended() {
+//        print("videoInvitationNotExtended()")
+//    }
     
     func rotated() {
         print("rotated():  phone orientation was just rotated")
@@ -853,18 +895,28 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             guest_name.removeFromSuperview()
             revoke_invitation_button.removeFromSuperview()
         }
-        else if let video_invitation_extended_to = currentVideoNode?.video_invitation_extended_to {
+        else if let video_invitation_extended_to = currentVideoNode?.video_invitation_extended_to, let landscapeView = landscapeView {
             invite_someone_button.removeFromSuperview()
             if TPUser.sharedInstance.getName() == video_invitation_extended_to {
-                guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
-                revoke_invitation_button.removeFromSuperview() // or this one
+                if let inviteFrom = TPUser.sharedInstance.video_invitation_from_name {
+                    landscapeView.addSubview(guest_name)
+                    guest_name.text = "\(inviteFrom) has invited you to participate in a video chat"
+                    guest_name.isHidden = false
+                    guest_name.topAnchor.constraint(equalTo: landscapeView.centerYAnchor, constant: 48).isActive = true
+                    guest_name.leadingAnchor.constraint(equalTo: landscapeView.leadingAnchor, constant: 24).isActive = true
+                    guest_name.trailingAnchor.constraint(equalTo: (videoChatInstructionsView?.leadingAnchor)!, constant:-24).isActive = true
+                    landscapeView.addSubview(revoke_invitation_button)
+                    revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
+                    revoke_invitation_button.centerXAnchor.constraint(equalTo: guest_name.centerXAnchor, constant:0).isActive = true
+                }
             }
             else {
-                if let remote_camera_view = remote_camera_view, let landscapeView = landscapeView {
+                if let remote_camera_view = remote_camera_view {
                     landscapeView.addSubview(guest_name)
                     guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
-                    guest_name.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 48).isActive = true
-                    guest_name.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+                    guest_name.isHidden = false
+                    guest_name.topAnchor.constraint(equalTo: landscapeView.centerYAnchor, constant: 48).isActive = true
+                    guest_name.leadingAnchor.constraint(equalTo: landscapeView.leadingAnchor, constant: 24).isActive = true
                     guest_name.trailingAnchor.constraint(equalTo: (videoChatInstructionsView?.leadingAnchor)!, constant:-24).isActive = true
                     landscapeView.addSubview(revoke_invitation_button)
                     revoke_invitation_button.topAnchor.constraint(equalTo: guest_name.bottomAnchor, constant:16).isActive = true
@@ -874,7 +926,13 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
         else {
             // means the remote camera is not visible and there's no invitation extended yet
-            if let remote_camera_view = remote_camera_view, let landscapeView = landscapeView {
+            let ivl = self.isViewLoaded
+            let ibp = self.isBeingPresented
+            let hack = TPUser.sharedInstance.isAllowed() || (ivl && ibp)
+            if hack, // hack bug fix - keeps app from crashing when invitation is revoked and the user is actually on the limbo screen
+                let _ = remote_camera_view,
+                let landscapeView = landscapeView
+            {
                 landscapeView.addSubview(invite_someone_button)
                 invite_someone_button.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 48).isActive = true
                 invite_someone_button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 96).isActive = true
@@ -951,6 +1009,57 @@ extension VideoChatVC : SearchUsersDelegate {
             Database.database().reference().updateChildValues(data)
         }
     }
+}
+
+extension VideoChatVC : AccountStatusEventListener {
+    func roleAssigned(role: String) {
+        
+    }
+    
+    func roleRemoved(role: String) {
+        
+    }
+    
+    func teamSelected(team: Team, whileLoggingIn: Bool) {
+        
+    }
+    
+    func userSignedOut() {
+        
+    }
+    
+    func allowed() {
+        
+    }
+    
+    func notAllowed() {
+        
+    }
+    
+    func accountEnabled() {
+        
+    }
+    
+    func accountDisabled() {
+        
+    }
+    
+    func videoInvitationExtended(vi: VideoInvitation) {
+        
+    }
+    
+    func videoInvitationRevoked() {
+        if TPUser.sharedInstance.isAllowed() {
+            // If you are a vetted user and your invitation is cancelled, we will show you a screen saying as much
+            // You can then swipe to the right to get the menu
+        }
+        else {
+            // If you came from the Limbo screen, you go back to the Limbo screen
+            closeScreen()
+        }
+    }
+    
+    
 }
 
 // MARK: TVIRoomDelegate
@@ -1042,8 +1151,9 @@ extension VideoChatVC : TVIRemoteParticipantDelegate {
         print("Subscribed to \(publication.trackName) video track for Participant \(participant.identity)")
 
         if (self.remoteParticipant == participant) {
-            setupRemoteVideoView()
+            
             if let remote_camera_view = self.remote_camera_view {
+                remoteCameraVisible = true
                 inviteLinks()
                 remote_camera_view.backgroundColor = .black
                 videoTrack.addRenderer(remote_camera_view)
@@ -1061,15 +1171,10 @@ extension VideoChatVC : TVIRemoteParticipantDelegate {
         print("Unsubscribed from \(publication.trackName) video track for Participant \(participant.identity)")
 
         if (self.remoteParticipant == participant) {
+            remoteCameraVisible = false
             videoTrack.removeRenderer(self.remote_camera_view!)
             inviteLinks()
             remote_camera_view?.backgroundColor = UIColor(red: 0.5, green: 0.8, blue: 1, alpha: 0.8)
-//            self.remote_view?.removeFromSuperview()
-//            self.remote_camera_view = nil
-//            remote_view.isHidden = true
-            // add this back...
-//            view.addSubview(empty_remote_view)
-//            empty_remote_view.isHidden = false
         }
     }
 

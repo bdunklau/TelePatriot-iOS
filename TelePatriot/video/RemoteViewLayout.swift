@@ -5,7 +5,7 @@
 //  Copyright © 2017 Vidyo. All rights reserved.
 //
 
-
+import UIKit
 import Foundation
 
 class RemoteViewLayout {

@@ -102,8 +102,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 
                 // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
                 let u = TPUser.sharedInstance
-//                u.noRoleAssignedDelegate = self
-                
                 
                 
                 // need to get handle to SidePanelViewController
@@ -122,6 +120,10 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 print("CenterViewController.checkLoggedIn() -----------------")
                 // BUG: This setUser() call below has to notify the SidePanelViewController
                 u.setUser(u: user)
+                appDelegate?.limboViewController?.addAccountStatusEventListener(user: u) // TODO this is "backwards"
+                if let videoChatVC = appDelegate?.videoChatVC {
+                    u.accountStatusEventListeners.append(videoChatVC)
+                }
                 
             } else {
                 // No user is signed in.
@@ -497,6 +499,7 @@ extension CenterViewController : AccountStatusEventListener {
         if let limboViewController = delegate?.getLimboViewController() {
             
             let is_ = limboViewController.viewIfLoaded?.window != nil || limboViewController.isBeingPresented
+                        || limboViewController.isViewLoaded
             if !is_ { // bug fix - avoids a nasty "already presented" exception
                 limboViewController.modalPresentationStyle = .popover
                 self.present(limboViewController, animated: true, completion:nil)
@@ -518,6 +521,16 @@ extension CenterViewController : AccountStatusEventListener {
             disabledViewController.dismiss(animated: true, completion: nil)
             self.disabledViewController = nil
         }
+    }
+    
+    // required by AccountStatusEventListener
+    func videoInvitationExtended(vi: VideoInvitation) {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    // required by AccountStatusEventListener
+    func videoInvitationRevoked() {
+        // do nothing?  really?  if so, code smell
     }
 }
 

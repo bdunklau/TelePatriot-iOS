@@ -162,6 +162,10 @@ class VideoInvitation {
         return invitations
     }
     
+    static func createKey(initiator: String, guest: String) -> String {
+        return "initiator\(initiator)guest\(guest)"
+    }
+    
     func save() -> String? {
         if let initiator_id = initiator_id, let guest_id = guest_id {
             let key = "initiator\(initiator_id)guest\(guest_id)"
@@ -235,20 +239,20 @@ class VideoInvitation {
             TPUser.sharedInstance.setCurrent_video_node_key(current_video_node_key: video_node_key)
             
             var updates : [String:Any] = [:]
-            // if user already has a current video node, set 'present' on that node to false
-            if let vk = TPUser.sharedInstance.current_video_node_key {
-                updates["video/list/\(vk)/video_participants/\(TPUser.sharedInstance.getUid())/present"] = false
-            }
             
             let vp = VideoParticipant(user: TPUser.sharedInstance)
             for (key, value) in vp.dictionary() {
                 updates["video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/\(key)"] = value
             }
-            // triggers creating of vidyo token...
-            updates["video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/present"] = true
-            updates["video/list/\(video_node_key)/video_participants/\(TPUser.sharedInstance.getUid())/vidyo_token_requested"] = true
             
-            updates["video/list/\(video_node_key)/room_id"] = room_id
+            // This is what tells the limbo screen that they've been invited.
+            // BUT LEAVE THIS COMMENTED OUT.  Don't delete these nodes here, because as soon as you do, the user
+            // will be kicked right back to the limbo screen.  Instead, we will delete these nodes in VideoChatVC.boomNotify2()
+            // once the video lifecycle is complete
+//            updates["users/\(TPUser.sharedInstance.getUid())/video_invitation_from"] = NSNull()      // can't use nil
+//            updates["users/\(TPUser.sharedInstance.getUid())/video_invitation_from_name"] = NSNull() // can't use nil
+            
+            updates["video/list/\(video_node_key)/room_id"] = room_id // TODO why this?
             Database.database().reference().updateChildValues(updates)
         }
     }

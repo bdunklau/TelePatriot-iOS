@@ -35,4 +35,7 @@ protocol AccountStatusEventListener {
     
     func accountEnabled()
     func accountDisabled()
+    
+    func videoInvitationExtended(vi: VideoInvitation)
+    func videoInvitationRevoked()
 }

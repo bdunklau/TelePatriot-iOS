@@ -121,7 +121,8 @@ class TPUser {
         })
     }
     
-    private func redirectIfNotAllowed() {
+    // doesn't consider account_disposition:enabled/disabled
+    func isAllowed() -> Bool {
         // make sure the user should be allowed in
         if let has_signed_petition = self.has_signed_petition,
             has_signed_petition,
@@ -129,6 +130,17 @@ class TPUser {
             has_signed_confidentiality_agreement,
             let is_banned = self.is_banned,
             !is_banned {
+            
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    private func redirectIfNotAllowed() {
+        // make sure the user should be allowed in
+        if isAllowed() {
             // good - let them in
             fireAllowed()
         }
@@ -286,6 +298,37 @@ class TPUser {
             // on the iPhone to think it has a current_video_node_key when that node has actually been deleted
             self.current_video_node_key = nil
         }
+        
+        if let val = dictionary["video_invitation_from_name"] as? String {
+            video_invitation_from_name = val
+        }
+        else {
+            video_invitation_from_name = nil
+        }
+        
+        if let val = dictionary["video_invitation_from"] as? String, video_invitation_from == nil {
+            // means an invitation was just extended
+            video_invitation_from = val
+            let video_invitation_key = VideoInvitation.createKey(initiator: val, guest: TPUser.sharedInstance.getUid())
+            Database.database().reference().child("video/invitations/\(video_invitation_key)")
+                .observeSingleEvent(of: .value, with: {(snapshot) in
+                    let vi = VideoInvitation(snapshot: snapshot)
+                    self.fireVideoInvitationExtended(vi: vi)
+                })
+        }
+        
+        // means an invitation was just revoked
+        if dictionary["video_invitation_from"] == nil, let video_invitation_from = video_invitation_from {
+            let video_invitation_key = VideoInvitation.createKey(initiator: video_invitation_from, guest: TPUser.sharedInstance.getUid())
+            Database.database().reference().child("video/invitations/\(video_invitation_key)")
+                .observeSingleEvent(of: .value, with: {(snapshot) in
+                    self.video_invitation_from = nil
+                    self.video_invitation_from_name = nil
+                    self.fireVideoInvitationRevoked()
+                })
+        }
+        
+        
         
         // teams?
         // topics?
@@ -646,6 +689,18 @@ class TPUser {
     private func fireSignedOutEvent() {
         for l in self.accountStatusEventListeners {
             l.userSignedOut()
+        }
+    }
+    
+    private func fireVideoInvitationExtended(vi: VideoInvitation) {
+        for l in self.accountStatusEventListeners {
+            l.videoInvitationExtended(vi: vi)
+        }
+    }
+    
+    private func fireVideoInvitationRevoked() {
+        for l in self.accountStatusEventListeners {
+            l.videoInvitationRevoked()
         }
     }
     

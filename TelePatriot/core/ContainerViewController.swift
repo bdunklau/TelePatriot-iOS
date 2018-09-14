@@ -97,8 +97,9 @@ class ContainerViewController: UIViewController {
         directorViewController = getDirectorViewController()
         directorViewController.delegate = centerViewController
         
-        limboViewController = getLimboViewController()
-        limboViewController?.addAccountStatusEventListener(user: TPUser.sharedInstance)
+//        TPUser.sharedInstance is not init-ed yet ...
+//        limboViewController = getLimboViewController()
+//        limboViewController?.addAccountStatusEventListener(user: TPUser.sharedInstance)
         
         missionDetailsVC = getMissionDetailsVC()
         missionDetailsVC.missionDetailsDelegate = centerViewController

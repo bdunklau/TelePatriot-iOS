@@ -11,11 +11,12 @@ import Firebase
 
 class LimboViewController: BaseViewController, UITableViewDelegate
 //, UITableViewDataSource
-, AccountStatusEventListener {
+{
     
     
     var scrollView : UIScrollView?
     var isBrandNewUser : Bool?
+    var videoInvitation : VideoInvitation?
     
     
     let welcome_heading : UILabel = {
@@ -54,6 +55,13 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         return l
     }()
     
+    let ACCESS_LIMITED_DESCRIPTION = "You currently have Limited Access to TelePatriot.  With Limited Access, you can " +
+    "record video messages of support for the Convention of States and this app will automatically upload them to YouTube," +
+    "Facebook and Twitter.  Click \"Show Me How\" to find out how.";
+
+    let YOUVE_BEEN_INVITED_MESSAGE = " has invited you to participate in a video call.  Click \"Video Call - You're Invited!\" to join ";
+
+    
     let access_limited_description : UITextView = {
         let textView = UITextView()
         textView.text = "You currently have Limited Access to TelePatriot.  With Limited Access, you can record video messages of support for the Convention of States and this app will automatically upload them to YouTube, Facebook and Twitter.  Click \"Show Me How\" to find out how."
@@ -76,6 +84,13 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         return button
     }()
     
+    let video_invitation_button : BaseButton = {
+        let button = BaseButton(text: "Video Call - You're Invited!")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(startVideoChat(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     let full_access_heading : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +102,7 @@ class LimboViewController: BaseViewController, UITableViewDelegate
     
     let full_access_description : UITextView = {
         let textView = UITextView()
-        textView.text = "For Full Access to TelePatriot, there are two legal requirement you must meet.  They are described below."
+        textView.text = "For Full Access to TelePatriot, there are two legal requirements you must meet.  They are described below."
         textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
         textView.translatesAutoresizingMaskIntoConstraints = false
         //        var frame = textView.frame
@@ -234,9 +249,17 @@ class LimboViewController: BaseViewController, UITableViewDelegate
             access_limited_description.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
             access_limited_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
             
+            // This and the video_invitation_button are put right on top of each other.  And then we selectively show
+            // one or the other depending on whether an invitation has been extended to this person.
+            // See videoInvitationExtended() below
             scrollView.addSubview(show_me_how_button)
             show_me_how_button.topAnchor.constraint(equalTo: access_limited_description.bottomAnchor, constant: 16).isActive = true
             show_me_how_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
+            
+            scrollView.addSubview(video_invitation_button)
+            video_invitation_button.topAnchor.constraint(equalTo: access_limited_description.bottomAnchor, constant: 16).isActive = true
+            video_invitation_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
+            video_invitation_button.isHidden = true
             
             scrollView.addSubview(full_access_heading)
             full_access_heading.topAnchor.constraint(equalTo: show_me_how_button.bottomAnchor, constant: 32).isActive = true
@@ -288,36 +311,6 @@ class LimboViewController: BaseViewController, UITableViewDelegate
             
             view.addSubview(scrollView)
         }
-        
-        
-        
-        
-//        view.addSubview(limboExplanation)
-//        view.addSubview(accountStatusHeaderLabel)
-        
-//        limboExplanation.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-//        limboExplanation.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70).isActive = true
-//        limboExplanation.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-//        limboExplanation.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.15).isActive = true
-        
-//        accountStatusHeaderLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-//        accountStatusHeaderLabel.topAnchor.constraint(equalTo: limboExplanation.bottomAnchor, constant: 8).isActive = true
-//        accountStatusHeaderLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        
-//        view.addSubview(date)
-//        date.topAnchor.constraint(equalTo: accountStatusHeaderLabel.bottomAnchor, constant: 8).isActive = true
-//        date.leadingAnchor.constraint(equalTo: accountStatusHeaderLabel.leadingAnchor, constant: 0).isActive = true
-//
-//        view.addSubview(event)
-//        event.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 8).isActive = true
-//        event.leadingAnchor.constraint(equalTo: date.leadingAnchor, constant: 0).isActive = true
-        
-        
-//        tableViewAccountStatusEvents = UITableView(frame: CGRect(x: 10, y: 200, width: 350, height: 400), style: .plain) // <--- this turned out to be key
-//        tableViewAccountStatusEvents?.dataSource = self
-//        tableViewAccountStatusEvents?.register(AccountStatusEventTableViewCell.self, forCellReuseIdentifier: "cellId")
-//        tableViewAccountStatusEvents?.rowHeight = 110
-//        view.addSubview(tableViewAccountStatusEvents!)
         
         
         // The user object fires roleAssigned() which calls all listeners
@@ -379,6 +372,15 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         showScreen(vc: ShowMeHowVC())
     }
     
+    @objc private func startVideoChat(_ sender:UIButton) {
+        if let vc = getAppDelegate().videoChatVC, let videoInvitation = videoInvitation {
+//          I think what we need to do is create a VideoInvitation object and accept it here
+//            Then make sure the current user is a participant on the video node
+            videoInvitation.accept()
+            showScreen(vc: vc) // have to get the vc from appDelegate
+        }
+    }
+    
     @objc private func clickDone(_ sender:UIButton) {
         let now = Util.getDate_as_millis()
         done_button.setTitle("Verifying...", for: .normal)
@@ -424,74 +426,10 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-//    static func createInvitations(snapshot: DataSnapshot) -> [VideoInvitation] {
-//        var invitations = [VideoInvitation]()
-//        let children = snapshot.children
-//        var counter = 0
-//        while let snap = children.nextObject() as? DataSnapshot {
-//            let invitation = VideoInvitation(snapshot: snap)
-//            invitations.append(invitation)
-//        }
-//        return invitations
-//    }
-    
-    
-//    func fetchAccountStatusEvents(uid: String, name: String) {
-//        Database.database().reference().child("users")
-//            .child(uid).child("account_status_events")
-//            .queryLimited(toLast: 1) // just display the latest event
-//            .observe(.value, with: {(snapshot) in
-//            let children = snapshot.children
-//            print("fetchAccountStatusEvents: begin while")
-//            while let snap = children.nextObject() as? DataSnapshot {
-//
-//                if let dictionary = snap.value as? [String : Any],
-//                    let thedate = dictionary["date"] as? String,
-//                    let theevent = dictionary["event"] as? String
-//                {
-//                    self.date.text = thedate
-//                    self.event.text = theevent
-//                    print("fetchAccountStatusEvents: key=\(snap.key) theevent=\(theevent)")
-//                }
-//            }
-//
-//        }, withCancel: nil)
-//    }
-    
-    
-//    func fetchAccountStatusEvents_orig(uid: String, name: String) {
-//        Database.database().reference().child("users").child(uid).child("account_status_events").observe(.childAdded, with: {(snapshot) in
-//
-//            guard let dictionary = snapshot.value as? [String : String] else { return }
-//            guard let thedate = dictionary["date"] else { return }
-//            guard let event = dictionary["event"] else { return }
-//            let accountStatusEvent = AccountStatusEvent(thedate: thedate, event: event)
-//
-//            self.accountStatusEvents.append(accountStatusEvent)
-//            DispatchQueue.main.async{
-//                self.tableViewAccountStatusEvents?.reloadData()
-//
-//                // this is what automatically scrolls the list to the bottom row when the admin takes action
-//                // on this new person's account.  There aren't usually enough rows to matter in this case (admins reviewing
-//                // and approving new people) but we'll end up using this code in other areas.
-//                let index = IndexPath(row: self.accountStatusEvents.count-1, section: 0) // use your index number or Indexpath
-//                self.tableViewAccountStatusEvents?.scrollToRow(at: index, at: .bottom, animated: true)
-//            }
-//
-//        }, withCancel: nil)
-//    }
+extension LimboViewController : AccountStatusEventListener {
     
     
     // required by AccountStatusEventListener
@@ -520,12 +458,12 @@ class LimboViewController: BaseViewController, UITableViewDelegate
     
     // required by AccountStatusEventListener
     func allowed() {
-//        message = "allowed"
+        //        message = "allowed"
     }
     
     // required by AccountStatusEventListener
     func notAllowed() {
-//        message = "not allowed"
+        //        message = "not allowed"
     }
     
     // required by AccountStatusEventListener
@@ -546,25 +484,20 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         // do nothing
     }
     
+    func videoInvitationExtended(vi: VideoInvitation) {
+        videoInvitation = vi
+        show_me_how_button.isHidden = true
+        DispatchQueue.main.async { self.video_invitation_button.isHidden = false }
+        access_limited_description.text = TPUser.sharedInstance.video_invitation_from_name!+" "+YOUVE_BEEN_INVITED_MESSAGE+" "+TPUser.sharedInstance.video_invitation_from_name!
+    }
     
-//    // required by UITableViewDataSource
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return accountStatusEvents.count
-//    }
-//
-//    // required by UITableViewDataSource
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableViewAccountStatusEvents?.dequeueReusableCell(withIdentifier: "cellId",
-//                                                                     for: indexPath as IndexPath) as! AccountStatusEventTableViewCell
-//
-//        let accountStatusEvent = accountStatusEvents[indexPath.row]
-//        cell.configureCell(accountStatusEvent: accountStatusEvent)
-//
-//        return cell
-//    }
+    func videoInvitationRevoked() {
+        videoInvitation = nil
+        show_me_how_button.isHidden = false
+        video_invitation_button.isHidden = true
+        access_limited_description.text = ACCESS_LIMITED_DESCRIPTION
+    }
     
-
 }
 
 /*************  this is just another way of implementing the UITableViewDataSource

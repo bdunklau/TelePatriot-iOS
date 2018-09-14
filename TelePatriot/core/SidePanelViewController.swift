@@ -104,17 +104,19 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         // might not be "My Mission" - it could be "Directors" or "Admins"
         if(!TPUser.sharedInstance.isVolunteer) {
             removeItem(items: &menuItems[0], text: "My Mission")
-            //menuItems[0].remove(at: 0)
         }
         
         if(!TPUser.sharedInstance.isDirector) {
             removeItem(items: &menuItems[0], text: "Directors")
-            //menuItems[0].remove(at: 1)
         }
         
         if(!TPUser.sharedInstance.isAdmin) {
             removeItem(items: &menuItems[0], text: "Admins")
-            //menuItems[0].remove(at: 2)
+        }
+        
+        if(!TPUser.sharedInstance.isVideoCreator) {
+            removeItem(items: &menuItems[1], text: "Video Chat")
+            removeItem(items: &menuItems[1], text: "Video Offers")
         }
     }
     
@@ -279,6 +281,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
 //
 //    }
     
+    // required by AccountStatusEventListener
     private func doRoleAdded(menuText: String, section: Int) {
         let itemText = menuText
         var alreadyGranted = false
@@ -321,6 +324,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
 //        }
 //    }
     
+    // required by AccountStatusEventListener
     private func doRoleRemoved(menuText: String, section: Int) {
         // var cell:Cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section))?
         var i = 0
@@ -342,6 +346,18 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
             self.deleteCell(cell: fc, section: section)
         }
     }
+    
+    // required by AccountStatusEventListener
+    func videoInvitationExtended(vi: VideoInvitation) {
+        // do anything?
+    }
+    
+    // required by AccountStatusEventListener
+    func videoInvitationRevoked() {
+        // do anything?
+    }
+    
+    
 }
 
 
@@ -356,7 +372,6 @@ extension SidePanelViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "thecell", for: indexPath) as! MenuCell
         let sec = indexPath.section

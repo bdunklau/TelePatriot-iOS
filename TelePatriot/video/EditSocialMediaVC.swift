@@ -115,7 +115,7 @@ class EditSocialMediaVC: BaseViewController, EditSocialMediaDelegate {
     
     private func stripAtSign(string: String) -> String {
         if string.prefix(1) == "@" {
-            return String(string.suffix(1))
+            return String(string.suffix(string.count - 1))
         }
         else { return string }
     }
