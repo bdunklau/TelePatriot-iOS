@@ -139,6 +139,14 @@ struct Legislator : Decodable {
          This is from the constructor of VideoNode, which has a different group of node names...
          ****************/
         
+        if let val = data["legislator_first_name"] as? String {
+            first_name = val
+        }
+        
+        if let val = data["legislator_last_name"] as? String {
+            last_name = val
+        }
+        
         if let ln = data["legislator_full_name"] as? String {
             full_name = ln
         }

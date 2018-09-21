@@ -629,7 +629,7 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
             self.editTwitterButton.isHidden = false
             self.editTwitterButton.setImage(UIImage(named: "baseline_edit_black_18dp"), for: .normal)
             self.legislator = legislator
-            self.legislatorName.text = legislator.full_name
+            self.legislatorName.text = "\(legislator.first_name) \(legislator.last_name)" /*full_name is sometimes first/last reversed*/
             self.state.text = legislator.state.uppercased()
             self.chamber.text = legislator.chamber == "lower" ? "HD" : (legislator.chamber == "upper" ? "SD" : "")
             self.district.text = legislator.district

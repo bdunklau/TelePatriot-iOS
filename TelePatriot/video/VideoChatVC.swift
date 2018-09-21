@@ -156,11 +156,34 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         return l
     }()
     
+//    This is a "hack" button in case people rotate their phones but still see the "Rotate your phone" message
+    let ok_rotated : BaseButton = {
+        let button = BaseButton(text: "OK")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont(name: "Verdana", size: 16)
+        button.addTarget(self, action: #selector(checkForLandscape(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UIDevice.current.orientation.isLandscape {
+        let hack = false
+        if hack {
+            if let landscapeView = landscapeView {
+                landscapeView.removeFromSuperview()
+            }
+            if let portraitView = portraitView {
+                portraitView.removeFromSuperview()
+            }
+            landscapeView = nil
+            portraitView = nil
+            queryCurrentVideoNode()
+            loadLandscapeView()
+            view.addSubview(landscapeView!)
+        }
+        else if UIDevice.current.orientation.isLandscape {
             queryCurrentVideoNode()
             
             if landscapeView == nil {
@@ -182,9 +205,9 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        inviteLinks()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        inviteLinks()
+//    }
     
     func loadPortraitView() {
         
@@ -193,6 +216,10 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             portraitView.addSubview(flip_to_landscape_label)
             flip_to_landscape_label.centerXAnchor.constraint(equalTo: portraitView.centerXAnchor, constant: 0).isActive = true
             flip_to_landscape_label.centerYAnchor.constraint(equalTo: portraitView.centerYAnchor, constant: 0).isActive = true
+            
+            portraitView.addSubview(ok_rotated)
+            ok_rotated.centerXAnchor.constraint(equalTo: flip_to_landscape_label.centerXAnchor, constant: 0).isActive = true
+            ok_rotated.topAnchor.constraint(equalTo: flip_to_landscape_label.bottomAnchor, constant: 16).isActive = true
         }
     }
     
@@ -329,7 +356,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     var notifiedOfEnd = false
     private func boomNotify() {
-        if TPUser.sharedInstance.isAllowed() {
+        if TPUser.sharedInstance.isAllowed() && TPUser.sharedInstance.isVideoCreator {
             boomNotify1()
         }
         else {
@@ -911,7 +938,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
                 }
             }
             else {
-                if let remote_camera_view = remote_camera_view {
+                if remote_camera_view != nil {
                     landscapeView.addSubview(guest_name)
                     guest_name.text = "You have invited \(video_invitation_extended_to) to participate in a video chat"
                     guest_name.isHidden = false
@@ -954,24 +981,33 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
 
+    @objc private func checkForLandscape(_ sender: UIButton) {
+        if UIDevice.current.orientation.isLandscape {
+            viewDidLoad()
+        }
+        else {
+            simpleOKDialog(message: "Phone orientation is still Portrait.  Rotate 90 degress please")
+        }
+    }
+    
     // revoke_invitation_button should only be displayed when an invitation has been extended
     @objc private func revokeInvitation(_ sender: UIButton) {
-
-//        Do this on the server side instead
         
-//        if let vn = videoNode, let video_invitation_key = vn.video_invitation_key,
-//            let video_invitation_extended_to = vn.video_invitation_extended_to
-//        {
-//            let request_type = "revoke invitation"
-//            let video_node_key = vn.getKey()
-//            let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(),
-//                                name: TPUser.sharedInstance.getName(),
-//                                video_node_key: video_node_key,
-//                                video_invitation_key: video_invitation_key,
-//                                video_invitation_extended_to: video_invitation_extended_to,
-//                                request_type: request_type, RoomSid: nil)
-//            ve.save()
-//        }
+        //        Do this on the server side instead
+        
+        //        if let vn = videoNode, let video_invitation_key = vn.video_invitation_key,
+        //            let video_invitation_extended_to = vn.video_invitation_extended_to
+        //        {
+        //            let request_type = "revoke invitation"
+        //            let video_node_key = vn.getKey()
+        //            let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(),
+        //                                name: TPUser.sharedInstance.getName(),
+        //                                video_node_key: video_node_key,
+        //                                video_invitation_key: video_invitation_key,
+        //                                video_invitation_extended_to: video_invitation_extended_to,
+        //                                request_type: request_type, RoomSid: nil)
+        //            ve.save()
+        //        }
         
         
         guard let vn = currentVideoNode else {
@@ -979,7 +1015,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
         let vi = VideoInvitation(videoNode: vn)
         vi.delete();
-
+        
     }
     
 }
@@ -1049,9 +1085,13 @@ extension VideoChatVC : AccountStatusEventListener {
     }
     
     func videoInvitationRevoked() {
-        if TPUser.sharedInstance.isAllowed() {
-            // If you are a vetted user and your invitation is cancelled, we will show you a screen saying as much
-            // You can then swipe to the right to get the menu
+        if TPUser.sharedInstance.isAllowed() && TPUser.sharedInstance.isVideoCreator {
+            // If you are a vetted user and your invitation is cancelled, we will just present you
+            // with the "invite someone" link
+        }
+        else if TPUser.sharedInstance.isAllowed() && !TPUser.sharedInstance.isVideoCreator {
+            // not sure what to do here - just log the user out
+            TPUser.sharedInstance.signOut()
         }
         else {
             // If you came from the Limbo screen, you go back to the Limbo screen

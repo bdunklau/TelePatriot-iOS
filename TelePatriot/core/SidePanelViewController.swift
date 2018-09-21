@@ -61,7 +61,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         tableView?.separatorStyle = UITableViewCellSeparatorStyle.none // I didn't like the gray separators lines in the slide-out menu
         
-        var headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         //var imageView: UIImageView = UIImageView(frame: frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         headerView.addSubview(cos_logo)
         

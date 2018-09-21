@@ -369,7 +369,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
         
         // leftViewController is instantiated now in AppDelegate
         leftViewController = appDelegate?.leftViewController  // accessed in CenterViewController.checkLoggedIn()
-        print("self.view.frame.height = \(self.view.frame.height)")
+        //print("self.view.frame.height = \(self.view.frame.height)")
         addChildSidePanelController(leftViewController!)
         
     }
@@ -409,7 +409,7 @@ extension ContainerViewController: CenterViewControllerDelegate {
         // in SidePanelViewController.viewDidLayoutSubviews(), we achieve a side menu that takes up the whole height
         // of the screen and adjusts to either portrait or landscape mode
         sidePanelController.view.frame = CGRect(x: 0, y: 0, width: 315, height: self.view.frame.height)
-        print("self.view.frame.height = \(self.view.frame.height)")
+        //print("self.view.frame.height = \(self.view.frame.height)")
         view.insertSubview(sidePanelController.view, at: 0)
         
         addChildViewController(sidePanelController)
@@ -419,8 +419,8 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func animateLeftPanel(shouldExpand: Bool) {
         if shouldExpand {
             currentState = .leftPanelExpanded
-            print("centerNavigationController.view.frame.width = \(centerNavigationController.view.frame.width)")
-            print("centerNavigationController.view.frame.height = \(centerNavigationController.view.frame.height)")
+            //print("centerNavigationController.view.frame.width = \(centerNavigationController.view.frame.width)")
+            //print("centerNavigationController.view.frame.height = \(centerNavigationController.view.frame.height)")
             animateCenterPanelXPosition(targetPosition: 315 /*centerNavigationController.view.frame.width - centerPanelExpandedOffset*/)
             
         } else {

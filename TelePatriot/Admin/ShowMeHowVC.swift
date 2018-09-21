@@ -291,11 +291,11 @@ class ShowMeHowVC: BaseViewController {
     }
     
     private func loadTestData() {
-        phone_number_field.text = "5550001212"
-        residential_address_line1.text = "6400 Lakeshore Dr"
-        residential_address_city.text = "Dallas"
-        setState(state_abbrev: "tx")
-        residential_address_zip.text = "75214"
+//        phone_number_field.text = "5550001212"
+//        residential_address_line1.text = "6400 Lakeshore Dr"
+//        residential_address_city.text = "Dallas"
+//        setState(state_abbrev: "tx")
+//        residential_address_zip.text = "75214"
     }
     
     private func setState(state_abbrev: String?) {
