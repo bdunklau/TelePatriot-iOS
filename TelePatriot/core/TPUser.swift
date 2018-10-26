@@ -16,7 +16,7 @@ class TPUser {
     var user : User?
     
     // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
-    private var uid : String? // this is the key of the user's node
+    var uid : String? // this is the key of the user's node
     var account_disposition : String?
     var account_dispositioned_by : String?
     var account_dispositioned_by_uid : String?
@@ -174,6 +174,14 @@ class TPUser {
             callback(someuser)
         })
          ***********/
+    }
+    
+    func set(name: String) {
+        self.name = name
+    }
+    
+    func set(email: String) {
+        self.email = email
     }
     
     private func populate(uid: String, dictionary: [String:Any]) {
@@ -659,46 +667,65 @@ class TPUser {
     }
     
     private func fireAllowed() {
+        print("==========================================================")
+        print("TPUser.fireAllowed()")
         // get rid of the limbo screen if it's currently being displayed
         for l in self.accountStatusEventListeners {
+            print("accountStatusEventListener:  \(String(describing: l))")
             l.allowed()
         }
     }
     
     private func fireNotAllowed() {
+        print("==========================================================")
+        print("fireNotAllowed()")
         // send the user to the limbo screen because they are not allowed in
         for l in self.accountStatusEventListeners {
+            print("accountStatusEventListener:  \(String(describing: l))")
             l.notAllowed()
         }
     }
     
     private func fireAccountEnabled() {
+        print("==========================================================")
+        print("fireAccountEnabled()")
         // make sure the DisabledVC isn't showing if their account goes from account_disposition:disabled to :enabled
         for l in self.accountStatusEventListeners {
+            print("accountStatusEventListener:  \(String(describing: l))")
             l.accountEnabled()
         }
     }
     
     private func fireAccountDisabled() {
+        print("==========================================================")
+        print("fireAccountDisabled()")
         // make sure the DisabledVC is showing if their account is account_disposition:disabled
         for l in self.accountStatusEventListeners {
+            print("accountStatusEventListener:  \(String(describing: l))")
             l.accountDisabled()
         }
     }
     
     private func fireSignedOutEvent() {
+        print("==========================================================")
+        print("fireSignedOutEvent()")
         for l in self.accountStatusEventListeners {
+            print("accountStatusEventListener:  \(String(describing: l))")
             l.userSignedOut()
         }
     }
     
     private func fireVideoInvitationExtended(vi: VideoInvitation) {
+        print("==========================================================")
+        print("fireVideoInvitationExtended()")
         for l in self.accountStatusEventListeners {
             l.videoInvitationExtended(vi: vi)
         }
     }
     
     private func fireVideoInvitationRevoked() {
+        print("==========================================================")
+        print("fireVideoInvitationRevoked()")
         for l in self.accountStatusEventListeners {
             l.videoInvitationRevoked()
         }
@@ -761,6 +788,14 @@ class TPUser {
         return currentTeam
     }
     
+    
+    func addAccountStatusEventListener(listener: AccountStatusEventListener) {
+        
+        if(self.accountStatusEventListeners.count == 0
+            || !self.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == String(describing: type(of: listener)) })) {
+            self.accountStatusEventListeners.append(listener)
+        } else { print("TPUser: NOT adding \(String(describing: type(of: listener))) to list of accountStatusEventListeners") }
+    }
     
     private func clearFields() {
         

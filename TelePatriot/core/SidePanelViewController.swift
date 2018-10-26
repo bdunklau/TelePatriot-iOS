@@ -49,6 +49,13 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         return label
     }()
     
+    let about_label : UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     enum CellIdentifiers {
         static let thecell = "thecell"
     }
@@ -81,11 +88,15 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         usernameLabel.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: 8).isActive = true
         usernameLabel.bottomAnchor.constraint(equalTo: emailLabel.topAnchor, constant: 0).isActive = true
         
-        
         let labelView: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         headerView.addSubview(labelView)
         tableView?.tableHeaderView = headerView
         tableView?.tableHeaderView?.frame.size.height = cos_logo.frame.size.height
+        let footerView: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        footerView.addSubview(about_label)
+        about_label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 8).isActive = true
+        about_label.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: 0).isActive = true
+        tableView?.tableFooterView = footerView
         
         
         tableView?.delegate = self
@@ -93,6 +104,11 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         tableView?.register(MenuCell.self, forCellReuseIdentifier: "thecell")
         self.view.addSubview(tableView!)
         
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            print("\(version) - \(build)")
+            about_label.text = "TelePatriot version \(version) (\(build))"
+        }
         
         // even though we listen for role-added and role-removed events above
         // in listenForAccountStatusEvents(), the listener is

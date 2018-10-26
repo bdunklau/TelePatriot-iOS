@@ -16,12 +16,12 @@ struct Legislator : Decodable {
     var last_name = ""
     var leg_id = "" // an OpenStates attribute
     var email = ""
-    var emails = [String]() // this kinda sucks
-    var phone = ""
-    var phones = [String]() // this kinda sucks
+    var emails : [String]?//() // this kinda sucks
+    var phone : String?
+    var phones : [String]?//() // this kinda sucks
     var party = ""
-    var photo_url = ""
-    var photoUrl = "" // comes from Google Civic API
+    var photo_url : String?
+    var photoUrl : String? // comes from Google Civic API
     var chamber = "" // upper or lower
     var url = ""
     var offices = [Office]()
@@ -29,10 +29,10 @@ struct Legislator : Decodable {
     var district = ""
     var state = "" // state abbrev
     
-    var legislator_cos_position = ""
-    var legislator_facebook = ""
-    var legislator_facebook_id = ""
-    var legislator_twitter = ""
+    var legislator_cos_position : String?
+    var legislator_facebook : String?
+    var legislator_facebook_id : String?
+    var legislator_twitter : String?
     
     struct Office : Decodable {
         var name = ""
@@ -192,10 +192,10 @@ struct Legislator : Decodable {
      }
     
     func getPhotoURL() -> URL {
-        if let url = URL(string: photoUrl) {
+        if let photoUrl = photoUrl, let url = URL(string: photoUrl) {
             return url
         }
-        else if let url = URL(string: photo_url) {
+        else if let photo_url = photo_url, let url = URL(string: photo_url) {
             return url
         }
         else {

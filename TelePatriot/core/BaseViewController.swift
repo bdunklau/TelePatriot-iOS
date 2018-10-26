@@ -29,9 +29,17 @@ class BaseViewController: UIViewController {
         
     }
     
-    func showScreen(vc: UIViewController) {
-        self.present(vc, animated: true, completion: nil)
-    }
+    
+    // Just do this from any vc instead of showScreen()
+    //   self.present(vc, animated: true, completion: nil)
+    
+//    func showScreen(vc: UIViewController) {
+//        var topController: UIViewController = (UIApplication.shared.keyWindow?.rootViewController!)!
+//        while(topController.presentedViewController != nil) {
+//            topController = topController.presentedViewController!
+//        }
+//        topController.present(vc, animated: true, completion: nil)
+//    }
     
     func closeScreen() {
         self.dismiss(animated: true, completion: nil)

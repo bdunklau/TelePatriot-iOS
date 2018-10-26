@@ -754,6 +754,10 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
         // Create an audio track.
         if (localAudioTrack == nil) {
+            // didn't cancel echo like I hoped, but is a good example of how to create one of these options objects
+            //let options = TVIAudioOptions.init(block: {(builder: TVIAudioOptionsBuilder) -> Void in
+            //    builder.isSoftwareAecEnabled = true
+            //})
             localAudioTrack = TVILocalAudioTrack.init(options: nil, enabled: true, name: "Microphone")
             
             if (localAudioTrack == nil) {

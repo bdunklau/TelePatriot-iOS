@@ -35,7 +35,7 @@ target 'TelePatriot' do
     
     pod 'FirebaseInstanceID', '= 2.0.0'
     
-    pod 'TwilioVideo', '~> 2.3'
+    pod 'TwilioVideo', '~> 2.4.0'
     
 end
 

@@ -10,213 +10,14 @@ import UIKit
 import Firebase
 
 class LimboViewController: BaseViewController, UITableViewDelegate
-//, UITableViewDataSource
 {
-    
-    
-    var scrollView : UIScrollView?
+    private var user: User?
     var isBrandNewUser : Bool?
-    var videoInvitation : VideoInvitation?
+    var limboView: LimboView?
+    var missingInformationView: MissingInformationView?
+    var dataMissing = false
+    var userValues: [String:String] = [:]
     
-    
-    let welcome_heading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Welcome"
-        l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        return l
-    }()
-    
-    let limboExplanation : UITextView = {
-        let textView = UITextView()
-        textView.text = "xxx"
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize) // just example
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        
-        var frame = textView.frame
-        frame.size.height = 24
-        textView.frame = frame
-        textView.backgroundColor = .clear
-        
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    let access_limited_heading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Access: Limited"
-        l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        return l
-    }()
-    
-    let ACCESS_LIMITED_DESCRIPTION = "You currently have Limited Access to TelePatriot.  With Limited Access, you can " +
-    "record video messages of support for the Convention of States and this app will automatically upload them to YouTube," +
-    "Facebook and Twitter.  Click \"Show Me How\" to find out how.";
-
-    let YOUVE_BEEN_INVITED_MESSAGE = " has invited you to participate in a video call.  Click \"Video Call - You're Invited!\" to join ";
-
-    
-    let access_limited_description : UITextView = {
-        let textView = UITextView()
-        textView.text = "You currently have Limited Access to TelePatriot.  With Limited Access, you can record video messages of support for the Convention of States and this app will automatically upload them to YouTube, Facebook and Twitter.  Click \"Show Me How\" to find out how."
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        //        var frame = textView.frame
-        //        frame.size.height = 24
-        //        textView.frame = frame
-        textView.backgroundColor = .clear
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    let show_me_how_button : BaseButton = {
-        let button = BaseButton(text: "Show Me How")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(clickShowMeHow(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let video_invitation_button : BaseButton = {
-        let button = BaseButton(text: "Video Call - You're Invited!")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(startVideoChat(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let full_access_heading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Full Access"
-        l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        return l
-    }()
-    
-    let full_access_description : UITextView = {
-        let textView = UITextView()
-        textView.text = "For Full Access to TelePatriot, there are two legal requirements you must meet.  They are described below."
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        //        var frame = textView.frame
-        //        frame.size.height = 24
-        //        textView.frame = frame
-        textView.backgroundColor = .clear
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    let legal_requirement_1_heading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Legal Requirement #1"
-        l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        return l
-    }()
-    
-    let legal_requirement_1 : UITextView = {
-        let textView = UITextView()
-        textView.text = "You must sign the Convention of States petition"
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        textView.translatesAutoresizingMaskIntoConstraints = false
-//        var frame = textView.frame
-//        frame.size.height = 24
-//        textView.frame = frame
-        textView.backgroundColor = .clear
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    let sign_petition_button : BaseButton = {
-        let button = BaseButton(text: "Sign the Petition")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(clickSignPetition(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let legal_requirement_2_heading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Legal Requirement #2"
-        l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        return l
-    }()
-    
-    let legal_requirement_2 : UITextView = {
-        let textView = UITextView()
-        textView.text = "You must sign the Convention of States confidentiality agreement"
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        //        var frame = textView.frame
-        //        frame.size.height = 24
-        //        textView.frame = frame
-        textView.backgroundColor = .clear
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    let sign_confidentiality_agreement_button : BaseButton = {
-        let button = BaseButton(text: "Sign the Confidentiality Agreement")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(clickSignConfidentialityAgreement(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    let when_finished_heading : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "When Finished..."
-        l.font = l.font.withSize(18)
-        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-        return l
-    }()
-    
-    let when_finished : UITextView = {
-        let textView = UITextView()
-        textView.text = "Once you have signed both documents, click \"Done\" below"
-        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        //        var frame = textView.frame
-        //        frame.size.height = 24
-        //        textView.frame = frame
-        textView.backgroundColor = .clear
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
-    
-    let done_button : BaseButton = {
-        let button = BaseButton(text: "Done")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(clickDone(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    
-//    let accountStatusHeaderLabel : UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = "Account Status"
-//        return label
-//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -226,121 +27,35 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         // Is this going to work?  We should never come to this view except on brand new users
         isBrandNewUser = true
         
-        
-        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        if let scrollView = scrollView {
-            scrollView.contentSize = CGSize(width: self.view.frame.width, height: 2000)
-            
-            scrollView.addSubview(welcome_heading)
-            welcome_heading.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16).isActive = true
-            welcome_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(limboExplanation)
-            limboExplanation.topAnchor.constraint(equalTo: welcome_heading.bottomAnchor, constant: 8).isActive = true
-            limboExplanation.leadingAnchor.constraint(equalTo: welcome_heading.leadingAnchor, constant: 0).isActive = true
-            limboExplanation.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            scrollView.addSubview(access_limited_heading)
-            access_limited_heading.topAnchor.constraint(equalTo: limboExplanation.bottomAnchor, constant: 32).isActive = true
-            access_limited_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(access_limited_description)
-            access_limited_description.topAnchor.constraint(equalTo: access_limited_heading.bottomAnchor, constant: 8).isActive = true
-            access_limited_description.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            access_limited_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            // This and the video_invitation_button are put right on top of each other.  And then we selectively show
-            // one or the other depending on whether an invitation has been extended to this person.
-            // See videoInvitationExtended() below
-            scrollView.addSubview(show_me_how_button)
-            show_me_how_button.topAnchor.constraint(equalTo: access_limited_description.bottomAnchor, constant: 16).isActive = true
-            show_me_how_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
-            
-            scrollView.addSubview(video_invitation_button)
-            video_invitation_button.topAnchor.constraint(equalTo: access_limited_description.bottomAnchor, constant: 16).isActive = true
-            video_invitation_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
-            video_invitation_button.isHidden = true
-            
-            scrollView.addSubview(full_access_heading)
-            full_access_heading.topAnchor.constraint(equalTo: show_me_how_button.bottomAnchor, constant: 32).isActive = true
-            full_access_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(full_access_description)
-            full_access_description.topAnchor.constraint(equalTo: full_access_heading.bottomAnchor, constant: 8).isActive = true
-            full_access_description.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            full_access_description.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            scrollView.addSubview(legal_requirement_1_heading)
-            legal_requirement_1_heading.topAnchor.constraint(equalTo: full_access_description.bottomAnchor, constant: 32).isActive = true
-            legal_requirement_1_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(legal_requirement_1)
-            legal_requirement_1.topAnchor.constraint(equalTo: legal_requirement_1_heading.bottomAnchor, constant: 8).isActive = true
-            legal_requirement_1.leadingAnchor.constraint(equalTo: legal_requirement_1_heading.leadingAnchor, constant: 0).isActive = true
-            legal_requirement_1.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            scrollView.addSubview(sign_petition_button)
-            sign_petition_button.topAnchor.constraint(equalTo: legal_requirement_1.bottomAnchor, constant: 16).isActive = true
-            sign_petition_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
-            
-            scrollView.addSubview(legal_requirement_2_heading)
-            legal_requirement_2_heading.topAnchor.constraint(equalTo: sign_petition_button.bottomAnchor, constant: 32).isActive = true
-            legal_requirement_2_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(legal_requirement_2)
-            legal_requirement_2.topAnchor.constraint(equalTo: legal_requirement_2_heading.bottomAnchor, constant: 8).isActive = true
-            legal_requirement_2.leadingAnchor.constraint(equalTo: legal_requirement_2_heading.leadingAnchor, constant: 0).isActive = true
-            legal_requirement_2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            scrollView.addSubview(sign_confidentiality_agreement_button)
-            sign_confidentiality_agreement_button.topAnchor.constraint(equalTo: legal_requirement_2.bottomAnchor, constant: 16).isActive = true
-            sign_confidentiality_agreement_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
-            
-            scrollView.addSubview(when_finished_heading)
-            when_finished_heading.topAnchor.constraint(equalTo: sign_confidentiality_agreement_button.bottomAnchor, constant: 32).isActive = true
-            when_finished_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(when_finished)
-            when_finished.topAnchor.constraint(equalTo: when_finished_heading.bottomAnchor, constant: 8).isActive = true
-            when_finished.leadingAnchor.constraint(equalTo: when_finished_heading.leadingAnchor, constant: 0).isActive = true
-            when_finished.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            scrollView.addSubview(done_button)
-            done_button.topAnchor.constraint(equalTo: when_finished.bottomAnchor, constant: 16).isActive = true
-            done_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
-            
-            view.addSubview(scrollView)
-        }
-        
-        
-        // The user object fires roleAssigned() which calls all listeners
-        // This call makes this class one of those listeners
-        // See also roleAssigned() in this class
-        
         // https://stackoverflow.com/a/44403725
         // Hide the back button on this screen.  Don't want the user to be able to go anywhere
         // until they are assigned to a group
         self.navigationItem.hidesBackButton = true
-
-        // Do any additional setup after loading the view.
-        limboExplanation.text = TPUser.sharedInstance.getName() /*"Brent Dunklau"*/ +
-            ", welcome to TelePatriot. This app is a powerful tool for supporters of the Convention of States Project."
         
-        if TPUser.sharedInstance.getEmail() == "email not available" {
-            legal_requirement_1.text = "You must sign the Convention of States petition using a confirmed email address.  Unfortunately, your email address has not been confirmed by the Facebook or Google (whoever you logged in with). We cannot grant you access to this app until we have an email address that has been confirmed by Facebook/Google.  We apologize for the inconvenience."
+        if dataMissing {
+            // show missingInformationView
+            missingInformationView = MissingInformationView(frame: view.frame)
+            missingInformationView?.setValues(uid: TPUser.sharedInstance.getUid(), user: userValues)
+            view.addSubview(missingInformationView!)
             
-            legal_requirement_2.text = "You must sign the Convention of States confidentiality agreement using a confirmed email address.  Unfortunately, your email address has not been confirmed by the Facebook or Google (whoever you logged in with). We cannot grant you access to this app until we have an email address that has been confirmed by Facebook/Google.  We apologize for the inconvenience."
+            missingInformationView?.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+            missingInformationView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+            missingInformationView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+            missingInformationView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+            missingInformationView?.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: 1.0).isActive = true
+            missingInformationView?.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: 1.0).isActive = true
+            missingInformationView?.missingInformationDelegate = self
         }
         else {
-            legal_requirement_1.text = "You must sign the Convention of States petition using this email address: \(TPUser.sharedInstance.getEmail())"
-            legal_requirement_2.text = "You must sign the Convention of States confidentiality agreement using this email address: \(TPUser.sharedInstance.getEmail())"
+            showLimboView(name: TPUser.sharedInstance.getName(), email: TPUser.sharedInstance.getEmail())
         }
-        
-        
-        //let nibName = UINib(nibName: "AccountStatusEventTableViewCell", bundle: nil)
-        //tableViewAccountStatusEvents.register(nibName, forCellReuseIdentifier: "cellId")
-        
-//        fetchAccountStatusEvents(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName())
+    }
+    
+    private func showLimboView(name: String, email: String) {
+        limboView = LimboView(frame: view.frame)
+        limboView?.setupView(name: name, email: email)
+        limboView?.limboViewDelegate = self
+        view.addSubview(limboView!)
     }
     
     func addAccountStatusEventListener(user: TPUser) {
@@ -352,6 +67,19 @@ class LimboViewController: BaseViewController, UITableViewDelegate
             print("LimboViewController: NOT adding self to list of accountStatusEventListeners") }
     }
     
+//    func setDataMissing(nameMissing: Bool, emailMissing: Bool, user: User) {
+//
+//        if nameMissing || emailMissing {
+//            var data : [String:String] = [:]
+//            if !nameMissing {
+//                data["name"] = user.displayName
+//            }
+//            if !emailMissing {
+//                data["email"] = user.email
+//            }
+//        }
+//    }
+    
     @objc private func clickSignPetition(_ sender:UIButton) {
         // TODO should get from database
         openUrl(string: "https://www.conventionofstates.com")
@@ -360,54 +88,6 @@ class LimboViewController: BaseViewController, UITableViewDelegate
     @objc private func clickSignConfidentialityAgreement(_ sender:UIButton) {
         // TODO should get from database
         openUrl(string: "https://esign.coslms.com:8443/S/COS/Transaction/Volunteer_Agreement_Manual")
-    }
-    
-    @objc private func clickShowMeHow(_ sender:UIButton) {
-        // go to the Show Me How page
-        
-        // Android: LimboActivity:show_me_how_button does this:  startActivity(new Intent(LimboActivity.this, ShowMeHowActivity.class));
-        
-//        let vc = ShowMeHowVC()
-//        self.present(vc, animated: true, completion: nil)
-        showScreen(vc: ShowMeHowVC())
-    }
-    
-    @objc private func startVideoChat(_ sender:UIButton) {
-        if let vc = getAppDelegate().videoChatVC, let videoInvitation = videoInvitation {
-//          I think what we need to do is create a VideoInvitation object and accept it here
-//            Then make sure the current user is a participant on the video node
-            videoInvitation.accept()
-            showScreen(vc: vc) // have to get the vc from appDelegate
-        }
-    }
-    
-    @objc private func clickDone(_ sender:UIButton) {
-        let now = Util.getDate_as_millis()
-        done_button.setTitle("Verifying...", for: .normal)
-        let evt = CBAPIEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), email: TPUser.sharedInstance.getEmail(), event_type: "check legal")
-        evt.save()
-        
-        // need to call CB to confirm...
-        Database.database().reference().child("cb_api_events/check-legal-responses/\(TPUser.sharedInstance.getUid())")
-            .queryOrdered(byChild: "date_ms")
-            .queryStarting(atValue: now)
-            .queryLimited(toFirst: 1)
-            .observe(.value, with: {(snapshot) in
-                
-            let children = snapshot.children
-            while let snap = children.nextObject() as? DataSnapshot { // should only be one child because we limited to 1
-                guard let dictionary = snap.value as? [String:Any] else {
-                    return
-                }
-                if let valid = dictionary["valid"] as? Bool {
-                    if valid {
-                        self.done_button.setTitle("Good", for: .normal) }
-                    else {
-                        self.done_button.setTitle("Signatures Not Received Yet", for: .normal) }
-                }
-            }
-                
-        })
     }
     
     private func openUrl(string: String) {
@@ -426,7 +106,174 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // As long as the user contains the required info - name and email - we show the limbo screen
+    // that tells them they need to sign the petition and conf agreement.
+    // But if name or email is missing, we have to send them to the MissingInformationView screen
+    func setUser(user: User) {
+        self.user = user
+        
+        // check for special configuration to see if we should simulate missing data (name and email)
+        Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot) in
+            var simulate_missing_name = false
+            var simulate_missing_email = false
+            if let dictionary = snapshot.value as? [String : Any] {
+                if let val = dictionary["simulate_missing_name"] as? Bool {
+                    simulate_missing_name = val
+                }
+                if let val = dictionary["simulate_missing_email"] as? Bool {
+                    simulate_missing_email = val
+                }
+            }
+            
+            let nameMissing = user.displayName == nil || user.displayName == "" || simulate_missing_name
+            let emailMissing = user.email == nil || user.email == "" || simulate_missing_email
+            self.dataMissing = nameMissing || emailMissing
+            
+            // User is signed in
+            print("====================================================================")
+            print("nameMissing = \(nameMissing)  simulate_missing_name = \(simulate_missing_name)")
+            print("emailMissing = \(emailMissing)  simulate_missing_email = \(simulate_missing_email)")
+            print("dataMissing = \(self.dataMissing)")
+            print(user.displayName)
+            print(user.email)
+            
+            if !nameMissing {
+                self.userValues["name"] = user.displayName
+            }
+            if !emailMissing {
+                self.userValues["email"] = user.email
+            }
+            
+        }, withCancel: nil)
+    }
 
+}
+
+extension LimboViewController : LimboViewDelegate {
+    func clickShowMeHow() {
+        self.present(ShowMeHowVC(), animated: true, completion: nil)
+    }
+    
+    func startVideoChat() {
+        if let vc = getAppDelegate().videoChatVC, let videoInvitation = limboView?.videoInvitation {
+            //          I think what we need to do is create a VideoInvitation object and accept it here
+            //            Then make sure the current user is a participant on the video node
+            videoInvitation.accept()
+            self.present(vc, animated: true, completion: nil) // have to get the vc from appDelegate
+        }
+    }
+    
+    func clickDone(name: String, email: String) {
+        
+        let now = Util.getDate_as_millis()
+        limboView?.done_button.setTitle("Verifying...", for: .normal)
+        let evt = CBAPIEvent(uid: TPUser.sharedInstance.getUid(), name: name, email: email, event_type: "check legal")
+        evt.save()
+        
+        // need to call CB to confirm...
+        Database.database().reference().child("cb_api_events/check-legal-responses/\(TPUser.sharedInstance.getUid())")
+            .queryOrdered(byChild: "date_ms")
+            .queryStarting(atValue: now)
+            .queryLimited(toFirst: 1)
+            .observeSingleEvent(of: .value, with: {(snapshot) in
+                
+                let children = snapshot.children
+                while let snap = children.nextObject() as? DataSnapshot { // should only be one child because we limited to 1
+                    guard let dictionary = snap.value as? [String:Any] else {
+                        return
+                    }
+                    if let valid = dictionary["valid"] as? Bool {
+                        if valid {
+                            self.limboView?.done_button.setTitle("Good", for: .normal) }
+                        else {
+                            self.limboView?.done_button.setTitle("Signatures Not Received Yet", for: .normal) }
+                    }
+                }
+                
+            })
+    }
+}
+
+extension String {
+    func isValidEmail() -> Bool {
+        // here, `try!` will always succeed because the pattern is valid
+        let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+        return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
+    }
+}
+
+// This is what gets called when you click Save on the MissingInformationView
+// And what happens is: The name and email are saved to the database and the user is shown
+// the main verbiage of the limbo screen (LimboView).  We don't show this to users that have missing
+// names and emails because there's no point.  We have to get that information first.
+extension LimboViewController : MissingInformationDelegate {
+    func saveInfo(uid: String, name: String, email: String) {
+        if name == "" || email == "" {
+            let title = "Required Fields"
+            let message = "All fields on this screen are required"
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style {
+                case .default:
+                    print("default")
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            })
+            
+            alert.addAction(ok)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        else if !email.isValidEmail() {
+            let title = "Invalid Email"
+            let message = "This is not a valid email address:\n\(email)"
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
+                switch action.style {
+                case .default:
+                    print("default")
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            })
+            
+            alert.addAction(ok)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            let updatedData = ["users/\(uid)/name": name,
+                               "users/\(uid)/email": email,
+                               "users/\(uid)/account_disposition": "enabled"]
+            // example of multi-path update
+            Database.database().reference().updateChildValues(updatedData, withCompletionBlock: { (error, ref) -> Void in
+                if let missingInformationView = self.missingInformationView {
+                    missingInformationView.removeFromSuperview()
+                }
+                self.showLimboView(name: name, email: email)
+                TPUser.sharedInstance.user?.updateEmail(to: email, completion: {error in
+                    if error != nil {
+                        
+                    }
+                    else {
+                        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                        changeRequest?.displayName = name
+                        changeRequest?.commitChanges { (error) in
+                            // do nothing I guess
+                        }
+                    }
+                }) // TODO can't find signature of UserProfileChangeCallback
+                TPUser.sharedInstance.set(email: email)
+                TPUser.sharedInstance.set(name: name)
+            })
+        }
+    }
 }
 
 extension LimboViewController : AccountStatusEventListener {
@@ -485,17 +332,17 @@ extension LimboViewController : AccountStatusEventListener {
     }
     
     func videoInvitationExtended(vi: VideoInvitation) {
-        videoInvitation = vi
-        show_me_how_button.isHidden = true
-        DispatchQueue.main.async { self.video_invitation_button.isHidden = false }
-        access_limited_description.text = TPUser.sharedInstance.video_invitation_from_name!+" "+YOUVE_BEEN_INVITED_MESSAGE+" "+TPUser.sharedInstance.video_invitation_from_name!
+        limboView?.videoInvitation = vi
+        limboView?.show_me_how_button.isHidden = true
+        DispatchQueue.main.async { self.limboView?.video_invitation_button.isHidden = false }
+        limboView?.access_limited_description.text = TPUser.sharedInstance.video_invitation_from_name!+" "+(limboView?.YOUVE_BEEN_INVITED_MESSAGE)!+" "+TPUser.sharedInstance.video_invitation_from_name!
     }
     
     func videoInvitationRevoked() {
-        videoInvitation = nil
-        show_me_how_button.isHidden = false
-        video_invitation_button.isHidden = true
-        access_limited_description.text = ACCESS_LIMITED_DESCRIPTION
+        limboView?.videoInvitation = nil
+        limboView?.show_me_how_button.isHidden = false
+        limboView?.video_invitation_button.isHidden = true
+        limboView?.access_limited_description.text = limboView?.ACCESS_LIMITED_DESCRIPTION
     }
     
 }

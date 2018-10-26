@@ -79,6 +79,8 @@
 		A15D845D1FA8D04D007EE77C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D845C1FA8D04D007EE77C /* ViewController.swift */; };
 		A15D84651FA92976007EE77C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15D84641FA92976007EE77C /* SWRevealViewController.m */; };
 		A171C802208BC2900017892A /* EditLegislatorForVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171C801208BC2900017892A /* EditLegislatorForVideoVC.swift */; };
+		A1781B8C217ACA3B00CB4462 /* MissingInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1781B8B217ACA3B00CB4462 /* MissingInformationView.swift */; };
+		A1781B8E217AE4A000CB4462 /* LimboView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1781B8D217AE4A000CB4462 /* LimboView.swift */; };
 		A17B6ED41FD14EB300A3325C /* WrapUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */; };
 		A17B6ED61FD1EA7100A3325C /* MissionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B6ED51FD1EA7100A3325C /* MissionItem.swift */; };
 		A17B6ED81FD2195F00A3325C /* AppDelegateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17B6ED71FD2195F00A3325C /* AppDelegateDelegate.swift */; };
@@ -189,6 +191,8 @@
 		A15D84641FA92976007EE77C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		A15DDE3C2074909E005331D5 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IQKeyboardManagerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A171C801208BC2900017892A /* EditLegislatorForVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLegislatorForVideoVC.swift; sourceTree = "<group>"; };
+		A1781B8B217ACA3B00CB4462 /* MissingInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingInformationView.swift; sourceTree = "<group>"; };
+		A1781B8D217AE4A000CB4462 /* LimboView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimboView.swift; sourceTree = "<group>"; };
 		A17B6ED31FD14EB300A3325C /* WrapUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapUpViewController.swift; sourceTree = "<group>"; };
 		A17B6ED51FD1EA7100A3325C /* MissionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionItem.swift; sourceTree = "<group>"; };
 		A17B6ED71FD2195F00A3325C /* AppDelegateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateDelegate.swift; sourceTree = "<group>"; };
@@ -315,6 +319,7 @@
 				A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */,
 				A1217E301FCA199A0007ABF8 /* Call.swift */,
 				A1217E341FCA24150007ABF8 /* CallButton.swift */,
+				A1781B8B217ACA3B00CB4462 /* MissingInformationView.swift */,
 				A134C1AD2017ECD000B64939 /* Util.swift */,
 			);
 			path = misc;
@@ -368,6 +373,7 @@
 				A1DD805E1FE97173003F140C /* AssignUserVC.swift */,
 				A190B47B20095D3B00ED51D6 /* CannotApproveUserVC.swift */,
 				A144EB832137360300005BDF /* DisabledViewController.swift */,
+				A1781B8D217AE4A000CB4462 /* LimboView.swift */,
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
 				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
 				A135C30020197AE500B50B49 /* SearchUsersVC.swift */,
@@ -599,7 +605,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -623,7 +629,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -692,6 +698,7 @@
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */,
 				A13187B92078555E0048FE95 /* EditVideoMissionDescriptionVC.swift in Sources */,
+				A1781B8E217AE4A000CB4462 /* LimboView.swift in Sources */,
 				A19F6C3A2139D91D00A140C2 /* ShowMeHowVC.swift in Sources */,
 				A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
@@ -728,6 +735,7 @@
 				A12CDB3F1FAF78E0003DE424 /* VolunteerViewController.swift in Sources */,
 				A159F9641FCF6F5E00204847 /* NoRoleAssignedDelegate.swift in Sources */,
 				A109E8AB1FC564A50005517A /* CenterViewController.swift in Sources */,
+				A1781B8C217ACA3B00CB4462 /* MissingInformationView.swift in Sources */,
 				A137720520CCC77300566AFE /* VideoInvitation.swift in Sources */,
 				A13F7AA62013EB7500EF0766 /* Legislator.swift in Sources */,
 				A135C2FF20196A6200B50B49 /* AdminVC.swift in Sources */,

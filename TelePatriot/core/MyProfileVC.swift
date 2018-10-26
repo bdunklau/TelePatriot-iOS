@@ -49,7 +49,7 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
     
     let myAddressExplanation : UITextView = {
         let textView = UITextView()
-        textView.text = "Not your residential address?  Use the fields below to update, or touch Capture Location next time you're home."
+        textView.text = "Not your residential address?  Use the fields below to update, or touch \"Use My Current Location\" next time you're home."
         textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
         //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize) // just example
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -170,16 +170,16 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
     }()
     
     
-    let latitudeLabel : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Latitude"
-        //l.font = l.font.withSize(24)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
-        return l
-    }()
-    
-    
+//    let latitudeLabel : UILabel = {
+//        let l = UILabel()
+//        l.translatesAutoresizingMaskIntoConstraints = false
+//        l.text = "Latitude"
+//        //l.font = l.font.withSize(24)
+//        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
+//        return l
+//    }()
+
+
     let latitudeValueLabel : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -188,18 +188,18 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
         return l
     }()
-    
-    
-    let longitudeLabel : UILabel = {
-        let l = UILabel()
-        l.translatesAutoresizingMaskIntoConstraints = false
-        l.text = "Longitude"
-        //l.font = l.font.withSize(24)
-        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
-        return l
-    }()
-    
-    
+
+
+//    let longitudeLabel : UILabel = {
+//        let l = UILabel()
+//        l.translatesAutoresizingMaskIntoConstraints = false
+//        l.text = "Longitude"
+//        //l.font = l.font.withSize(24)
+//        //l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize) // just example
+//        return l
+//    }()
+
+
     let longitudeValueLabel : UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -284,7 +284,7 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         
         scrollView?.addSubview(myAddressExplanation)
         myAddressExplanation.topAnchor.constraint(equalTo: myAddressHeading.bottomAnchor, constant: 8).isActive = true
-        myAddressExplanation.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 8).isActive = true
+        myAddressExplanation.leadingAnchor.constraint(equalTo: (scrollView?.leadingAnchor)!, constant: 4).isActive = true
         myAddressExplanation.widthAnchor.constraint(equalTo: (scrollView?.widthAnchor)!, multiplier: 0.95).isActive = true
         
         scrollView?.addSubview(addressLine1Field)
@@ -352,24 +352,24 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
         saveButton.centerXAnchor.constraint(equalTo: (scrollView?.centerXAnchor)!).isActive = true
         
         
-        scrollView?.addSubview(latitudeLabel)
-        latitudeLabel.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 8).isActive = true
-        latitudeLabel.leadingAnchor.constraint(equalTo: senateDistrictLabel.leadingAnchor, constant: 0).isActive = true
-        
-        
-        scrollView?.addSubview(latitudeValueLabel)
-        latitudeValueLabel.topAnchor.constraint(equalTo: latitudeLabel.topAnchor, constant: 0).isActive = true
-        latitudeValueLabel.leadingAnchor.constraint(equalTo: latitudeLabel.trailingAnchor, constant: 12).isActive = true
-        
-        
-        scrollView?.addSubview(longitudeLabel)
-        longitudeLabel.topAnchor.constraint(equalTo: latitudeLabel.bottomAnchor, constant: 8).isActive = true
-        longitudeLabel.leadingAnchor.constraint(equalTo: latitudeLabel.leadingAnchor, constant: 0).isActive = true
-        
-        
-        scrollView?.addSubview(longitudeValueLabel)
-        longitudeValueLabel.topAnchor.constraint(equalTo: longitudeLabel.topAnchor, constant: 0).isActive = true
-        longitudeValueLabel.leadingAnchor.constraint(equalTo: longitudeLabel.trailingAnchor, constant: 4).isActive = true
+//        scrollView?.addSubview(latitudeLabel)
+//        latitudeLabel.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 8).isActive = true
+//        latitudeLabel.leadingAnchor.constraint(equalTo: senateDistrictLabel.leadingAnchor, constant: 0).isActive = true
+//
+//
+//        scrollView?.addSubview(latitudeValueLabel)
+//        latitudeValueLabel.topAnchor.constraint(equalTo: latitudeLabel.topAnchor, constant: 0).isActive = true
+//        latitudeValueLabel.leadingAnchor.constraint(equalTo: latitudeLabel.trailingAnchor, constant: 12).isActive = true
+//
+//
+//        scrollView?.addSubview(longitudeLabel)
+//        longitudeLabel.topAnchor.constraint(equalTo: latitudeLabel.bottomAnchor, constant: 8).isActive = true
+//        longitudeLabel.leadingAnchor.constraint(equalTo: latitudeLabel.leadingAnchor, constant: 0).isActive = true
+//
+//
+//        scrollView?.addSubview(longitudeValueLabel)
+//        longitudeValueLabel.topAnchor.constraint(equalTo: longitudeLabel.topAnchor, constant: 0).isActive = true
+//        longitudeValueLabel.leadingAnchor.constraint(equalTo: longitudeLabel.trailingAnchor, constant: 4).isActive = true
         
         
         //locationTuples = [(sourceField, nil), (destinationField1, nil), (destinationField2, nil)]
@@ -511,9 +511,22 @@ class MyProfileVC: BaseViewController, CLLocationManagerDelegate {
             
             let str = String(describing: type(of: data))
             print( "data is: \(str)"  )
+            print( "data is... " )
+            print(data!)
+//            let datastring = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            let datastring = String(data: data!, encoding: .utf8)
+            print(datastring!)
+            let json = datastring?.data(using: .utf8)!
             
             let decoder = JSONDecoder()
             let legislators = try? decoder.decode([Legislator].self, from: data!)
+            
+            do {
+                try decoder.decode([Legislator].self, from: data!)
+            } catch {
+                print("================================================================")
+                print("Error info: \(error)")
+            }
             
             // get house and senate district numbers here so we can put them in the TPUser object
             

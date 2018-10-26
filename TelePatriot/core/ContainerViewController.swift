@@ -147,7 +147,7 @@ class ContainerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // TODO do we need to do something here or not when orientation changes between landscap and portrait?
+        // TODO do we need to do something here or not when orientation changes between landscape and portrait?
         //view.invalidateIntrinsicContentSize()
     }
     

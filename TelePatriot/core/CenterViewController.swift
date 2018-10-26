@@ -21,6 +21,8 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     // centerViewController.delegate = self  (from ContainerViewController)
     var delegate: CenterViewControllerDelegate?
     
+    //var missingInformationVC: MissingInformationVC?
+    
     var byPassLogin : Bool = false
     
     let logo : UIImageView = {
@@ -38,6 +40,23 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         return button
     }()
     
+    let one_moment_please_label : UITextView = {
+        let textView = UITextView()
+        textView.text = "One moment please\nLogging you in now"
+        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
+        //textView.font = UIFont.boldSystemFont(ofSize: textView.font.pointSize) // just example
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var frame = textView.frame
+        frame.size.height = 16
+        textView.frame = frame
+        
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    
     //var limboViewController : LimboViewController?
     var disabledViewController : DisabledViewController?
     
@@ -46,11 +65,10 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     }
     
     override func viewDidLoad() {
+        self.navigationItem.title = "TelePatriot" // what the user sees (across the top) when they first login
         
-        loadSplashscreen()
-        
-        BackTracker.sharedInstance.setNavigationItem(nav: self.navigationItem, backHandler: self)
-        
+        getSpinner()
+        showSpinner()
         
         if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
             || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "CenterViewController" })) {
@@ -58,6 +76,12 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         } else {
             print("CenterViewController: NOT adding self to list of accountStatusEventListeners") }
         
+        BackTracker.sharedInstance.setNavigationItem(nav: self.navigationItem, backHandler: self)
+        
+        
+        if let _ = TPUser.sharedInstance.uid {
+            loadSplashscreen()
+        }
         
         // LimboViewController sets this in prepareForSegue
         if(!byPassLogin) {
@@ -71,10 +95,62 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
             // https://stackoverflow.com/a/44403725
             //self.navigationItem.hidesBackButton = true
         }
+        
+        
     }
     
+    var spinnerView : UIView?
+    let ai = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+    
+//    private func showSpinner2() {
+//        if (self.spinning) {
+//            return
+//        }
+//        self.spinnerView?.addSubview(self.ai)
+//        print("showSpinner2():  ================================================")
+//        print("showSpinner2():  self.spinnerView?.addSubview(self.ai)")
+//        self.view.addSubview(self.spinnerView!)
+//        print("showSpinner2():  self.view.addSubview(self.spinnerView!)")
+//        self.spinning = true
+//        print("showSpinner2():  self.spinning = \(self.spinning)")
+//    }
+    
+    private func getSpinner() {
+        spinnerView = UIView.init(frame: view.bounds)
+        if let spinnerView = spinnerView {
+            spinnerView.addSubview(one_moment_please_label)
+            
+            one_moment_please_label.centerXAnchor.constraint(equalTo: spinnerView.centerXAnchor, constant: 0).isActive = true
+            one_moment_please_label.centerYAnchor.constraint(equalTo: spinnerView.centerYAnchor, constant: -64).isActive = true
+            
+            spinnerView.backgroundColor = UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            ai.startAnimating()
+            ai.center = spinnerView.center
+        }
+        
+    }
+    
+    private func showSpinner() {
+        DispatchQueue.main.async {
+            self.spinnerView?.addSubview(self.ai)
+            self.view.addSubview(self.spinnerView!)
+        }
+    }
+    
+    private func dismissSpinner() {
+        self.ai.removeFromSuperview()
+        if let spinnerView = spinnerView {
+            spinnerView.removeFromSuperview()
+        }
+    }
+    
+    var splashScreenAlreadyLoaded = false
     private func loadSplashscreen() {
-        self.navigationItem.title = "TelePatriot" // what the user sees (across the top) when they first login
+        if splashScreenAlreadyLoaded {
+            return
+        }
+        splashScreenAlreadyLoaded = true
+        dismissSpinner()
         
         view.addSubview(logo)
         view.addSubview(getStartedButton)
@@ -91,39 +167,42 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         getStartedButton.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
     }
     
-    
+    var dataMissing = false
+    var simulate_missing_name = false
+    var simulate_missing_email = false
     // logging in is done here.  Logging out is done in TPUser.signOut()
     func checkLoggedIn() {
+        
         Auth.auth().addStateDidChangeListener { auth, user in
-            if user != nil {
-                // User is signed in
-                print(user?.displayName)
-                print(user?.email)
-                
-                // if the user doesn't have any roles assigned yet, send him to the Limbo screen...
-                let u = TPUser.sharedInstance
-                
+            if let user = user {
                 
                 // need to get handle to SidePanelViewController
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
+                TPUser.sharedInstance.setUser(u: user)
                 
                 // The user object fires roleAssigned() which calls all listeners
                 // This call makes this class one of those listeners
                 // See also roleAssigned() in this class
                 // addLeftPanelViewController()
-                if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
-                    || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "SidePanelViewController" })) {
-                    TPUser.sharedInstance.accountStatusEventListeners.append((appDelegate?.leftViewController!)!)
-                } else { print("SidePanelViewController: NOT adding self to list of accountStatusEventListeners") }
+//                if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
+//                    || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "SidePanelViewController" })) {
+//                    TPUser.sharedInstance.accountStatusEventListeners.append((appDelegate?.leftViewController!)!)
+//                } else { print("SidePanelViewController: NOT adding self to list of accountStatusEventListeners") }
                 
-                print("CenterViewController.checkLoggedIn() -----------------")
-                // BUG: This setUser() call below has to notify the SidePanelViewController
-                u.setUser(u: user)
-                appDelegate?.limboViewController?.addAccountStatusEventListener(user: u) // TODO this is "backwards"
-                if let videoChatVC = appDelegate?.videoChatVC {
-                    u.accountStatusEventListeners.append(videoChatVC)
+                if let sidePanelViewController = appDelegate?.leftViewController {
+                    TPUser.sharedInstance.addAccountStatusEventListener(listener: sidePanelViewController)
                 }
+                
+                if let videoChatVC = appDelegate?.videoChatVC {
+                    TPUser.sharedInstance.addAccountStatusEventListener(listener: videoChatVC)
+                }
+                
+                if let limboViewController = appDelegate?.limboViewController {
+                    limboViewController.setUser(user: user)
+                    TPUser.sharedInstance.addAccountStatusEventListener(listener: limboViewController)
+                }
+                
                 
             } else {
                 // No user is signed in.
@@ -135,7 +214,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     
     // https://www.youtube.com/watch?v=jH2LdL-PsHI
     // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
-    func login() {
+    private func login() {
         let authUI = FUIAuth.init(uiWith: Auth.auth())
         
         // This is how you disable sign-in by email.  Uncomment to disable
@@ -356,16 +435,6 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
     
 }
 
-//extension CenterViewController : NoRoleAssignedDelegate {
-//    func theUserHasNoRoles() {
-//        // If you need to test/debug the LimboViewController screen flow, you'll want to comment this line in and out
-//        // With it commented out, you'll always be sent to the Home screen where you can logout.
-//        let limboViewController = LimboViewController()
-//        let navViewController: UINavigationController = UINavigationController(rootViewController: limboViewController)
-//        self.present(navViewController, animated: true, completion: nil)
-//    }
-//}
-
 extension CenterViewController : NewPhoneCampaignSubmittedHandler {
     func newPhoneCampaignSubmitted() {
         guard let vc = delegate?.getMissionSummaryTVC() else { return }
@@ -450,19 +519,6 @@ extension CenterViewController : SearchUsersDelegate {
 }
 
 
-// Once the user (admin) has assigned the new user to some groups (Admin, Director and/or Volunteer)
-// the admin clicks OK which ends up calling this function, which sends the user back to the
-// Unassigned Users screen
-/**************
-extension CenterViewController : AssignUserDelegate {
-    func userAssigned(user : TPUser) {
-        // go back to the Unassigned User screen
-        guard let vc = delegate?.getUnassignedUsersVC() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers)
-    }
-}
- ***********/
-
 extension CenterViewController : AccountStatusEventListener {
     func roleAssigned(role: String) {
         // stub
@@ -493,18 +549,23 @@ extension CenterViewController : AccountStatusEventListener {
             limboViewController.dismiss(animated: true, completion: nil)
             limboViewController.removeFromParentViewController()
         }
+        loadSplashscreen()
     }
     
     func notAllowed() {
+        dismissSpinner()
+        
         if let limboViewController = delegate?.getLimboViewController() {
             
             let is_ = limboViewController.viewIfLoaded?.window != nil || limboViewController.isBeingPresented
-                        || limboViewController.isViewLoaded
+                || limboViewController.isViewLoaded
             if !is_ { // bug fix - avoids a nasty "already presented" exception
                 limboViewController.modalPresentationStyle = .popover
                 self.present(limboViewController, animated: true, completion:nil)
             }
         }
+        
+        //loadSplashscreen()
     }
     
     func accountDisabled() {

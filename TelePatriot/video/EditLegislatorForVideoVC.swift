@@ -352,18 +352,21 @@ class EditLegislatorForVideoVC: BaseViewController, UIPickerViewDelegate, UIPick
         if let vn = videoNode {
             // emails stored under states/legislators are a mess...
             var email = ""
-            if legislator.emails != nil && legislator.emails.count > 0 {
-                email = legislator.emails[0]
+            
+//          if legislator.emails != nil && legislator.emails?.count > 0 {
+            if let theemails = legislator.emails,
+                theemails.count > 0 {
+                email = theemails[0]
             } else if legislator.email != "" {
                 email = legislator.email
             }
             
             // phones are also a mess...
             var phone = ""
-            if legislator.phones != nil && legislator.phones.count > 0 {
-                phone = legislator.phones[0]
-            } else if legislator.phone != "" {
-                phone = legislator.phone
+            if let phones = legislator.phones, phones.count > 0 {
+                phone = phones[0]
+            } else if let ph = legislator.phone {
+                phone = ph
             }
             
             let updatedData = ["video/list/\(vn.getKey())/legislator_first_name": legislator.first_name,
