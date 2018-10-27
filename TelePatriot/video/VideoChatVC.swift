@@ -537,11 +537,11 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             let video_participant = vn.video_participants[TPUser.sharedInstance.getUid()],
             let room_id = vn.room_id
         else {
-            simpleOKDialog(message: "Video chat is currently disabled")
+            simpleOKDialog(title: "Video Chat", message: "Video chat is currently disabled")
             return
         }
         
-        recordingWillStart = false // reset these value to false whenever
+        recordingWillStart = false // reset these values to false whenever
         recordingWillStop = false  // the connect/disconnect button is clicked
         
         let img = connect_button.currentImage == UIImage(named: "callEnd.png") ? UIImage(named: "callStart.png") : UIImage(named: "callEnd.png")
@@ -831,9 +831,49 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
         
         guard let _ = vn.legislator else {
-            simpleOKDialog(message: "Choose a legislator before recording")
+            simpleOKDialog(title: "Choose Legislator", message: "Choose a legislator before recording")
             return
         }
+        
+//        The red "Recording..." indicator is set in doConnect() and unset in doDisconnect()
+        
+        if let room_id = vn.room_id, let _ = vn.room_sid
+        {
+            if let _ = vn.recording_stopped {
+                let alert = UIAlertController(title: "Erase Recording?", message: "Do you want to record over the video you just created?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Keep", style: .cancel, handler: { action in
+                    switch action.style {
+                    case .default:
+                        print("default")
+                    case .cancel:
+                        print("cancel")
+                    case .destructive:
+                        print("destructive")
+                    }
+                }))
+                alert.addAction(UIAlertAction(title: "Record Over", style: .destructive, handler: { action in
+                    switch action.style {
+                    case .default:
+                        print("default")
+                    case .cancel:
+                        print("cancel")
+                    case .destructive:
+                        self.doRecording(vn: vn, room_id: room_id)
+                    }
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+                doRecording(vn: vn, room_id: room_id)
+            }
+            
+        }
+        else {
+            simpleOKDialog(title: "Recording", message: "Recording is currently disabled")
+        }
+    }
+    
+    private func doRecording(vn: VideoNode, room_id: String) {
         
         var rec_label = ""
         if vn.recordingHasNotStarted() || vn.recordingHasStopped() {
@@ -849,20 +889,11 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             self.record_label.text = rec_label
         }
         
-//        The red "Recording..." indicator is set in doConnect() and unset in doDisconnect()
-        
-        if let room_id = vn.room_id, let room_sid = vn.room_sid
-        {
-            let video_node_key = vn.getKey()
-            let request_type = vn.recordingHasStarted() ? "stop recording" : "start recording"
-            showSpinner() // dismissed in doConnect() and doDisconnect()
-            let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: video_node_key, room_id: room_id, request_type: request_type, RoomSid: vn.room_sid, MediaUri: vn.composition_MediaUri)
-            ve.save()
-        }
-        else {
-            simpleOKDialog(message: "Recording is currently disabled")
-        }
-        
+        let video_node_key = vn.getKey()
+        let request_type = vn.recordingHasStarted() ? "stop recording" : "start recording"
+        showSpinner() // dismissed in doConnect() and doDisconnect()
+        let ve = VideoEvent(uid: TPUser.sharedInstance.getUid(), name: TPUser.sharedInstance.getName(), video_node_key: video_node_key, room_id: room_id, request_type: request_type, RoomSid: vn.room_sid, MediaUri: vn.composition_MediaUri)
+        ve.save()
     }
     
 //    private func recordingHasNotStarted() {
@@ -877,7 +908,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
 //        publish_button.isHidden = false
 //    }
     
-    private func simpleOKDialog(message: String) {
+    private func simpleOKDialog(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style {
@@ -892,6 +923,31 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         self.present(alert, animated: true, completion: nil)
     }
     
+    private func simpleDeleteCancelDialog(title: String, message: String, delete: String, cancel: String, deleteFunction: @escaping ()->Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: { action in
+            switch action.style {
+            case .default:
+                print("default")
+            case .cancel:
+                print("cancel")
+            case .destructive:
+                print("destructive")
+            }
+        }))
+        alert.addAction(UIAlertAction(title: delete, style: .destructive, handler: { action in
+            switch action.style {
+            case .default:
+                print("default")
+            case .cancel:
+                print("cancel")
+            case .destructive:
+                deleteFunction()
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @objc func publishClicked(_ sender: Any) {
         
         guard let vn = currentVideoNode else {
@@ -900,7 +956,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
         if let room_id = vn.room_id
         {
-            simpleOKDialog(message: "Publishing has started. You will get an email when your video is ready.  May take up to 10 mins.")
+            simpleOKDialog(title: "Publishing", message: "Publishing has started. You will get an email when your video is ready.  May take up to 10 mins.")
             let video_node_key = vn.getKey()
             let request_type = "start publishing"
             showSpinner() // dismissed in doConnect() and doDisconnect()
@@ -914,7 +970,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             ve.save()
         }
         else {
-            simpleOKDialog(message: "Publishing is currently disabled")
+            simpleOKDialog(title: "Publishing", message: "Publishing is currently disabled")
         }
     }
     
@@ -990,7 +1046,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             viewDidLoad()
         }
         else {
-            simpleOKDialog(message: "Phone orientation is still Portrait.  Rotate 90 degress please")
+            simpleOKDialog(title: "Rotate", message: "Phone orientation is still Portrait.  Rotate 90 degress please")
         }
     }
     
