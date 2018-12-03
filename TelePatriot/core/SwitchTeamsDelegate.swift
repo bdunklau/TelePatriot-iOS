@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SwitchTeamsDelegate {
-    func teamSelected(team: Team)
+    func teamSelected(team: TeamIF)
 }

@@ -67,19 +67,6 @@ class LimboViewController: BaseViewController, UITableViewDelegate
             print("LimboViewController: NOT adding self to list of accountStatusEventListeners") }
     }
     
-//    func setDataMissing(nameMissing: Bool, emailMissing: Bool, user: User) {
-//
-//        if nameMissing || emailMissing {
-//            var data : [String:String] = [:]
-//            if !nameMissing {
-//                data["name"] = user.displayName
-//            }
-//            if !emailMissing {
-//                data["email"] = user.email
-//            }
-//        }
-//    }
-    
     @objc private func clickSignPetition(_ sender:UIButton) {
         // TODO should get from database
         openUrl(string: "https://www.conventionofstates.com")
@@ -176,7 +163,7 @@ extension LimboViewController : LimboViewDelegate {
             .queryOrdered(byChild: "date_ms")
             .queryStarting(atValue: now)
             .queryLimited(toFirst: 1)
-            .observeSingleEvent(of: .value, with: {(snapshot) in
+            .observe(.value, with: {(snapshot) in
                 
                 let children = snapshot.children
                 while let snap = children.nextObject() as? DataSnapshot { // should only be one child because we limited to 1
@@ -192,6 +179,7 @@ extension LimboViewController : LimboViewDelegate {
                 }
                 
             })
+    
     }
 }
 
@@ -323,7 +311,7 @@ extension LimboViewController : AccountStatusEventListener {
         // do nothing
     }
     
-    func teamSelected(team: Team, whileLoggingIn: Bool) {
+    func teamSelected(team: TeamIF, whileLoggingIn: Bool) {
         // do nothing
     }
     

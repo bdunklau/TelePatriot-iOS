@@ -129,7 +129,7 @@ class MenuItems {
         return imgView
     }()
     
-    static let team = MenuItem(icon: MenuItems.teamIcon, title: "Team: (tap to choose)")
+    static let team = MenuItem(icon: MenuItems.teamIcon, title: "Team: None")
     static let myMission = MenuItem(icon: MenuItems.myMissionIcon, title: "My Mission")
     static let directors = MenuItem(icon: MenuItems.directorsIcon, title: "Directors")
     static let admins = MenuItem(icon: MenuItems.adminsIcon, title: "Admins")

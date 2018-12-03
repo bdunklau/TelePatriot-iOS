@@ -27,7 +27,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewD
     
     var ref : DatabaseReference?
     
-    var team : Team?
+    var team : TeamIF?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewD
         }
         
         team = tm
-        guard let team_name = team?.team_name else { return }
+        guard let team_name = team?.getName() else { return }
         
         // need to get handle to MissionSummaryTVC
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -276,7 +276,7 @@ class MissionSummaryTVC: BaseViewController, UITableViewDataSource, UITableViewD
 }
 
 protocol MissionListDelegate {
-    func missionSelected(mission: MissionSummary, team: Team)
+    func missionSelected(mission: MissionSummary, team: TeamIF)
 }
 
 // all this just for the teamSelected() method ?  not the greatest
@@ -314,7 +314,7 @@ extension MissionSummaryTVC : AccountStatusEventListener {
     }
     
     // required by AccountStatusEventListener
-    func teamSelected(team: Team, whileLoggingIn: Bool) {
+    func teamSelected(team: TeamIF, whileLoggingIn: Bool) {
         missions.removeAll()
     }
     

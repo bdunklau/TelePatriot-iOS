@@ -224,12 +224,18 @@ class LegislatorUI: UIView, UITableViewDataSource, UITableViewDelegate {
         // display profile pics as cool circular images
         profilePic.legislatorImage(fromUrl: legislator.getPhotoURL().absoluteString)
         
-        if legislator.legislator_facebook != "" {
-            facebookButton.setTitle("FB: @\(legislator.legislator_facebook)", for: .normal)
+        if let legislator_facebook = legislator.legislator_facebook {
+            facebookButton.setTitle("FB: @\(legislator_facebook)", for: .normal)
+        }
+        else {
+            facebookButton.setTitle("FB: -", for: .normal)
         }
         
-        if legislator.legislator_twitter != "" {
-            twitterButton.setTitle("TW: @\(legislator.legislator_twitter)", for: .normal)
+        if let legislator_twitter = legislator.legislator_twitter {
+            twitterButton.setTitle("TW: @\(legislator_twitter)", for: .normal)
+        }
+        else {
+            twitterButton.setTitle("TW: -", for: .normal)
         }
         
         offices.removeAll()

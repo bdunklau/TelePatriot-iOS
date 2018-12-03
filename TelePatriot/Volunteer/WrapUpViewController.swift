@@ -170,9 +170,9 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     private func saveNotes() {
         
         if let missionItem = TPUser.sharedInstance.currentMissionItem,
-            let team = TPUser.sharedInstance.getCurrentTeam()?.team_name {
+            let team_name = TPUser.sharedInstance.getCurrentTeam()?.getName() {
             
-            saveMissionItem_original_style(missionItem: missionItem, team: team)
+            saveMissionItem_original_style(missionItem: missionItem, team: team_name)
         }
         else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
             saveMissionItem2(mission_item: mi2)

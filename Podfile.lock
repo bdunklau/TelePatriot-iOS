@@ -11,12 +11,12 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.2):
     - BoringSSL-GRPC/Interface (= 0.0.2)
   - BoringSSL-GRPC/Interface (0.0.2)
-  - FBSDKCoreKit (4.37.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.37.0):
+  - FBSDKCoreKit (4.38.1):
+    - Bolts (~> 1.9)
+  - FBSDKLoginKit (4.38.1):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.37.0):
-    - FBSDKCoreKit (~> 4.37.0)
+  - FBSDKShareKit (4.38.1):
+    - FBSDKCoreKit
   - Firebase/Auth (4.13.0):
     - Firebase/Core
     - FirebaseAuth (= 4.6.1)
@@ -165,27 +165,27 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.4)
     - "GoogleToolboxForMac/NSDictionary+URLArguments (= 2.1.4)"
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
-  - gRPC (1.15.1):
-    - gRPC-RxLibrary (= 1.15.1)
-    - gRPC/Main (= 1.15.1)
-  - gRPC-Core (1.15.1):
-    - gRPC-Core/Implementation (= 1.15.1)
-    - gRPC-Core/Interface (= 1.15.1)
-  - gRPC-Core/Implementation (1.15.1):
+  - gRPC (1.16.0):
+    - gRPC-RxLibrary (= 1.16.0)
+    - gRPC/Main (= 1.16.0)
+  - gRPC-Core (1.16.0):
+    - gRPC-Core/Implementation (= 1.16.0)
+    - gRPC-Core/Interface (= 1.16.0)
+  - gRPC-Core/Implementation (1.16.0):
     - BoringSSL-GRPC (= 0.0.2)
-    - gRPC-Core/Interface (= 1.15.1)
+    - gRPC-Core/Interface (= 1.16.0)
     - nanopb (~> 0.3)
-  - gRPC-Core/Interface (1.15.1)
-  - gRPC-ProtoRPC (1.15.1):
-    - gRPC-ProtoRPC/Main (= 1.15.1)
-  - gRPC-ProtoRPC/Main (1.15.1):
-    - gRPC (= 1.15.1)
-    - gRPC-RxLibrary (= 1.15.1)
+  - gRPC-Core/Interface (1.16.0)
+  - gRPC-ProtoRPC (1.16.0):
+    - gRPC-ProtoRPC/Main (= 1.16.0)
+  - gRPC-ProtoRPC/Main (1.16.0):
+    - gRPC (= 1.16.0)
+    - gRPC-RxLibrary (= 1.16.0)
     - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.15.1)
-  - gRPC/Main (1.15.1):
-    - gRPC-Core (= 1.15.1)
-    - gRPC-RxLibrary (= 1.15.1)
+  - gRPC-RxLibrary (1.16.0)
+  - gRPC/Main (1.16.0):
+    - gRPC-Core (= 1.16.0)
+    - gRPC-RxLibrary (= 1.16.0)
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
   - GTMSessionFetcher (1.2.0):
@@ -195,19 +195,19 @@ PODS:
     - GTMSessionFetcher/Core (= 1.2.0)
   - IQKeyboardManagerSwift (6.2.0)
   - leveldb-library (1.20)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
+  - nanopb (0.3.901):
+    - nanopb/decode (= 0.3.901)
+    - nanopb/encode (= 0.3.901)
+  - nanopb/decode (0.3.901)
+  - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
   - TwilioVideo (2.4.1)
   - TwitterCore (3.2.0)
-  - TwitterKit (3.4.1):
-    - TwitterCore (>= 3.1.0)
+  - TwitterKit (3.4.2):
+    - TwitterCore (>= 3.2.0)
 
 DEPENDENCIES:
   - FBSDKCoreKit
@@ -272,9 +272,9 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
-  FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
-  FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
-  FBSDKShareKit: 52e0083222c38e930eb6878007478326599195c3
+  FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
+  FBSDKLoginKit: 4621c690d9dd8628031a4791497062183ea34b0d
+  FBSDKShareKit: 6ffe22f0a0618eb7424d4104ab0ef3ce9643d42a
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseABTesting: d07d0ee833b842d5153549e4c7e2e2cb1c23a3f9
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
@@ -292,20 +292,20 @@ SPEC CHECKSUMS:
   GoogleAPIClientForREST: 5b95b38a0fa912e8ac7bdcf9e124578ef1a61bf2
   GoogleSignIn: 11183592dc63e105475c7305a325045ff95e02b7
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  gRPC: c1fa6fccfc3d31212f32aa7d4e40ab0452195ccb
-  gRPC-Core: 840d1068a0a57eeca00b52486897ad6265b8f0be
-  gRPC-ProtoRPC: 69552f09c9e8e6c253663668525b7c708814a9bd
-  gRPC-RxLibrary: 67a03bd22ef654e95fd7d6e4b9c5e62420a867b8
+  gRPC: e35d5286c526bb4dd03662a314dce9599b83b3a5
+  gRPC-Core: 24f0344f259b87b477cfd50e1c80a743bbc48113
+  gRPC-ProtoRPC: 3d07afd59f65bf29f0456724978035d2d12e903e
+  gRPC-RxLibrary: a4bfc6fbb4fb5ed45f85a2317435bc08ace76ac5
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   TwilioVideo: b964fd93d78f4c856516204b560b2b3b1a1813a6
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
-  TwitterKit: 054005edf5350aa9074af74b41456e5a61e3f322
+  TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
 PODFILE CHECKSUM: a6403dd15d92de3d136151551430688608353c2e
 

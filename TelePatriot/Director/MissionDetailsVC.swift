@@ -30,29 +30,6 @@ class MissionDetailsVC: BaseViewController {
         return label
     }()
     
-    /*****************
-    let mission_description : UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let mission_script_label : UILabel = {
-        let label = UILabel()
-        label.text = "Script"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let mission_script : UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    ****************/
-    
     let descriptionAndScript : UITextView = {
         let textView = UITextView()
         textView.text = ""
@@ -80,7 +57,7 @@ class MissionDetailsVC: BaseViewController {
     
     // passed in from extension CenterViewController : MissionListDelegate
     var mission : MissionSummary?
-    var team : Team?
+    var team : TeamIF?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,20 +94,6 @@ class MissionDetailsVC: BaseViewController {
             descriptionAndScript.topAnchor.constraint(equalTo: mission_description_label.bottomAnchor, constant: 8).isActive = true
             descriptionAndScript.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
             descriptionAndScript.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-            
-            /****************
-            scrollView.addSubview(mission_description)
-            mission_description.topAnchor.constraint(equalTo: mission_description_label.bottomAnchor, constant: 8).isActive = true
-            mission_description.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(mission_script_label)
-            mission_script_label.topAnchor.constraint(equalTo: mission_description.bottomAnchor, constant: 16).isActive = true
-            mission_script_label.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            
-            scrollView.addSubview(mission_script)
-            mission_script.topAnchor.constraint(equalTo: mission_script_label.bottomAnchor, constant: 8).isActive = true
-            mission_script.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-            ************/
             
             scrollView.addSubview(delete_button)
             delete_button.topAnchor.constraint(equalTo: descriptionAndScript.bottomAnchor, constant: 48).isActive = true
@@ -182,9 +145,11 @@ class MissionDetailsVC: BaseViewController {
         }
     }
     
-    private func deleteMission(mission: MissionSummary, team: Team) {
-        Database.database().reference().child("teams").child(team.team_name).child("missions").child(mission.mission_id!).removeValue()
-        missionDetailsDelegate?.missionDeleted(mission: mission)
+    private func deleteMission(mission: MissionSummary, team: TeamIF) {
+        if let team_name = team.getName() {
+            Database.database().reference().child("teams").child(team_name).child("missions").child(mission.mission_id!).removeValue()
+            missionDetailsDelegate?.missionDeleted(mission: mission)
+        }
     }
 
     override func didReceiveMemoryWarning() {

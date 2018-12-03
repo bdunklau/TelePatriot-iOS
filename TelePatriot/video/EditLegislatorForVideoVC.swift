@@ -396,10 +396,15 @@ class EditLegislatorForVideoVC: BaseViewController, UIPickerViewDelegate, UIPick
     // per LegislatorDelegate
     // see LegislatorUI
     func editSocialMedia(legislator: Legislator, handle: String?, handleType: String?) {
-        if let handle = handle, let vc = getAppDelegate().editSocialMediaVC {
+        if let vc = getAppDelegate().editSocialMediaVC {
             vc.modalPresentationStyle = .popover
             vc.socialMediaDelegate = vc // this class implements EditSocialMediaDelegate
-            vc.handle = handle
+            if let handle = handle {
+                vc.handle = handle
+            }
+            else {
+                vc.handle = ""
+            }
             vc.handleType = handleType
             vc.legislator = legislator
             present(vc, animated: true, completion:nil)

@@ -102,7 +102,7 @@ class NewPhoneCampaignVC: BaseViewController {
     
     /*@IBAction*/ @objc func okPressed(_ sender: Any) {
         
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.getName() else {
             return
         }
         let rootRef = Database.database().reference()

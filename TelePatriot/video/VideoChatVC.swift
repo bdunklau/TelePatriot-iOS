@@ -1116,7 +1116,7 @@ extension VideoChatVC : AccountStatusEventListener {
         
     }
     
-    func teamSelected(team: Team, whileLoggingIn: Bool) {
+    func teamSelected(team: TeamIF, whileLoggingIn: Bool) {
         
     }
     

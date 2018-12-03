@@ -28,10 +28,10 @@ class AllActivityVC: BaseViewController, UITableViewDataSource {
         
         // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
         // database like this...  Optional("The Cavalry")
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+        guard let team_name = TPUser.sharedInstance.getCurrentTeam()?.getName() else {
             return
         }
-        ref = Database.database().reference().child("teams/\(team)/activity/all")
+        ref = Database.database().reference().child("teams/\(team_name)/activity/all")
         
         activityTableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
         activityTableView?.dataSource = self

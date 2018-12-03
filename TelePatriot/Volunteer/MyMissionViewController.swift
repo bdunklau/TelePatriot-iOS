@@ -61,6 +61,20 @@ class MyMissionViewController : BaseViewController {
         return textView
     }()
     
+//    Example of what comes out of CB from the /volunteers/get_person endpoint
+//
+//    {
+//    "mission_id": 30,
+//    "name": "Idaho Test 2",
+//    "priority": 1,
+//    "description": "Second test mission for Idaho",
+//    "script": "<p>Another test mission, calling districts near Boise</p>",
+//    "status": "active",
+//    "person_id": 2278603,
+//    "first_name": "Barbara",
+//    "last_name": "Shipley",
+//    "phone": "(707) 3184585"
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,10 +186,10 @@ class MyMissionViewController : BaseViewController {
         
         // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
         // database like this...  Optional("The Cavalry")
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+        guard let team_name = TPUser.sharedInstance.getCurrentTeam()?.getName() else {
             return
         }
-        let ref = Database.database().reference().child("teams/\(team)/activity")
+        let ref = Database.database().reference().child("teams/\(team_name)/activity")
         ref.child("all").childByAutoId().setValue(m.dictionary())
         ref.child("by_phone_number").child(ph).childByAutoId().setValue(m.dictionary())
         
@@ -191,7 +205,7 @@ class MyMissionViewController : BaseViewController {
     
     func fetchMission(parent: UIViewController?) {
         
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+        guard let team = TPUser.sharedInstance.getCurrentTeam()?.getName() else {
             return
         }
         

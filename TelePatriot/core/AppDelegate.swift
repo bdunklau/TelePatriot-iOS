@@ -456,10 +456,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // the "guard" will unwrap the team name.  Otherwise, you'll get nodes written to the
         // database like this...  Optional("The Cavalry")
-        guard let team = TPUser.sharedInstance.getCurrentTeam()?.team_name else {
+        guard let teamName = TPUser.sharedInstance.getCurrentTeam()?.getName() else {
             return
         }
-        let ref = Database.database().reference().child("teams/\(team)/activity")
+        let ref = Database.database().reference().child("teams/\(teamName)/activity")
         ref.child("all").childByAutoId().setValue(m.dictionary())
         ref.child("by_phone_number").child(phone).childByAutoId().setValue(m.dictionary())
     }

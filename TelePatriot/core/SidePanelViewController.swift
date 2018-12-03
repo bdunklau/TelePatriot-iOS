@@ -252,9 +252,11 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     // when he changes teams.  That visual confirmation comes in the form the left menu that slides out
     // to show the user what the new current team.  But we don't want to slide this menu out when the user is
     // just logging in.  For one thing, it is screwing up the creation of the other role menu items.
-    func teamSelected(team: Team, whileLoggingIn: Bool) {
-        menuItems[0][0].title = "Team: "+team.team_name
-        tableView?.reloadData()
+    func teamSelected(team: TeamIF, whileLoggingIn: Bool) {
+        if let teamName = team.getName() {
+            menuItems[0][0].title = "Team: "+teamName
+            tableView?.reloadData()
+        }
         
         // Set in AppDelegate.application()
         // The thing is, we don't want this function called when the user is logging in

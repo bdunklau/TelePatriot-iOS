@@ -633,10 +633,16 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
             self.state.text = legislator.state.uppercased()
             self.chamber.text = legislator.chamber == "lower" ? "HD" : (legislator.chamber == "upper" ? "SD" : "")
             self.district.text = legislator.district
-            let fbButtonText = legislator.legislator_facebook=="" ? "FB: -" : "FB: @\(legislator.legislator_facebook)"
+            var fbButtonText = "FB: -"
+            if let legislator_facebook = legislator.legislator_facebook, legislator_facebook != "" {
+                fbButtonText = "FB: @\(legislator_facebook)"
+            }
             self.facebookButton.setTitle(fbButtonText, for: .normal)
             self.fbId = legislator.legislator_facebook_id
-            let twButtonText = legislator.legislator_twitter=="" ? "TW: -" : "TW: @\(legislator.legislator_twitter)"
+            var twButtonText = "TW: -"
+            if let legislator_twitter = legislator.legislator_twitter, legislator_twitter != "" {
+                twButtonText = "TW: @\(legislator_twitter)"
+            }
             self.twitterButton.setTitle(twButtonText, for: .normal)
             self.video_title.text = self.videoNode?.video_title
             self.youtube_video_description.text = self.videoNode?.youtube_video_description
@@ -702,13 +708,17 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
     }
     
     private func editSocialMedia(legislator: Legislator?, handle: String?, handleType: String?) {
-        if let handle = handle,
-            let vc = editSocialMediaVC,
+        if let vc = editSocialMediaVC,
             let legislator = legislator
         {
             vc.modalPresentationStyle = .popover
             vc.socialMediaDelegate = self
-            vc.handle = handle
+            if handle == nil {
+                vc.handle = ""
+            }
+            else {
+                vc.handle = handle
+            }
             vc.handleType = handleType
             vc.legislator = legislator
             videoChatVC?.present(vc, animated: true, completion:nil)

@@ -23,10 +23,11 @@ class TPUser {
     var account_dispositioned_on : String?
     var account_dispositioned_on_ms : Int64?
     
+    var citizen_builder_id : Int32?
     var created : String? // MMM d, yyyy h:mm a z
     var current_latitude : Double?
     var current_longitude : Double?
-    private var currentTeam : Team?
+    private var currentTeam : TeamIF?
     private var email : String?
     var has_signed_confidentiality_agreement : Bool?
     var has_signed_petition : Bool?
@@ -46,7 +47,7 @@ class TPUser {
     var state_lower_district: String?
     var video_invitation_from: String?
     var video_invitation_from_name: String?
-    var teams : [Team]?
+    var teams : [TeamIF]?
     
     var isVolunteer = false
     var isDirector = false
@@ -85,7 +86,7 @@ class TPUser {
         // only set the user object if it's not set already
         // If you want to logout/login as someone else, we need to UN-set this user first
         //  ...just my rule
-        guard let usr = user else {
+        guard user != nil else {
             user = u
             // This is where I have to notify the SidePanelViewController that the user changed
             appDelegate.leftViewController?.putTheCorrectStuffInThisView(user: self)
@@ -109,6 +110,7 @@ class TPUser {
         }
         
         databaseRef?.child("users").child(uid).observe(.value, with: {(snapshot) in
+//        databaseRef?.child("users").child(uid).observeSingleEvent(of: .value, with: {(snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else {
                 return
             }
@@ -210,6 +212,9 @@ class TPUser {
         
         if let created = dictionary["created"] as? String {
             self.created = created
+        }
+        if let citizen_builder_id = dictionary["citizen_builder_id"] as? Int32 {
+            self.citizen_builder_id = citizen_builder_id
         }
         if let lat = dictionary["current_latitude"] as? Double {
             self.current_latitude = lat
@@ -537,23 +542,33 @@ class TPUser {
             databaseRef = Database.database().reference()
         }
         
-        databaseRef?.child("users").child(uid).child("current_team").queryLimited(toFirst: 1).observe(.value, with: {(snapshot) in
-            guard let teamNode = snapshot.value as? [String: [String:String]] else {
+        databaseRef?.child("users").child(uid).child("current_team").queryLimited(toFirst: 1).observeSingleEvent(of: .value, with: {(snapshot) in
+            guard let teamNode = snapshot.value as? [String: [String:Any]] else {
                 print(snapshot.value as Any)
                 print("snapshot.value above")
                 return
             }
             
             for (_, teamAttributes) in teamNode {
-                guard let team_name = teamAttributes["team_name"] else {
+                guard let team_name = teamAttributes["team_name"] as? String else {
                     return
                 }
-                let team = Team(team_name: team_name)
+                let team = self.createTeam(team_name: team_name, data: teamAttributes)
                 self.setCurrentTeamAndNotify(team: team, whileLoggingIn: true)
             }
             
         })
         
+    }
+    
+    private func createTeam(team_name: String, data: [String:Any]) -> TeamIF {
+        if let _ = data["id"] as? Int32 {
+            let team = CBTeam(data: data)
+            return team
+        }
+        else {
+            return Team(team_name: team_name)
+        }
     }
     
     private func fetchRoles(uid: String) {
@@ -731,7 +746,7 @@ class TPUser {
         }
     }
     
-    func setCurrentTeam(team: Team) {
+    func setCurrentTeam(team: TeamIF) {
         if databaseRef == nil {
             databaseRef = Database.database().reference()
         }
@@ -740,10 +755,18 @@ class TPUser {
         // LESSON LEARNED: Do not try to unassign the "current mission item" from here
         // The "current team" has already been changed.  So if you try to unassign the current
         // mission item from here, you will write a partial mission_item record to the wrong team
-        
-        let current_team = [team.team_name : team.dictionary()]
-        databaseRef?.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in // completion block
+        if let team_name = team.getName() {
             self.setCurrentTeamAndNotify(team: team, whileLoggingIn: false)
+            
+            let current_team = [team_name : team.dictionary()]
+            databaseRef?.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in
+                // do nothing
+                // We used to have the self.setCurrentTeamAndNotify() call in here but on the very first time to
+                // the switch teams screen, it would take forever to actually switch teams and make the app slide
+                // the menu out with the newly selected team.  So I moved self.setCurrentTeamAndNotify() up above and
+                // out of this callback func
+                
+            }
         }
     }
     
@@ -757,10 +780,15 @@ class TPUser {
         
         // TODO better way than this would be to do multi-path updates.  There are examples somewhere in xcode
         // and/or Android studio
-        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
-        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
-        Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/group_number").setValue(missionItem.group_number_was)
-        
+        if let team_name = team.getName() {
+            let updates : [String:Any] = ["teams/\(team_name)/mission_items/"+mission_item_id+"/accomplished": "new",
+                           "teams/\(team_name)/mission_items/"+mission_item_id+"/active_and_accomplished": "true_new",
+                           "teams/\(team_name)/mission_items/"+mission_item_id+"/group_number": missionItem.group_number_was]
+            Database.database().reference().updateChildValues(updates)
+//            Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/accomplished").setValue("new")
+//            Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/active_and_accomplished").setValue("true_new")
+//            Database.database().reference().child("teams/\(team.team_name)/mission_items/"+mission_item_id+"/group_number").setValue(missionItem.group_number_was)
+        }
         // works, but ugly.  We're actually passing in the currentMissionItem and operating on that function arg
         // Then here at the end, we set this instance var to nil - ugh
         currentMissionItem = nil
@@ -773,7 +801,7 @@ class TPUser {
     }
     
     
-    private func setCurrentTeamAndNotify(team: Team, whileLoggingIn: Bool) {
+    private func setCurrentTeamAndNotify(team: TeamIF, whileLoggingIn: Bool) {
         self.currentTeam = team
         // where are these listeners set?...
         // Ans:  CenterViewController.checkLoggedIn()
@@ -784,7 +812,7 @@ class TPUser {
         }
     }
     
-    func getCurrentTeam() -> Team? {
+    func getCurrentTeam() -> TeamIF? {
         return currentTeam
     }
     
@@ -802,6 +830,7 @@ class TPUser {
         user = nil
         uid = nil // this is the key of the user's node
         created = nil
+        citizen_builder_id = nil
         current_latitude  = nil
         current_longitude = nil
         currentTeam = nil
@@ -829,7 +858,11 @@ class TPUser {
         //isDirector = false
         //isVolunteer = false
         
-        accountStatusEventListeners = [AccountStatusEventListener]()
+        // LET'S LEAVE THESE IN PLACE  If you sign out and back in, CenterViewController.viewDidLoad() doesn't get
+        // called again.  And that's where we add CenterViewController as a listener on the TPUser object.
+        // And we always need CenterViewController to be an AccountStatusEventListener because that's how we communicate
+        // user events to the UI
+        //accountStatusEventListeners = [AccountStatusEventListener]()
         
         //ref = nil // LESSON LEARNED - don't set this to nil unless you see where we're using this in this class
         // Setting this to nil created a bug on signout that was only apparent when they tried to sign back in.

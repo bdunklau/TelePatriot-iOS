@@ -147,8 +147,10 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     var splashScreenAlreadyLoaded = false
     private func loadSplashscreen() {
         if splashScreenAlreadyLoaded {
+            print("splashScreenAlreadyLoaded = \(splashScreenAlreadyLoaded)")
             return
         }
+        
         splashScreenAlreadyLoaded = true
         dismissSpinner()
         
@@ -181,15 +183,6 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 
                 TPUser.sharedInstance.setUser(u: user)
                 
-                // The user object fires roleAssigned() which calls all listeners
-                // This call makes this class one of those listeners
-                // See also roleAssigned() in this class
-                // addLeftPanelViewController()
-//                if(TPUser.sharedInstance.accountStatusEventListeners.count == 0
-//                    || !TPUser.sharedInstance.accountStatusEventListeners.contains(where: { String(describing: type(of: $0)) == "SidePanelViewController" })) {
-//                    TPUser.sharedInstance.accountStatusEventListeners.append((appDelegate?.leftViewController!)!)
-//                } else { print("SidePanelViewController: NOT adding self to list of accountStatusEventListeners") }
-                
                 if let sidePanelViewController = appDelegate?.leftViewController {
                     TPUser.sharedInstance.addAccountStatusEventListener(listener: sidePanelViewController)
                 }
@@ -201,6 +194,18 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 if let limboViewController = appDelegate?.limboViewController {
                     limboViewController.setUser(user: user)
                     TPUser.sharedInstance.addAccountStatusEventListener(listener: limboViewController)
+                }
+                
+                // fire off a CBAPIEvent to make CB do a look up on this email address
+                // BUT WHAT IF GOOGLE/FACEBOOK DIDN'T SEND THEIR NAME OR EMAIL ???
+                // We need a configurable switch to test this info not being sent
+                if let name = user.displayName, let email = user.email {
+                    let evt = CBAPIEvent(uid: TPUser.sharedInstance.getUid(), name: name, email: email, event_type: "login")
+                    evt.save()
+                }
+                else {
+                    // send them to the MissingInformation screen
+                    print("Send user to MissingInformation screen because name and/or email is missing")
                 }
                 
                 
@@ -226,16 +231,9 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         authUI?.providers = [googleProvider, facebookProvider]
         
         // from Brian Caldwell YouTube
-        /*********/
         let authViewController = MyAuthPicker(authUI: authUI!)
         let navc = UINavigationController(rootViewController: authViewController)
         self.present(navc, animated: true, completion: nil)
-         /********/
-        /*****
-         // This is the old way...  (pre-Jan 2018)
-        let authViewController = authUI?.authViewController()  // this is what it was
-        self.present(authViewController!, animated: true, completion: nil) // this is what it was
-         ******/
     }
     
     
@@ -299,6 +297,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         // This is where we figure out where to send the user based on the
         // menu item that was just touched
         if(menuItem.title == "Sign Out") {
+            splashScreenAlreadyLoaded = false  // so that the next time you login, you'll get the splashscreen again
             TPUser.sharedInstance.signOut()
             // see userSignedOut() below.  We created an extension of this class that implements
             // AccountStatusEventListener because we call TPUser.sharedInstance.signOut() from other
@@ -469,9 +468,9 @@ extension CenterViewController : ChooseSpreadsheetTypeDelegate {
 }
 
 extension CenterViewController : SwitchTeamsDelegate {
-    func teamSelected(team: Team) {
+    func teamSelected(team: TeamIF) {
         if let oldteam = TPUser.sharedInstance.getCurrentTeam() {
-            if oldteam.team_name != team.team_name {
+            if let name = team.getName(), let oldname = oldteam.getName(), name != oldname {
                 unassignMissionItem()
             }
         }
@@ -528,7 +527,7 @@ extension CenterViewController : AccountStatusEventListener {
         // stub
     }
     
-    func teamSelected(team: Team, whileLoggingIn: Bool) {
+    func teamSelected(team: TeamIF, whileLoggingIn: Bool) {
         // stub
     }
     
@@ -541,9 +540,9 @@ extension CenterViewController : AccountStatusEventListener {
         for child in self.childViewControllers {
             child.removeFromParentViewController()
         }
-        loadSplashscreen()
     }
     
+    //THIS ISN'T BEING CALLED ON SUBSEQUENT LOGINS !!!!!!!!!!!!!!!!!
     func allowed() {
         if let limboViewController = delegate?.getLimboViewController() {
             limboViewController.dismiss(animated: true, completion: nil)
@@ -630,7 +629,7 @@ extension CenterViewController : BackHandler {
 }
 
 extension CenterViewController : MissionListDelegate {
-    func missionSelected(mission: MissionSummary, team: Team) {
+    func missionSelected(mission: MissionSummary, team: TeamIF) {
         guard let vc = delegate?.getMissionDetailsVC() else { return }
         vc.mission = mission
         vc.team = team

@@ -25,7 +25,7 @@ protocol AccountStatusEventListener {
     
     func roleRemoved(role: String)
     
-    func teamSelected(team: Team, whileLoggingIn: Bool)
+    func teamSelected(team: TeamIF, whileLoggingIn: Bool)
     
     func userSignedOut()
     

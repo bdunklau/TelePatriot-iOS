@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26BD082336DFCFF13FC2E910 /* Pods_TelePatriot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7379C8F136141F223E54D5E /* Pods_TelePatriot.framework */; };
 		A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */; };
 		A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */; };
 		A109E8A31FC55F090005517A /* SidePanelViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */; };
@@ -66,6 +67,8 @@
 		A137720520CCC77300566AFE /* VideoInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137720420CCC77300566AFE /* VideoInvitation.swift */; };
 		A137720720D0200000566AFE /* VideoInvitationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137720620D0200000566AFE /* VideoInvitationsVC.swift */; };
 		A137720920D086FF00566AFE /* VideoInvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137720820D086FF00566AFE /* VideoInvitationCell.swift */; };
+		A137E827219A8F350050E724 /* CBTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137E826219A8F350050E724 /* CBTeam.swift */; };
+		A137E82B219AADA20050E724 /* CBTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137E82A219AADA20050E724 /* CBTeams.swift */; };
 		A13F7AA62013EB7500EF0766 /* Legislator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA52013EB7500EF0766 /* Legislator.swift */; };
 		A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA72014031A00EF0766 /* LegislatorUI.swift */; };
 		A13F7AAA20141CF500EF0766 /* OfficeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */; };
@@ -111,12 +114,11 @@
 		A1EA20421FCE135100FF0ABB /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */; };
 		A1FD73381FE0725100A1B383 /* MissionItemEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */; };
 		A1FD73411FE094CF00A1B383 /* AllActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD73401FE094CF00A1B383 /* AllActivityVC.swift */; };
-		BDD7F2035B27F329A7F2E797 /* Pods_TelePatriot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TelePatriot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B10EA8C10D32C5053B267AA /* Pods-TelePatriot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.debug.xcconfig"; sourceTree = "<group>"; };
+		097D73AB95CE2CE33EDF20E5 /* Pods-TelePatriot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.release.xcconfig"; sourceTree = "<group>"; };
+		357074A09D41350A2BE83A7D /* Pods-TelePatriot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.debug.xcconfig"; sourceTree = "<group>"; };
 		A103A7BA2009768D00F78C6F /* MyAuthPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAuthPicker.swift; sourceTree = "<group>"; };
 		A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A109E8A21FC55F090005517A /* SidePanelViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidePanelViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,8 @@
 		A137720420CCC77300566AFE /* VideoInvitation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInvitation.swift; sourceTree = "<group>"; };
 		A137720620D0200000566AFE /* VideoInvitationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInvitationsVC.swift; sourceTree = "<group>"; };
 		A137720820D086FF00566AFE /* VideoInvitationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInvitationCell.swift; sourceTree = "<group>"; };
+		A137E826219A8F350050E724 /* CBTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBTeam.swift; sourceTree = "<group>"; };
+		A137E82A219AADA20050E724 /* CBTeams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBTeams.swift; sourceTree = "<group>"; };
 		A13F7AA52013EB7500EF0766 /* Legislator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legislator.swift; sourceTree = "<group>"; };
 		A13F7AA72014031A00EF0766 /* LegislatorUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegislatorUI.swift; sourceTree = "<group>"; };
 		A13F7AA920141CF500EF0766 /* OfficeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeTableViewCell.swift; sourceTree = "<group>"; };
@@ -226,7 +230,7 @@
 		A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		A1FD73371FE0725000A1B383 /* MissionItemEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionItemEvent.swift; sourceTree = "<group>"; };
 		A1FD73401FE094CF00A1B383 /* AllActivityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllActivityVC.swift; sourceTree = "<group>"; };
-		F60D7E18A8FEAD8059C42035 /* Pods-TelePatriot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TelePatriot.release.xcconfig"; path = "Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot.release.xcconfig"; sourceTree = "<group>"; };
+		E7379C8F136141F223E54D5E /* Pods_TelePatriot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TelePatriot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,20 +238,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDD7F2035B27F329A7F2E797 /* Pods_TelePatriot.framework in Frameworks */,
 				A12CDB321FAE1605003DE424 /* FBSDKLoginKit.framework in Frameworks */,
 				A12CDB331FAE160A003DE424 /* FBSDKCoreKit.framework in Frameworks */,
+				26BD082336DFCFF13FC2E910 /* Pods_TelePatriot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6C14AAE037617CE38112F246 /* Pods */ = {
+		04080B8B129FFF41AFCCEAB2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9B10EA8C10D32C5053B267AA /* Pods-TelePatriot.debug.xcconfig */,
-				F60D7E18A8FEAD8059C42035 /* Pods-TelePatriot.release.xcconfig */,
+				357074A09D41350A2BE83A7D /* Pods-TelePatriot.debug.xcconfig */,
+				097D73AB95CE2CE33EDF20E5 /* Pods-TelePatriot.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -257,8 +261,8 @@
 			children = (
 				A126AE121F8B1D860096714B /* TelePatriot */,
 				A126AE111F8B1D860096714B /* Products */,
-				6C14AAE037617CE38112F246 /* Pods */,
 				BC6D4A42EB8157281A4D9794 /* Frameworks */,
+				04080B8B129FFF41AFCCEAB2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -273,6 +277,7 @@
 		A126AE121F8B1D860096714B /* TelePatriot */ = {
 			isa = PBXGroup;
 			children = (
+				A137E823219A8EEC0050E724 /* CitizenBuilder */,
 				A13187BA207B19970048FE95 /* Icons */,
 				A1E8D8692075A90800E4F720 /* video */,
 				A13B4C511FDF20EB00D5527E /* core */,
@@ -311,6 +316,15 @@
 				A13187BC207B1AB20048FE95 /* speakerOn.png */,
 			);
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		A137E823219A8EEC0050E724 /* CitizenBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				A137E826219A8F350050E724 /* CBTeam.swift */,
+				A137E82A219AADA20050E724 /* CBTeams.swift */,
+			);
+			path = CitizenBuilder;
 			sourceTree = "<group>";
 		};
 		A13B4C501FDF1FBF00D5527E /* misc */ = {
@@ -444,7 +458,7 @@
 				A15DDE3C2074909E005331D5 /* IQKeyboardManagerSwift.framework */,
 				A17C7FAF1FAC1B8200430C05 /* FBSDKLoginKit.framework */,
 				A17C7FAD1FAC1B6700430C05 /* FBSDKCoreKit.framework */,
-				21D294FA8D7228FD2C9482C0 /* Pods_TelePatriot.framework */,
+				E7379C8F136141F223E54D5E /* Pods_TelePatriot.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -456,12 +470,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A126AE221F8B1D860096714B /* Build configuration list for PBXNativeTarget "TelePatriot" */;
 			buildPhases = (
-				B04385EAF2614D8908D42114 /* [CP] Check Pods Manifest.lock */,
+				8FFAC1C98DAAD3AFB9F975A6 /* [CP] Check Pods Manifest.lock */,
 				A126AE0C1F8B1D860096714B /* Sources */,
 				A126AE0D1F8B1D860096714B /* Frameworks */,
 				A126AE0E1F8B1D860096714B /* Resources */,
-				EA8FABEA1BD3E7A2695CF554 /* [CP] Embed Pods Frameworks */,
-				9DE38E2A83F32C323EFFF34A /* [CP] Copy Pods Resources */,
+				CDA414FD8C3F3E165C112B6F /* [CP] Embed Pods Frameworks */,
+				C155884720B1311113C82507 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -545,7 +559,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9DE38E2A83F32C323EFFF34A /* [CP] Copy Pods Resources */ = {
+		8FFAC1C98DAAD3AFB9F975A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TelePatriot-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C155884720B1311113C82507 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -579,25 +611,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B04385EAF2614D8908D42114 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TelePatriot-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EA8FABEA1BD3E7A2695CF554 /* [CP] Embed Pods Frameworks */ = {
+		CDA414FD8C3F3E165C112B6F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -680,6 +694,7 @@
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
 				A17C7FB21FAC308D00430C05 /* HomeViewController.swift in Sources */,
 				A109E8A31FC55F090005517A /* SidePanelViewControllerDelegate.swift in Sources */,
+				A137E827219A8F350050E724 /* CBTeam.swift in Sources */,
 				A131189A1FE0BE670031D9AE /* ActivityTableViewCell.swift in Sources */,
 				A134E53E206C66AB00FEDBE6 /* RemoteViewLayout.swift in Sources */,
 				A17B6ED61FD1EA7100A3325C /* MissionItem.swift in Sources */,
@@ -700,6 +715,7 @@
 				A13187B92078555E0048FE95 /* EditVideoMissionDescriptionVC.swift in Sources */,
 				A1781B8E217AE4A000CB4462 /* LimboView.swift in Sources */,
 				A19F6C3A2139D91D00A140C2 /* ShowMeHowVC.swift in Sources */,
+				A137E82B219AADA20050E724 /* CBTeams.swift in Sources */,
 				A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */,
 				A131189E1FE6293E0031D9AE /* Team.swift in Sources */,
 				A103A7BB2009768D00F78C6F /* MyAuthPicker.swift in Sources */,
@@ -883,7 +899,7 @@
 		};
 		A126AE231F8B1D860096714B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B10EA8C10D32C5053B267AA /* Pods-TelePatriot.debug.xcconfig */;
+			baseConfigurationReference = 357074A09D41350A2BE83A7D /* Pods-TelePatriot.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -892,11 +908,11 @@
 				DEVELOPMENT_TEAM = 3U34TQ32MY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"~/Documents/FacebookSDK",
 					"$(PROJECT_DIR)/TelePatriot",
 					"$(PROJECT_DIR)",
+					"${inherited}",
+					"~/Documents/FacebookSDK",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
@@ -938,7 +954,7 @@
 		};
 		A126AE241F8B1D860096714B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F60D7E18A8FEAD8059C42035 /* Pods-TelePatriot.release.xcconfig */;
+			baseConfigurationReference = 097D73AB95CE2CE33EDF20E5 /* Pods-TelePatriot.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -947,11 +963,11 @@
 				DEVELOPMENT_TEAM = 3U34TQ32MY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"~/Documents/FacebookSDK",
 					"$(PROJECT_DIR)/TelePatriot",
 					"$(PROJECT_DIR)",
+					"${inherited}",
+					"~/Documents/FacebookSDK",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",

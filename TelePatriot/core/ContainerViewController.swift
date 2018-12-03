@@ -121,7 +121,7 @@ class ContainerViewController: UIViewController {
         }
         
         switchTeamsVC = getSwitchTeamsVC()
-        switchTeamsVC?.delegate = centerViewController
+        switchTeamsVC?.switchTeamsDelegate = centerViewController
         
         unassignedUsersVC = getUnassignedUsersVC()
         unassignedUsersVC?.unassignedUsersDelegate = centerViewController
