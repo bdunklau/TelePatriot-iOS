@@ -61,21 +61,6 @@ class MyMissionViewController : BaseViewController {
         return textView
     }()
     
-//    Example of what comes out of CB from the /volunteers/get_person endpoint
-//
-//    {
-//    "mission_id": 30,
-//    "name": "Idaho Test 2",
-//    "priority": 1,
-//    "description": "Second test mission for Idaho",
-//    "script": "<p>Another test mission, calling districts near Boise</p>",
-//    "status": "active",
-//    "person_id": 2278603,
-//    "first_name": "Barbara",
-//    "last_name": "Shipley",
-//    "phone": "(707) 3184585"
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,21 +96,6 @@ class MyMissionViewController : BaseViewController {
         descriptionTextView.topAnchor.constraint(equalTo: descriptionHeaderLabel.bottomAnchor).isActive = true
         descriptionTextView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
         //descriptionTextView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor, multiplier: 0.25).isActive = true
-        
-        /************
-         // see the TODO down in fetchMission for explanation why we aren't including these elements
-         scriptHeaderLabel.text = "Script"
-         scriptHeaderLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-         scriptHeaderLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 8).isActive = true
-         scriptHeaderLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
-         //scriptHeaderLabel.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor, multiplier: 0.25).isActive = true
-         
-         scriptTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-         scriptTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 16).isActive = true
-         scriptTextView.topAnchor.constraint(equalTo: scriptHeaderLabel.bottomAnchor, constant: 8).isActive = true
-         scriptTextView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
-         //scriptTextView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1).isActive = true
-         ************/
         
         scrollView.addSubview(callButton1)
         callButton1.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true

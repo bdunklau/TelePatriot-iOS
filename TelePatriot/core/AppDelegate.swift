@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var editVideoMissionDescriptionVC : EditVideoMissionDescriptionVC?
     var editLegislatorForVideoVC : EditLegislatorForVideoVC?
     var limboViewController: LimboViewController?
+    var myCBMissionViewController : MyCBMissionViewController?
     var myMissionViewController : MyMissionViewController?
     var missionDetailsVC : MissionDetailsVC?
     var missionSummaryTVC : MissionSummaryTVC?
@@ -84,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         editVideoMissionDescriptionVC = EditVideoMissionDescriptionVC()
         editLegislatorForVideoVC = EditLegislatorForVideoVC()
         limboViewController = LimboViewController()
+        myCBMissionViewController = MyCBMissionViewController()
         myMissionViewController = MyMissionViewController()
         missionDetailsVC = MissionDetailsVC()
         myLegislatorsVC = MyLegislatorsVC()

@@ -9,6 +9,10 @@
 import Foundation
 import Firebase
 
+// See OfficeTableViewCell.makeCall()
+// This class is poorly named.  It looks like it was created so that we could call legislators
+// directly
+// Probably should have named this class something like CallLegislatorMission
 class MissionItem2 {
     
     var id : String?

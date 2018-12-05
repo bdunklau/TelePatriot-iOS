@@ -65,7 +65,8 @@ class TPUser {
     // IF YOU ADD FIELDS, ADD THEM ALSO TO clearFields() BELOW
     // both are reset to nil in WrapUpViewController.submitWrapUp()
     var currentMissionItem : MissionItem?
-    var currentMissionItem2 : MissionItem2?
+    var currentMissionItem2 : MissionItem2? // see class def comment header
+    var currentCBMissionItem : CBMissionDetail?
     
     var current_video_node_key : String?
     
@@ -772,6 +773,17 @@ class TPUser {
     
     
     func unassignCurrentMissionItem() {
+        // We have some "transitional" code in here that will go away once the integration with CB is complete
+        // We're going to see what kind of "current" mission we have - do we have the original kind of mission
+        // that is stored in the TelePatriot/Firebase database?
+        // Or do we have the new style mission that comes from CB?
+        unassignLegacyMissionItem()
+        unassignCBMissionItem()
+    }
+    
+    
+    private func unassignLegacyMissionItem() {
+        
         guard let team = getCurrentTeam(),
             let missionItem = currentMissionItem,
             let mission_item_id = missionItem.mission_item_id as? String else {
@@ -792,6 +804,55 @@ class TPUser {
         // works, but ugly.  We're actually passing in the currentMissionItem and operating on that function arg
         // Then here at the end, we set this instance var to nil - ugh
         currentMissionItem = nil
+    }
+    
+    private func unassignCBMissionItem() {
+        guard let currentCBMissionItem = currentCBMissionItem else {
+            return }
+        
+        // TODO is there a way to encapsulate this call that gets us the Configuration object?
+        Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+            if let vals = snapshot.value as? [String:Any] {
+                let conf = Configuration(data: vals)
+                if conf.getMissionsFromCB() {
+                    guard let domain = conf.getCitizenBuilderDomain(),
+                        let mission_id = currentCBMissionItem.mission_id,
+                        let url = URL(string: "https://\(domain)/api/ios/v1/volunteers/revoke_person_call?person_id=\(currentCBMissionItem.person_id)&mission_id=\(mission_id)"),
+                        let apiKeyName = conf.getCitizenBuilderApiKeyName(),
+                        let apiKeyValue = conf.getCitizenBuilderApiKeyValue()
+                    else {
+                        return
+                    }
+                    print("url = \(url)")
+                    var request = URLRequest(url: url)
+                    request.httpMethod = "GET"
+                    request.setValue(apiKeyValue, forHTTPHeaderField: apiKeyName)
+                    
+                    let config = URLSessionConfiguration.default
+                    let session = URLSession(configuration: config)
+                    let task = session.dataTask(with: request) { (data, response, responseError) in
+                        
+                        print("Unassigned CB Mission:  person_id=\(currentCBMissionItem.person_id)  mission_id=\(mission_id)")
+                        
+                        // revoking/unassigning a mission gives you this response back
+                        /***
+                         {
+                         "info": "Success",
+                         "total": null,
+                         "calls_made": null,
+                         "percent_complete": null
+                         }
+                        ***/
+                        
+                        // not sure if we care to process the response though.  It's always "success" from CB
+                        // even when we pass obviously erroneous data
+                        //let decoder = JSONDecoder()
+                    }
+                    task.resume()
+                }
+                // don't care about 'else'
+            }
+        })
     }
     
     

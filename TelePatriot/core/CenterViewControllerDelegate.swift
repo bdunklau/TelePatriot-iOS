@@ -23,6 +23,7 @@ protocol CenterViewControllerDelegate {
     func getLimboViewController() -> LimboViewController?
     func getMissionDetailsVC() -> MissionDetailsVC?
     func getMissionSummaryTVC() -> MissionSummaryTVC?
+    func getMyCBMissionViewController() -> MyCBMissionViewController?
     func getMyMissionViewController() -> MyMissionViewController?
     //func getNoMissionVC() -> NoMissionVC?
     func getMyLegislatorsVC() -> MyLegislatorsVC?

@@ -34,6 +34,7 @@ class ContainerViewController: UIViewController {
     var directorViewController: DirectorViewController!
     var limboViewController: LimboViewController!
     var missionDetailsVC: MissionDetailsVC!
+    //var myCBMissionViewController: MyCBMissionViewController!
     var myMissionViewController: MyMissionViewController!
     var newPhoneCampaignVC: NewPhoneCampaignVC!
     var missionSummaryTVC: MissionSummaryTVC!
@@ -106,6 +107,8 @@ class ContainerViewController: UIViewController {
         
         missionSummaryTVC = getMissionSummaryTVC()
         missionSummaryTVC.missionListDelegate = centerViewController
+        
+        //myCBMissionViewController = MyCBMissionViewController() // instantiated in AppDelegate instead
         
         myMissionViewController = getMyMissionViewController()
         //myMissionViewController?.noMissionDelegate = centerViewController
@@ -260,6 +263,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func getLimboViewController() -> LimboViewController? {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.limboViewController
+    }
+    
+    func getMyCBMissionViewController() -> MyCBMissionViewController? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.myCBMissionViewController
     }
     
     func getMyMissionViewController() -> MyMissionViewController? {

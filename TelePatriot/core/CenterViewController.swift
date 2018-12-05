@@ -317,9 +317,31 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "My Mission") {
-            guard let vc = delegate?.getMyMissionViewController() else { return }
-            doView(vc: vc, viewControllers: self.childViewControllers)
-            //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
+            // See MainActivity.onNavigationItemSelected() on the Android side
+            // TRANSITIONAL CODE - We're not always going to have all this.  At some point, we are only going to get mission
+            // information from CB.  But until we finally jettison the mission stored in TelePatriot/Firebase, we're going to have
+            // to check the data under /administration/configuration
+            Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+                if let vals = snapshot.value as? [String:Any] {
+                    let conf = Configuration(data: vals)
+                    if conf.getMissionsFromCB() {
+                        guard let vc = self.delegate?.getMyCBMissionViewController() else {
+                            return }
+                        vc.missionConfig = conf
+                        self.doView(vc: vc, viewControllers: self.childViewControllers)
+                    }
+                    else {
+                        guard let vc = self.delegate?.getMyMissionViewController() else { return }
+                        self.doView(vc: vc, viewControllers: self.childViewControllers)
+                    }
+                }
+                else {
+                    guard let vc = self.delegate?.getMyMissionViewController() else { return }
+                    self.doView(vc: vc, viewControllers: self.childViewControllers)
+                    //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
+                }
+            })
+            
         }
         else if(menuItem.title == "Directors") {
             unassignMissionItem()
@@ -352,11 +374,6 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             guard let vc = delegate?.getVideoInvitationsViewController() else { return }
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
-        /*********
-        else if(menuItem.title == "Chat/Help") {
-            doView(name: menuItem.title, vc:  ChatHelpViewController(),, viewControllers: self.childViewControllers)
-        }
-         **********/
         // Director screen...
         else if(menuItem.title == "New Phone Campaign") {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }

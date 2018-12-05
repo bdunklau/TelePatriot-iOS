@@ -75,6 +75,9 @@
 		A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */; };
 		A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */; };
 		A14187A52119F63E00524966 /* VideoEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14187A42119F63E00524966 /* VideoEvent.swift */; };
+		A141DBB621B63EA900938314 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141DBB521B63EA900938314 /* Configuration.swift */; };
+		A141DBB821B6594700938314 /* MyCBMissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141DBB721B6594700938314 /* MyCBMissionViewController.swift */; };
+		A141DBBA21B6FF5A00938314 /* CBMissionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141DBB921B6FF5A00938314 /* CBMissionDetail.swift */; };
 		A144EB842137360300005BDF /* DisabledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A144EB832137360300005BDF /* DisabledViewController.swift */; };
 		A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */; };
 		A149B9A5210B55B500ACE10C /* VideoChatInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */; };
@@ -186,6 +189,9 @@
 		A13F7AAD2015D04100EF0766 /* MyLegislatorsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLegislatorsVC.swift; sourceTree = "<group>"; };
 		A140C1C2201BDE58007CFB9C /* AddressNeededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNeededView.swift; sourceTree = "<group>"; };
 		A14187A42119F63E00524966 /* VideoEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEvent.swift; sourceTree = "<group>"; };
+		A141DBB521B63EA900938314 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		A141DBB721B6594700938314 /* MyCBMissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCBMissionViewController.swift; sourceTree = "<group>"; };
+		A141DBB921B6FF5A00938314 /* CBMissionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMissionDetail.swift; sourceTree = "<group>"; };
 		A144EB832137360300005BDF /* DisabledViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledViewController.swift; sourceTree = "<group>"; };
 		A148B1E320ACFEC100DB979C /* EditSocialMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialMediaVC.swift; sourceTree = "<group>"; };
 		A149B9A4210B55B500ACE10C /* VideoChatInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatInstructionsView.swift; sourceTree = "<group>"; };
@@ -321,8 +327,10 @@
 		A137E823219A8EEC0050E724 /* CitizenBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				A141DBB921B6FF5A00938314 /* CBMissionDetail.swift */,
 				A137E826219A8F350050E724 /* CBTeam.swift */,
 				A137E82A219AADA20050E724 /* CBTeams.swift */,
+				A141DBB721B6594700938314 /* MyCBMissionViewController.swift */,
 			);
 			path = CitizenBuilder;
 			sourceTree = "<group>";
@@ -351,6 +359,7 @@
 				A1D37BB4213700C60059FFCD /* CBAPIEvent.swift */,
 				A109E8AA1FC564A50005517A /* CenterViewController.swift */,
 				A109E8A01FC55E510005517A /* CenterViewControllerDelegate.swift */,
+				A141DBB521B63EA900938314 /* Configuration.swift */,
 				A109E8AE1FC6233F0005517A /* ContainerViewController.swift */,
 				A13F7AA52013EB7500EF0766 /* Legislator.swift */,
 				A13F7AA72014031A00EF0766 /* LegislatorUI.swift */,
@@ -689,6 +698,7 @@
 				A190B47820095B0500ED51D6 /* UserIsBannedVC.swift in Sources */,
 				A1E8D86D2075B24100E4F720 /* VideoParticipant.swift in Sources */,
 				A19F6C40213A533900A140C2 /* VideoOfferCell.swift in Sources */,
+				A141DBBA21B6FF5A00938314 /* CBMissionDetail.swift in Sources */,
 				A1AD5C482011A32900CB113E /* MyProfileVC.swift in Sources */,
 				A18565951FBC19A3009EE57F /* AccountStatusEventTableViewCell.swift in Sources */,
 				A12CDB431FAF7902003DE424 /* AdminViewController.swift in Sources */,
@@ -714,6 +724,7 @@
 				A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */,
 				A13187B92078555E0048FE95 /* EditVideoMissionDescriptionVC.swift in Sources */,
 				A1781B8E217AE4A000CB4462 /* LimboView.swift in Sources */,
+				A141DBB821B6594700938314 /* MyCBMissionViewController.swift in Sources */,
 				A19F6C3A2139D91D00A140C2 /* ShowMeHowVC.swift in Sources */,
 				A137E82B219AADA20050E724 /* CBTeams.swift in Sources */,
 				A140C1C3201BDE58007CFB9C /* AddressNeededView.swift in Sources */,
@@ -758,6 +769,7 @@
 				A13F7AA82014031A00EF0766 /* LegislatorUI.swift in Sources */,
 				A134C1AE2017ECD000B64939 /* Util.swift in Sources */,
 				A12CDB3D1FAF77FE003DE424 /* BaseViewController.swift in Sources */,
+				A141DBB621B63EA900938314 /* Configuration.swift in Sources */,
 				A13F7AAE2015D04100EF0766 /* MyLegislatorsVC.swift in Sources */,
 				A109E8B71FC7DFB80005517A /* SharePetitionViewController.swift in Sources */,
 				A17B6EFC1FD36C8A00A3325C /* WrapUpViewControllerDelegate.swift in Sources */,
