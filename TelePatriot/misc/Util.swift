@@ -27,6 +27,11 @@ class Util {
     }
     
     
+    static func getDate_yyyy_MM_dd() -> String {
+        return getDate(withFormat: "yyyy-MM-dd") // i.e.  2018-04-09
+    }
+    
+    
     private static func getDate(withFormat: String) -> String {
         let date : Date = Date()
         let dateFormatter = DateFormatter()

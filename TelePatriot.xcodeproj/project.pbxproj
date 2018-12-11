@@ -112,6 +112,7 @@
 		A1DD80591FE96158003F140C /* UnassignedUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */; };
 		A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */; };
 		A1DD805F1FE97173003F140C /* AssignUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD805E1FE97173003F140C /* AssignUserVC.swift */; };
+		A1E0C4DD21B88F70004B8857 /* CBMissionItemWrapUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E0C4DC21B88F70004B8857 /* CBMissionItemWrapUpVC.swift */; };
 		A1E8D86B2075A94D00E4F720 /* VideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E8D86A2075A94D00E4F720 /* VideoNode.swift */; };
 		A1E8D86D2075B24100E4F720 /* VideoParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */; };
 		A1EA20421FCE135100FF0ABB /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */; };
@@ -231,6 +232,7 @@
 		A1DD80581FE96158003F140C /* UnassignedUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedUsersVC.swift; sourceTree = "<group>"; };
 		A1DD805A1FE963BB003F140C /* TPUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPUserTableViewCell.swift; sourceTree = "<group>"; };
 		A1DD805E1FE97173003F140C /* AssignUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignUserVC.swift; sourceTree = "<group>"; };
+		A1E0C4DC21B88F70004B8857 /* CBMissionItemWrapUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMissionItemWrapUpVC.swift; sourceTree = "<group>"; };
 		A1E8D86A2075A94D00E4F720 /* VideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNode.swift; sourceTree = "<group>"; };
 		A1E8D86C2075B24100E4F720 /* VideoParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoParticipant.swift; sourceTree = "<group>"; };
 		A1EA20411FCE135100FF0ABB /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				A137E826219A8F350050E724 /* CBTeam.swift */,
 				A137E82A219AADA20050E724 /* CBTeams.swift */,
 				A141DBB721B6594700938314 /* MyCBMissionViewController.swift */,
+				A1E0C4DC21B88F70004B8857 /* CBMissionItemWrapUpVC.swift */,
 			);
 			path = CitizenBuilder;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				A109E8A11FC55E510005517A /* CenterViewControllerDelegate.swift in Sources */,
 				A13187B3207730690048FE95 /* VideoType.swift in Sources */,
 				A109E8B91FC7DFCA0005517A /* ChatHelpViewController.swift in Sources */,
+				A1E0C4DD21B88F70004B8857 /* CBMissionItemWrapUpVC.swift in Sources */,
 				A17B6ED41FD14EB300A3325C /* WrapUpViewController.swift in Sources */,
 				A1FD73411FE094CF00A1B383 /* AllActivityVC.swift in Sources */,
 				A109E8A71FC561370005517A /* SidePanelViewController.swift in Sources */,

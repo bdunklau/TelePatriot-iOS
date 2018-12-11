@@ -82,8 +82,10 @@ class ContainerViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.myDelegate = centerViewController
         
+        appDelegate?.cbMissionItemWrapUpVC?.wrapUpCBCallDelegate = centerViewController
+        
         // creation and assignment of all these delegates should be more consistent
-        appDelegate?.wrapUpCallViewController?.delegate = centerViewController
+        appDelegate?.wrapUpCallViewController?.wrapUpViewControllerDelegate = centerViewController
         
         appDelegate?.myLegislatorsVC?.addressUpdater = centerViewController
         appDelegate?.myProfileVC?.addressUpdater = centerViewController

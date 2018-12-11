@@ -50,7 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var newPhoneCampaignVC : NewPhoneCampaignVC?
     var searchUsersVC : SearchUsersVC?
     var switchTeamsVC : SwitchTeamsVC?
-    var wrapUpCallViewController : WrapUpViewController?
+    var cbMissionItemWrapUpVC : CBMissionItemWrapUpVC? //new way
+    var wrapUpCallViewController : WrapUpViewController? //old way, but still useful for ad hoc calls to legislators
     var leftViewController : SidePanelViewController?
     var unassignedUsersVC : UnassignedUsersVC?
     var userIsBannedVC : UserIsBannedVC?
@@ -93,7 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         newPhoneCampaignVC = NewPhoneCampaignVC()
         searchUsersVC = SearchUsersVC()
         switchTeamsVC = SwitchTeamsVC()
-        wrapUpCallViewController = WrapUpViewController()
+        wrapUpCallViewController = WrapUpViewController() // old way, but still useful for the time being (12/8/18) because this is also how we wrap up ad hoc calls to legislators
+        cbMissionItemWrapUpVC = CBMissionItemWrapUpVC() // new way of wrapping up calls that come from CB
         unassignedUsersVC = UnassignedUsersVC()
         missionSummaryTVC = MissionSummaryTVC()
         userIsBannedVC = UserIsBannedVC()
@@ -380,27 +382,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // set in MyMissionViewController
         // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
         // so they can enter some notes on the call.
-        if let vc = wrapUpCallViewController {
-            var gotoWrapUpScreen = false
-            if let _ = TPUser.sharedInstance.currentMissionItem {
-                
-                // call begin is recorded in MyMissionViewController.makeCall()
-                endPhoneCallForOriginalStyleMissionItem()
-                gotoWrapUpScreen = true
-            }
-            else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
-                
-                // call begin is recorded in OfficeTableViewCell.makeCall()
-                endPhoneCallForMissionItem2(mission_item: mi2)
-                gotoWrapUpScreen = true
-            }
-            
-            if gotoWrapUpScreen {
-                // myDelegate is assigned in ContainerViewController.viewDidLoad()
-                // It's probably assigned to CenterViewController
-                myDelegate?.show(viewController: vc)
-            }
+        
+        if let _ = TPUser.sharedInstance.currentCBMissionItem,
+            let vc = cbMissionItemWrapUpVC {
+            myDelegate?.show(viewController: vc)
         }
+        
+        // when the call was to a legislators (Note: the mission type is MissionItem2)
+        if let mi2 = TPUser.sharedInstance.currentMissionItem2,
+            let vc = wrapUpCallViewController {
+            endPhoneCallForMissionItem2(mission_item: mi2)
+            myDelegate?.show(viewController: vc)
+        }
+        
+        
+        // TODO "legacy" code - remove after CB integration is complete
+        if let _ = TPUser.sharedInstance.currentMissionItem,
+            let vc = wrapUpCallViewController {
+            // call begin is recorded in MyMissionViewController.makeCall()
+            endPhoneCallForOriginalStyleMissionItem()
+            myDelegate?.show(viewController: vc)
+        }
+        
     }
     
     

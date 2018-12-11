@@ -459,6 +459,14 @@ extension CenterViewController : NewPhoneCampaignSubmittedHandler {
 }
 
 // CenterViewController is assigned in ContainerViewController.viewDidLoad()
+extension CenterViewController : WrapUpCBCallDelegate {
+    func cbMissionAccomplished() {
+        guard let vc = delegate?.getMyCBMissionViewController() else { return }
+        doView(vc: vc, viewControllers: self.childViewControllers)
+    }
+}
+
+// CenterViewController is assigned in ContainerViewController.viewDidLoad()
 extension CenterViewController : WrapUpViewControllerDelegate {
     
     func missionAccomplished() {

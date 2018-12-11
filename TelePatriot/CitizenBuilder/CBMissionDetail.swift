@@ -22,15 +22,15 @@ struct CBMissionDetail : Decodable {
     var phone : String? = ""
     var name2 : String? = ""
     var phone2 : String? = ""
-    var person_id : Int32 = -1
+    var person_id : Int32? = -1
     var info : String? = ""
     var total : Int32 = 0
     var calls_made : Int32 = 0
     var percent_complete : Int32 = 0
     
-//    var citizen_builder_domain = ""
-//    var citizen_builder_api_key_name = ""
-//    var citizen_builder_api_key_value = ""
+    var citizen_builder_domain : String? = ""
+    var citizen_builder_api_key_name : String? = ""
+    var citizen_builder_api_key_value : String? = ""
     
     init(data: [String:Any]) {
         

@@ -1,31 +1,31 @@
 //
-//  WrapUpViewController.swift
+//  WrapUpCBCallingMissionVC.swift
 //  TelePatriot
 //
-//  Created by Brent Dunklau on 12/1/17.
-//  Copyright © 2017 Brent Dunklau. All rights reserved.
+//  Created by Brent Dunklau on 12/5/18.
+//  Copyright © 2018 Brent Dunklau. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+// on Android, see CBMissionItemWrapUpFragment.java
+class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var wrapUpViewControllerDelegate : WrapUpViewControllerDelegate?
+    var wrapUpCBCallDelegate : WrapUpCBCallDelegate? // defined at bottom
     
     // need drop down for outcome type
     var picker: UIPickerView = {
         let p = UIPickerView()
-        //p.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS - EXCEPT IN THIS CASE
         return p
     }()
     
     // In Android, this list is in strings.xml   At some point, we should probably put this
     // list in the database
     //var pickerData = ["voice mail", "spoke on the phone", "number disconnected", "wrong number"] // this is what is was prior to 1/16/18
-    var pickerData = ["Voicemail", "Talked on the phone", "3-way call", "Wrong number", "Number disconnected", "No answer"]
+    var pickerData = ["Voicemail", "Talked on the phone", "3-way call", "Wrong number", "Number disconnected", "None"] //, "No answer"]
     
-    var outcome : String = "voice mail"
+    var outcome : String = "Voicemail"
     
     let whatHappenedLabel : UILabel = {
         let l = UILabel()
@@ -119,8 +119,6 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         notesField.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
         notesField.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
         
-        // submit button text depends on the type of mission
-        setSubmitButtonText()
         
         // But what if the user is taking a single action like calling his legislator?
         // There is no "next mission" in this case.  We have to intelligently figure out what the user's
@@ -138,100 +136,139 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
     }
     
     
-    private func setSubmitButtonText() {
-        if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
-            submitButton.setTitle("Submit", for: .normal)
-        }
-        
-        // else use default from declaration
-    }
-    
-    
     @objc func submitWrapUp(_ sender: BaseButton) {
+        doQuit = false
         saveNotes()
-        
-        if let mi2 = TPUser.sharedInstance.currentMissionItem2,
-            let vc = MissionItem2.nextViewController {
-            
-            TPUser.sharedInstance.currentMissionItem2 = nil
-            
-            // Now, just send the user to another mission
-            wrapUpViewControllerDelegate?.missionAccomplished(vc: vc)
-        }
-        else {
-            TPUser.sharedInstance.currentMissionItem = nil
-            
-            wrapUpViewControllerDelegate?.missionAccomplished()
-        }
-        
-        
     }
     
     private func saveNotes() {
-        
-        if let missionItem = TPUser.sharedInstance.currentMissionItem,
-            let team_name = TPUser.sharedInstance.getCurrentTeam()?.getName() {
-            
-            saveMissionItem_original_style(missionItem: missionItem, team: team_name)
+        guard let missionItem = TPUser.sharedInstance.currentCBMissionItem,
+            let person_id = missionItem.person_id,
+            let mission_id = missionItem.mission_id,
+            let phone = missionItem.phone,
+            let domain = missionItem.citizen_builder_domain,
+            let apiKeyName = missionItem.citizen_builder_api_key_name,
+            let apiKeyValue = missionItem.citizen_builder_api_key_value,
+            let author_id = TPUser.sharedInstance.citizen_builder_id,
+            let url = URL(string: "https://\(domain)/api/ios/v1/person_call/call_data")
+            else {
+                return
         }
-        else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
-            saveMissionItem2(mission_item: mi2)
+        
+        var notes = "no notes left"
+        if let fld = notesField.text, fld != "" {
+            notes = fld
         }
-    }
-    
-    private func saveMissionItem_original_style(missionItem: MissionItem, team: String) {
-        Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
-        let missionRef = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)")
-        let ref = missionRef.child("mission_items/\(missionItem.mission_item_id)")
-        ref.child("accomplished").setValue("complete")
-        ref.child("active").setValue(false)
-        ref.child("active_and_accomplished").setValue("false_complete")
-        ref.child("outcome").setValue(outcome)
-        ref.child("notes").setValue(notesField.text)
-        ref.child("completed_by_uid").setValue(TPUser.sharedInstance.getUid())
-        ref.child("completed_by_name").setValue(TPUser.sharedInstance.getName())
         
-        //let date : Date = Date()
-        //let dateFormatter = DateFormatter()
-        //dateFormatter.dateFormat = "MMM d, yyyy h:mm a z"
-        //let mission_complete_date = dateFormatter.string(from: date)
-        ref.child("mission_complete_date").setValue(Util.getDate_MMM_d_yyyy_hmm_am_z())
-        ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
+        let json : [String:Any] = [
+            "person_id": person_id,
+            "author_id": author_id,
+            "mission_id": mission_id,
+            "phone_number": phone,
+            "outcome": outcome,
+            "note": notes,
+            "call_date": Util.getDate_yyyy_MM_dd(),
+            "duration": 1, // TODO fix this
+            "success": true
+        ]
         
-        // need to update total_rows_completed using a firebase transaction like we do in MissionDetail.java: updateCompletedCount()
-        updateCompletedCount(ref: missionRef)
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-    }
-    
-    
-    private func saveMissionItem2(mission_item: MissionItem2) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue(apiKeyValue, forHTTPHeaderField: apiKeyName)
+        request.setValue("\(String(describing: jsonData?.count))", forHTTPHeaderField: "Content-Length")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData!
         
-        // Where is this MissionItem2 instantiate?   Ans: OfficeTableViewCell.makeCall()
-        mission_item.complete(outcome: outcome, notes: notesField.text)
-        
-        // The "call ended" event has already been logged by this time
-        // It's written to the database in AppDelegate.endPhoneCallForMissionItem2()
-    }
-    
-    
-    // see   https://stackoverflow.com/q/41337765
-    private func updateCompletedCount(ref: DatabaseReference) {
-        ref.runTransactionBlock({ (currentData:MutableData) -> TransactionResult in
-            if var value = currentData.value as? [String: AnyObject] {
-                
-                var total_rows_completed = value["total_rows_completed"] as? Int ?? 0
-                total_rows_completed += 1
-                value["total_rows_completed"] = total_rows_completed as AnyObject?
-                currentData.value = value
-                return TransactionResult.success(withValue: currentData)
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
             }
-            //Abort like if there was a problem
-            return TransactionResult.abort()
-        })
-        
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String:Any] {
+                print(responseJSON)
+                TPUser.sharedInstance.currentCBMissionItem = nil
+                self.wrapUpCBCallDelegate?.cbMissionAccomplished()
+                if self.doQuit {
+                    self.logout()
+                }
+            }
+        }
+        task.resume()
     }
     
+//    private func saveNotes() {
+//
+//        if let missionItem = TPUser.sharedInstance.currentMissionItem,
+//            let team_name = TPUser.sharedInstance.getCurrentTeam()?.getName() {
+//
+//            saveMissionItem_original_style(missionItem: missionItem, team: team_name)
+//        }
+//        else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
+//            saveMissionItem2(mission_item: mi2)
+//        }
+//
+//    }
+    
+//    private func saveMissionItem_original_style(missionItem: MissionItem, team: String) {
+//        Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
+//        let missionRef = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)")
+//        let ref = missionRef.child("mission_items/\(missionItem.mission_item_id)")
+//        ref.child("accomplished").setValue("complete")
+//        ref.child("active").setValue(false)
+//        ref.child("active_and_accomplished").setValue("false_complete")
+//        ref.child("outcome").setValue(outcome)
+//        ref.child("notes").setValue(notesField.text)
+//        ref.child("completed_by_uid").setValue(TPUser.sharedInstance.getUid())
+//        ref.child("completed_by_name").setValue(TPUser.sharedInstance.getName())
+//
+//        //let date : Date = Date()
+//        //let dateFormatter = DateFormatter()
+//        //dateFormatter.dateFormat = "MMM d, yyyy h:mm a z"
+//        //let mission_complete_date = dateFormatter.string(from: date)
+//        ref.child("mission_complete_date").setValue(Util.getDate_MMM_d_yyyy_hmm_am_z())
+//        ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
+//
+//        // need to update total_rows_completed using a firebase transaction like we do in MissionDetail.java: updateCompletedCount()
+//        updateCompletedCount(ref: missionRef)
+//
+//    }
+//
+//
+//    private func saveMissionItem2(mission_item: MissionItem2) {
+//
+//        // Where is this MissionItem2 instantiate?   Ans: OfficeTableViewCell.makeCall()
+//        mission_item.complete(outcome: outcome, notes: notesField.text)
+//
+//        // The "call ended" event has already been logged by this time
+//        // It's written to the database in AppDelegate.endPhoneCallForMissionItem2()
+//    }
+    
+    
+//    // see   https://stackoverflow.com/q/41337765
+//    private func updateCompletedCount(ref: DatabaseReference) {
+//        ref.runTransactionBlock({ (currentData:MutableData) -> TransactionResult in
+//            if var value = currentData.value as? [String: AnyObject] {
+//
+//                var total_rows_completed = value["total_rows_completed"] as? Int ?? 0
+//                total_rows_completed += 1
+//                value["total_rows_completed"] = total_rows_completed as AnyObject?
+//                currentData.value = value
+//                return TransactionResult.success(withValue: currentData)
+//            }
+//            //Abort like if there was a problem
+//            return TransactionResult.abort()
+//        })
+//
+//    }
+    
+    var doQuit = false
     @objc func submitWrapUpAndQuit(_ sender: BaseButton) {
+        doQuit = true
         saveNotes()
         logout()
     }
@@ -277,5 +314,11 @@ class WrapUpViewController : BaseViewController, UIPickerViewDelegate, UIPickerV
         print("didSelectRow row = \(row)")
         outcome = pickerData[row]
     }
-
+    
 }
+
+
+protocol WrapUpCBCallDelegate {
+    func cbMissionAccomplished()
+}
+

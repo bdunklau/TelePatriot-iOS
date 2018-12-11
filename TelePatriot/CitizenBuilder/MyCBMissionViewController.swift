@@ -130,10 +130,6 @@ class MyCBMissionViewController: BaseViewController {
     }
     
     private func getMission_fromCitizenBuilder() {
-//        TeamIF team = User.getInstance().getCurrentTeam();
-//        if(team == null) return;
-//        
-//        new GetCBMissionTask().execute(citizen_builder_domain, citizen_builder_api_key_name, citizen_builder_api_key_value);
         
         guard let teamId = TPUser.sharedInstance.getCurrentTeam()?.getId(),
             let domain = missionConfig?.getCitizenBuilderDomain(),
@@ -154,7 +150,7 @@ class MyCBMissionViewController: BaseViewController {
             
             let decoder = JSONDecoder()
             
-            guard let cbMissionDetails = try? decoder.decode(CBMissionDetail.self, from: data!),
+            guard var cbMissionDetails = try? decoder.decode(CBMissionDetail.self, from: data!),
                 let fname = cbMissionDetails.first_name,
                 let lname = cbMissionDetails.last_name,
                 let phone = cbMissionDetails.phone
@@ -167,6 +163,12 @@ class MyCBMissionViewController: BaseViewController {
                 TPUser.sharedInstance.unassignCurrentMissionItem()
                 return
             }
+            
+            // store these 3 in the cbMissionDetails object so we don't have to query again for them
+            // when it's time to save the call notes
+            cbMissionDetails.citizen_builder_domain = domain
+            cbMissionDetails.citizen_builder_api_key_name = apiKeyName
+            cbMissionDetails.citizen_builder_api_key_value = apiKeyValue
             
             TPUser.sharedInstance.currentCBMissionItem = cbMissionDetails // store this in the user object so we can unassign later from anywhere
             self.callButton1.phone = cbMissionDetails.phone

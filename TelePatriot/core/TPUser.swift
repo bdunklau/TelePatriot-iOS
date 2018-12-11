@@ -83,6 +83,7 @@ class TPUser {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
     }
     
+    // See CenterViewController.checkLoggedIn()
     func setUser(u: User?) {
         // only set the user object if it's not set already
         // If you want to logout/login as someone else, we need to UN-set this user first
@@ -92,37 +93,42 @@ class TPUser {
             // This is where I have to notify the SidePanelViewController that the user changed
             appDelegate.leftViewController?.putTheCorrectStuffInThisView(user: self)
             //setUserId(uid: (user?.uid)!) // fix/refactor
-            createNotStatic(uid: (user?.uid)!, callback: {(tpuser) in /* do nothing */  })
+            queryForUserData(uid: (user?.uid)!, callback: {(tpuser) in /* do nothing */  })
             return
         }
     }
     
-    /*******
-    func setUserId(uid: String) {
-        fetchRoles(uid: uid)
-        fetchCurrentTeam(uid: uid)
-        fetchUser(uid: uid) // this should replace the other fetches above at some point
-    }
-    *******/
-    
-    private func createNotStatic(uid: String, callback: @escaping (TPUser) -> Void ) {
+    private func queryForUserData(uid: String, callback: @escaping (TPUser) -> Void ) {
         if databaseRef == nil {
             databaseRef = Database.database().reference()
         }
-        
+
         databaseRef?.child("users").child(uid).observe(.value, with: {(snapshot) in
-//        databaseRef?.child("users").child(uid).observeSingleEvent(of: .value, with: {(snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else {
-                return
+            if let dictionary = snapshot.value as? [String:Any] {
+                self.populate(uid: uid, dictionary: dictionary)
+                self.redirectIfNotAllowed()
             }
-            // TODO this is really bad form to be doing additional queries here...
-            self.fetchRoles(uid: uid)
-            self.fetchCurrentTeam(uid: uid)
-            self.populate(uid: uid, dictionary: dictionary)
-            self.redirectIfNotAllowed()
-            callback(self) // search for "callback" above - does nothing
         })
     }
+    
+    //    private func queryForUserData(uid: String, callback: @escaping (TPUser) -> Void ) {
+    //        if databaseRef == nil {
+    //            databaseRef = Database.database().reference()
+    //        }
+    //
+    //        databaseRef?.child("users").child(uid).observe(.value, with: {(snapshot) in
+    ////        databaseRef?.child("users").child(uid).observeSingleEvent(of: .value, with: {(snapshot) in
+    //            guard let dictionary = snapshot.value as? [String: Any] else {
+    //                return
+    //            }
+    //            // TODO this is really bad form to be doing additional queries here...
+    //            self.fetchRoles(uid: uid, citizen_builder_id: dictionary["citizen_builder_id"] as? Int)
+    //            self.fetchCurrentTeam(uid: uid)
+    //            self.populate(uid: uid, dictionary: dictionary)
+    //            self.redirectIfNotAllowed()
+    //            callback(self) // search for "callback" above - does nothing
+    //        })
+    //    }
     
     // doesn't consider account_disposition:enabled/disabled
     func isAllowed() -> Bool {
@@ -163,20 +169,7 @@ class TPUser {
     
     static func create(uid: String, callback: @escaping (TPUser) -> Void ) {
         let someuser = TPUser()
-        someuser.createNotStatic(uid: uid, callback: callback)
-        /*******
-        someuser.databaseRef = Database.database().reference()
-        
-        someuser.databaseRef?.child("users").child(uid).observe(.value, with: {(snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else {
-                return
-            }
-            someuser.fetchRoles(uid: uid)
-            someuser.fetchCurrentTeam(uid: uid)
-            someuser.populate(uid: uid, dictionary: dictionary)
-            callback(someuser)
-        })
-         ***********/
+//        someuser.queryForUserData(uid: uid, callback: callback)
     }
     
     func set(name: String) {
@@ -224,7 +217,13 @@ class TPUser {
             self.current_longitude = lng
         }
         
-        // current_team ?
+        if let current_team_node = dictionary["current_team"] as? [String:[String:Any]],
+            let current_team = current_team_node.keys.first,
+            let team_data = current_team_node[current_team] as? [String:Any]
+        {
+            let tm = CBTeam(data: team_data)
+            self.setCurrentTeamAndNotify(team: tm, whileLoggingIn: false)
+        }
         
         if let email = dictionary["email"] as? String {
             self.email = email
@@ -293,15 +292,35 @@ class TPUser {
         if let roles = dictionary["roles"] as? [String:String] {
             if let adm = roles["Admin"], adm == "true" {
                 self.isAdmin = true
+                roleAssigned(role: "Admin")
+            }
+            else {
+                self.isAdmin = false
+                roleRemoved(role: "Admin")
             }
             if let dir = roles["Director"], dir == "true" {
                 self.isDirector = true
+                roleAssigned(role: "Director")
+            }
+            else {
+                self.isDirector = false
+                roleRemoved(role: "Director")
             }
             if let vol = roles["Volunteer"], vol == "true" {
                 self.isVolunteer = true
+                roleAssigned(role: "Volunteer")
+            }
+            else {
+                self.isVolunteer = false
+                roleRemoved(role: "Volunteer")
             }
             if let r = roles["Video Creator"], r == "true" {
                 self.isVideoCreator = true
+                roleAssigned(role: "Video Creator")
+            }
+            else {
+                self.isVideoCreator = false
+                roleRemoved(role: "Video Creator")
             }
         }
         if let cvk = dictionary["current_video_node_key"] as? String {
@@ -341,7 +360,6 @@ class TPUser {
                     self.fireVideoInvitationRevoked()
                 })
         }
-        
         
         
         // teams?
@@ -572,7 +590,26 @@ class TPUser {
         }
     }
     
-    private func fetchRoles(uid: String) {
+    private func fetchRoles(uid: String, citizen_builder_id: Int?) {
+        Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+            if let vals = snapshot.value as? [String:Any] {
+                let conf = Configuration(data: vals)
+                if let citizen_builder_id = citizen_builder_id, conf.getRolesFromCB() {
+                    self.fetchRoles_fromCB(citizen_builder_id: citizen_builder_id)
+                }
+                else {
+                    self.fetchRoles_fromFirebase(uid: uid)
+                }
+            }
+        })
+    }
+    
+    private func fetchRoles_fromCB(citizen_builder_id: Int) {
+    }
+    
+    // The "old way" is by getting role information from the TelePatriot/Firebase database
+    // The "new way" is by making an API call to CB to figure out what roles the user has
+    private func fetchRoles_fromFirebase(uid: String) {
         if(rolesAlreadyFetched) {
             return }
         
@@ -757,7 +794,7 @@ class TPUser {
         // The "current team" has already been changed.  So if you try to unassign the current
         // mission item from here, you will write a partial mission_item record to the wrong team
         if let team_name = team.getName() {
-            self.setCurrentTeamAndNotify(team: team, whileLoggingIn: false)
+            //self.setCurrentTeamAndNotify(team: team, whileLoggingIn: false)
             
             let current_team = [team_name : team.dictionary()]
             databaseRef?.child("users").child(getUid()).child("current_team").setValue(current_team) {(error, ref) -> Void in
@@ -866,8 +903,6 @@ class TPUser {
         self.currentTeam = team
         // where are these listeners set?...
         // Ans:  CenterViewController.checkLoggedIn()
-        // We also want MissionSummaryTVC to be a listener also so that we can clear out its 'missions' list
-        // from the previously selected team
         for l in self.accountStatusEventListeners {
             l.teamSelected(team: team, whileLoggingIn: whileLoggingIn)
         }
