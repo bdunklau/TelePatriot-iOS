@@ -16,7 +16,7 @@ struct CBMissionDetail : Decodable {
     var script : String? = ""
     var priority : Int32 = -1
     var status = ""
-    var name = ""  // the mission name
+    var name = "" // mission name, not the name of the person being called
     var first_name : String? = ""
     var last_name : String? = ""
     var phone : String? = ""
@@ -54,6 +54,12 @@ struct CBMissionDetail : Decodable {
         }
         if let val = data["phone"] as? String {
             phone = val
+        }
+        if let val = data["first_name"] as? String {
+            first_name = val
+        }
+        if let val = data["last_name"] as? String {
+            last_name = val
         }
         if let val = data["name2"] as? String {
             name2 = val

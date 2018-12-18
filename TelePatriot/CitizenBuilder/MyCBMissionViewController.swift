@@ -19,6 +19,22 @@ class MyCBMissionViewController: BaseViewController {
     var supporter_name : String?
     //var noMissionDelegate : NoMissionDelegate?
     
+    let missionNameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Mission Name"
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let missionProgressLabel : UILabel = {
+        let label = UILabel()
+        label.text = "-% Complete (- of - calls made)"
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let descriptionHeaderLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
@@ -76,7 +92,10 @@ class MyCBMissionViewController: BaseViewController {
     //    "person_id": 2278603,
     //    "first_name": "Barbara",
     //    "last_name": "Shipley",
-    //    "phone": "(707) 3184585"
+    //    "phone": "(707) 3184585",
+//        "total": 0,
+//        "calls_made": 0,
+//        "percent_complete": 0
     //    }
     
     override func viewDidLoad() {
@@ -95,9 +114,17 @@ class MyCBMissionViewController: BaseViewController {
         
         view.addSubview(scrollView)
         
+        scrollView.addSubview(missionNameLabel)
+        missionNameLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
+        missionNameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16).isActive = true
+        
+        scrollView.addSubview(missionProgressLabel)
+        missionProgressLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
+        missionProgressLabel.topAnchor.constraint(equalTo: missionNameLabel.bottomAnchor, constant: 8).isActive = true
+        
         descriptionHeaderLabel.text = "Mission Description"
         descriptionHeaderLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
-        descriptionHeaderLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 35).isActive = true
+        descriptionHeaderLabel.topAnchor.constraint(equalTo: missionProgressLabel.bottomAnchor, constant: 16).isActive = true
         descriptionHeaderLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
         //descriptionHeaderLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1).isActive = true
         
@@ -177,20 +204,41 @@ class MyCBMissionViewController: BaseViewController {
             
             DispatchQueue.main.async {
                 self.callButton1.setTitle("\(fname) \(lname) \(phone)", for: .normal)
-                if let descr = cbMissionDetails.description, let html = cbMissionDetails.script {
+                if  let descr = cbMissionDetails.description,
+                    let html = cbMissionDetails.script
+                {
+                    self.missionNameLabel.text = cbMissionDetails.name
+                    self.missionProgressLabel.text = "\(cbMissionDetails.percent_complete)% Completed (\(cbMissionDetails.calls_made) of \(cbMissionDetails.total) calls made)"
+                    
+                    // This is a temporary way of getting 3way call names and phone numbers.  We allow mission directors
+                    // to add an html comment in the mission description.  In this html comment is the name and phone
+                    // number of a person (probably a legislator) that we want to be the "3way call" party
+                    if let _3waycallname = self.get3WayCallName(string: html),
+                       let _3waycallphone = self.get3WayCallPhone(string: html)
+                    {
+                        let button2Text = "\(_3waycallname) \(_3waycallphone)"
+                        self.callButton2.setTitle(button2Text, for: .normal)
+                        self.callButton2.phone = _3waycallphone
+                    }
+                    else {
+                        self.callButton2.setTitle("", for: .normal)
+                    }
                     let scr = html.htmlToString // htmlToString is an extension below
                     self.descriptionTextView.text = "\(descr)\n\n\n\nScript\n\n\(scr)"
                 }
                 
-                if let name2 = cbMissionDetails.name2, let phone2 = cbMissionDetails.phone2,
-                    name2 != "", phone2 != "" {
-                    let button2Text = "\(cbMissionDetails.name2!) \(cbMissionDetails.phone2!)"
-                    self.callButton2.setTitle(button2Text, for: .normal)
-                    self.callButton2.phone = cbMissionDetails.phone2
-                }
-                else {
-                    self.callButton2.setTitle("", for: .normal)
-                }
+                // At some point, we'll get 3way call names and numbers in a more correct way.  When we do, the code
+                // below can serve as a starting point.  Until then, we get 3way call names and numbers by looking
+                // for an html comment string in the mission description (above)
+//                if let name2 = cbMissionDetails.name2, let phone2 = cbMissionDetails.phone2,
+//                    name2 != "", phone2 != "" {
+//                    let button2Text = "\(cbMissionDetails.name2!) \(cbMissionDetails.phone2!)"
+//                    self.callButton2.setTitle(button2Text, for: .normal)
+//                    self.callButton2.phone = cbMissionDetails.phone2
+//                }
+//                else {
+//                    self.callButton2.setTitle("", for: .normal)
+//                }
                 
             }
 
@@ -268,6 +316,25 @@ class MyCBMissionViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func get3WayCallName(string: String) -> String? {
+        return substring(string: string, s1: "start 3way call name", s2: "end 3way call name")
+    }
+    
+    func get3WayCallPhone(string: String) -> String? {
+        return substring(string: string, s1: "start 3way call phone", s2: "end 3way call phone")
+    }
+    
+    func substring(string: String, s1: String, s2: String) -> String? {
+        
+        if let beginPos = string.range(of: s1),
+            let endPos = string.range(of: s2) {
+            let range = beginPos.upperBound..<endPos.lowerBound
+            let s = string[range]
+            return String(s)
+        }
+        return nil
+    }
     
     /*
      // MARK: - Navigation
