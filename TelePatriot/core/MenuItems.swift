@@ -148,8 +148,8 @@ class MenuItems {
                         ,MenuItems.myMission
             
                           // TODO will want to put these back in at some point (Dec 2018)
-//                        ,MenuItems.directors // uncomment to make these start showing up again.  See the comments below also at getItem()
-//                        ,MenuItems.admins     // this will be later on though, once CB integration is complete and we want to restore this functionality
+                        ,MenuItems.directors // uncomment to make these start showing up again.  See the comments below also at getItem()
+                        ,MenuItems.admins     // this will be later on though, once CB integration is complete and we want to restore this functionality
                         ]
         
         
@@ -193,8 +193,8 @@ class MenuItems {
             items["My Mission"] = myMission
             
             // TODO will want to put these back in at some point (Dec 2018)
-//            items["Directors"] = directors  // uncomment these 2 items and the 2 items at mainSection0 above
-//            items["Admins"] = admins        // When you do, the Admins and Directors menu items will appear again
+            items["Directors"] = directors  // uncomment these 2 items and the 2 items at mainSection0 above
+            items["Admins"] = admins        // When you do, the Admins and Directors menu items will appear again
             items["Video Chat"] = videoChat    // They have been taken out for the first phase of CB integration because all the
             items["Video Offers"] = videoOffers    // functionality for these 2 roles is being absorbed into CB.  There won't be anything
             return items                            // for Directors and Admins to do from the phone in the short term anyway

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SidePanelViewController: UIViewController, AccountStatusEventListener {
+class SidePanelViewController: UIViewController {
     
     
     var tableView : UITableView?
@@ -185,6 +185,20 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    
+}
+
+
+extension SidePanelViewController: AccountStatusEventListener {
+    
+    func changed(name: String) {
+        usernameLabel.text = name
+    }
+    
+    func changed(email: String) {
+        emailLabel.text = email
+    }
+    
     // See TPUser.fetchRoles()
     // required by AccountStatusEventListener
     func roleAssigned(role: String) {
@@ -266,6 +280,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    
     // required by AccountStatusEventListener
     func userSignedOut() {
         let teamItem = menuItems[0][0]
@@ -278,26 +293,26 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     
     // WHY DO WE NEED 'index' ?  AREN'T WE JUST ADDING WHATEVER ITEM TO THE END OF THE LIST
     // REGARDLESS OF HOW BIG THE LIST IS?  (I think so)
-//    private func doRoleAdded(menuText: String, items: Array<MenuItem>) {
-//        let itemText = menuText
-//        var alreadyGranted = false
-//        let loop = items
-//        for mi in loop {
-//            if(mi.title == itemText) {
-//                alreadyGranted = true
-//            }
-//        }
-//        if(!alreadyGranted) {
-//            guard let theItem = MenuItems.getItem(withText: itemText) else { //MenuItem(title: itemText)
-//                // TODO this is a problem - no error handling here
-//                return
-//            }
-//            guard menuItems.count > 0 else { return }
-//            menuItems[0].append(theItem)
-//            tableView?.reloadData()
-//        }
-//
-//    }
+    //    private func doRoleAdded(menuText: String, items: Array<MenuItem>) {
+    //        let itemText = menuText
+    //        var alreadyGranted = false
+    //        let loop = items
+    //        for mi in loop {
+    //            if(mi.title == itemText) {
+    //                alreadyGranted = true
+    //            }
+    //        }
+    //        if(!alreadyGranted) {
+    //            guard let theItem = MenuItems.getItem(withText: itemText) else { //MenuItem(title: itemText)
+    //                // TODO this is a problem - no error handling here
+    //                return
+    //            }
+    //            guard menuItems.count > 0 else { return }
+    //            menuItems[0].append(theItem)
+    //            tableView?.reloadData()
+    //        }
+    //
+    //    }
     
     // required by AccountStatusEventListener
     private func doRoleAdded(menuText: String, section: Int) {
@@ -321,26 +336,28 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         
     }
     
-//    private func doRoleRemoved(menuText: String, items: Array<MenuItem>) {
-//        // var cell:Cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section))?
-//        var i = 0
-//        var found = -1
-//        var foundCell : UITableViewCell?
-//        for mi in items {
-//            if(mi.title == menuText) {
-//                found = i
-//                // We either need to put the Video Chat menu item in section 0, or replace the
-//                // hard-coded 0 below with a variable and then figure out what section the removed menu item is in
-//                foundCell = tableView?.cellForRow(at: IndexPath(row: found, section: 0))
-//                break
-//            }
-//            i = i + 1
-//        }
-//
-//        if let fc = foundCell {
-//            self.deleteCell(cell: fc)
-//        }
-//    }
+    
+    //    private func doRoleRemoved(menuText: String, items: Array<MenuItem>) {
+    //        // var cell:Cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section))?
+    //        var i = 0
+    //        var found = -1
+    //        var foundCell : UITableViewCell?
+    //        for mi in items {
+    //            if(mi.title == menuText) {
+    //                found = i
+    //                // We either need to put the Video Chat menu item in section 0, or replace the
+    //                // hard-coded 0 below with a variable and then figure out what section the removed menu item is in
+    //                foundCell = tableView?.cellForRow(at: IndexPath(row: found, section: 0))
+    //                break
+    //            }
+    //            i = i + 1
+    //        }
+    //
+    //        if let fc = foundCell {
+    //            self.deleteCell(cell: fc)
+    //        }
+    //    }
+    
     
     // required by AccountStatusEventListener
     private func doRoleRemoved(menuText: String, section: Int) {
@@ -365,6 +382,7 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
         }
     }
     
+    
     // required by AccountStatusEventListener
     func videoInvitationExtended(vi: VideoInvitation) {
         // do anything?
@@ -374,8 +392,6 @@ class SidePanelViewController: UIViewController, AccountStatusEventListener {
     func videoInvitationRevoked() {
         // do anything?
     }
-    
-    
 }
 
 

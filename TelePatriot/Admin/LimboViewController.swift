@@ -266,6 +266,13 @@ extension LimboViewController : MissingInformationDelegate {
 
 extension LimboViewController : AccountStatusEventListener {
     
+    func changed(name: String) {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    func changed(email: String) {
+        // do nothing?  really?  if so, code smell
+    }
     
     // required by AccountStatusEventListener
     func roleAssigned(role: String) {

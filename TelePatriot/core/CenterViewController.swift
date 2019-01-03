@@ -544,6 +544,15 @@ extension CenterViewController : SearchUsersDelegate {
 
 
 extension CenterViewController : AccountStatusEventListener {
+    
+    func changed(name: String) {
+        // do nothing?  really?  if so, code smell
+    }
+    
+    func changed(email: String) {
+        // do nothing?  really?  if so, code smell
+    }
+    
     func roleAssigned(role: String) {
         // stub
     }

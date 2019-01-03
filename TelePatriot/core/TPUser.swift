@@ -184,13 +184,6 @@ class TPUser {
         
         self.uid = uid
         
-        // account_status_events ?
-        
-        var account_dispositioned_by : String?
-        var account_dispositioned_by_uid : String?
-        var account_dispositioned_on : String?
-        var account_dispositioned_on_ms : Int64?
-        
         if let account_disposition = dictionary["account_disposition"] as? String {
             self.account_disposition = account_disposition
         }
@@ -227,6 +220,7 @@ class TPUser {
         
         if let email = dictionary["email"] as? String {
             self.email = email
+            fireChange(email: email)
         }
         
         if let has_signed_confidentiality_agreement = dictionary["has_signed_confidentiality_agreement"] as? Bool {
@@ -258,6 +252,7 @@ class TPUser {
         }
         if let name = dictionary["name"] as? String {
             self.name = name
+            fireChange(name: name)
         }
         if let phone = dictionary["phone"] as? String {
             self.phone = phone
@@ -716,6 +711,18 @@ class TPUser {
         // we can now hide whatever role label corresponds to the role that was just removed
         for l in accountStatusEventListeners {
             l.roleRemoved(role: role)
+        }
+    }
+    
+    private func fireChange(name: String) {
+        for l in self.accountStatusEventListeners {
+            l.changed(name: name)
+        }
+    }
+    
+    private func fireChange(email: String) {
+        for l in self.accountStatusEventListeners {
+            l.changed(email: email)
         }
     }
     
