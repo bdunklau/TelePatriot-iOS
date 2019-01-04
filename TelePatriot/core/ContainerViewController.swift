@@ -455,13 +455,12 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
         
         let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
         let gestureIsDraggingFromRightToLeft = !gestureIsDraggingFromLeftToRight
-        
-        let panAllowed = (gestureIsDraggingFromRightToLeft && allowPanningFromRightToLeft) || (gestureIsDraggingFromLeftToRight)
+                
+        let panAllowed = (gestureIsDraggingFromRightToLeft && allowPanningFromRightToLeft && recognizer.view!.frame.origin.x > 0) || (gestureIsDraggingFromLeftToRight)
         
         if !panAllowed {
             return
         }
-        
         
         switch recognizer.state {
             
@@ -485,18 +484,16 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
             
         case .ended:
             // this seems backwards, but this is the way it works (this is how we prevent swiping from right to left when it doesn't make sense)
-            if currentState == .bothCollapsed {
-                allowPanningFromRightToLeft = true
-            }
-            else {
-                allowPanningFromRightToLeft = false
-            }
+
+            allowPanningFromRightToLeft = false
             
             if let _ = leftViewController,
                 let rview = recognizer.view {
                 // animate the side panel open or closed based on whether the view has moved more or less than halfway
                 let hasMovedGreaterThanHalfway = rview.center.x > view.bounds.size.width
                 animateLeftPanel(shouldExpand: hasMovedGreaterThanHalfway)
+                
+                allowPanningFromRightToLeft = true
                 
             }
             else if let _ = rightViewController,
