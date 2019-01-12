@@ -6,8 +6,6 @@
 //  Copyright © 2017 Brent Dunklau. All rights reserved.
 //
 
-// testing temp2 branch
-
 // https://www.youtube.com/watch?v=jH2LdL-PsHI
 // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
 import UIKit
