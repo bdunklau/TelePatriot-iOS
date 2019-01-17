@@ -28,21 +28,25 @@ class SwitchTeamsVC: BaseViewController {
 
         // Do any additional setup after loading the view.
         let uid = TPUser.sharedInstance.getUid()
-//        ref = Database.database().reference().child("users/\(uid)/teams")
         
-        Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+        Database.database().reference().child("administration/configuration").observe(.value, with: {(snapshot: DataSnapshot) in
+            
+            print("snapshot.value = \(snapshot.value)")
+            print("TPUser.sharedInstance.citizen_builder_id = \(TPUser.sharedInstance.citizen_builder_id)")
+            
             if let vals = snapshot.value as? [String:Any],
-                let get_teams_from = vals["get_teams_from"] as? String,
-                let envName = vals["environment"] as? String,
-                let environment = vals[envName] as? [String:Any],
-                let apiKeyName = environment["citizen_builder_api_key_name"] as? String,
-                let apiKeyValue = environment["citizen_builder_api_key_value"] as? String,
-                let domain = environment["citizen_builder_domain"] as? String,
                 let cbid = TPUser.sharedInstance.citizen_builder_id {
                 
-                if get_teams_from == "citizenbuilder" {
+                let conf = Configuration(data: vals)
+                
+                if conf.get_teams_from == "citizenbuilder" {
                     self.useCB = true
-                    self.fromCitizenBuilder(cbid: cbid, apiKeyName: apiKeyName, apiKeyValue: apiKeyValue, domain: domain)
+                    if let apiKeyName = conf.getCitizenBuilderApiKeyName(),
+                        let apiKeyValue = conf.getCitizenBuilderApiKeyValue(),
+                        let domain = conf.getCitizenBuilderDomain() {
+                    
+                        self.fromCitizenBuilder(cbid: cbid, apiKeyName: apiKeyName, apiKeyValue: apiKeyValue, domain: domain)
+                    }
                 }
                 else {
                     self.useCB = false
