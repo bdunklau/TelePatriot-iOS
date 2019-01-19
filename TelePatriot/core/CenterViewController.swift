@@ -305,18 +305,23 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         else if(menuItem.title.starts(with: "My Profile")) {
             guard let vc = delegate?.getMyProfileVC() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title.starts(with: "My Legislators")) {
             guard let vc = delegate?.getMyLegislatorsVC() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title.starts(with: "Team")) {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
             guard let vc = delegate?.getSwitchTeamsVC() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers)
         }
         else if(menuItem.title == "My Mission") {
+            unassignMissionItem()
+            
             // See MainActivity.onNavigationItemSelected() on the Android side
             // TRANSITIONAL CODE - We're not always going to have all this.  At some point, we are only going to get mission
             // information from CB.  But until we finally jettison the mission stored in TelePatriot/Firebase, we're going to have
@@ -344,15 +349,15 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             
         }
         else if(menuItem.title == "Directors") {
-            unassignMissionItem()
             // don't instantiate here.  Get from ContainerViewController  ...but how?
             if let directorViewController = delegate?.getDirectorViewController() {
+                unassignMissionItem()
                 doView(vc: directorViewController, viewControllers: self.childViewControllers)
             }
         }
         else if(menuItem.title == "Admins") {
-            unassignMissionItem()
             guard let vc = delegate?.getAdminVC() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         else if(menuItem.title == "Share Petition") {
@@ -362,16 +367,19 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         else if(menuItem.title == "Video Chat") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoChatViewController() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         else if(menuItem.title == "Video Offers") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoOffersVC() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         else if(menuItem.title == "Video Invitations") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoInvitationsViewController() else { return }
+            unassignMissionItem()
             doView(vc: vc, viewControllers: self.childViewControllers, track: true)
         }
         // Director screen...

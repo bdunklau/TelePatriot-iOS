@@ -861,7 +861,8 @@ class TPUser {
                 if conf.getMissionsFromCB() {
                     guard let domain = conf.getCitizenBuilderDomain(),
                         let mission_id = currentCBMissionItem.mission_id,
-                        let url = URL(string: "https://\(domain)/api/ios/v1/volunteers/revoke_person_call?person_id=\(currentCBMissionItem.person_id)&mission_id=\(mission_id)"),
+                        let person_id = currentCBMissionItem.person_id,
+                        let url = URL(string: "https://\(domain)/api/ios/v1/volunteers/revoke_person_call?person_id=\(person_id)&mission_id=\(mission_id)"),
                         let apiKeyName = conf.getCitizenBuilderApiKeyName(),
                         let apiKeyValue = conf.getCitizenBuilderApiKeyValue()
                     else {
@@ -876,7 +877,7 @@ class TPUser {
                     let session = URLSession(configuration: config)
                     let task = session.dataTask(with: request) { (data, response, responseError) in
                         
-                        print("Unassigned CB Mission:  person_id=\(currentCBMissionItem.person_id)  mission_id=\(mission_id)")
+                        print("Unassigned CB Mission:  person_id=\(person_id)  mission_id=\(mission_id)")
                         
                         // revoking/unassigning a mission gives you this response back
                         /***
