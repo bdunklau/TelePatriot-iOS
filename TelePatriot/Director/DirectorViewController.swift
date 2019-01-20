@@ -39,12 +39,16 @@ class DirectorViewController: BaseViewController {
             if let vals = snapshot.value as? [String:Any] {
                 let conf = Configuration(data: vals)
                 if conf.getRolesFromCB() {
+                    self.tableView?.removeFromSuperview()
+                    
                     self.view.addSubview(self.removed)
                     self.removed.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
                     self.removed.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120).isActive = true
                     self.removed.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
                 }
                 else {
+                    self.removed.removeFromSuperview()
+                    
                     self.tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
                     self.tableView?.delegate = self
                     self.tableView?.dataSource = this
@@ -53,6 +57,8 @@ class DirectorViewController: BaseViewController {
                 }
             }
             else {
+                self.tableView?.removeFromSuperview()
+                
                 self.view.addSubview(self.removed)
                 self.removed.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
                 self.removed.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120).isActive = true
