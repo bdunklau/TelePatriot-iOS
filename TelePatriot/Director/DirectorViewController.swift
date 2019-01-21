@@ -32,8 +32,6 @@ class DirectorViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let this = self
-        
         // TODO this is "transitional" code that shouldn't be around forever
         Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
             if let vals = snapshot.value as? [String:Any] {
@@ -51,7 +49,7 @@ class DirectorViewController: BaseViewController {
                     
                     self.tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
                     self.tableView?.delegate = self
-                    self.tableView?.dataSource = this
+                    self.tableView?.dataSource = self
                     self.tableView?.register(MenuCell.self, forCellReuseIdentifier: "thecell")
                     self.view.addSubview(self.tableView!)
                 }

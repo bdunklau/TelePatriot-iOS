@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AdminVC: BaseViewController {
     
@@ -28,17 +29,60 @@ class AdminVC: BaseViewController {
     }()
     
     
+    let removed : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        //l.font = l.font.withSize(18)
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        l.textColor = .black
+        // this setting, plus the widthAnchor constraint below is how we achieve word wrapping inside the scrollview
+        l.numberOfLines = 0
+        l.text = "Admin features have been moved to CitizenBuilder"
+        return l
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(unassignedUsersButton)
-        unassignedUsersButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        unassignedUsersButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -72).isActive = true
         
-        view.addSubview(searchUsersButton)
-        searchUsersButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        searchUsersButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 72).isActive = true
+        // TODO this is "transitional" code that shouldn't be around forever
+        Database.database().reference().child("administration/configuration").observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+            if let vals = snapshot.value as? [String:Any] {
+                let conf = Configuration(data: vals)
+                if conf.getRolesFromCB() {
+                    self.unassignedUsersButton.removeFromSuperview()
+                    self.searchUsersButton.removeFromSuperview()
+                    
+                    self.view.addSubview(self.removed)
+                    self.removed.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
+                    self.removed.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120).isActive = true
+                    self.removed.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
+                }
+                else {
+                    self.removed.removeFromSuperview()
+                    
+                    self.view.addSubview(self.unassignedUsersButton)
+                    self.unassignedUsersButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+                    self.unassignedUsersButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -72).isActive = true
+                    
+                    self.view.addSubview(self.searchUsersButton)
+                    self.searchUsersButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+                    self.searchUsersButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 72).isActive = true
+                    
+                }
+            }
+            else {
+                self.unassignedUsersButton.removeFromSuperview()
+                self.searchUsersButton.removeFromSuperview()
+                
+                self.view.addSubview(self.removed)
+                self.removed.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
+                self.removed.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120).isActive = true
+                self.removed.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.95).isActive = true
+            }
+        })
+        
     }
     
     
