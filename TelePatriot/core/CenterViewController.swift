@@ -696,6 +696,18 @@ extension CenterViewController : VideoInvitationDelegate {
     }
 }
 
+extension CenterViewController : MissionDelegate {
+    func leaveNotes() {
+        guard let _ = TPUser.sharedInstance.currentCBMissionItem,
+            let vc = delegate?.getCBMissionItemWrapUpVC()
+        // whats the vc
+        else { return }
+        
+        doView(vc: vc, viewControllers: self.childViewControllers)
+        
+    }
+}
+
 /******
 extension CenterViewController : NoMissionDelegate {
     func notifyNoMissions() {

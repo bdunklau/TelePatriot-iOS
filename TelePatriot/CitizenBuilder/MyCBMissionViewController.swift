@@ -18,6 +18,7 @@ class MyCBMissionViewController: BaseViewController {
     var mission_name : String?
     var supporter_name : String?
     //var noMissionDelegate : NoMissionDelegate?
+    var missionDelegate : MissionDelegate?
     
     let missionNameLabel : UILabel = {
         let label = UILabel()
@@ -78,6 +79,13 @@ class MyCBMissionViewController: BaseViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         return textView
+    }()
+    
+    let button_leave_notes : BaseButton = {
+        let btn = BaseButton(text: "")
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(gotoLeaveNotesScreen(_:)), for: .touchUpInside)
+        return btn
     }()
     
     //    Example of what comes out of CB from the /volunteers/get_person endpoint
@@ -147,6 +155,10 @@ class MyCBMissionViewController: BaseViewController {
         callButton2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1).isActive = true
         callButton2.addTarget(self, action: #selector(makeCall(_:)), for: .touchUpInside)
         
+        scrollView.addSubview(button_leave_notes)
+        button_leave_notes.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant:0).isActive = true
+        button_leave_notes.topAnchor.constraint(equalTo: callButton2.bottomAnchor, constant: 24).isActive = true
+        
         
         // might also want to look into this: https://stackoverflow.com/a/31428932
         // to try to get elements positioned relative to the nav bar at the top
@@ -186,6 +198,7 @@ class MyCBMissionViewController: BaseViewController {
                     self.descriptionTextView.text = self.NO_MISSIONS_FOUND_MESSAGE
                     self.callButton1.setTitle("", for: .normal)
                     self.callButton2.setTitle("", for: .normal)
+                    self.button_leave_notes.setTitle("", for: .normal)
                 }
                 TPUser.sharedInstance.unassignCurrentMissionItem()
                 return
@@ -199,6 +212,7 @@ class MyCBMissionViewController: BaseViewController {
             
             TPUser.sharedInstance.currentCBMissionItem = cbMissionDetails // store this in the user object so we can unassign later from anywhere
             self.callButton1.phone = cbMissionDetails.phone
+            DispatchQueue.main.async { self.button_leave_notes.setTitle("Leave Notes", for: .normal) }
             self.supporter_name = "\(fname) \(lname)"
             self.mission_name = cbMissionDetails.name
             
@@ -219,9 +233,13 @@ class MyCBMissionViewController: BaseViewController {
                         let button2Text = "\(_3waycallname) \(_3waycallphone)"
                         self.callButton2.setTitle(button2Text, for: .normal)
                         self.callButton2.phone = _3waycallphone
+                        TPUser.sharedInstance.currentCBMissionItem?.name2 = _3waycallname
+                        TPUser.sharedInstance.currentCBMissionItem?.phone2 = _3waycallphone
                     }
                     else {
                         self.callButton2.setTitle("", for: .normal)
+                        TPUser.sharedInstance.currentCBMissionItem?.name2 = nil
+                        TPUser.sharedInstance.currentCBMissionItem?.phone2 = nil
                     }
                     let scr = html.htmlToString // htmlToString is an extension below
                     self.descriptionTextView.text = "\(descr)\n\n\n\nScript\n\n\(scr)"
@@ -262,6 +280,14 @@ class MyCBMissionViewController: BaseViewController {
     
     func myResumeFunction() {
         getMission_fromCitizenBuilder()
+    }
+    
+    
+    @objc func gotoLeaveNotesScreen(_ sender: BaseButton) {
+        guard let del = missionDelegate else {
+            return
+        }
+        del.leaveNotes()
     }
     
     
@@ -308,6 +334,7 @@ class MyCBMissionViewController: BaseViewController {
         descriptionTextView.text = MyMissionViewController.NO_MISSIONS_FOUND_MESSAGE
         callButton1.setTitle("", for: .normal)
         callButton2.setTitle("", for: .normal)
+        button_leave_notes.setTitle("", for: .normal)
     }
     
     
@@ -365,5 +392,9 @@ extension StringProtocol {
     var digits: String {
         return String(filter(("0"..."9").contains))
     }
+}
+
+protocol MissionDelegate {
+    func leaveNotes()
 }
 

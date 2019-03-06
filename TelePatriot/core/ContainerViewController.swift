@@ -110,7 +110,7 @@ class ContainerViewController: UIViewController {
         missionSummaryTVC = getMissionSummaryTVC()
         missionSummaryTVC.missionListDelegate = centerViewController
         
-        //myCBMissionViewController = MyCBMissionViewController() // instantiated in AppDelegate instead
+        appDelegate?.myCBMissionViewController?.missionDelegate = centerViewController
         
         myMissionViewController = getMyMissionViewController()
         //myMissionViewController?.noMissionDelegate = centerViewController
@@ -228,6 +228,11 @@ extension ContainerViewController: CenterViewControllerDelegate {
         }
         
         return directorViewController
+    }
+    
+    func getCBMissionItemWrapUpVC() -> CBMissionItemWrapUpVC? {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.cbMissionItemWrapUpVC
     }
     
     func getNewPhoneCampaignVC() -> NewPhoneCampaignVC? {

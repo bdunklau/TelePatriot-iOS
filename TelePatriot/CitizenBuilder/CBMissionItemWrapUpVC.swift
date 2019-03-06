@@ -23,13 +23,43 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
     // In Android, this list is in strings.xml   At some point, we should probably put this
     // list in the database
     //var pickerData = ["voice mail", "spoke on the phone", "number disconnected", "wrong number"] // this is what is was prior to 1/16/18
-    var pickerData = ["Voicemail", "Talked on the phone", "3-way call", "Wrong number", "Number disconnected", "None"] //, "No answer"]
+    var pickerData = ["Voicemail", "Talked on the phone", "3-way call",
+                      "Wrong number", "Number disconnected"] /*, "None",<- bug here , "No answer"] */
     
     var outcome : String = "Voicemail"
     
     let whatHappenedLabel : UILabel = {
         let l = UILabel()
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
         l.text = "What happened on the call?..."
+        l.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS !!!!!!
+        return l
+    }()
+    
+    let mission_person_name : UILabel = {
+        let l = UILabel()
+        l.text = ""
+        l.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS !!!!!!
+        return l
+    }()
+    
+    let mission_person_phone : UILabel = {
+        let l = UILabel()
+        l.text = ""
+        l.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS !!!!!!
+        return l
+    }()
+    
+    let mission_person_name2 : UILabel = {
+        let l = UILabel()
+        l.text = ""
+        l.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS !!!!!!
+        return l
+    }()
+    
+    let mission_person_phone2 : UILabel = {
+        let l = UILabel()
+        l.text = ""
         l.translatesAutoresizingMaskIntoConstraints = false // <-- ALWAYS DO THIS !!!!!!
         return l
     }()
@@ -78,16 +108,31 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         self.picker.delegate = self
         self.picker.dataSource = self
         
-        self.picker.frame = CGRect(x: 0, y: 64, width: self.view.bounds.width, height: 200.0)
+        self.picker.frame = CGRect(x: 0, y: 196, width: self.view.bounds.width, height: 100.0)
         picker.selectRow(-1, inComponent: 0, animated: false)
         
-        /****/
         view.addSubview(whatHappenedLabel)
         whatHappenedLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
         whatHappenedLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8).isActive = true
         whatHappenedLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         whatHappenedLabel.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.25).isActive = true
-        /****/
+        
+        view.addSubview(mission_person_name)
+        mission_person_name.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
+        mission_person_name.topAnchor.constraint(equalTo: whatHappenedLabel.bottomAnchor, constant: -48).isActive = true
+
+        view.addSubview(mission_person_phone)
+        mission_person_phone.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -24).isActive = true
+        mission_person_phone.bottomAnchor.constraint(equalTo: mission_person_name.bottomAnchor, constant: 0).isActive = true
+
+        view.addSubview(mission_person_name2)
+        mission_person_name2.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 4).isActive = true
+        mission_person_name2.topAnchor.constraint(equalTo: mission_person_name.bottomAnchor, constant: 8).isActive = true
+
+        view.addSubview(mission_person_phone2)
+        mission_person_phone2.leadingAnchor.constraint(equalTo: mission_person_phone.leadingAnchor, constant: 0).isActive = true
+        mission_person_phone2.bottomAnchor.constraint(equalTo: mission_person_name2.bottomAnchor, constant: 0).isActive = true
+        
         
         if view.subviews.contains(picker) {
             picker.removeFromSuperview()
@@ -102,7 +147,7 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         //pickerViewContainer.view.addSubview(picker)
         //view.addSubview(pickerViewContainer.view)
         //pickerViewContainer.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8).isActive = true
-        picker.topAnchor.constraint(equalTo: whatHappenedLabel.bottomAnchor, constant: 64).isActive = true
+        picker.topAnchor.constraint(equalTo: whatHappenedLabel.bottomAnchor, constant: 32).isActive = true
         //picker.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 135).isActive = true
         picker.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         picker.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
@@ -133,6 +178,21 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         submitAndQuitButton.topAnchor.constraint(equalTo: submitButton.bottomAnchor, constant: 32).isActive = true
         submitAndQuitButton.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
         
+        
+        if let missionItem = TPUser.sharedInstance.currentCBMissionItem,
+            let fname = missionItem.first_name, let lname = missionItem.last_name,
+            let phone = missionItem.phone {
+            mission_person_name.text = "\(fname) \(lname)"
+            mission_person_phone.text = phone
+            if let name2 = missionItem.name2, let phone2 = missionItem.phone2 {
+                mission_person_name2.text = name2
+                mission_person_phone2.text = phone2
+            }
+            else {
+                mission_person_name2.text = ""
+                mission_person_phone2.text = ""
+            }
+        }
     }
     
     
@@ -140,6 +200,7 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         doQuit = false
         saveNotes()
     }
+    
     
     private func saveNotes() {
         guard let missionItem = TPUser.sharedInstance.currentCBMissionItem,
@@ -192,7 +253,7 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
             if let responseJSON = responseJSON as? [String:Any] {
                 print(responseJSON)
                 TPUser.sharedInstance.currentCBMissionItem = nil
-                self.wrapUpCBCallDelegate?.cbMissionAccomplished()
+                DispatchQueue.main.async { self.wrapUpCBCallDelegate?.cbMissionAccomplished() }
                 if self.doQuit {
                     self.logout()
                 }
@@ -201,70 +262,6 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         task.resume()
     }
     
-//    private func saveNotes() {
-//
-//        if let missionItem = TPUser.sharedInstance.currentMissionItem,
-//            let team_name = TPUser.sharedInstance.getCurrentTeam()?.getName() {
-//
-//            saveMissionItem_original_style(missionItem: missionItem, team: team_name)
-//        }
-//        else if let mi2 = TPUser.sharedInstance.currentMissionItem2 {
-//            saveMissionItem2(mission_item: mi2)
-//        }
-//
-//    }
-    
-//    private func saveMissionItem_original_style(missionItem: MissionItem, team: String) {
-//        Database.database().reference().child("teams/\(team)/mission_items/\(missionItem.mission_item_id)").removeValue()
-//        let missionRef = Database.database().reference().child("teams/\(team)/missions/\(missionItem.mission_id)")
-//        let ref = missionRef.child("mission_items/\(missionItem.mission_item_id)")
-//        ref.child("accomplished").setValue("complete")
-//        ref.child("active").setValue(false)
-//        ref.child("active_and_accomplished").setValue("false_complete")
-//        ref.child("outcome").setValue(outcome)
-//        ref.child("notes").setValue(notesField.text)
-//        ref.child("completed_by_uid").setValue(TPUser.sharedInstance.getUid())
-//        ref.child("completed_by_name").setValue(TPUser.sharedInstance.getName())
-//
-//        //let date : Date = Date()
-//        //let dateFormatter = DateFormatter()
-//        //dateFormatter.dateFormat = "MMM d, yyyy h:mm a z"
-//        //let mission_complete_date = dateFormatter.string(from: date)
-//        ref.child("mission_complete_date").setValue(Util.getDate_MMM_d_yyyy_hmm_am_z())
-//        ref.child("uid_and_active").setValue(TPUser.sharedInstance.getUid()+"_false")
-//
-//        // need to update total_rows_completed using a firebase transaction like we do in MissionDetail.java: updateCompletedCount()
-//        updateCompletedCount(ref: missionRef)
-//
-//    }
-//
-//
-//    private func saveMissionItem2(mission_item: MissionItem2) {
-//
-//        // Where is this MissionItem2 instantiate?   Ans: OfficeTableViewCell.makeCall()
-//        mission_item.complete(outcome: outcome, notes: notesField.text)
-//
-//        // The "call ended" event has already been logged by this time
-//        // It's written to the database in AppDelegate.endPhoneCallForMissionItem2()
-//    }
-    
-    
-//    // see   https://stackoverflow.com/q/41337765
-//    private func updateCompletedCount(ref: DatabaseReference) {
-//        ref.runTransactionBlock({ (currentData:MutableData) -> TransactionResult in
-//            if var value = currentData.value as? [String: AnyObject] {
-//
-//                var total_rows_completed = value["total_rows_completed"] as? Int ?? 0
-//                total_rows_completed += 1
-//                value["total_rows_completed"] = total_rows_completed as AnyObject?
-//                currentData.value = value
-//                return TransactionResult.success(withValue: currentData)
-//            }
-//            //Abort like if there was a problem
-//            return TransactionResult.abort()
-//        })
-//
-//    }
     
     var doQuit = false
     @objc func submitWrapUpAndQuit(_ sender: BaseButton) {

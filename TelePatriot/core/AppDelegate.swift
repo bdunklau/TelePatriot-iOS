@@ -376,33 +376,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //providerDelegate.reportIncomingCall(uuid: uuid, handle: handle, hasVideo: hasVideo, completion: completion)
     //}
 
-    func onCallEnded() {
-        // set in MyMissionViewController
-        // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
-        // so they can enter some notes on the call.
-        
-        if let _ = TPUser.sharedInstance.currentCBMissionItem,
-            let vc = cbMissionItemWrapUpVC {
-            myDelegate?.show(viewController: vc)
-        }
-        
-        // when the call was to a legislators (Note: the mission type is MissionItem2)
-        if let mi2 = TPUser.sharedInstance.currentMissionItem2,
-            let vc = wrapUpCallViewController {
-            endPhoneCallForMissionItem2(mission_item: mi2)
-            myDelegate?.show(viewController: vc)
-        }
-        
-        
-        // TODO "legacy" code - remove after CB integration is complete
-        if let _ = TPUser.sharedInstance.currentMissionItem,
-            let vc = wrapUpCallViewController {
-            // call begin is recorded in MyMissionViewController.makeCall()
-            endPhoneCallForOriginalStyleMissionItem()
-            myDelegate?.show(viewController: vc)
-        }
-        
-    }
+    
+//    func onCallEnded() {
+//        // set in MyMissionViewController
+//        // If the user has a "currentMissionItem", we need to send them to the WrapUpViewController screen
+//        // so they can enter some notes on the call.
+//
+//        if let _ = TPUser.sharedInstance.currentCBMissionItem,
+//            let vc = cbMissionItemWrapUpVC {
+//            myDelegate?.show(viewController: vc)
+//        }
+//
+//        // when the call was to a legislators (Note: the mission type is MissionItem2)
+//        if let mi2 = TPUser.sharedInstance.currentMissionItem2,
+//            let vc = wrapUpCallViewController {
+//            endPhoneCallForMissionItem2(mission_item: mi2)
+//            myDelegate?.show(viewController: vc)
+//        }
+//
+//    }
     
     
     private func endPhoneCallForMissionItem2(mission_item: MissionItem2) {
@@ -486,8 +478,12 @@ extension AppDelegate: CXCallObserverDelegate {
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         
         if call.hasEnded == true {
-            print("Disconnected")
-            onCallEnded()
+            // We're not automatically going to the Wrap Up screen anymore when a hangup is detected.
+            // For one thing, an incoming call could interrupt the user and inadvertently send the user to
+            // the wrap up screen.  So instead, we added a "Leave Notes" button to the mission screen,
+            // My CBMissionViewController
+//            print("Disconnected")
+//            onCallEnded()
         }
         if call.isOutgoing == true && call.hasConnected == false {
             print("Dialing")

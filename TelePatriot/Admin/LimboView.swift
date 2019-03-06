@@ -214,6 +214,31 @@ class LimboView: UIView {
     }()
     
     
+//    let nevermind_heading : UILabel = {
+//        let l = UILabel()
+//        l.translatesAutoresizingMaskIntoConstraints = false
+//        l.text = "Get Me Out of Here"
+//        l.font = l.font.withSize(18)
+//        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+//        return l
+//    }()
+//
+//    let nevermind : UITextView = {
+//        let textView = UITextView()
+//        textView.text = "Changed your mind?  Typed in the wrong email?  Want us to forget you were ever here?  Just click \"Get Me Out of Here\" below"
+//        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
+//        textView.translatesAutoresizingMaskIntoConstraints = false
+//        //        var frame = textView.frame
+//        //        frame.size.height = 24
+//        //        textView.frame = frame
+//        textView.backgroundColor = .clear
+//        textView.textAlignment = .left
+//        textView.isEditable = false
+//        textView.isScrollEnabled = false
+//        return textView
+//    }()
+    
+    
     // #1
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -308,6 +333,10 @@ class LimboView: UIView {
             done_button.topAnchor.constraint(equalTo: when_finished.bottomAnchor, constant: 16).isActive = true
             done_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
             
+//            scrollView.addSubview(nevermind_heading)
+//            nevermind_heading.topAnchor.constraint(equalTo: done_button.bottomAnchor, constant: 16).isActive = true
+//            nevermind_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+            
             addSubview(scrollView)
         }
         
@@ -351,7 +380,7 @@ class LimboView: UIView {
     
     @objc private func clickSignConfidentialityAgreement(_ sender:UIButton) {
         // TODO should get from database
-        openUrl(string: "https://esign.coslms.com:8443/S/COS/Transaction/Volunteer_Agreement_Manual")
+        openUrl(string: "https://legal.conventionofstates.com/S/COS/Transaction/Volunteer_Agreement_Manual")
     }
     
     @objc private func clickShowMeHow(_ sender:UIButton) {

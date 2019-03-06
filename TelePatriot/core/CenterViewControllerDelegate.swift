@@ -24,6 +24,7 @@ protocol CenterViewControllerDelegate {
     func getMissionDetailsVC() -> MissionDetailsVC?
     func getMissionSummaryTVC() -> MissionSummaryTVC?
     func getMyCBMissionViewController() -> MyCBMissionViewController?
+    func getCBMissionItemWrapUpVC() -> CBMissionItemWrapUpVC?
     func getMyMissionViewController() -> MyMissionViewController?
     //func getNoMissionVC() -> NoMissionVC?
     func getMyLegislatorsVC() -> MyLegislatorsVC?
