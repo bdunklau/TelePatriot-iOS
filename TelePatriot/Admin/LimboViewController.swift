@@ -15,14 +15,25 @@ class LimboViewController: BaseViewController, UITableViewDelegate
     var isBrandNewUser : Bool?
     var limboView: LimboView?
     var missingInformationView: MissingInformationView?
+    var nevermindView: NevermindView?
     var dataMissing = false
     var userValues: [String:String] = [:]
+    var nevermindDelegate : NevermindDelegate?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "TelePatriot" // what the user sees (across the top) when they first login
+        //theview()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        theview()
+    }
+    
+    private func theview() {
         
         // Is this going to work?  We should never come to this view except on brand new users
         isBrandNewUser = true
@@ -33,6 +44,9 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         self.navigationItem.hidesBackButton = true
         
         if dataMissing {
+            limboView?.removeFromSuperview()
+            nevermindView?.removeFromSuperview()
+            
             // show missingInformationView
             missingInformationView = MissingInformationView(frame: view.frame)
             missingInformationView?.setValues(uid: TPUser.sharedInstance.getUid(), user: userValues)
@@ -51,7 +65,16 @@ class LimboViewController: BaseViewController, UITableViewDelegate
         }
     }
     
+    private func showNevermindView() {
+        limboView?.removeFromSuperview()
+        nevermindView = NevermindView(frame: view.frame)
+        nevermindView?.setupView()
+        nevermindView?.nevermindDelegate = self
+        view.addSubview(nevermindView!)
+    }
+    
     private func showLimboView(name: String, email: String) {
+        nevermindView?.removeFromSuperview()
         limboView = LimboView(frame: view.frame)
         limboView?.setupView(name: name, email: email)
         limboView?.limboViewDelegate = self
@@ -137,6 +160,15 @@ class LimboViewController: BaseViewController, UITableViewDelegate
 
 }
 
+extension LimboViewController : NevermindDelegate {
+    func clickReregister() {
+        nevermindDelegate?.clickReregister() // CenterViewController
+    }
+    func clickQuit() {
+        nevermindDelegate?.clickQuit()
+    }
+}
+
 extension LimboViewController : LimboViewDelegate {
     func clickShowMeHow() {
         self.present(ShowMeHowVC(), animated: true, completion: nil)
@@ -180,6 +212,10 @@ extension LimboViewController : LimboViewDelegate {
                 
             })
     
+    }
+    
+    func clickNevermind() {
+        showNevermindView()
     }
 }
 

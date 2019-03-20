@@ -214,29 +214,36 @@ class LimboView: UIView {
     }()
     
     
-//    let nevermind_heading : UILabel = {
-//        let l = UILabel()
-//        l.translatesAutoresizingMaskIntoConstraints = false
-//        l.text = "Get Me Out of Here"
-//        l.font = l.font.withSize(18)
-//        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
-//        return l
-//    }()
-//
-//    let nevermind : UITextView = {
-//        let textView = UITextView()
-//        textView.text = "Changed your mind?  Typed in the wrong email?  Want us to forget you were ever here?  Just click \"Get Me Out of Here\" below"
-//        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
-//        textView.translatesAutoresizingMaskIntoConstraints = false
-//        //        var frame = textView.frame
-//        //        frame.size.height = 24
-//        //        textView.frame = frame
-//        textView.backgroundColor = .clear
-//        textView.textAlignment = .left
-//        textView.isEditable = false
-//        textView.isScrollEnabled = false
-//        return textView
-//    }()
+    let nevermind_heading : UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.text = "Nevermind"
+        l.font = l.font.withSize(18)
+        l.font = UIFont.boldSystemFont(ofSize: l.font.pointSize)
+        return l
+    }()
+
+    let nevermind : UITextView = {
+        let textView = UITextView()
+        textView.text = "Mis-typed your email?  Need to start over?  Maybe you just decided you don't want this app after all.  No biggie.  Just touch \"Nevermind\" below and we'll forget you were ever here"
+        textView.font = UIFont(name: (textView.font?.fontName)!, size: (textView.font?.pointSize)!+4)!
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        //        var frame = textView.frame
+        //        frame.size.height = 24
+        //        textView.frame = frame
+        textView.backgroundColor = .clear
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    
+    let nevermind_button : BaseButton = {
+        let button = BaseButton(text: "Nevermind")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(clickNevermind(_:)), for: .touchUpInside)
+        return button
+    }()
     
     
     // #1
@@ -333,9 +340,18 @@ class LimboView: UIView {
             done_button.topAnchor.constraint(equalTo: when_finished.bottomAnchor, constant: 16).isActive = true
             done_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
             
-//            scrollView.addSubview(nevermind_heading)
-//            nevermind_heading.topAnchor.constraint(equalTo: done_button.bottomAnchor, constant: 16).isActive = true
-//            nevermind_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+            scrollView.addSubview(nevermind_heading)
+            nevermind_heading.topAnchor.constraint(equalTo: done_button.bottomAnchor, constant: 32).isActive = true
+            nevermind_heading.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8).isActive = true
+            
+            scrollView.addSubview(nevermind)
+            nevermind.topAnchor.constraint(equalTo: nevermind_heading.bottomAnchor, constant: 8).isActive = true
+            nevermind.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 4).isActive = true
+            nevermind.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.95).isActive = true
+            
+            scrollView.addSubview(nevermind_button)
+            nevermind_button.topAnchor.constraint(equalTo: nevermind.bottomAnchor, constant: 16).isActive = true
+            nevermind_button.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0).isActive = true
             
             addSubview(scrollView)
         }
@@ -397,6 +413,10 @@ class LimboView: UIView {
         limboViewDelegate?.clickDone(name: name, email: email)
     }
     
+    @objc private func clickNevermind(_ sender:UIButton) {
+        limboViewDelegate?.clickNevermind() // LimboViewController
+    }
+    
     private func openUrl(string: String) {
         guard let url = URL(string: string) else {
             return
@@ -415,4 +435,5 @@ protocol LimboViewDelegate {
     func clickShowMeHow()
     func startVideoChat()
     func clickDone(name: String, email: String)
+    func clickNevermind()
 }

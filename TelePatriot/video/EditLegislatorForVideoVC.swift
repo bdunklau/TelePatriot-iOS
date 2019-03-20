@@ -335,7 +335,7 @@ class EditLegislatorForVideoVC: BaseViewController, UIPickerViewDelegate, UIPick
                         legislatorUI.legislatorDelegate = self
                         legislatorUI.setLegislator(legislator: legislator)
                         
-                        print("legislator name: \(legislator.first_name) \(legislator.last_name)")
+                        print("legislator name: \(legislator.first_name) \(legislator.last_name) \(legislator.leg_id)")
                     }
                     counter = counter + 1
                 }

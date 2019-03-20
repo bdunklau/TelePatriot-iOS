@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.5784301"
+            timestampString = "574749191.299733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "439"
-            endingLineNumber = "439"
+            startingLineNumber = "471"
+            endingLineNumber = "471"
             landmarkName = "doView(vc:track:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.578707"
+            timestampString = "574749191.2999721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,7 +250,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1899149"
+            timestampString = "574749191.300051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "698"
@@ -282,7 +282,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.190007"
+            timestampString = "574749191.3001291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "457"
@@ -298,7 +298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.190062"
+            timestampString = "574749191.300182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "479"
@@ -314,7 +314,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.190112"
+            timestampString = "574749191.300233"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "469"
@@ -330,7 +330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1901619"
+            timestampString = "574749191.300284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "446"
@@ -346,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.19021"
+            timestampString = "574749191.300334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "452"
@@ -378,7 +378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.190271"
+            timestampString = "574749191.300397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "382"
@@ -650,11 +650,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190477"
+            timestampString = "574749191.300602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "550"
-            endingLineNumber = "550"
+            startingLineNumber = "548"
+            endingLineNumber = "548"
             landmarkName = "messaging(_:didReceiveRegistrationToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -666,11 +666,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.1905251"
+            timestampString = "574749191.30065"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "563"
-            endingLineNumber = "563"
+            startingLineNumber = "561"
+            endingLineNumber = "561"
             landmarkName = "messaging(_:didReceive:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -682,11 +682,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190565"
+            timestampString = "574749191.300697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "refreshToken(notification:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -698,11 +698,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190604"
+            timestampString = "574749191.300736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "application(_:didReceiveRemoteNotification:fetchCompletionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -714,11 +714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190641"
+            timestampString = "574749191.300773"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "519"
-            endingLineNumber = "519"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "userNotificationCenter(_:willPresent:withCompletionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -730,11 +730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190677"
+            timestampString = "574749191.3008111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
             landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -746,7 +746,87 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190714"
+            timestampString = "574749191.30085"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "574749191.3008879"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "574749191.300926"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "applicationDidBecomeActive(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "574749191.300963"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
+            landmarkName = "messaging(_:didRefreshRegistrationToken:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "574749191.301001"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "574749191.301039"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "186"
@@ -762,91 +842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190751"
+            timestampString = "574749191.301077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190788"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
-            landmarkName = "applicationDidBecomeActive(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190825"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
-            landmarkName = "messaging(_:didRefreshRegistrationToken:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190861"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190896"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190933"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "init()"
             landmarkType = "7">
          </BreakpointContent>
@@ -858,11 +858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.190969"
+            timestampString = "574749191.301114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -890,7 +890,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474424"
+            timestampString = "574749191.301169"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "226"
@@ -906,7 +906,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474473"
+            timestampString = "574749191.301213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "202"
@@ -922,7 +922,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.4745131"
+            timestampString = "574749191.3012511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "264"
@@ -938,7 +938,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474551"
+            timestampString = "574749191.3012871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "182"
@@ -954,7 +954,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474589"
+            timestampString = "574749191.301325"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "204"
@@ -970,7 +970,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474627"
+            timestampString = "574749191.301373"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "312"
@@ -986,7 +986,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474665"
+            timestampString = "574749191.301419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "337"
@@ -1002,7 +1002,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474702"
+            timestampString = "574749191.301456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "259"
@@ -1018,7 +1018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474739"
+            timestampString = "574749191.301493"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "279"
@@ -1034,7 +1034,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474776"
+            timestampString = "574749191.301529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "282"
@@ -1050,7 +1050,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474812"
+            timestampString = "574749191.3015651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "319"
@@ -1082,7 +1082,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474889"
+            timestampString = "574749191.301616"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "336"
@@ -1114,7 +1114,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.474962"
+            timestampString = "574749191.301667"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "352"
@@ -1210,7 +1210,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.475057"
+            timestampString = "574749191.301759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "336"
@@ -1226,7 +1226,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.4750969"
+            timestampString = "574749191.301813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "246"
@@ -1242,7 +1242,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.475135"
+            timestampString = "574749191.301872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "314"
@@ -1258,7 +1258,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.475177"
+            timestampString = "574749191.301919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "315"
@@ -1370,7 +1370,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/video/EditLegislatorForVideoVC.swift"
-            timestampString = "564093600.47528"
+            timestampString = "574749191.302016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "388"
@@ -1418,11 +1418,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.583087"
+            timestampString = "574749191.302056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1434,11 +1434,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.5831341"
+            timestampString = "574749191.302124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "457"
-            endingLineNumber = "457"
+            startingLineNumber = "489"
+            endingLineNumber = "489"
             landmarkName = "newPhoneCampaignSubmitted()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1450,23 +1450,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.191294"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.191335"
+            timestampString = "574749191.302191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "256"
@@ -1481,12 +1465,28 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/ContainerViewController.swift"
-            timestampString = "568280129.583619"
+            filePath = "TelePatriot/core/AppDelegate.swift"
+            timestampString = "574749191.302232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/ContainerViewController.swift"
+            timestampString = "574749191.302272"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "rotated()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1498,11 +1498,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.583661"
+            timestampString = "574749191.302313"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "511"
+            endingLineNumber = "511"
             landmarkName = "CenterViewController"
             landmarkType = "21">
          </BreakpointContent>
@@ -1514,12 +1514,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/ContainerViewController.swift"
-            timestampString = "568280129.583701"
+            timestampString = "574749191.302381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
-            landmarkName = "toggleLeftPanel()"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "toggleRightPanel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1530,11 +1530,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/ContainerViewController.swift"
-            timestampString = "568280129.583737"
+            timestampString = "574749191.30242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "animateLeftPanel(shouldExpand:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1546,12 +1546,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/ContainerViewController.swift"
-            timestampString = "568280129.5837719"
+            timestampString = "574749191.302459"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "441"
-            endingLineNumber = "441"
-            landmarkName = "animateLeftPanel(shouldExpand:)"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
+            landmarkName = "animateCenterPanelXPosition(targetPosition:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1562,12 +1562,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/ContainerViewController.swift"
-            timestampString = "568280129.583806"
+            timestampString = "574749191.302498"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
-            landmarkName = "addLeftPanelViewController()"
+            startingLineNumber = "398"
+            endingLineNumber = "398"
+            landmarkName = "addRightPanelViewController()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1626,7 +1626,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1914541"
+            timestampString = "574749191.3025841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "651"
@@ -1642,7 +1642,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.191505"
+            timestampString = "574749191.302636"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "672"
@@ -1658,7 +1658,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.191554"
+            timestampString = "574749191.3026839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "688"
@@ -1674,7 +1674,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1916"
+            timestampString = "574749191.302734"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "689"
@@ -1690,7 +1690,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1916471"
+            timestampString = "574749191.3027821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "683"
@@ -1706,7 +1706,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.191694"
+            timestampString = "574749191.30283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "713"
@@ -1738,11 +1738,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.584185"
+            timestampString = "574749191.302892"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "700"
-            endingLineNumber = "700">
+            startingLineNumber = "744"
+            endingLineNumber = "744">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2008,11 +2008,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.584632"
+            timestampString = "574749191.303124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2022,7 +2022,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.191901"
+            timestampString = "574749191.303479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
@@ -2038,7 +2038,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.191951"
+            timestampString = "574749191.303535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
@@ -2054,7 +2054,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.191999"
+            timestampString = "574749191.303596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "733"
@@ -2070,11 +2070,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.5848041"
+            timestampString = "574749191.303659"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "697"
+            endingLineNumber = "697"
             landmarkName = "CenterViewController"
             landmarkType = "21">
          </BreakpointContent>
@@ -2086,11 +2086,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.584844"
+            timestampString = "574749191.30373"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "674"
-            endingLineNumber = "674"
+            startingLineNumber = "706"
+            endingLineNumber = "706"
             landmarkName = "CenterViewController"
             landmarkType = "21">
          </BreakpointContent>
@@ -2102,7 +2102,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.192068"
+            timestampString = "574749191.303812"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "745"
@@ -2118,11 +2118,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.5849251"
+            timestampString = "574749191.303867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2272,31 +2272,31 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.VideoOffersVC.viewDidLoad() -&gt; ()"
+                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in TelePatriot.VideoOffersVC.viewDidLoad() -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/video/VideoOffersVC.swift"
-                  timestampString = "569402905.698205"
+                  timestampString = "574749191.615165"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
                   endingLineNumber = "39"
-                  offsetFromSymbolStart = "944">
+                  offsetFromSymbolStart = "992">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.VideoOffersVC.viewDidLoad() -&gt; ()"
+                  symbolName = "closure #2 () -&gt; () in closure #1 (__C.FIRDataSnapshot) -&gt; () in TelePatriot.VideoOffersVC.viewDidLoad() -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/video/VideoOffersVC.swift"
-                  timestampString = "569402905.699827"
+                  timestampString = "574749191.6168"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "40"
                   endingLineNumber = "40"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "36">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2404,11 +2404,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.192234"
+            timestampString = "574749191.304309"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "rotated()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2420,11 +2420,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.192275"
+            timestampString = "574749191.3043621"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
             landmarkName = "rotated()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2548,11 +2548,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.586004"
+            timestampString = "574749191.304486"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2562,11 +2562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.5860389"
+            timestampString = "574749191.304774"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2576,11 +2576,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.586074"
+            timestampString = "574749191.305057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2590,11 +2590,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.586109"
+            timestampString = "574749191.305354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2604,7 +2604,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.192408"
+            timestampString = "574749191.305649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "781"
@@ -2620,7 +2620,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.192457"
+            timestampString = "574749191.305733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "789"
@@ -2652,11 +2652,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.192517"
+            timestampString = "574749191.305822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "rotated()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2748,11 +2748,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/Admin/LimboViewController.swift"
-            timestampString = "568280129.586695"
+            timestampString = "574749191.3059469"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369">
+            startingLineNumber = "405"
+            endingLineNumber = "405">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2826,7 +2826,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.586852"
+            timestampString = "574749191.306493"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
@@ -2842,11 +2842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.586892"
+            timestampString = "574749191.306684"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "626"
-            endingLineNumber = "626"
+            startingLineNumber = "658"
+            endingLineNumber = "658"
             landmarkName = "videoInvitationRevoked()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2858,7 +2858,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.586931"
+            timestampString = "574749191.306764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -2874,11 +2874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.58697"
+            timestampString = "574749191.3069251"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "authUI(_:didSignInWith:error:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2890,7 +2890,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587007"
+            timestampString = "574749191.307066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
@@ -2906,11 +2906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587045"
+            timestampString = "574749191.307158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "622"
-            endingLineNumber = "622"
+            startingLineNumber = "654"
+            endingLineNumber = "654"
             landmarkName = "videoInvitationExtended(vi:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2922,11 +2922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587083"
+            timestampString = "574749191.3072309"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "630"
-            endingLineNumber = "630"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -2954,7 +2954,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.58716"
+            timestampString = "574749191.307323"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
@@ -2970,7 +2970,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587198"
+            timestampString = "574749191.307397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "73"
@@ -2986,7 +2986,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/misc/MissingInformationView.swift"
-            timestampString = "562224220.265093"
+            timestampString = "574747396.056772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
@@ -3002,7 +3002,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/misc/MissingInformationView.swift"
-            timestampString = "562224220.265138"
+            timestampString = "574747396.060541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
@@ -3018,7 +3018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/misc/MissingInformationView.swift"
-            timestampString = "562224220.265177"
+            timestampString = "574747396.060832"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
@@ -3146,11 +3146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.5874079"
+            timestampString = "574749191.307598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "585"
-            endingLineNumber = "585"
+            startingLineNumber = "617"
+            endingLineNumber = "617"
             landmarkName = "allowed()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3162,11 +3162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587451"
+            timestampString = "574749191.307678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "614"
-            endingLineNumber = "614"
+            startingLineNumber = "646"
+            endingLineNumber = "646"
             landmarkName = "accountEnabled()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3178,7 +3178,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587491"
+            timestampString = "574749191.30776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
@@ -3194,7 +3194,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.192824"
+            timestampString = "574749191.307856"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "203"
@@ -3210,7 +3210,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.192878"
+            timestampString = "573541178.5151989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "106"
@@ -3226,7 +3226,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193193"
+            timestampString = "574749191.307947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "555"
@@ -3242,7 +3242,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193246"
+            timestampString = "574749191.30801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "567"
@@ -3258,11 +3258,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193294"
+            timestampString = "574749191.308069"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "910"
-            endingLineNumber = "910"
+            startingLineNumber = "911"
+            endingLineNumber = "911"
             landmarkName = "setCurrentTeamAndNotify(team:whileLoggingIn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3274,7 +3274,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193341"
+            timestampString = "574749191.308118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "581"
@@ -3306,11 +3306,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587817"
+            timestampString = "574749191.308181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "502"
-            endingLineNumber = "502"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "teamSelected(team:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3322,11 +3322,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1934119"
+            timestampString = "574749191.308253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "914"
-            endingLineNumber = "914"
+            startingLineNumber = "915"
+            endingLineNumber = "915"
             landmarkName = "setCurrentTeamAndNotify(team:whileLoggingIn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3338,13 +3338,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.1934609"
+            timestampString = "573541178.515298"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "242"
+            endingLineNumber = "242">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3354,7 +3352,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587921"
+            timestampString = "574749191.308318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
@@ -3370,11 +3368,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.587963"
+            timestampString = "574749191.3083889"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3386,7 +3384,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588001"
+            timestampString = "574749191.308459"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
@@ -3402,7 +3400,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193712"
+            timestampString = "574749191.3085279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
@@ -3418,7 +3416,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193764"
+            timestampString = "574749191.308579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
@@ -3434,7 +3432,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193813"
+            timestampString = "574749191.308629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "735"
@@ -3450,7 +3448,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588168"
+            timestampString = "574749191.308678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "75"
@@ -3466,7 +3464,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.5882061"
+            timestampString = "574749191.308748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
@@ -3498,7 +3496,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.193891"
+            timestampString = "574749191.308831"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
@@ -3514,11 +3512,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588309"
+            timestampString = "574749191.308884"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3530,11 +3528,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588349"
+            timestampString = "574749191.308952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3546,11 +3544,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588387"
+            timestampString = "574749191.309021"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3562,11 +3560,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.2452"
+            timestampString = "573027194.712382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3574,15 +3572,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588444"
+            timestampString = "574749191.309106"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "417"
-            endingLineNumber = "417"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "doView(vc:viewControllers:track:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3594,11 +3592,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588485"
+            timestampString = "574749191.309176"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3610,11 +3608,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.245631"
+            timestampString = "573027194.712532"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3626,11 +3624,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.245883"
+            timestampString = "573027194.712584"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3642,11 +3640,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.246122"
+            timestampString = "573027194.712635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "loadTheView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3658,11 +3656,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.246361"
+            timestampString = "573027194.7126859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "296"
+            endingLineNumber = "296"
             landmarkName = "makeCall(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3674,11 +3672,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588585"
+            timestampString = "574749191.3092999"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "didSelectSomething(menuItem:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3690,11 +3688,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.246618"
+            timestampString = "573027194.712783"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "makeCall(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3706,11 +3704,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.246857"
+            timestampString = "573027194.712833"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3718,15 +3716,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194049"
+            timestampString = "574749191.309396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "879"
-            endingLineNumber = "879"
+            startingLineNumber = "880"
+            endingLineNumber = "880"
             landmarkName = "unassignCBMissionItem()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3738,7 +3736,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194098"
+            timestampString = "574749191.30946"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "855"
@@ -3754,11 +3752,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588747"
+            timestampString = "574749191.309514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "unassignMissionItem()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3770,11 +3768,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.247131"
+            timestampString = "573027194.7129591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3782,31 +3780,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/CenterViewController.swift"
-            timestampString = "568280129.588805"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
-            landmarkName = "didSelectSomething(menuItem:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194178"
+            timestampString = "574749191.3096"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "868"
-            endingLineNumber = "868"
+            startingLineNumber = "869"
+            endingLineNumber = "869"
             landmarkName = "unassignCBMissionItem()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3818,7 +3800,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194229"
+            timestampString = "574749191.309656"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "854"
@@ -3834,7 +3816,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194277"
+            timestampString = "574749191.30971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "859"
@@ -3846,15 +3828,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1943229"
+            timestampString = "574749191.30976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "871"
-            endingLineNumber = "871"
+            startingLineNumber = "872"
+            endingLineNumber = "872"
             landmarkName = "unassignCBMissionItem()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3866,7 +3848,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.19437"
+            timestampString = "574749191.30981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "862"
@@ -3881,60 +3863,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.194419"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "onCallEnded()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.1944571"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "387"
-            endingLineNumber = "387"
-            landmarkName = "onCallEnded()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/core/AppDelegate.swift"
-            timestampString = "569402905.1944931"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
-            landmarkName = "onCallEnded()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.294855"
+            timestampString = "574575530.147079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "saveNotes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3946,11 +3880,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.2948999"
+            timestampString = "574575530.147121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "saveNotes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3962,11 +3896,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.2949409"
+            timestampString = "574575530.147158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "saveNotes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3978,12 +3912,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.294981"
+            timestampString = "574575530.147194"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "saveNotes()"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "submitWrapUpAndQuit(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -4026,11 +3960,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.295019"
+            timestampString = "574575530.147231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "submitWrapUpAndQuit(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
+            timestampString = "574575530.147264"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "logout()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
+            timestampString = "574575530.1472991"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "saveNotes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4042,12 +4008,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.295058"
+            timestampString = "574575530.1473351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "saveNotes()"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
+            landmarkName = "CBMissionItemWrapUpVC"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
+            timestampString = "574575530.14737"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "logout()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4058,11 +4040,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.295096"
+            timestampString = "574575530.147405"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "saveNotes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4074,59 +4056,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.295136"
+            timestampString = "574575530.147441"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "saveNotes()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.295174"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "saveNotes()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.295212"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "saveNotes()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
-            timestampString = "565938679.2952501"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "saveNotes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4138,7 +4072,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194626"
+            timestampString = "574749191.309975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "589"
@@ -4154,27 +4088,27 @@
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
-                  timestampString = "569402905.793925"
+                  timestampString = "574749191.765933"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "589"
                   endingLineNumber = "589"
-                  offsetFromSymbolStart = "52">
+                  offsetFromSymbolStart = "56">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.TPUser.(fetchRoles in _6CEB0283793AB88A539B694D8D5218BE)(uid: Swift.String, citizen_builder_id: Swift.Optional&lt;Swift.Int&gt;) -&gt; ()"
+                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in TelePatriot.TPUser.(fetchRoles in _6CEB0283793AB88A539B694D8D5218BE)(uid: Swift.String, citizen_builder_id: Swift.Optional&lt;Swift.Int&gt;) -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
-                  timestampString = "569402905.795646"
+                  timestampString = "574749191.7676589"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "590"
                   endingLineNumber = "590"
-                  offsetFromSymbolStart = "56">
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -4186,7 +4120,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194675"
+            timestampString = "574749191.310026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "593"
@@ -4202,7 +4136,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194723"
+            timestampString = "574749191.310079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "596"
@@ -4218,7 +4152,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.19477"
+            timestampString = "574749191.310129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "631"
@@ -4234,27 +4168,27 @@
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
-                  timestampString = "569402905.807333"
+                  timestampString = "574749191.77981"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "631"
                   endingLineNumber = "631"
-                  offsetFromSymbolStart = "328">
+                  offsetFromSymbolStart = "324">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.TPUser.(fetchRoles_fromFirebase in _6CEB0283793AB88A539B694D8D5218BE)(uid: Swift.String) -&gt; ()"
+                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in TelePatriot.TPUser.(fetchRoles_fromFirebase in _6CEB0283793AB88A539B694D8D5218BE)(uid: Swift.String) -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
-                  timestampString = "569402905.809044"
+                  timestampString = "574749191.781535"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "633"
                   endingLineNumber = "633"
-                  offsetFromSymbolStart = "32">
+                  offsetFromSymbolStart = "44">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -4266,7 +4200,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1948169"
+            timestampString = "574749191.310178"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "633"
@@ -4282,7 +4216,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194863"
+            timestampString = "574749191.310235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "662"
@@ -4298,27 +4232,27 @@
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
-                  timestampString = "569402905.816914"
+                  timestampString = "574749191.791159"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "662"
                   endingLineNumber = "662"
-                  offsetFromSymbolStart = "1268">
+                  offsetFromSymbolStart = "920">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.TPUser.(fetchRoles_fromFirebase in _6CEB0283793AB88A539B694D8D5218BE)(uid: Swift.String) -&gt; ()"
+                  symbolName = "closure #2 (__C.FIRDataSnapshot) -&gt; () in TelePatriot.TPUser.(fetchRoles_fromFirebase in _6CEB0283793AB88A539B694D8D5218BE)(uid: Swift.String) -&gt; ()"
                   moduleName = "TelePatriot"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
-                  timestampString = "569402905.8186539"
+                  timestampString = "574749191.7928441"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "664"
                   endingLineNumber = "664"
-                  offsetFromSymbolStart = "24">
+                  offsetFromSymbolStart = "36">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -4330,7 +4264,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.194909"
+            timestampString = "574749191.3102829"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "670"
@@ -4346,7 +4280,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1949559"
+            timestampString = "574749191.310329"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "221"
@@ -4362,7 +4296,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.195001"
+            timestampString = "574749191.310376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "213"
@@ -4378,12 +4312,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.1950459"
+            timestampString = "573541178.51571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "111"
             endingLineNumber = "111"
-            landmarkName = "fromCitizenBuilder(cbid:apiKeyName:apiKeyValue:domain:)"
+            landmarkName = "fromTelePatriot(uid:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4394,7 +4328,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.195269"
+            timestampString = "574749191.310437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "831"
@@ -4410,7 +4344,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.19532"
+            timestampString = "574749191.310487"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "825"
@@ -4426,7 +4360,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1953681"
+            timestampString = "574749191.310535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "218"
@@ -4442,11 +4376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.247748"
+            timestampString = "573027194.713787"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4458,11 +4392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.247997"
+            timestampString = "573027194.7138439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4474,11 +4408,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.248214"
+            timestampString = "573027194.713901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4490,11 +4424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.248413"
+            timestampString = "573027194.713961"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4506,11 +4440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
-            timestampString = "566552382.24861"
+            timestampString = "573027194.714022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "getMission_fromCitizenBuilder()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4522,7 +4456,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.195464"
+            timestampString = "574749191.310634"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "288"
@@ -4538,7 +4472,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.1955169"
+            timestampString = "574749191.310693"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "304"
@@ -4554,13 +4488,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.195568"
+            timestampString = "573541178.515825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
             endingLineNumber = "108"
-            landmarkName = "fromCitizenBuilder(cbid:apiKeyName:apiKeyValue:domain:)"
-            landmarkType = "7">
+            landmarkName = "SwitchTeamsVC"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4570,12 +4504,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.195789"
+            timestampString = "573541178.515864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
             endingLineNumber = "120"
-            landmarkName = "fromTelePatriot(uid:)"
+            landmarkName = "fetchData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4586,7 +4520,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/TPUser.swift"
-            timestampString = "569402905.196041"
+            timestampString = "574749191.310766"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "795"
@@ -4602,7 +4536,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.196093"
+            timestampString = "573541178.5159121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
@@ -4618,7 +4552,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.1963"
+            timestampString = "573541178.515949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "95"
@@ -4634,45 +4568,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.196506"
+            timestampString = "573541178.5159841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TelePatriot.SwitchTeamsVC.viewDidLoad() -&gt; ()"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/SwitchTeamsVC.swift"
-                  timestampString = "569402905.857875"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33"
-                  offsetFromSymbolStart = "200">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.SwitchTeamsVC.viewDidLoad() -&gt; ()"
-                  moduleName = "TelePatriot"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/SwitchTeamsVC.swift"
-                  timestampString = "569402905.859807"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35"
-                  offsetFromSymbolStart = "36">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4682,7 +4584,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.196701"
+            timestampString = "573541178.516019"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
@@ -4698,12 +4600,204 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelePatriot/core/SwitchTeamsVC.swift"
-            timestampString = "569402905.196897"
+            timestampString = "573541178.516054"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
             endingLineNumber = "41"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/TPUser.swift"
+            timestampString = "574749191.310867"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "858"
+            endingLineNumber = "858"
+            landmarkName = "unassignCBMissionItem()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TelePatriot.TPUser.(unassignCBMissionItem in _6CEB0283793AB88A539B694D8D5218BE)() -&gt; ()"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
+                  timestampString = "569712011.741516"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "858"
+                  endingLineNumber = "858"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in TelePatriot.TPUser.(unassignCBMissionItem in _6CEB0283793AB88A539B694D8D5218BE)() -&gt; ()"
+                  moduleName = "TelePatriot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bdunklau/TelePatriot/TelePatriot/core/TPUser.swift"
+                  timestampString = "569712011.743096"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "859"
+                  endingLineNumber = "859"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/CenterViewController.swift"
+            timestampString = "574749191.310922"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
+            landmarkName = "didSelectSomething(menuItem:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/CenterViewController.swift"
+            timestampString = "574749191.310991"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
+            landmarkName = "didSelectSomething(menuItem:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/CitizenBuilder/CBMissionItemWrapUpVC.swift"
+            timestampString = "574575530.147863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/CitizenBuilder/MyCBMissionViewController.swift"
+            timestampString = "573027194.714349"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "gotoLeaveNotesScreen(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Admin/LimboViewController.swift"
+            timestampString = "574749191.311087"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "clickNevermind()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Admin/LimboViewController.swift"
+            timestampString = "574749191.3114409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "showNevermindView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Admin/NevermindView.swift"
+            timestampString = "574749191.311697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "clickReregister(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/core/CenterViewController.swift"
+            timestampString = "574749191.311744"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "checkLoggedIn()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelePatriot/Admin/LimboViewController.swift"
+            timestampString = "574749191.3117909"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "showNevermindView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

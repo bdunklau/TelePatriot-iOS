@@ -182,18 +182,22 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
                 TPUser.sharedInstance.setUser(u: user)
+                print("CenterViewController.checkLoggedIn(): TPUser.sharedInstance.setUser(u: user)  \(user.displayName ?? "name is n/a")")
                 
                 if let sidePanelViewController = appDelegate?.leftViewController {
                     TPUser.sharedInstance.addAccountStatusEventListener(listener: sidePanelViewController)
+                    print("CenterViewController.checkLoggedIn(): TPUser.sharedInstance.addAccountStatusEventListener(listener: sidePanelViewController)")
                 }
                 
                 if let videoChatVC = appDelegate?.videoChatVC {
                     TPUser.sharedInstance.addAccountStatusEventListener(listener: videoChatVC)
+                    print("CenterViewController.checkLoggedIn(): TPUser.sharedInstance.addAccountStatusEventListener(listener: videoChatVC)")
                 }
                 
                 if let limboViewController = appDelegate?.limboViewController {
                     limboViewController.setUser(user: user)
                     TPUser.sharedInstance.addAccountStatusEventListener(listener: limboViewController)
+                    print("CenterViewController.checkLoggedIn(): TPUser.sharedInstance.addAccountStatusEventListener(listener: limboViewController)")
                 }
                 
                 // fire off a CBAPIEvent to make CB do a look up on this email address
@@ -202,10 +206,11 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
                 if let name = user.displayName, let email = user.email {
                     let evt = CBAPIEvent(uid: TPUser.sharedInstance.getUid(), name: name, email: email, event_type: "login")
                     evt.save()
+                    print("CenterViewController.checkLoggedIn(): evt.save()")
                 }
                 else {
                     // send them to the MissingInformation screen
-                    print("Send user to MissingInformation screen because name and/or email is missing")
+                    print("CenterViewController.checkLoggedIn(): Send user to MissingInformation screen because name and/or email is missing")
                 }
                 
                 
@@ -219,7 +224,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     
     // https://www.youtube.com/watch?v=jH2LdL-PsHI
     // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
-    private func login() {
+    func login() {
         let authUI = FUIAuth.init(uiWith: Auth.auth())
         
         // This is how you disable sign-in by email.  Uncomment to disable
@@ -233,7 +238,14 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
         // from Brian Caldwell YouTube
         let authViewController = MyAuthPicker(authUI: authUI!)
         let navc = UINavigationController(rootViewController: authViewController)
-        self.present(navc, animated: true, completion: nil)
+        
+        var topController: UIViewController = (UIApplication.shared.keyWindow?.rootViewController!)!
+        while(topController.presentedViewController != nil) {
+            topController = topController.presentedViewController!
+        }
+        topController.present(navc, animated: true, completion: nil)
+        
+//        self.present(navc, animated: true, completion: nil)
     }
     
     
@@ -263,6 +275,18 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
 extension CenterViewController : AppDelegateDelegate {
     func show(viewController: UIViewController) {
         doView(vc: viewController, viewControllers: self.childViewControllers)
+    }
+}
+
+extension CenterViewController : NevermindDelegate {
+    func clickReregister() {
+//        try! Auth.auth().signOut()
+//        splashScreenAlreadyLoaded = false  // so that the next time you login, you'll get the splashscreen again
+        login()
+    }
+    func clickQuit() {
+        splashScreenAlreadyLoaded = false  // so that the next time you login, you'll get the splashscreen again
+        TPUser.sharedInstance.signOut()
     }
 }
 

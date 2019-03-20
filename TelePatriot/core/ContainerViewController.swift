@@ -32,7 +32,7 @@ class ContainerViewController: UIViewController {
     var centerViewController: CenterViewController!
     var chooseSpreadsheetTypeVC: ChooseSpreadsheetTypeVC!
     var directorViewController: DirectorViewController!
-    var limboViewController: LimboViewController!
+//    var limboViewController: LimboViewController!
     var missionDetailsVC: MissionDetailsVC!
     //var myCBMissionViewController: MyCBMissionViewController!
     var myMissionViewController: MyMissionViewController!
@@ -103,6 +103,8 @@ class ContainerViewController: UIViewController {
 //        TPUser.sharedInstance is not init-ed yet ...
 //        limboViewController = getLimboViewController()
 //        limboViewController?.addAccountStatusEventListener(user: TPUser.sharedInstance)
+        
+        getLimboViewController()?.nevermindDelegate = centerViewController
         
         missionDetailsVC = getMissionDetailsVC()
         missionDetailsVC.missionDetailsDelegate = centerViewController
