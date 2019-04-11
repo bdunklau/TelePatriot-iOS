@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import FirebaseAuthUI
+//import FirebaseAuthUI
 
 // Adapted from "Simplify Singletons" here -> https://savvyapps.com/blog/swift-tips-for-developers
 class TPUser {

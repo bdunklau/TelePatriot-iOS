@@ -9,10 +9,11 @@
 import UIKit
 import Firebase
 import FirebaseAuth
-import FirebaseAuthUI
-import FirebaseDatabaseUI
-import FirebaseGoogleAuthUI
-import FirebaseFacebookAuthUI
+import FirebaseUI
+//import FirebaseAuthUI
+//import FirebaseDatabaseUI
+//import FirebaseGoogleAuthUI
+//import FirebaseFacebookAuthUI
 import FBSDKCoreKit
 import FBSDKLoginKit
 

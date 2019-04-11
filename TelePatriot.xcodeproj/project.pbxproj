@@ -28,6 +28,7 @@
 		A126AE1B1F8B1D860096714B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A126AE1A1F8B1D860096714B /* Assets.xcassets */; };
 		A126AE1E1F8B1D860096714B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A126AE1C1F8B1D860096714B /* LaunchScreen.storyboard */; };
 		A126AE281F8B25B40096714B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A126AE271F8B25B40096714B /* GoogleService-Info.plist */; };
+		A129B402224010420022646D /* NevermindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129B401224010420022646D /* NevermindView.swift */; };
 		A12CDB321FAE1605003DE424 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17C7FAF1FAC1B8200430C05 /* FBSDKLoginKit.framework */; };
 		A12CDB331FAE160A003DE424 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17C7FAD1FAC1B6700430C05 /* FBSDKCoreKit.framework */; };
 		A12CDB371FAF6495003DE424 /* NewPhoneCampaignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CDB361FAF6495003DE424 /* NewPhoneCampaignVC.swift */; };
@@ -145,6 +146,7 @@
 		A126AE1D1F8B1D860096714B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A126AE1F1F8B1D860096714B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A126AE271F8B25B40096714B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A129B401224010420022646D /* NevermindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NevermindView.swift; sourceTree = "<group>"; };
 		A12CDB361FAF6495003DE424 /* NewPhoneCampaignVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhoneCampaignVC.swift; sourceTree = "<group>"; };
 		A12CDB3C1FAF77FE003DE424 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A12CDB3E1FAF78E0003DE424 /* VolunteerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolunteerViewController.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				A144EB832137360300005BDF /* DisabledViewController.swift */,
 				A1781B8D217AE4A000CB4462 /* LimboView.swift */,
 				A18565911FBC0523009EE57F /* LimboViewController.swift */,
+				A129B401224010420022646D /* NevermindView.swift */,
 				A159F9631FCF6F5E00204847 /* NoRoleAssignedDelegate.swift */,
 				A135C30020197AE500B50B49 /* SearchUsersVC.swift */,
 				A19F6C392139D91D00A140C2 /* ShowMeHowVC.swift */,
@@ -596,8 +599,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TelePatriot/Pods-TelePatriot-resources.sh",
-				"${PODS_ROOT}/FirebaseInvites/Resources/GINInviteResources.bundle",
-				"${PODS_ROOT}/FirebaseInvites/Resources/GPPACLPickerResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAnonymousAuthUI.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseFacebookAuthUI.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
@@ -608,8 +610,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GINInviteResources.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GPPACLPickerResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAnonymousAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseFacebookAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
@@ -635,20 +636,17 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${PODS_ROOT}/TwilioVideo/Build/iOS/TwilioVideo.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -659,20 +657,17 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwilioVideo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -723,6 +718,7 @@
 				A18565981FBCF2A6009EE57F /* AccountStatusEvent.swift in Sources */,
 				A109E8AF1FC6233F0005517A /* ContainerViewController.swift in Sources */,
 				A1DD805B1FE963BB003F140C /* TPUserTableViewCell.swift in Sources */,
+				A129B402224010420022646D /* NevermindView.swift in Sources */,
 				A126AE141F8B1D860096714B /* AppDelegate.swift in Sources */,
 				A148B1E420ACFEC100DB979C /* EditSocialMediaVC.swift in Sources */,
 				A13187B92078555E0048FE95 /* EditVideoMissionDescriptionVC.swift in Sources */,

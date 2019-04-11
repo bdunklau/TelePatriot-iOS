@@ -7,22 +7,22 @@ target 'TelePatriot' do
     
     # Pods for TelePatriot
     # see all the possibilities here: https://firebase.google.com/docs/ios/setup
-    pod 'Firebase/Core'
+    pod 'Firebase/Core', '~> 5.0'
     pod 'Firebase/Messaging'
-    pod 'Firebase/Database'
-    pod 'Firebase/Invites'
+    pod 'Firebase/Database', '~> 5.0'
+    # pod 'Firebase/Invites'
     pod 'Firebase/DynamicLinks'
     pod 'Firebase/RemoteConfig'
     pod 'Firebase/Auth'
     pod 'IQKeyboardManagerSwift'
-    pod 'FirebaseUI', '~> 4.0'
+    pod 'FirebaseUI', '~> 5.0'
     
     # source:  https://github.com/firebase/FirebaseUI-iOS/blob/master/FirebaseAuthUI/README.md
-    pod 'FirebaseUI/Auth'
-    pod 'FirebaseUI/Google'
-    pod 'FirebaseUI/Facebook'
-    pod 'FirebaseUI/Twitter'
-    pod 'FirebaseUI/Phone'
+    # pod 'FirebaseUI/Auth', '~> 5.0'
+    # pod 'FirebaseUI/Google', '~> 5.0'
+    # pod 'FirebaseUI/Facebook'
+    # pod 'FirebaseUI/Twitter', '~> 5.0'
+    # pod 'FirebaseUI/Phone', '~> 5.2.2'
     
     # pod 'FacebookCore'
     # pod 'FacebookLogin'
@@ -33,7 +33,7 @@ target 'TelePatriot' do
     pod 'FBSDKShareKit'
     pod 'FBSDKLoginKit'
     
-    pod 'FirebaseInstanceID', '= 2.0.0'
+    pod 'FirebaseInstanceID'
     
     pod 'TwilioVideo', '~> 2.4.0'
     

@@ -205,6 +205,8 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
     private func saveNotes() {
         guard let missionItem = TPUser.sharedInstance.currentCBMissionItem,
             let person_id = missionItem.person_id,
+            let first_name = missionItem.first_name,
+            let last_name = missionItem.last_name,
             let mission_id = missionItem.mission_id,
             let phone = missionItem.phone,
             let domain = missionItem.citizen_builder_domain,
@@ -260,6 +262,36 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
             }
         }
         task.resume()
+        
+        var call_notes = [
+            "first_name": first_name, // the person called
+            "last_name": last_name,   // the person called
+            "person_id": person_id,   // the person called CB ID
+            "phone_number": phone,    // the person called
+            "author_name": TPUser.sharedInstance.getName(), // the volunteer
+            "author_id": author_id,                         // the volunteer's CB ID
+            "outcome": outcome,
+            "notes": notes,
+            "call_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+            "call_date_ms": Util.getDate_as_millis(),
+            "mission_name": missionItem.name,
+            "mission_id": mission_id,
+            "calls_made": missionItem.calls_made,
+            "percent_complete": missionItem.percent_complete,
+            "total": missionItem.total,
+            "status": missionItem.status
+            ] as [String : Any]
+        
+        if let phone2 = missionItem.phone2, let name2 = missionItem.name2 {
+            call_notes["phone2"] = phone2.trimmingCharacters(in: .whitespacesAndNewlines)
+            call_notes["name2"] = name2.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        if let info = missionItem.info {
+            call_notes["info"] = info
+        }
+        
+        let ref = Database.database().reference().child("call_notes")
+        ref.childByAutoId().setValue(call_notes)
     }
     
     
