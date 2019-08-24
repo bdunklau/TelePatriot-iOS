@@ -323,6 +323,7 @@ class MyCBMissionViewController: BaseViewController {
         
         // now do the call
         UIApplication.shared.open(number)
+//        UIApplication.shared.open(URL(string: "tel://2146320000")!) // short circuit to some other number
     }
     
     func getDateString() -> String {
