@@ -34,7 +34,9 @@ class VideoEvent {
     }
     
     func save() {
-        Database.database().reference().child("video/video_events").childByAutoId().setValue(dictionary())
+        let id:String = Database.database().reference().child("video/video_events").childByAutoId().key!
+        print("video/video_events/\(id)")
+        Database.database().reference().child("video/video_events").child(id).setValue(dictionary())
     }
     
     private func dictionary() -> [String:Any] {
@@ -42,12 +44,12 @@ class VideoEvent {
             "uid": uid,
             "name": name,
             "video_node_key": video_node_key,
-            "room_id": room_id,
-            "RoomSid": RoomSid,
-            "MediaUri": MediaUri,
+            "room_id": room_id as Any,
+            "RoomSid": RoomSid as Any,
+            "MediaUri": MediaUri as Any,
             "request_type": request_type,
-            "video_invitation_key": video_invitation_key,
-            "video_invitation_extended_to": video_invitation_extended_to
+            "video_invitation_key": video_invitation_key as Any,
+            "video_invitation_extended_to": video_invitation_extended_to as Any
             // no need to pass date from the client side, let the server side handle that with a trigger - less code on the client
         ]
     }

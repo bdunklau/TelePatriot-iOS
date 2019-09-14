@@ -142,6 +142,7 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         }
         
         notesField.text = ""
+        outcome = "Voicemail" // reset to this value each time we come to this screen
         
         view.addSubview(picker)
         //pickerViewContainer.view.addSubview(picker)
@@ -248,50 +249,57 @@ class CBMissionItemWrapUpVC: BaseViewController, UIPickerViewDelegate, UIPickerV
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "No data")
+                print(error?.localizedDescription ?? "No data") // TODO FIXME write errors to db
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String:Any] {
                 print(responseJSON)
                 TPUser.sharedInstance.currentCBMissionItem = nil
-                DispatchQueue.main.async { self.wrapUpCBCallDelegate?.cbMissionAccomplished() }
                 if self.doQuit {
                     self.logout()
-                }
-            }
+                } else {
+                    
+                    var call_notes = [
+                        "first_name": first_name, // the person called
+                        "last_name": last_name,   // the person called
+                        "person_id": person_id,   // the person called CB ID
+                        "phone_number": phone,    // the person called
+                        "author_name": TPUser.sharedInstance.getName(), // the volunteer
+                        "author_id": author_id,                         // the volunteer's CB ID
+                        "outcome": self.outcome,
+                        "notes": notes,
+                        "call_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
+                        "call_date_ms": Util.getDate_as_millis(),
+                        "mission_name": missionItem.name,
+                        "mission_id": mission_id,
+                        "calls_made": missionItem.calls_made,
+                        "percent_complete": missionItem.percent_complete,
+                        "total": missionItem.total,
+                        "status": missionItem.status
+                        ] as [String : Any]
+                    
+                    if let phone2 = missionItem.phone2, let name2 = missionItem.name2 {
+                        call_notes["phone2"] = phone2.trimmingCharacters(in: .whitespacesAndNewlines)
+                        call_notes["name2"] = name2.trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    if let info = missionItem.info {
+                        call_notes["info"] = info
+                    }
+                    
+                    let ref = Database.database().reference().child("call_notes")
+                    ref.childByAutoId().setValue(call_notes, withCompletionBlock: { (error, ref) -> Void in
+                        DispatchQueue.main.async {
+                            self.wrapUpCBCallDelegate?.cbMissionAccomplished()
+                        } // DispatchQueue.main.async
+                    })
+                    
+                } // else if self.doQuit
+                
+            } // if let responseJSON = responseJSON as? [String:Any]
         }
         task.resume()
         
-        var call_notes = [
-            "first_name": first_name, // the person called
-            "last_name": last_name,   // the person called
-            "person_id": person_id,   // the person called CB ID
-            "phone_number": phone,    // the person called
-            "author_name": TPUser.sharedInstance.getName(), // the volunteer
-            "author_id": author_id,                         // the volunteer's CB ID
-            "outcome": outcome,
-            "notes": notes,
-            "call_date": Util.getDate_MMM_d_yyyy_hmm_am_z(),
-            "call_date_ms": Util.getDate_as_millis(),
-            "mission_name": missionItem.name,
-            "mission_id": mission_id,
-            "calls_made": missionItem.calls_made,
-            "percent_complete": missionItem.percent_complete,
-            "total": missionItem.total,
-            "status": missionItem.status
-            ] as [String : Any]
-        
-        if let phone2 = missionItem.phone2, let name2 = missionItem.name2 {
-            call_notes["phone2"] = phone2.trimmingCharacters(in: .whitespacesAndNewlines)
-            call_notes["name2"] = name2.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        if let info = missionItem.info {
-            call_notes["info"] = info
-        }
-        
-        let ref = Database.database().reference().child("call_notes")
-        ref.childByAutoId().setValue(call_notes)
     }
     
     
