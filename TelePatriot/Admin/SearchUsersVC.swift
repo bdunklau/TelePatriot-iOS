@@ -25,6 +25,11 @@ class SearchUsersVC: UITableViewController, UISearchResultsUpdating {
     var users = [TPUser]()
     
     override func viewDidLoad() {
+        // see the extension below SearchUsersVC: UISearchBarDelegate
+        // this is how we dismiss this view controller when the cancel button is touched
+        searchController.searchBar.delegate = self;
+        // makes the cancel button always visible
+        searchController.searchBar.setShowsCancelButton(true, animated: true)
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
@@ -166,6 +171,19 @@ class SearchUsersVC: UITableViewController, UISearchResultsUpdating {
         searchUsersDelegate?.userSelected(user: user)
     }
 }
+
+
+extension SearchUsersVC: UISearchBarDelegate {
+    
+    /**
+     when the cancel button is pressed next to the search box, this view controller is dismissed
+    **/
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchController.isActive = false // without this, the search bar will still be visible on the next screen
+        self.dismiss(animated: false, completion: nil)
+    }
+}
+
 
 protocol SearchUsersDelegate {
     func userSelected(user: TPUser)
