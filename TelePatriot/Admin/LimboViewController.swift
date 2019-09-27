@@ -303,7 +303,20 @@ extension LimboViewController : MissingInformationDelegate {
 extension LimboViewController : AccountStatusEventListener {
     
     func changed(name: String) {
-        // do nothing?  really?  if so, code smell
+        // If a name change is detected here, it's probably because the name went from nil
+        // to something.  The user is probably just now joining, probably joined using the red
+        // "Sign in with email" button and the displayName was not immediately available.
+        // But it became available in CenterViewController.authUI().  That's where we call
+        // TPUser.set(name: name) and the call to set(name: name) contained a call to
+        // TPUser.fireChange(name: name) which calls the change(name: String) of every
+        // AccountStatusEventListener - which includes this method
+        // So here, if MissingInformationView is present/displayed, dismiss it.
+        missingInformationView?.removeFromSuperview()
+        
+        // remove this view that we are about to show on the very next line, in case we have already
+        // shown this view.  Prevents possibly displaying this view twice, one instance on top of itself.
+        limboView?.removeFromSuperview()
+        showLimboView(name: TPUser.sharedInstance.getName(), email: TPUser.sharedInstance.getEmail())
     }
     
     func changed(email: String) {

@@ -249,6 +249,8 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
 //        self.present(navc, animated: true, completion: nil)
     }
     
+    func noopCallback(error: NSError?) {
+    }
     
     internal func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         if error != nil {
@@ -258,11 +260,20 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
             //User is in! Here is where we code after signing in
             // how do we get the name of the user?
             
-            //print("User: "+user!.displayName!)
-            //name.text = user!.displayName!
-            for pr in authUI.providers {
-                print("\(pr.shortName) : accessToken: \(pr.accessToken), idToken: \(pr.idToken)")
+            print("User: \(user!.displayName!)") // TODO FIXME displayName is correct here.  Need to propagate it.
+            // See LimboViewController.setUser() - that's where the displayName is not found
+            // See CenterViewController.checkLoggedIn()
+            // here's the fix...
+            if let u = user,
+               let name = u.displayName {
+                TPUser.sharedInstance.set(name: name)
+                TPUser.sharedInstance.update(callback: noopCallback)
             }
+            
+            // don't need this
+//            for pr in authUI.providers {
+//                print("\(pr.shortName) : accessToken: \(pr.accessToken), idToken: \(pr.idToken)")
+//            }
             /**
              Now find out if user has any roles yet, or if he has to be sent to the "limbo" screen
              **/

@@ -174,6 +174,13 @@ class TPUser {
     
     func set(name: String) {
         self.name = name
+        // Added primarily to dismiss the MissingInformationView that gets displayed when new
+        // users sign up via email.  The user.displayName attribute finally becomes available in
+        // CenterViewController.authUI().  At that point, we call this function and then update
+        // the database.  We would like for user.displayName to be available as soon as the auth
+        // event fires in CenterViewController.checkLoggedIn() at Auth.auth().addStateDidChangeListener
+        // but alas, displayName is not available there.
+        fireChange(name: name)
     }
     
     func set(email: String) {
@@ -447,7 +454,7 @@ class TPUser {
     
     // right now, we are only updating residential address fields and lat/long fields
     // At some point, we should use this to update all fields
-    func update(callback: @escaping (_ err: NSError?) -> Void) {
+    func update(callback: @escaping (_ err: NSError?) -> Void ) {
         
         if databaseRef == nil {
             databaseRef = Database.database().reference()
@@ -457,26 +464,28 @@ class TPUser {
         let uid = getUid()
         // Create the data we want to update
         var updatedUserData = [
-                   "users/\(uid)/account_disposition": account_disposition,
-                   "users/\(uid)/account_dispositioned_by": account_dispositioned_by,
-                   "users/\(uid)/account_dispositioned_by_uid": account_dispositioned_by_uid,
-                   "users/\(uid)/account_dispositioned_on": account_dispositioned_on,
-                   "users/\(uid)/account_dispositioned_on_ms": account_dispositioned_on_ms,
-                   "users/\(uid)/residential_address_line1": residential_address_line1,
-                   "users/\(uid)/residential_address_line2": residential_address_line2,
-                   "users/\(uid)/residential_address_city": residential_address_city,
-                   "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev,
-                   "users/\(uid)/residential_address_zip": residential_address_zip,
-                   "users/\(uid)/legislative_house_district": legislative_house_district,
-                   "users/\(uid)/legislative_senate_district": legislative_senate_district,
-                   "users/\(uid)/state_upper_district": state_upper_district,
-                   "users/\(uid)/state_lower_district": state_lower_district,
-                   "users/\(uid)/current_latitude": current_latitude,
-                   "users/\(uid)/current_longitude": current_longitude,
-                   "users/\(uid)/current_video_node_key": current_video_node_key,
-                   "users/\(uid)/has_signed_confidentiality_agreement": has_signed_confidentiality_agreement,
-                   "users/\(uid)/has_signed_petition": has_signed_petition,
-                   "users/\(uid)/is_banned": is_banned] as [String : Any]
+            "users/\(uid)/account_disposition": account_disposition as Any,
+            "users/\(uid)/account_dispositioned_by": account_dispositioned_by as Any,
+            "users/\(uid)/account_dispositioned_by_uid": account_dispositioned_by_uid as Any,
+            "users/\(uid)/account_dispositioned_on": account_dispositioned_on as Any,
+            "users/\(uid)/account_dispositioned_on_ms": account_dispositioned_on_ms as Any,
+            "users/\(uid)/residential_address_line1": residential_address_line1 as Any,
+            "users/\(uid)/residential_address_line2": residential_address_line2 as Any,
+            "users/\(uid)/residential_address_city": residential_address_city as Any,
+            "users/\(uid)/residential_address_state_abbrev": residential_address_state_abbrev as Any,
+            "users/\(uid)/residential_address_zip": residential_address_zip as Any,
+            "users/\(uid)/legislative_house_district": legislative_house_district as Any,
+            "users/\(uid)/legislative_senate_district": legislative_senate_district as Any,
+            "users/\(uid)/name": name as Any,
+            "users/\(uid)/name_lower": name?.lowercased() as Any,
+            "users/\(uid)/state_upper_district": state_upper_district as Any,
+            "users/\(uid)/state_lower_district": state_lower_district as Any,
+            "users/\(uid)/current_latitude": current_latitude as Any,
+            "users/\(uid)/current_longitude": current_longitude as Any,
+            "users/\(uid)/current_video_node_key": current_video_node_key as Any,
+            "users/\(uid)/has_signed_confidentiality_agreement": has_signed_confidentiality_agreement as Any,
+            "users/\(uid)/has_signed_petition": has_signed_petition as Any,
+            "users/\(uid)/is_banned": is_banned as Any] as [String : Any]
         
         if isAdmin {
             updatedUserData["users/\(uid)/roles/Admin"] = "true"
