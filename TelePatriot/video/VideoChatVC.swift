@@ -1084,6 +1084,24 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
     }
     
+    
+    let messageComposer = MessageComposer()
+    
+    private func sendTextMessage(message: [String:String]) {
+        guard let recipient = message["recipient"],
+            let body = message["message"]
+        else {
+                return
+        }
+        
+        if(messageComposer.canSendText()) {
+            let messageComposeVC = messageComposer.configuredMessageComposeViewController(recipient: recipient, message: body)
+            present(messageComposeVC, animated: true, completion: nil)
+        }
+        else {
+            simpleOKDialog(title: "Cannot Send Text Message", message: "Your device is not able to send text messages")
+        }
+    }
 }
 
 
@@ -1125,6 +1143,8 @@ extension VideoChatVC : UserInvitedDelegate {
             let video_invitation_key = videoInvitation.save()
             currentVideoNode?.video_invitation_key = video_invitation_key
             
+            videoInvitation.getTextMessage(callback: sendTextMessage)
+            
             // now write the video_invitation_key to the video node so that we can revoke the invitation later if we want to
             var data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
                         "video/list/\(vid)/video_invitation_extended_to" : user["name"],
@@ -1144,32 +1164,32 @@ extension VideoChatVC : UserInvitedDelegate {
 
 // code moved to InviteSomeoneVC
 //
-extension VideoChatVC : SearchUsersDelegate {
-
-    // This second function is what gets called when you choose a user from SearchUsersVC
-    // Notice in the method above that we made 'self' the delegate of SearchUsersVC
-    // per SearchUsersDelegate
-    func userSelected(user: TPUser) {
-        if let vc = getAppDelegate().searchUsersVC {
-            vc.dismiss(animated: false, completion: nil)
-        }
-
-        // We want to write this user and the current user to /video/invitations
-        if let vid = TPUser.sharedInstance.current_video_node_key {
-            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, video_node_key: vid, guest: user)
-            let video_invitation_key = videoInvitation.save()
-            currentVideoNode?.video_invitation_key = video_invitation_key
-
-            // now write the video_invitation_key to the video node so that we can revoke the invitation later if we want to
-            let data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
-                        "video/list/\(vid)/video_invitation_extended_to" : user.getName(),
-                        "users/\(user.getUid())/video_invitation_from" : TPUser.sharedInstance.getUid(),
-                        "users/\(user.getUid())/video_invitation_from_name" : TPUser.sharedInstance.getName(),
-                        "users/\(user.getUid())/current_video_node_key" : TPUser.sharedInstance.current_video_node_key]
-            Database.database().reference().updateChildValues(data)
-        }
-    }
-}
+//extension VideoChatVC : SearchUsersDelegate {
+//
+//    // This second function is what gets called when you choose a user from SearchUsersVC
+//    // Notice in the method above that we made 'self' the delegate of SearchUsersVC
+//    // per SearchUsersDelegate
+//    func userSelected(user: TPUser) {
+//        if let vc = getAppDelegate().searchUsersVC {
+//            vc.dismiss(animated: false, completion: nil)
+//        }
+//
+//        // We want to write this user and the current user to /video/invitations
+//        if let vid = TPUser.sharedInstance.current_video_node_key {
+//            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, video_node_key: vid, guest: user)
+//            let video_invitation_key = videoInvitation.save()
+//            currentVideoNode?.video_invitation_key = video_invitation_key
+//
+//            // now write the video_invitation_key to the video node so that we can revoke the invitation later if we want to
+//            let data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
+//                        "video/list/\(vid)/video_invitation_extended_to" : user.getName(),
+//                        "users/\(user.getUid())/video_invitation_from" : TPUser.sharedInstance.getUid(),
+//                        "users/\(user.getUid())/video_invitation_from_name" : TPUser.sharedInstance.getName(),
+//                        "users/\(user.getUid())/current_video_node_key" : TPUser.sharedInstance.current_video_node_key]
+//            Database.database().reference().updateChildValues(data)
+//        }
+//    }
+//}
 
 
 extension VideoChatVC : AccountStatusEventListener {

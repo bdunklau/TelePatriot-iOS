@@ -16,6 +16,7 @@ class VideoInvitation {
     var guest_id : String?
     var guest_name : String?
     var guest_email : String?
+    var guest_sms_phone : String?
     var guest_photo_url : String?
     
     // person who sent the invitation
@@ -88,6 +89,7 @@ class VideoInvitation {
             guest_id = id
         } else if let phone = guestMap["sms_phone"] as? String {
             guest_id = "mobile_phone_\(phone)"
+            guest_sms_phone = phone
         }
         
         if let name = guestMap["name"] as? String {
@@ -190,6 +192,36 @@ class VideoInvitation {
             invitations.append(invitation)
         }
         return invitations
+    }
+    
+    func getTextMessage(callback: @escaping (_ textMessage:[String:String])->Void) {
+        guard let phone = guest_sms_phone,
+            let name = guest_name else {
+            return
+        }
+        
+        Database.database().reference().child("administration/hosts")
+            .queryOrdered(byChild: "type")
+            .queryEqual(toValue: "web host")
+            .observeSingleEvent(of: .value, with: {(snapshot: DataSnapshot) in
+                
+                guard let snap = snapshot.children.nextObject() as? DataSnapshot,
+                    let vals = snap.value as? [String:Any],
+                    let host = vals["host"],
+                    let port = vals["port"],
+                    let video_node_key = self.video_node_key
+                else {
+                    return
+                }
+                
+                let link = "https://\(host)/video/invitation/\(video_node_key)/\(phone)"
+                
+                let textMessage = ["recipient": phone,
+                                   "message": "Hi \(name)\nPlease touch the link below to join me on a video call\n\nThanks!\n\(TPUser.sharedInstance.getName())\n\n\(link)"]
+                
+                callback(textMessage)
+        })
+        
     }
     
     static func createKey(initiator: String, guest: String) -> String {

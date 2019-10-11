@@ -220,7 +220,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // https://stackoverflow.com/a/32555911
         // https://github.com/hackiftekhar/IQKeyboardManager
         // Automatically moves input fields up when the keyboard is present so the input isn't hidden
-        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enable = true // COMPILE FAILURE?... Here's how you fix it (below)
+        // https://github.com/bdunklau/TelePatriot-iOS/wiki/Troubleshooting
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
