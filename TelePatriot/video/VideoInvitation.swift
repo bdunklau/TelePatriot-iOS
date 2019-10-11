@@ -60,7 +60,7 @@ class VideoInvitation {
         }
     }
     
-    init(creator: TPUser, guest: TPUser, video_node_key: String) {
+    init(creator: TPUser, video_node_key: String, guest: TPUser) {
         initiator_id = creator.getUid()
         initiator_name = creator.getName()
         initiator_email = creator.getEmail()
@@ -72,6 +72,36 @@ class VideoInvitation {
         guest_name = guest.getName()
         guest_email = guest.getEmail()
         guest_photo_url = guest.getPhotoURL().absoluteString
+        self.video_node_key = video_node_key
+    }
+    
+    init(creator: TPUser, guestMap: [String:Any], video_node_key: String) {
+        initiator_id = creator.getUid()
+        initiator_name = creator.getName()
+        initiator_email = creator.getEmail()
+        initiator_photo_url = creator.getPhotoURL().absoluteString
+        invitation_create_date = Util.getDate_Day_MMM_d_hmmss_am_z_yyyy()
+        invitation_create_date_ms = Util.getDate_as_millis()
+        room_id = video_node_key
+        
+        if let id = guestMap["uid"] as? String {
+            guest_id = id
+        } else if let phone = guestMap["sms_phone"] as? String {
+            guest_id = "mobile_phone_\(phone)"
+        }
+        
+        if let name = guestMap["name"] as? String {
+            guest_name = name
+        }
+        
+        if let email = guestMap["email"] as? String {
+            guest_email = email
+        }
+        
+        if let photo = guestMap["photo_url"] as? String {
+            guest_photo_url = photo
+        }
+        
         self.video_node_key = video_node_key
     }
     

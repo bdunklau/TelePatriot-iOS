@@ -1030,12 +1030,18 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }
     
 
-    // These next two functions kinda go together.  This first one pops up the Search Users screen
     @objc private func inviteSomeone(_ sender: UIButton) {
-        // pop up the same Search Users screen that Admins see
-        if let vc = getAppDelegate().searchUsersVC {
+//        if let vc = getAppDelegate().searchUsersVC {
+//            vc.modalPresentationStyle = .popover
+//            vc.searchUsersDelegate = self
+//            self.present(vc, animated: true, completion:nil)
+//            // See extension VideoChatVC : SearchUsersDelegate below
+//        }
+        
+        if let vc = getAppDelegate().inviteSomeoneVC {
             vc.modalPresentationStyle = .popover
-            vc.searchUsersDelegate = self
+            vc.userInvitedDelegate = self
+            vc.videoChatVC = self
             self.present(vc, animated: true, completion:nil)
             // See extension VideoChatVC : SearchUsersDelegate below
         }
@@ -1080,8 +1086,66 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
 }
 
-extension VideoChatVC : SearchUsersDelegate {
+
+extension VideoChatVC : UserInvitedDelegate {
     
+    // user is Any because we could invite someone by text message, in which case they
+    // won't actually have a user account
+    func userInvited(someone: Any) {
+        // if user is a TPUser, then they were invited by name
+        if let user = someone as? TPUser {
+            let userMap = ["uid": user.getUid(),
+                           "name": user.getName(),
+                           "email": user.getEmail(),
+                           "photo_url": user.getPhotoURL().absoluteString]
+            inviteUser(user: userMap)
+        }
+        // else "someone" is just a map.  they were invited by text message
+        else if let user = someone as? [String:Any],
+            let sms_phone = user["sms_phone"],
+            let name = user["name"]
+        {
+            let userMap = ["name": name,
+                           "sms_phone": sms_phone]
+            inviteUser(user: userMap)
+            if let vc = getAppDelegate().inviteByTextMessageVC {
+                vc.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+    
+    private func inviteUser(user: [String:Any]) {
+        if let vc = getAppDelegate().searchUsersVC {
+            vc.dismiss(animated: false, completion: nil)
+        }
+        
+        // We want to write this user and the current user to /video/invitations
+        if let vid = TPUser.sharedInstance.current_video_node_key {
+            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guestMap: user, video_node_key: vid)
+            let video_invitation_key = videoInvitation.save()
+            currentVideoNode?.video_invitation_key = video_invitation_key
+            
+            // now write the video_invitation_key to the video node so that we can revoke the invitation later if we want to
+            var data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
+                        "video/list/\(vid)/video_invitation_extended_to" : user["name"],
+                        "video/list/\(vid)/sms_phone" : user["sms_phone"]]
+            if let guest_id = user["uid"] as? String {
+                data["users/\(guest_id)/video_invitation_from"] = TPUser.sharedInstance.getUid()
+                data["users/\(guest_id)/video_invitation_from_name"] = TPUser.sharedInstance.getName()
+                data["users/\(guest_id)/current_video_node_key"] = TPUser.sharedInstance.current_video_node_key
+            }
+            
+            Database.database().reference().updateChildValues(data as [AnyHashable : Any])
+        }
+    
+    }
+}
+
+
+// code moved to InviteSomeoneVC
+//
+extension VideoChatVC : SearchUsersDelegate {
+
     // This second function is what gets called when you choose a user from SearchUsersVC
     // Notice in the method above that we made 'self' the delegate of SearchUsersVC
     // per SearchUsersDelegate
@@ -1092,7 +1156,7 @@ extension VideoChatVC : SearchUsersDelegate {
 
         // We want to write this user and the current user to /video/invitations
         if let vid = TPUser.sharedInstance.current_video_node_key {
-            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, guest: user, video_node_key: vid)
+            let videoInvitation = VideoInvitation(creator: TPUser.sharedInstance, video_node_key: vid, guest: user)
             let video_invitation_key = videoInvitation.save()
             currentVideoNode?.video_invitation_key = video_invitation_key
 
@@ -1106,6 +1170,7 @@ extension VideoChatVC : SearchUsersDelegate {
         }
     }
 }
+
 
 extension VideoChatVC : AccountStatusEventListener {
     

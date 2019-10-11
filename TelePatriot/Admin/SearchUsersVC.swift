@@ -13,6 +13,7 @@ class SearchUsersVC: UITableViewController, UISearchResultsUpdating {
     
     
     // assigned to CenterViewController in ContainerViewController
+    // also set in InviteSomeoneVC.inviteByName()
     var searchUsersDelegate : SearchUsersDelegate?
     var ref : DatabaseReference?
     var query : DatabaseQuery?
@@ -167,7 +168,9 @@ class SearchUsersVC: UITableViewController, UISearchResultsUpdating {
         
         searchController.searchBar.endEditing(true)
         searchController.isActive = false // without this, the search bar will still be visible on the next screen, when we are looking at a particular user's profile
+        
         // assigned to CenterViewController in ContainerViewController
+        // also set in InviteSomeoneVC.inviteByName()
         searchUsersDelegate?.userSelected(user: user)
     }
 }
