@@ -607,6 +607,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
         
         // Connect to the Room using the options we provided.
+        // TODO DOCUMENT THIS
         room = TwilioVideo.connect(with: connectOptions, delegate: self)
         if let room = room
             //, room.isRecording // why doesn't THIS work?
@@ -1257,19 +1258,21 @@ extension VideoChatVC : AccountStatusEventListener {
 }
 
 // MARK: TVIRoomDelegate
+// TODO DOCUMENT THIS NEXT LINE
+// See in this file:    room = TwilioVideo.connect(with: connectOptions, delegate: self)
 extension VideoChatVC : TVIRoomDelegate {
     func didConnect(to room: TVIRoom) {
-        
+
         // At the moment, this example only supports rendering one Participant at a time.
-        
+
         print("Connected to room \(room.name) as \(String(describing: room.localParticipant?.identity))")
-        
+
         if (room.remoteParticipants.count > 0) {
             self.remoteParticipant = room.remoteParticipants[0]
-            self.remoteParticipant?.delegate = self
+            self.remoteParticipant?.delegate = self  // TODO DOCUMENT THIS
         }
     }
-    
+
     func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {
         print("Disconnected from room \(room.name), error = \(String(describing: error))")
         self.cleanupRemoteParticipant()
@@ -1301,6 +1304,7 @@ extension VideoChatVC : TVIRoomDelegate {
 
 
 // MARK: TVIRemoteParticipantDelegate
+// See:   self.remoteParticipant?.delegate = self    in this file  TODO DOCUMENT THIS
 extension VideoChatVC : TVIRemoteParticipantDelegate {
 
     func remoteParticipant(_ participant: TVIRemoteParticipant,

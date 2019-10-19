@@ -239,18 +239,18 @@ class VideoInvitation {
     
     private func dictionary() -> [String: Any] {
         var dict : [String:Any] = [
-            "invitation_create_date": invitation_create_date,
-            "invitation_create_date_ms": invitation_create_date_ms,
-            "initiator_id": initiator_id,
-            "initiator_name": initiator_name,
-            "initiator_photo_url": initiator_photo_url,
-            "initiator_email": initiator_email,
-            "guest_id": guest_id,
-            "guest_name": guest_name,
-            "guest_photo_url": guest_photo_url,
-            "guest_email": guest_email,
-            "room_id": room_id,
-            "video_node_key": video_node_key
+            "invitation_create_date": invitation_create_date as Any,
+            "invitation_create_date_ms": invitation_create_date_ms as Any,
+            "initiator_id": initiator_id as Any,
+            "initiator_name": initiator_name as Any,
+            "initiator_photo_url": initiator_photo_url as Any,
+            "initiator_email": initiator_email as Any,
+            "guest_id": guest_id as Any,
+            "guest_name": guest_name as Any,
+            "guest_photo_url": guest_photo_url as Any,
+            "guest_email": guest_email as Any,
+            "room_id": room_id as Any,
+            "video_node_key": video_node_key as Any
         ]
         
         if let ierd = initiator_enter_room_date {

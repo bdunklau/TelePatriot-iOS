@@ -126,19 +126,19 @@ struct VideoParticipant {
             "uid": uid,
             "name": name,
             "email": email,
-            "phone": phone,
+            "phone": phone as Any,
             "start_date": start_date,
             "start_date_ms": start_date_ms,
-            "connect_date": connect_date,
-            "connect_date_ms": connect_date_ms,
-            "disconnect_date": disconnect_date,
-            "disconnect_date_ms": disconnect_date_ms,
-            "end_date": end_date,
-            "end_date_ms": end_date_ms,
-            "role": role,
+            "connect_date": connect_date as Any,
+            "connect_date_ms": connect_date_ms as Any,
+            "disconnect_date": disconnect_date as Any,
+            "disconnect_date_ms": disconnect_date_ms as Any,
+            "end_date": end_date as Any,
+            "end_date_ms": end_date_ms as Any,
+            "role": role as Any,
             "present": present,
-            "twilio_token": twilio_token,
-            "twilio_token_record": twilio_token_record
+            "twilio_token": twilio_token as Any,
+            "twilio_token_record": twilio_token_record as Any
         ]
     }
     

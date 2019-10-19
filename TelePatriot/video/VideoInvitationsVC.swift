@@ -128,6 +128,7 @@ class VideoInvitationsVC: BaseViewController, UITableViewDataSource, UITableView
     
     @objc func acceptInvitation(_ sender:UIButton) {
         invitations[sender.tag].accept()
+        // invitationDelegate is probably centerViewController
         invitationDelegate?.videoInvitationSelected(invitation: invitations[sender.tag])
     }
     
