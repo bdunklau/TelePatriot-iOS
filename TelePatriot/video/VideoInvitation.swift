@@ -217,7 +217,7 @@ class VideoInvitation {
                 let link = "https://\(host)/video/invitation/\(video_node_key)/\(phone)"
                 
                 let textMessage = ["recipient": phone,
-                                   "message": "Hi \(name)\nPlease touch the link below to join me on a video call\n\nThanks!\n\(TPUser.sharedInstance.getName())\n\n\(link)"]
+                                   "message": "\(link)\n\nHi \(name)\nPlease touch the link above to join me on a video call\n\nThanks!\n\(TPUser.sharedInstance.getName())"]
                 
                 callback(textMessage)
         })

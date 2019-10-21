@@ -1150,6 +1150,8 @@ extension VideoChatVC : UserInvitedDelegate {
             var data = ["video/list/\(vid)/video_invitation_key" : video_invitation_key,
                         "video/list/\(vid)/video_invitation_extended_to" : user["name"],
                         "video/list/\(vid)/sms_phone" : user["sms_phone"]]
+            
+            // we check because the guest may not have a record in the database - they won't if invited by text message
             if let guest_id = user["uid"] as? String {
                 data["users/\(guest_id)/video_invitation_from"] = TPUser.sharedInstance.getUid()
                 data["users/\(guest_id)/video_invitation_from_name"] = TPUser.sharedInstance.getName()
