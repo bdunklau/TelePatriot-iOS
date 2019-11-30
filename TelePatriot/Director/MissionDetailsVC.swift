@@ -113,7 +113,7 @@ class MissionDetailsVC: BaseViewController {
         if let mission = mission {
             let title = "Delete Mission"
             let message = "Are you SURE you want to delete this Mission?\n\nBecause once it's gone - it's GONE"
-            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
             let dontDelete = UIAlertAction(title: "Don't Delete", style: .default, handler: { action in
                 switch action.style {
                 case .default:

@@ -838,7 +838,7 @@ class VideoChatInstructionsView: UIView, UIPopoverPresentationControllerDelegate
         // pop up a dialog with a text field showing the legislator's information
         // and save, cancel buttons
         if let vc = editLegislatorForVideoVC {
-            vc.modalPresentationStyle = .popover
+            vc.modalPresentationStyle = .fullScreen
             vc.videoNode = videoNode
             videoChatVC?.present(vc, animated: true, completion:nil)
         }

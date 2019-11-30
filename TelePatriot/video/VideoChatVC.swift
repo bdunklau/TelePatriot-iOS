@@ -53,27 +53,27 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     
     let connect_button : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         // have to do this in viewDidLoad() I think - because 'self' isn't available here
         //button.frame = CGRect(x: 8, y: self.view.bounds.height / 3 + 40, width: 40, height: 40)
         button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named: "callStart.png"), for: UIControlState.normal)
+        button.setImage(UIImage(named: "callStart.png"), for: UIControl.State.normal)
         button.addTarget(self, action: #selector(connectionClicked(_:)), for: .touchUpInside)
         return button
     }()
     
     let microphone_button : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControlState.normal)
+        button.setImage(UIImage(named: "microphoneOnWhite.png"), for: UIControl.State.normal)
         button.addTarget(self, action: #selector(micClicked(_:)), for: .touchUpInside)
         return button
     }()
     
     let record_button : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named: "record.png"), for: UIControlState.normal)
+        button.setImage(UIImage(named: "record.png"), for: UIControl.State.normal)
         button.addTarget(self, action: #selector(recordClicked(_:)), for: .touchUpInside)
         return button
     }()
@@ -91,9 +91,9 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }()
     
     let publish_button : UIButton = {
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named: "arrow-upload-icon.png"), for: UIControlState.normal)
+        button.setImage(UIImage(named: "arrow-upload-icon.png"), for: UIControl.State.normal)
         button.addTarget(self, action: #selector(publishClicked(_:)), for: .touchUpInside)
         return button
     }()
@@ -373,7 +373,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         
             let title = "BOOM! You Did It!"
             let message = "Mission Accomplished - Your video has been published.  What do you want to do now?"
-            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
             let stop = UIAlertAction(title: "Stop For Now", style: .default, handler: { action in
                 switch action.style {
                 case .default:
@@ -414,7 +414,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             
             let title = "BOOM! You Did It!"
             let message = "Mission Accomplished - Your video has been published.  Check your email."
-            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
             let close = UIAlertAction(title: "OK", style: .default, handler: { action in
                 switch action.style {
                 case .default:
@@ -545,7 +545,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         recordingWillStop = false  // the connect/disconnect button is clicked
         
         let img = connect_button.currentImage == UIImage(named: "callEnd.png") ? UIImage(named: "callStart.png") : UIImage(named: "callEnd.png")
-        DispatchQueue.main.async { self.connect_button.setImage(img, for: UIControlState.normal) }
+        DispatchQueue.main.async { self.connect_button.setImage(img, for: UIControl.State.normal) }
         
         let request_type = video_participant.isConnected() ? "disconnect request" : "connect request"
         showSpinner() // dismissed in doConnect() and doDisconnect()
@@ -675,6 +675,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }
     
     private func startPreview() {
+        // if(true) { return } // uncomment if you need to run a simulator in XCode
         
         // Preview our local camera track in the local video preview view.
         camera = TVICameraCapturer(source: .frontCamera, delegate: self)
@@ -803,7 +804,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
             // prevent the buttons from changing state when the recording starts and stops - very confusing to the user
             // The user doesn't know that they are actually being disconnected from one room and automatically connected to another room
         } else {
-            self.connect_button.setImage(UIImage(named: inRoom ? "callEnd.png" : "callStart.png"), for: UIControlState.normal)
+            self.connect_button.setImage(UIImage(named: inRoom ? "callEnd.png" : "callStart.png"), for: UIControl.State.normal)
             self.microphone_button.isHidden = !inRoom
             self.record_button.isHidden = !inRoom
         }
@@ -841,7 +842,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         if let room_id = vn.room_id, let _ = vn.room_sid
         {
             if let _ = vn.recording_stopped {
-                let alert = UIAlertController(title: "Erase Recording?", message: "Do you want to record over the video you just created?", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Erase Recording?", message: "Do you want to record over the video you just created?", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Keep", style: .cancel, handler: { action in
                     switch action.style {
                     case .default:
@@ -910,7 +911,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
 //    }
     
     private func simpleOKDialog(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style {
             case .default:
@@ -925,7 +926,7 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }
     
     private func simpleDeleteCancelDialog(title: String, message: String, delete: String, cancel: String, deleteFunction: @escaping ()->Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: { action in
             switch action.style {
             case .default:

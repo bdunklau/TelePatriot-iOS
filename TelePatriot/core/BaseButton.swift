@@ -19,7 +19,7 @@ class BaseButton: UIButton {
         //self.backgroundColor = UIColor.blue
         setTitle(text, for: .normal)
         let color = UIColor(red: 0, green: 0.478431, blue: 1, alpha: 1)
-        self.setTitleColor(color, for: UIControlState.normal)//.textColor = UIColor.blue
+        self.setTitleColor(color, for: UIControl.State.normal)//.textColor = UIColor.blue
         translatesAutoresizingMaskIntoConstraints = false
     }
     

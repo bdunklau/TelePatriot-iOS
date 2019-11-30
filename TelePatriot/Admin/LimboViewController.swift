@@ -236,7 +236,7 @@ extension LimboViewController : MissingInformationDelegate {
         if name == "" || email == "" {
             let title = "Required Fields"
             let message = "All fields on this screen are required"
-            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
                 switch action.style {
                 case .default:
@@ -255,7 +255,7 @@ extension LimboViewController : MissingInformationDelegate {
         else if !email.isValidEmail() {
             let title = "Invalid Email"
             let message = "This is not a valid email address:\n\(email)"
-            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
                 switch action.style {
                 case .default:

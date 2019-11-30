@@ -66,7 +66,7 @@ class SidePanelViewController: UIViewController {
         listenForAccountStatusEvents()
         
         tableView = UITableView(frame: self.view.bounds, style: .plain) // <--- this turned out to be key
-        tableView?.separatorStyle = UITableViewCellSeparatorStyle.none // I didn't like the gray separators lines in the slide-out menu
+        tableView?.separatorStyle = UITableViewCell.SeparatorStyle.none // I didn't like the gray separators lines in the slide-out menu
         
         let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         //var imageView: UIImageView = UIImageView(frame: frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -556,7 +556,7 @@ extension UIImage {
     var circle: UIImage {
         let square = size.width < size.height ? CGSize(width: size.width, height: size.width) : CGSize(width: size.height, height: size.height)
         let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
-        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.contentMode = UIView.ContentMode.scaleAspectFill
         imageView.image = self
         imageView.layer.cornerRadius = square.width/2
         imageView.layer.masksToBounds = true

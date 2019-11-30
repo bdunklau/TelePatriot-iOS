@@ -177,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // [START set_messaging_delegate]
         Messaging.messaging().delegate = self
@@ -207,8 +207,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load a named file for switching between dev and prod firebase instances
         // see https://firebase.google.com/docs/configure/
-        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        //let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
+         let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+//        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")
         guard let fileopts = FirebaseOptions.init(contentsOfFile: filePath!)
             else { assert(false, "Couldn't load config file")
                 return false
@@ -256,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: /*NSNotification.Name.*/UIDevice.orientationDidChangeNotification, object: nil)
         
         return true
     }
@@ -320,14 +320,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // https://gist.github.com/caldwbr/5abe2dba3d1c2a6b525e141e7e967ac4
     //***// SUPER IMPORTANT FUNCTION!!!!!!!!!!!!!!
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String?, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
         
         return handled || GIDSignIn.sharedInstance().handle(
             url,
-            sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?,
-            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String?,
+            annotation: options[UIApplication.OpenURLOptionsKey.annotation])
     }
     
     // MARK: - Core Data stack

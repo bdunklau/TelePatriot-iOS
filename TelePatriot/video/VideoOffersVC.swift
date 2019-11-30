@@ -62,7 +62,7 @@ class VideoOffersVC: BaseViewController {
 
             let title = "Delete Offer?"
             let message = "Delete this offer once \(thename) has completed the video, lost interest, or can't be reached"
-            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
             let dontDelete = UIAlertAction(title: "Cancel", style: .default, handler: { action in
                 switch action.style {
                 case .default:

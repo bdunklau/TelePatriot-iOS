@@ -520,7 +520,7 @@ class AssignUserVC: BaseViewController {
             }
         }
         
-        let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: buttonText, style: .default, handler: { action in
             switch action.style {
             case .default:

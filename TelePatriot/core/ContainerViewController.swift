@@ -144,9 +144,9 @@ class ContainerViewController: UIViewController {
         // and display bar button items in the navigation bar
         centerNavigationController = UINavigationController(rootViewController: centerViewController)
         view.addSubview(centerNavigationController.view)
-        addChildViewController(centerNavigationController)
+        addChild(centerNavigationController)
         
-        centerNavigationController.didMove(toParentViewController: self)
+        centerNavigationController.didMove(toParent: self)
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
@@ -163,7 +163,8 @@ class ContainerViewController: UIViewController {
     // need to allow scrolling of the menu
     // AppDelegate is where this function is referenced
     func rotated() {
-        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
+        if UIDevice.current.orientation.isLandscape {
+//        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
             //print("Landscape")
             centerPanelExpandedOffset = 120
         }
@@ -429,8 +430,8 @@ extension ContainerViewController: CenterViewControllerDelegate {
         //print("self.view.frame.height = \(self.view.frame.height)")
         view.insertSubview(sidePanelController.view, at: 0)
         
-        addChildViewController(sidePanelController)
-        sidePanelController.didMove(toParentViewController: self)
+        addChild(sidePanelController)
+        sidePanelController.didMove(toParent: self)
     }
     
     func animateLeftPanel(shouldExpand: Bool) {

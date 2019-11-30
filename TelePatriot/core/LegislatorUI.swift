@@ -189,7 +189,7 @@ class LegislatorUI: UIView, UITableViewDataSource, UITableViewDelegate {
         
         // doesn't seem to do anything
         officesTable?.estimatedRowHeight = 144.0
-        officesTable?.rowHeight = UITableViewAutomaticDimension
+        officesTable?.rowHeight = UITableView.automaticDimension
     }
     
     

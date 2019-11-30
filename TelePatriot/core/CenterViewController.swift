@@ -101,7 +101,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
     }
     
     var spinnerView : UIView?
-    let ai = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+    let ai = UIActivityIndicatorView.init(style: UIActivityIndicatorView.Style.gray)
     
 //    private func showSpinner2() {
 //        if (self.spinning) {
@@ -286,7 +286,7 @@ class CenterViewController: BaseViewController, FUIAuthDelegate {
 
 extension CenterViewController : AppDelegateDelegate {
     func show(viewController: UIViewController) {
-        doView(vc: viewController, viewControllers: self.childViewControllers)
+        doView(vc: viewController, viewControllers: self.children)
     }
 }
 
@@ -342,18 +342,18 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         else if(menuItem.title.starts(with: "My Profile")) {
             guard let vc = delegate?.getMyProfileVC() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.children)
         }
         else if(menuItem.title.starts(with: "My Legislators")) {
             guard let vc = delegate?.getMyLegislatorsVC() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.children)
         }
         else if(menuItem.title.starts(with: "Team")) {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
             guard let vc = delegate?.getSwitchTeamsVC() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.children)
         }
         else if(menuItem.title == "My Mission") {
             unassignMissionItem()
@@ -369,16 +369,16 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
                         guard let vc = self.delegate?.getMyCBMissionViewController() else {
                             return }
                         vc.missionConfig = conf
-                        self.doView(vc: vc, viewControllers: self.childViewControllers)
+                        self.doView(vc: vc, viewControllers: self.children)
                     }
                     else {
                         guard let vc = self.delegate?.getMyMissionViewController() else { return }
-                        self.doView(vc: vc, viewControllers: self.childViewControllers)
+                        self.doView(vc: vc, viewControllers: self.children)
                     }
                 }
                 else {
                     guard let vc = self.delegate?.getMyMissionViewController() else { return }
-                    self.doView(vc: vc, viewControllers: self.childViewControllers)
+                    self.doView(vc: vc, viewControllers: self.children)
                     //doView(vc: MyMissionViewController(), viewControllers: self.childViewControllers)
                 }
             })
@@ -388,41 +388,41 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
             // don't instantiate here.  Get from ContainerViewController  ...but how?
             if let directorViewController = delegate?.getDirectorViewController() {
                 unassignMissionItem()
-                doView(vc: directorViewController, viewControllers: self.childViewControllers)
+                doView(vc: directorViewController, viewControllers: self.children)
             }
         }
         else if(menuItem.title == "Admins") {
             guard let vc = delegate?.getAdminVC() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+            doView(vc: vc, viewControllers: self.children, track: true)
         }
         else if(menuItem.title == "Share Petition") {
             unassignMissionItem()
-            doView(vc:  SharePetitionViewController(), viewControllers: self.childViewControllers)
+            doView(vc:  SharePetitionViewController(), viewControllers: self.children)
         }
         else if(menuItem.title == "Video Chat") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoChatViewController() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+            doView(vc: vc, viewControllers: self.children, track: true)
         }
         else if(menuItem.title == "Video Offers") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoOffersVC() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+            doView(vc: vc, viewControllers: self.children, track: true)
         }
         else if(menuItem.title == "Video Invitations") {
             // delegate is probably ContainerViewController
             guard let vc = delegate?.getVideoInvitationsViewController() else { return }
             unassignMissionItem()
-            doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+            doView(vc: vc, viewControllers: self.children, track: true)
         }
         // Director screen...
         else if(menuItem.title == "New Phone Campaign") {
             //guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
             guard let vc = delegate?.getChooseSpreadsheetTypeVC() else { return }
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.children)
         }
         else if(menuItem.title == "My Active Missions") {
             //doView(vc: Xxxxxxxxxxx(), viewControllers: self.childViewControllers)
@@ -435,11 +435,11 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         else if(menuItem.title == "All Missions") {
             guard let vc = delegate?.getMissionSummaryTVC() else { return }
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.children)
         }
         else if(menuItem.title == "All Activity") {
             guard let vc = delegate?.getAllActivityVC() else { return }
-            doView(vc: vc, viewControllers: self.childViewControllers)
+            doView(vc: vc, viewControllers: self.children)
         }
         
     }
@@ -458,9 +458,9 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
     }
     
     private func doView(vc: UIViewController, viewControllers: [UIViewController], track: Bool) {
-        guard let viewController = inList(viewControllers: self.childViewControllers, viewController: vc) else {
+        guard let viewController = inList(viewControllers: self.children, viewController: vc) else {
             // vc not yet a child vc so add it
-            addChildViewController(vc)
+            addChild(vc)
             delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
             self.view.addSubview(vc.view)
             if track { BackTracker.sharedInstance.onChoose(vc: vc) }
@@ -471,16 +471,16 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
         }
         delegate?.viewChosen() // sets ContainerViewController.allowPanningFromRightToLeft = false
         viewController.viewDidLoad() // creative or hacky?  I need to run the code in this function whenever the view becomes visible again
-        self.view.bringSubview(toFront: viewController.view)
+        self.view.bringSubviewToFront(viewController.view)
         if track { BackTracker.sharedInstance.onChoose(vc: vc) }
     }
     
     func doView(vc: UIViewController) {
-        doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+        doView(vc: vc, viewControllers: self.children, track: true)
     }
     
     func doView(vc: UIViewController, track: Bool) {
-        doView(vc: vc, viewControllers: self.childViewControllers, track: track)
+        doView(vc: vc, viewControllers: self.children, track: track)
     }
     
     func unassignMissionItem() {
@@ -498,7 +498,7 @@ extension CenterViewController: SidePanelViewControllerDelegate, DirectorViewCon
 extension CenterViewController : NewPhoneCampaignSubmittedHandler {
     func newPhoneCampaignSubmitted() {
         guard let vc = delegate?.getMissionSummaryTVC() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -506,7 +506,7 @@ extension CenterViewController : NewPhoneCampaignSubmittedHandler {
 extension CenterViewController : WrapUpCBCallDelegate {
     func cbMissionAccomplished() {
         guard let vc = delegate?.getMyCBMissionViewController() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -515,14 +515,14 @@ extension CenterViewController : WrapUpViewControllerDelegate {
     
     func missionAccomplished() {
         guard let vc = delegate?.getMyMissionViewController() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
     
     // Not sure if I like this idea...  Let's put a viewcontroller inside the mission_item
     // object so the mission_item can direct us to the next screen, either back to My Mission
     // or to My Legislators or to ... ?
     func missionAccomplished(vc: UIViewController) {
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -532,7 +532,7 @@ extension CenterViewController : ChooseSpreadsheetTypeDelegate {
         guard let vc = delegate?.getNewPhoneCampaignVC() else { return }
         vc.missionNode = missionNode
         vc.clearFields()
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -562,7 +562,7 @@ extension CenterViewController : UnassignedUsersDelegate {
             if is_banned {
                 guard let vc : UserIsBannedVC = delegate?.getUserIsBannedVC() else { return }
                 vc.user = user
-                doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+                doView(vc: vc, viewControllers: self.children, track: true)
                 return
             }
             
@@ -571,7 +571,7 @@ extension CenterViewController : UnassignedUsersDelegate {
         guard let normalVC = delegate?.getAssignUserVC() else {return}
         //normalVC.uid = user.getUid()
         normalVC.passedInUser = user
-        doView(vc: normalVC, viewControllers: self.childViewControllers, track: true)
+        doView(vc: normalVC, viewControllers: self.children, track: true)
     }
 }
 
@@ -582,7 +582,7 @@ extension CenterViewController : SearchUsersDelegate {
         guard let normalVC = delegate?.getAssignUserVC() else {return}
         //normalVC.uid = user.getUid()
         normalVC.passedInUser = user
-        doView(vc: normalVC, viewControllers: self.childViewControllers, track: true)
+        doView(vc: normalVC, viewControllers: self.children, track: true)
     }
 }
 
@@ -615,8 +615,8 @@ extension CenterViewController : AccountStatusEventListener {
         for subview in view.subviews {
             subview.removeFromSuperview()
         }
-        for child in self.childViewControllers {
-            child.removeFromParentViewController()
+        for child in self.children {
+            child.removeFromParent()
         }
     }
     
@@ -624,7 +624,7 @@ extension CenterViewController : AccountStatusEventListener {
     func allowed() {
         if let limboViewController = delegate?.getLimboViewController() {
             limboViewController.dismiss(animated: true, completion: nil)
-            limboViewController.removeFromParentViewController()
+            limboViewController.removeFromParent()
         }
         loadSplashscreen()
     }
@@ -678,12 +678,12 @@ extension CenterViewController : AddressUpdater {
     func beginUpdatingAddressManually() {
         guard let vc = delegate?.getMyProfileVC() else { return }
         vc.useGPS = false
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
     func beginUpdatingAddressUsingGPS() {
         guard let vc = delegate?.getMyProfileVC() else { return }
         vc.useGPS = true
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -691,18 +691,18 @@ extension CenterViewController : AddressUpdater {
 extension CenterViewController : AdminDelegate {
     func gotoUnassignedUsers() {
         guard let vc = delegate?.getUnassignedUsersVC() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+        doView(vc: vc, viewControllers: self.children, track: true)
     }
     
     func gotoSearchUsers() {
         guard let vc = delegate?.getSearchUsersVC() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers, track: true)
+        doView(vc: vc, viewControllers: self.children, track: true)
     }
 }
 
 extension CenterViewController : BackHandler {
     func goBack(vc: UIViewController, track: Bool) {
-        doView(vc: vc, viewControllers: self.childViewControllers, track: track)
+        doView(vc: vc, viewControllers: self.children, track: track)
     }
 }
 
@@ -711,14 +711,14 @@ extension CenterViewController : MissionListDelegate {
         guard let vc = delegate?.getMissionDetailsVC() else { return }
         vc.mission = mission
         vc.team = team
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
 extension CenterViewController : MissionDetailsDelegate {
     func missionDeleted(mission: MissionSummary) {
         guard let vc = delegate?.getMissionSummaryTVC() else { return }
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -728,7 +728,7 @@ extension CenterViewController : VideoInvitationDelegate {
             let room_id = invitation.room_id
             else { return }
         vc.room_id = room_id
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
     }
 }
 
@@ -739,7 +739,7 @@ extension CenterViewController : MissionDelegate {
         // whats the vc
         else { return }
         
-        doView(vc: vc, viewControllers: self.childViewControllers)
+        doView(vc: vc, viewControllers: self.children)
         
     }
 }
