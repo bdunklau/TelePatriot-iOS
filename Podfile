@@ -35,12 +35,14 @@ target 'TelePatriot' do
 
     pod 'FirebaseInstanceID'
     
-#    pod 'FacebookSDK'
-#    pod 'FacebookSDK/LoginKit'
-#    pod 'FacebookSDK/ShareKit'
-#    pod 'FacebookSDK/PlacesKit'
-#    pod 'FBSDKMessengerShareKit'
-    pod 'FBSDKCoreKit', '~> 4.44'
+    pod 'FacebookSDK'
+    pod 'FacebookSDK/LoginKit'
+    pod 'FacebookSDK/ShareKit'
+    pod 'FacebookSDK/PlacesKit'
+    
+    pod 'FBSDKMessengerShareKit'
+
+#    pod 'FBSDKCoreKit', '~> 4.44'
 
     pod 'TwilioVideo', '~> 2.4.0'
     

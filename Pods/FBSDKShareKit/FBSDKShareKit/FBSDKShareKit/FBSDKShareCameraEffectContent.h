@@ -18,14 +18,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import <FBSDKShareKit/FBSDKCameraEffectArguments.h>
-#import <FBSDKShareKit/FBSDKCameraEffectTextures.h>
-#import <FBSDKShareKit/FBSDKSharingContent.h>
-#import <FBSDKShareKit/FBSDKSharingScheme.h>
+#import "FBSDKCameraEffectArguments.h"
+#import "FBSDKCameraEffectTextures.h"
+#import "FBSDKSharingContent.h"
+#import "FBSDKSharingScheme.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  A model for content to share with a Facebook camera effect.
  */
+NS_SWIFT_NAME(ShareCameraEffectContent)
 @interface FBSDKShareCameraEffectContent : NSObject <FBSDKSharingContent, FBSDKSharingScheme>
 
 /**
@@ -51,3 +54,5 @@
 - (BOOL)isEqualToShareCameraEffectContent:(FBSDKShareCameraEffectContent *)content;
 
 @end
+
+NS_ASSUME_NONNULL_END
