@@ -14,7 +14,7 @@ target 'TelePatriot' do
     pod 'Firebase/DynamicLinks'
     pod 'Firebase/RemoteConfig'
     pod 'Firebase/Auth'
-    pod 'IQKeyboardManagerSwift'
+    pod 'IQKeyboardManagerSwift' #, '6.5.4'
     pod 'FirebaseUI', '~> 5.0'
     
     # source:  https://github.com/firebase/FirebaseUI-iOS/blob/master/FirebaseAuthUI/README.md
@@ -24,10 +24,10 @@ target 'TelePatriot' do
     # pod 'FirebaseUI/Twitter', '~> 5.0'
     # pod 'FirebaseUI/Phone', '~> 5.2.2'
     
-    # pod 'FacebookCore'
-    # pod 'FacebookLogin'
-    # pod 'FacebookShare'
-    
+#     pod 'FacebookCore'
+#     pod 'FacebookLogin'
+#     pod 'FacebookShare'
+
     # maybe this...
     pod 'FBSDKCoreKit'
     pod 'FBSDKShareKit'
@@ -35,12 +35,12 @@ target 'TelePatriot' do
 
     pod 'FirebaseInstanceID'
     
-    pod 'FacebookSDK'
-    pod 'FacebookSDK/LoginKit'
-    pod 'FacebookSDK/ShareKit'
-    pod 'FacebookSDK/PlacesKit'
-    
-    pod 'FBSDKMessengerShareKit'
+#    pod 'FacebookSDK'
+#    pod 'FacebookSDK/LoginKit'
+#    pod 'FacebookSDK/ShareKit'
+#    pod 'FacebookSDK/PlacesKit'
+#    pod 'FBSDKMessengerShareKit'
+#    pod 'FBSDKMarketingKit'
 
 #    pod 'FBSDKCoreKit', '~> 4.44'
 
