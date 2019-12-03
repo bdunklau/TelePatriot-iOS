@@ -18,16 +18,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSDKShareOpenGraphAction.h"
-#import "FBSDKSharingContent.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import <FBSDKShareKit/FBSDKShareOpenGraphAction.h>
+#import <FBSDKShareKit/FBSDKSharingContent.h>
 
 /**
   A model for Open Graph content to be shared.
  */
-NS_SWIFT_NAME(ShareOpenGraphContent)
-DEPRECATED_MSG_ATTRIBUTE("Open Graph no longer available; use FBSDKShareLinkContent instead.")
 @interface FBSDKShareOpenGraphContent : NSObject <FBSDKSharingContent>
 
 /**
@@ -40,6 +36,7 @@ DEPRECATED_MSG_ATTRIBUTE("Open Graph no longer available; use FBSDKShareLinkCont
   Property name that points to the primary Open Graph Object in the action.
 
  The value that this action points to will be use for rendering the preview for the share.
+ @return The property name for the Open Graph Object in the action
  */
 @property (nonatomic, copy) NSString *previewPropertyName;
 
@@ -51,5 +48,3 @@ DEPRECATED_MSG_ATTRIBUTE("Open Graph no longer available; use FBSDKShareLinkCont
 - (BOOL)isEqualToShareOpenGraphContent:(FBSDKShareOpenGraphContent *)content;
 
 @end
-
-NS_ASSUME_NONNULL_END

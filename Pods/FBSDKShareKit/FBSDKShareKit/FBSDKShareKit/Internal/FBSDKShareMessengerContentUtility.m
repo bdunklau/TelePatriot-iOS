@@ -18,11 +18,7 @@
 
 #import "FBSDKShareMessengerContentUtility.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareConstants.h"
 #import "FBSDKShareMessengerGenericTemplateContent.h"
 #import "FBSDKShareMessengerGenericTemplateElement.h"
@@ -39,7 +35,6 @@ NSString *const kFBSDKShareMessengerAttachmentKey = @"attachment";
 NSString *const kFBSDKShareMessengerElementsKey = @"elements";
 NSString *const kFBSDKShareMessengerButtonsKey = @"buttons";
 
-DEPRECATED_FOR_MESSENGER
 static void _AddToContentPreviewDictionaryForURLButton(NSMutableDictionary<NSString *, id> *dictionary,
                                                        FBSDKShareMessengerURLActionButton *urlButton)
 {
@@ -52,8 +47,8 @@ static void _AddToContentPreviewDictionaryForURLButton(NSMutableDictionary<NSStr
   }
 
   NSString *previewString = urlButton.title.length > 0 ? [NSString stringWithFormat:@"%@ - %@", urlButton.title, shortURLString] : shortURLString;
-  [FBSDKBasicUtility dictionary:dictionary setObject:previewString forKey:@"target_display"];
-  [FBSDKBasicUtility dictionary:dictionary setObject:urlButton.url.absoluteString forKey:@"item_url"];
+  [FBSDKInternalUtility dictionary:dictionary setObject:previewString forKey:@"target_display"];
+  [FBSDKInternalUtility dictionary:dictionary setObject:urlButton.url.absoluteString forKey:@"item_url"];
 }
 
 void AddToContentPreviewDictionaryForButton(NSMutableDictionary<NSString *, id> *dictionary,
@@ -64,10 +59,7 @@ void AddToContentPreviewDictionaryForButton(NSMutableDictionary<NSString *, id> 
   }
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKShareMessengerContentUtility
-#pragma clang diagnostic pop
 
 static NSString *_WebviewHeightRatioString(FBSDKShareMessengerURLActionButtonWebviewHeightRatio heightRatio) {
   switch (heightRatio) {
@@ -90,15 +82,15 @@ NSDictionary<NSString *, id> *SerializableButtonFromURLButton(FBSDKShareMessenge
 
   // Strip out title for default action
   if (!isDefaultAction) {
-    [FBSDKBasicUtility dictionary:serializableButton setObject:button.title forKey:@"title"];
+    [FBSDKInternalUtility dictionary:serializableButton setObject:button.title forKey:@"title"];
   }
 
-  [FBSDKBasicUtility dictionary:serializableButton setObject:@"web_url" forKey:@"type"];
-  [FBSDKBasicUtility dictionary:serializableButton setObject:button.url.absoluteString forKey:@"url"];
-  [FBSDKBasicUtility dictionary:serializableButton setObject:_WebviewHeightRatioString(button.webviewHeightRatio) forKey:@"webview_height_ratio"];
-  [FBSDKBasicUtility dictionary:serializableButton setObject:@(button.isMessengerExtensionURL) forKey:@"messenger_extensions"];
-  [FBSDKBasicUtility dictionary:serializableButton setObject:button.fallbackURL.absoluteString forKey:@"fallback_url"];
-  [FBSDKBasicUtility dictionary:serializableButton setObject:_WebviewShareButtonString(button.shouldHideWebviewShareButton) forKey:@"webview_share_button"];
+  [FBSDKInternalUtility dictionary:serializableButton setObject:@"web_url" forKey:@"type"];
+  [FBSDKInternalUtility dictionary:serializableButton setObject:button.url.absoluteString forKey:@"url"];
+  [FBSDKInternalUtility dictionary:serializableButton setObject:_WebviewHeightRatioString(button.webviewHeightRatio) forKey:@"webview_height_ratio"];
+  [FBSDKInternalUtility dictionary:serializableButton setObject:@(button.isMessengerExtensionURL) forKey:@"messenger_extensions"];
+  [FBSDKInternalUtility dictionary:serializableButton setObject:button.fallbackURL.absoluteString forKey:@"fallback_url"];
+  [FBSDKInternalUtility dictionary:serializableButton setObject:_WebviewShareButtonString(button.shouldHideWebviewShareButton) forKey:@"webview_share_button"];
   return serializableButton;
 }
 
@@ -107,7 +99,7 @@ NSArray<NSDictionary<NSString *, id> *> *SerializableButtonsFromButton(id<FBSDKS
   // Return NSArray even though there is just one button to match proper json structure
   NSMutableArray<NSDictionary<NSString *, id> *> *serializableButtons = [NSMutableArray array];
   if ([button isKindOfClass:[FBSDKShareMessengerURLActionButton class]]) {
-    [FBSDKBasicUtility array:serializableButtons addObject:SerializableButtonFromURLButton(button, NO)];
+    [FBSDKInternalUtility array:serializableButtons addObject:SerializableButtonFromURLButton(button, NO)];
   }
 
   return serializableButtons;
@@ -123,9 +115,9 @@ NSArray<NSDictionary<NSString *, id> *> *SerializableButtonsFromButton(id<FBSDKS
     NSString *contentForShareDataString = [[NSString alloc] initWithData:contentForShareData encoding:NSUTF8StringEncoding];
 
     NSMutableDictionary<NSString *, id> *messengerShareContent = [NSMutableDictionary dictionary];
-    [FBSDKBasicUtility dictionary:messengerShareContent setObject:contentForShareDataString forKey:@"content_for_share"];
-    [FBSDKBasicUtility dictionary:messengerShareContent setObject:contentForPreview forKey:@"content_for_preview"];
-    [FBSDKBasicUtility dictionary:parameters setObject:messengerShareContent forKey:@"messenger_share_content"];
+    [FBSDKInternalUtility dictionary:messengerShareContent setObject:contentForShareDataString forKey:@"content_for_share"];
+    [FBSDKInternalUtility dictionary:messengerShareContent setObject:contentForPreview forKey:@"content_for_preview"];
+    [FBSDKInternalUtility dictionary:parameters setObject:messengerShareContent forKey:@"messenger_share_content"];
   }
 }
 
@@ -144,10 +136,10 @@ NSArray<NSDictionary<NSString *, id> *> *SerializableButtonsFromButton(id<FBSDKS
     (urlActionButton.isMessengerExtensionURL ? [FBSDKShareUtility validateRequiredValue:pageID name:@"content pageID" error:errorRef] : YES);
   } else {
     if (errorRef != NULL) {
-      *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                        name:@"buttons"
-                                                       value:button
-                                                     message:nil];
+      *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                       name:@"buttons"
+                                                      value:button
+                                                    message:nil];
     }
     return NO;
   }

@@ -18,34 +18,17 @@
 
 #import <Foundation/Foundation.h>
 
-#if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#else
-@import FBSDKCoreKit;
-#endif
+#import <FBSDKCoreKit/FBSDKCopying.h>
 
-#import "FBSDKShareOpenGraphObject.h"
-#import "FBSDKShareOpenGraphValueContainer.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import <FBSDKShareKit/FBSDKShareOpenGraphObject.h>
+#import <FBSDKShareKit/FBSDKShareOpenGraphValueContainer.h>
 
 /**
   An Open Graph Action for sharing.
 
  The property keys MUST have namespaces specified on them, such as `og:image`.
  */
-NS_SWIFT_NAME(ShareOpenGraphAction)
 @interface FBSDKShareOpenGraphAction : FBSDKShareOpenGraphValueContainer <FBSDKCopying, NSSecureCoding>
-
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
-
-/**
- Designated initializer to build a new action and set the object for the specified key.
- @param actionType The action type of the receiver
- */
-- (instancetype)initWithActionType:(NSString *)actionType
-NS_SWIFT_NAME(init(type:));
 
 /**
   Convenience method to build a new action and set the object for the specified key.
@@ -85,5 +68,3 @@ NS_SWIFT_NAME(init(type:));
 - (BOOL)isEqualToShareOpenGraphAction:(FBSDKShareOpenGraphAction *)action;
 
 @end
-
-NS_ASSUME_NONNULL_END

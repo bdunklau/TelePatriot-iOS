@@ -20,19 +20,10 @@
 
 #import <Foundation/Foundation.h>
 
-#if defined BUCK || defined FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#else
-@import FBSDKCoreKit;
-#endif
+#import <FBSDKCoreKit/FBSDKGraphRequestDataAttachment.h>
+#import <FBSDKShareKit/FBSDKShareConstants.h>
 
-#import "FBSDKShareConstants.h"
-
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareDefines.h"
 
 static NSString *const FBSDKVideoUploaderDefaultGraphNode = @"me";
@@ -72,7 +63,7 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
 
 - (void)_postStartRequest
 {
-  FBSDKGraphRequestBlock startRequestCompletionHandler = ^(FBSDKGraphRequestConnection *connection, id result, NSError *error)
+  FBSDKGraphRequestHandler startRequestCompletionHandler = ^(FBSDKGraphRequestConnection *connection, id result, NSError *error)
   {
     if (error) {
       [self.delegate videoUploader:self didFailWithError:error];
@@ -84,9 +75,9 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
       NSDictionary *offsetDictionary = [self _extractOffsetsFromResultDictionary:result];
       if (uploadSessionID == nil || videoID == nil) {
         [self.delegate videoUploader:self didFailWithError:
-         [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                                code:FBSDKShareErrorUnknown
-                             message:@"Failed to get valid upload_session_id or video_id."]];
+         [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                               code:FBSDKShareErrorUnknown
+                            message:@"Failed to get valid upload_session_id or video_id."]];
         return;
       } else if (offsetDictionary == nil) {
         return;
@@ -98,9 +89,9 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
   };
   if (_videoSize == 0) {
     [self.delegate videoUploader:self didFailWithError:
-     [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                            code:FBSDKShareErrorUnknown
-                         message:[NSString stringWithFormat:@"Invalid video size: %lu", (unsigned long)_videoSize]]];
+     [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                           code:FBSDKShareErrorUnknown
+                        message:[NSString stringWithFormat:@"Invalid video size: %lu", (unsigned long)_videoSize]]];
     return;
   }
   [[[FBSDKGraphRequest alloc] initWithGraphPath:_graphPath
@@ -131,9 +122,9 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
       NSData *data = [self.delegate videoChunkDataForVideoUploader:self startOffset:startOffset endOffset:endOffset];
       if (data == nil || data.length != chunkSize) {
         [self.delegate videoUploader:self didFailWithError:
-         [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                                code:FBSDKShareErrorUnknown
-                             message:[NSString
+         [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                               code:FBSDKShareErrorUnknown
+                            message:[NSString
                                      stringWithFormat:@"Fail to get video chunk with start offset: %lu, end offset : %lu.",
                                      (unsigned long)startOffset,
                                      (unsigned long)endOffset]]];
@@ -142,7 +133,7 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
       dispatch_async(dispatch_get_main_queue(), ^{
         FBSDKGraphRequestDataAttachment *dataAttachment = [[FBSDKGraphRequestDataAttachment alloc] initWithData:data
                                                                                                        filename:self->_videoName
-                                                                                                    contentType:@""];
+                                                                                                    contentType:nil];
         FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:self->_graphPath
                                                                        parameters:@{
                                                                                     FBSDK_SHARE_VIDEO_UPLOAD_PHASE: FBSDK_SHARE_VIDEO_UPLOAD_PHASE_TRANSFER,
@@ -182,9 +173,9 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
       result = [FBSDKTypeUtility dictionaryValue:result];
       if (result[FBSDK_SHARE_VIDEO_UPLOAD_SUCCESS] == nil) {
         [self.delegate videoUploader:self didFailWithError:
-         [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                                code:FBSDKShareErrorUnknown
-                             message:@"Failed to finish uploading."]];
+         [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                               code:FBSDKShareErrorUnknown
+                            message:@"Failed to finish uploading."]];
         return;
       }
       NSMutableDictionary *shareResult = [[NSMutableDictionary alloc] init];
@@ -203,16 +194,16 @@ static NSString *const FBSDKVideoUploaderEdge = @"videos";
   NSNumber *endNum = [self.numberFormatter numberFromString:result[FBSDK_SHARE_VIDEO_END_OFFSET]];
   if (startNum == nil || endNum == nil) {
     [self.delegate videoUploader:self didFailWithError:
-     [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                            code:FBSDKShareErrorUnknown
-                         message:@"Fail to get valid start_offset or end_offset."]];
+     [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                           code:FBSDKShareErrorUnknown
+                        message:@"Fail to get valid start_offset or end_offset."]];
     return nil;
   }
   if ([startNum compare:endNum] == NSOrderedDescending) {
     [self.delegate videoUploader:self didFailWithError:
-     [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                            code:FBSDKShareErrorUnknown
-                         message:@"Invalid offset: start_offset is greater than end_offset."]];
+     [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                           code:FBSDKShareErrorUnknown
+                        message:@"Invalid offset: start_offset is greater than end_offset."]];
     return nil;
   }
 

@@ -18,10 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSDKShareConstants.h"
-#import "FBSDKSharing.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import <FBSDKShareKit/FBSDKSharing.h>
 
 /**
  A dialog for sharing content through Messenger.
@@ -38,28 +35,13 @@ NS_ASSUME_NONNULL_BEGIN
  - FBSDKShareVideoContent
  - Any other types that are not one of the four supported types listed above
  */
-NS_SWIFT_NAME(MessageDialog)
-DEPRECATED_FOR_MESSENGER
 @interface FBSDKMessageDialog : NSObject <FBSDKSharingDialog>
-
-/**
- Convenience method to return a Message Share Dialog with content and a delegate.
- @param content The content to be shared.
- @param delegate The receiver's delegate.
- */
-+ (instancetype)dialogWithContent:(id<FBSDKSharingContent>)content
-                         delegate:(nullable id<FBSDKSharingDelegate>)delegate
-NS_SWIFT_NAME(init(content:delegate:));
 
 /**
  Convenience method to show a Message Share Dialog with content and a delegate.
  @param content The content to be shared.
  @param delegate The receiver's delegate.
  */
-+ (instancetype)showWithContent:(id<FBSDKSharingContent>)content
-                       delegate:(nullable id<FBSDKSharingDelegate>)delegate
-NS_SWIFT_UNAVAILABLE("Use init(content:delegate:).show() instead");
++ (instancetype)showWithContent:(id<FBSDKSharingContent>)content delegate:(id<FBSDKSharingDelegate>)delegate;
 
 @end
-
-NS_ASSUME_NONNULL_END

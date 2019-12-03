@@ -19,11 +19,7 @@
 #import "FBSDKShareOpenGraphValueContainer.h"
 #import "FBSDKShareOpenGraphValueContainer+Internal.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareOpenGraphObject.h"
 #import "FBSDKSharePhoto.h"
 #import "FBSDKShareUtility.h"
@@ -32,7 +28,7 @@
 
 @implementation FBSDKShareOpenGraphValueContainer
 {
-  NSMutableDictionary<NSString *, id> *_properties;
+  NSMutableDictionary *_properties;
 }
 
 #pragma mark - Object Lifecycle
@@ -57,7 +53,7 @@
   return [self _valueOfClass:[NSArray class] forKey:key];
 }
 
-- (void)enumerateKeysAndObjectsUsingBlock:(FBSDKEnumerationBlock)block
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(NSString *key, id object, BOOL *stop))block
 {
   [_properties enumerateKeysAndObjectsUsingBlock:block];
 }
@@ -87,7 +83,7 @@
   return [self _valueForKey:key];
 }
 
-- (void)parseProperties:(NSDictionary<NSString *, id> *)properties
+- (void)parseProperties:(NSDictionary *)properties
 {
   [FBSDKShareUtility assertOpenGraphValues:properties requireKeyNamespace:[self requireKeyNamespace]];
   [_properties addEntriesFromDictionary:[FBSDKShareUtility convertOpenGraphValues:properties]];
@@ -149,7 +145,7 @@
 
 #pragma mark - Internal Methods
 
-- (NSDictionary<NSString *, id> *)allProperties
+- (NSDictionary *)allProperties
 {
   return _properties;
 }

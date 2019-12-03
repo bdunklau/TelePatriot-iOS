@@ -18,27 +18,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSDKShareMessengerActionButton.h"
-#import "FBSDKSharingContent.h"
+#import <FBSDKShareKit/FBSDKShareMessengerActionButton.h>
+#import <FBSDKShareKit/FBSDKSharingContent.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-DEPRECATED_FOR_MESSENGER
 typedef NS_ENUM(NSUInteger, FBSDKShareMessengerMediaTemplateMediaType) {
   FBSDKShareMessengerMediaTemplateMediaTypeImage = 0,
   FBSDKShareMessengerMediaTemplateMediaTypeVideo
-} NS_SWIFT_NAME(ShareMessengerMediaTemplateMediaType);
+};
 
 /**
  A model for sharing media template content. See
  https://developers.facebook.com/docs/messenger-platform/send-messages/template/media for details.
  */
-NS_SWIFT_NAME(ShareMessengerMediaTemplateContent)
-DEPRECATED_FOR_MESSENGER
 @interface FBSDKShareMessengerMediaTemplateContent : NSObject <FBSDKSharingContent>
-
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
 
 /**
  The media type (image or video) for this content. This must match the media type specified in the
@@ -49,19 +41,19 @@ DEPRECATED_FOR_MESSENGER
 /**
  The attachmentID of the item to share. Optional, but either attachmentID or mediaURL must be specified.
  */
-@property (nonatomic, copy, readonly, nullable) NSString *attachmentID;
+@property (nonatomic, copy, readonly) NSString *attachmentID;
 
 /**
  The Facebook url for this piece of media. External urls will not work; this must be a Facebook url.
  See https://developers.facebook.com/docs/messenger-platform/send-messages/template/media for details.
  Optional, but either attachmentID or mediaURL must be specified.
  */
-@property (nonatomic, copy, readonly, nullable) NSURL *mediaURL;
+@property (nonatomic, copy, readonly) NSURL *mediaURL;
 
 /**
  This specifies what action button to show below the media. Optional.
  */
-@property (nonatomic, copy, nullable) id<FBSDKShareMessengerActionButton> button;
+@property (nonatomic, copy) id<FBSDKShareMessengerActionButton> button;
 
 /**
  Custom initializer to create media template share with attachment id.
@@ -75,5 +67,3 @@ DEPRECATED_FOR_MESSENGER
 - (instancetype)initWithMediaURL:(NSURL *)mediaURL;
 
 @end
-
-NS_ASSUME_NONNULL_END

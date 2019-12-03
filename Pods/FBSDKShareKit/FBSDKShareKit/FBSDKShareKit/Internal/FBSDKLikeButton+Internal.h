@@ -18,8 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-
+#import "FBSDKCoreKit+Internal.h"
 #import "FBSDKLikeActionController.h"
 #import "FBSDKLikeButton.h"
 

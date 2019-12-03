@@ -18,10 +18,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSDKShareOpenGraphObject.h"
-#import "FBSDKSharing.h"
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
 
-NS_ASSUME_NONNULL_BEGIN
+#import <FBSDKShareKit/FBSDKShareOpenGraphObject.h>
+#import <FBSDKShareKit/FBSDKSharing.h>
 
 /**
   A utility class for sharing through the graph API.  Using this class requires an access token that
@@ -31,35 +31,19 @@ NS_ASSUME_NONNULL_BEGIN
  If you want to use FBSDKShareAPI in a background thread, you must manage the run loop
  yourself.
  */
-NS_SWIFT_NAME(ShareAPI)
 @interface FBSDKShareAPI : NSObject <FBSDKSharing>
-
-- (instancetype)init NS_DESIGNATED_INITIALIZER
-NS_SWIFT_UNAVAILABLE("Use init(content:delegate:) instead");
-+ (instancetype)new NS_UNAVAILABLE;
 
 /**
   Convenience method to build up a share API with content and a delegate.
  @param content The content to be shared.
  @param delegate The receiver's delegate.
  */
-+ (instancetype)apiWithContent:(id<FBSDKSharingContent>)content
-                      delegate:(nullable id<FBSDKSharingDelegate>)delegate
-NS_SWIFT_NAME(init(content:delegate:));
-
-/**
- Convenience method to build up and share a share API with content and a delegate.
- @param content The content to be shared.
- @param delegate The receiver's delegate.
- */
-+ (instancetype)shareWithContent:(id<FBSDKSharingContent>)content
-                        delegate:(nullable id<FBSDKSharingDelegate>)delegate
-NS_SWIFT_UNAVAILABLE("Use init(content:delegate:).share() instead");
++ (instancetype)shareWithContent:(id<FBSDKSharingContent>)content delegate:(id<FBSDKSharingDelegate>)delegate;
 
 /**
   The message the person has provided through the custom dialog that will accompany the share content.
  */
-@property (nonatomic, copy, nullable) NSString *message;
+@property (nonatomic, copy) NSString *message;
 
 /**
   The graph node to which content should be shared.
@@ -73,7 +57,7 @@ NS_SWIFT_UNAVAILABLE("Use init(content:delegate:).share() instead");
  Defaults to [FBSDKAccessToken currentAccessToken]. Setting this to nil will revert the access token to
  [FBSDKAccessToken currentAccessToken].
  */
-@property (nonatomic, strong, nullable) FBSDKAccessToken *accessToken;
+@property (nonatomic, strong) FBSDKAccessToken *accessToken;
 
 /**
   A Boolean value that indicates whether the receiver can send the share.
@@ -108,5 +92,3 @@ NS_SWIFT_UNAVAILABLE("Use init(content:delegate:).share() instead");
 - (BOOL)share;
 
 @end
-
-NS_ASSUME_NONNULL_END

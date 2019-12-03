@@ -18,11 +18,7 @@
 
 #import "FBSDKGameRequestContent.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareConstants.h"
 #import "FBSDKShareUtility.h"
 
@@ -88,9 +84,9 @@
   if (mustHaveobjectID ^ hasobjectID) {
     if (errorRef != NULL) {
       NSString *message = @"The objectID is required when the actionType is either send or askfor.";
-      *errorRef = [FBSDKError requiredArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                         name:@"objectID"
-                                                      message:message];
+      *errorRef = [NSError fbRequiredArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                        name:@"objectID"
+                                                     message:message];
     }
     return NO;
   }
@@ -100,20 +96,20 @@
   if (hasTo && hasFilters) {
     if (errorRef != NULL) {
       NSString *message = @"Cannot specify to and filters at the same time.";
-      *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                        name:@"recipients"
-                                                       value:_recipients
-                                                     message:message];
+      *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                       name:@"recipients"
+                                                      value:_recipients
+                                                    message:message];
     }
     return NO;
   }
   if (hasTo && hasSuggestions) {
     if (errorRef != NULL) {
       NSString *message = @"Cannot specify to and suggestions at the same time.";
-      *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                        name:@"recipients"
-                                                       value:_recipients
-                                                     message:message];
+      *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                       name:@"recipients"
+                                                      value:_recipients
+                                                    message:message];
     }
     return NO;
   }
@@ -121,10 +117,10 @@
   if (hasFilters && hasSuggestions) {
     if (errorRef != NULL) {
       NSString *message = @"Cannot specify filters and suggestions at the same time.";
-      *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                        name:@"recipientSuggestions"
-                                                       value:_recipientSuggestions
-                                                     message:message];
+      *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                       name:@"recipientSuggestions"
+                                                      value:_recipientSuggestions
+                                                    message:message];
     }
     return NO;
   }
@@ -132,10 +128,10 @@
   if (_data.length > 255) {
     if (errorRef != NULL) {
       NSString *message = @"The data cannot be longer than 255 characters";
-      *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                        name:@"data"
-                                                       value:_data
-                                                     message:message];
+      *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                       name:@"data"
+                                                      value:_data
+                                                    message:message];
     }
     return NO;
   }

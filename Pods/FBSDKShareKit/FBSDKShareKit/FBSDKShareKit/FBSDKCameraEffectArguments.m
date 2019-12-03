@@ -18,18 +18,14 @@
 
 #import "FBSDKCameraEffectArguments.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareUtility.h"
 
 static NSString *const FBSDKCameraEffectArgumentsArgumentsKey = @"arguments";
 
 @implementation FBSDKCameraEffectArguments
 {
-  NSMutableDictionary<NSString *, id> *_arguments;
+  NSMutableDictionary *_arguments;
 }
 
 #pragma mark - Object Lifecycle
@@ -57,12 +53,12 @@ static NSString *const FBSDKCameraEffectArgumentsArgumentsKey = @"arguments";
   [self _setValue:[array copy] forKey:key];
 }
 
-- (NSArray<NSString *> *)arrayForKey:(NSString *)key
+- (NSArray *)arrayForKey:(NSString *)key
 {
   return [self _valueOfClass:[NSArray class] forKey:key];
 }
 
-- (NSDictionary<NSString *, id> *)allArguments;
+- (NSDictionary *)allArguments
 {
   return _arguments;
 }

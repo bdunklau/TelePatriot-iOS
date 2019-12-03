@@ -18,11 +18,7 @@
 
 #import "FBSDKShareOpenGraphAction.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareOpenGraphValueContainer+Internal.h"
 
 #define FBSDK_SHARE_OPEN_GRAPH_ACTION_TYPE_KEY @"type"
@@ -33,14 +29,15 @@
 
 + (instancetype)actionWithType:(NSString *)actionType object:(FBSDKShareOpenGraphObject *)object key:(NSString *)key
 {
-  FBSDKShareOpenGraphAction *action = [[self alloc] initWithActionType:actionType];
+  FBSDKShareOpenGraphAction *action = [[FBSDKShareOpenGraphAction alloc] init];
+  action.actionType = actionType;
   [action setObject:object forKey:key];
   return action;
 }
 
 + (instancetype)actionWithType:(NSString *)actionType objectID:(NSString *)objectID key:(NSString *)key
 {
-  FBSDKShareOpenGraphAction *action = [[self alloc] initWithActionType:actionType];
+  FBSDKShareOpenGraphAction *action = [[FBSDKShareOpenGraphAction alloc] init];
   action.actionType = actionType;
   [action setString:objectID forKey:key];
   return action;
@@ -48,7 +45,7 @@
 
 + (instancetype)actionWithType:(NSString *)actionType objectURL:(NSURL *)objectURL key:(NSString *)key
 {
-  FBSDKShareOpenGraphAction *action = [[self alloc] initWithActionType:actionType];
+  FBSDKShareOpenGraphAction *action = [[FBSDKShareOpenGraphAction alloc] init];
   action.actionType = actionType;
   [action setURL:objectURL forKey:key];
   return action;
@@ -86,15 +83,6 @@
   return YES;
 }
 
-- (instancetype)initWithActionType:(NSString *)actionType
-{
-  if (self = [super init]) {
-    self.actionType = actionType;
-  }
-
-  return self;
-}
-
 - (instancetype)initWithCoder:(NSCoder *)decoder
 {
   if ((self = [super initWithCoder:decoder])) {
@@ -113,7 +101,8 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-  FBSDKShareOpenGraphAction *copy = [[FBSDKShareOpenGraphAction alloc] initWithActionType:[_actionType copy]];
+  FBSDKShareOpenGraphAction *copy = [[FBSDKShareOpenGraphAction alloc] init];
+  copy->_actionType = [_actionType copy];
   [copy parseProperties:[self allProperties]];
   return copy;
 }

@@ -18,11 +18,7 @@
 
 #import "FBSDKShareMessengerMediaTemplateContent.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKHashtag.h"
 #import "FBSDKShareConstants.h"
 #import "FBSDKShareMessengerContentUtility.h"
@@ -59,7 +55,6 @@ static NSString *_MediaTemplateURLSerializationKey(NSURL *mediaURL)
   }
 }
 
-DEPRECATED_FOR_MESSENGER
 static NSString *_MediaTypeString(FBSDKShareMessengerMediaTemplateMediaType mediaType)
 {
   switch (mediaType) {
@@ -70,25 +65,21 @@ static NSString *_MediaTypeString(FBSDKShareMessengerMediaTemplateMediaType medi
   }
 }
 
-DEPRECATED_FOR_MESSENGER
 static NSArray<NSDictionary<NSString *, id> *> *_SerializableMediaTemplateContentFromContent(FBSDKShareMessengerMediaTemplateContent *mediaTemplateContent)
 {
   NSMutableArray<NSDictionary<NSString *, id> *> *serializableMediaTemplateContent = [NSMutableArray array];
 
   NSMutableDictionary<NSString *, id> *mediaTemplateContentDictionary = [NSMutableDictionary dictionary];
-  [FBSDKBasicUtility dictionary:mediaTemplateContentDictionary setObject:_MediaTypeString(mediaTemplateContent.mediaType) forKey:@"media_type"];
-  [FBSDKBasicUtility dictionary:mediaTemplateContentDictionary setObject:mediaTemplateContent.mediaURL.absoluteString forKey:@"url"];
-  [FBSDKBasicUtility dictionary:mediaTemplateContentDictionary setObject:mediaTemplateContent.attachmentID forKey:@"attachment_id"];
-  [FBSDKBasicUtility dictionary:mediaTemplateContentDictionary setObject:SerializableButtonsFromButton(mediaTemplateContent.button) forKey:kFBSDKShareMessengerButtonsKey];
+  [FBSDKInternalUtility dictionary:mediaTemplateContentDictionary setObject:_MediaTypeString(mediaTemplateContent.mediaType) forKey:@"media_type"];
+  [FBSDKInternalUtility dictionary:mediaTemplateContentDictionary setObject:mediaTemplateContent.mediaURL.absoluteString forKey:@"url"];
+  [FBSDKInternalUtility dictionary:mediaTemplateContentDictionary setObject:mediaTemplateContent.attachmentID forKey:@"attachment_id"];
+  [FBSDKInternalUtility dictionary:mediaTemplateContentDictionary setObject:SerializableButtonsFromButton(mediaTemplateContent.button) forKey:kFBSDKShareMessengerButtonsKey];
   [serializableMediaTemplateContent addObject:mediaTemplateContentDictionary];
 
   return serializableMediaTemplateContent;
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKShareMessengerMediaTemplateContent
-#pragma clang diagnostic pop
 
 #pragma mark - Properties
 
@@ -124,6 +115,12 @@ static NSArray<NSDictionary<NSString *, id> *> *_SerializableMediaTemplateConten
 
 #pragma mark - FBSDKSharingContent
 
+- (void)addToParameters:(NSMutableDictionary<NSString *, id> *)parameters
+          bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
+{
+  [parameters addEntriesFromDictionary:[self addParameters:parameters bridgeOptions:bridgeOptions]];
+}
+
 - (NSDictionary<NSString *, id> *)addParameters:(NSDictionary<NSString *, id> *)existingParameters
                                   bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
 {
@@ -141,12 +138,12 @@ static NSArray<NSDictionary<NSString *, id> *> *_SerializableMediaTemplateConten
   contentForShare[kFBSDKShareMessengerAttachmentKey] = attachment;
 
   NSMutableDictionary<NSString *, id> *contentForPreview = [NSMutableDictionary dictionary];
-  [FBSDKBasicUtility dictionary:contentForPreview setObject:@"DEFAULT" forKey:@"preview_type"];
-  [FBSDKBasicUtility dictionary:contentForPreview setObject:_attachmentID forKey:@"attachment_id"];
-  [FBSDKBasicUtility dictionary:contentForPreview
-                      setObject:_mediaURL.absoluteString
-                         forKey:_MediaTemplateURLSerializationKey(_mediaURL)];
-  [FBSDKBasicUtility dictionary:contentForPreview setObject:_MediaTypeString(_mediaType) forKey:@"media_type"];
+  [FBSDKInternalUtility dictionary:contentForPreview setObject:@"DEFAULT" forKey:@"preview_type"];
+  [FBSDKInternalUtility dictionary:contentForPreview setObject:_attachmentID forKey:@"attachment_id"];
+  [FBSDKInternalUtility dictionary:contentForPreview
+                         setObject:_mediaURL.absoluteString
+                            forKey:_MediaTemplateURLSerializationKey(_mediaURL)];
+  [FBSDKInternalUtility dictionary:contentForPreview setObject:_MediaTypeString(_mediaType) forKey:@"media_type"];
   AddToContentPreviewDictionaryForButton(contentForPreview, _button);
 
   [FBSDKShareMessengerContentUtility addToParameters:updatedParameters contentForShare:contentForShare contentForPreview:contentForPreview];
@@ -160,9 +157,9 @@ static NSArray<NSDictionary<NSString *, id> *> *_SerializableMediaTemplateConten
 {
   if (!_mediaURL && !_attachmentID) {
     if (errorRef != NULL) {
-      *errorRef = [FBSDKError requiredArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                         name:@"attachmentID/mediaURL"
-                                                      message:@"Must specify either attachmentID or mediaURL"];
+      *errorRef = [NSError fbRequiredArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                        name:@"attachmentID/mediaURL"
+                                                     message:@"Must specify either attachmentID or mediaURL"];
     }
     return NO;
   }
@@ -181,7 +178,7 @@ static NSArray<NSDictionary<NSString *, id> *> *_SerializableMediaTemplateConten
 
 - (instancetype)initWithCoder:(NSCoder *)decoder
 {
-  if (self = [self initWithAttachmentID:@""]) {
+  if ((self = [self init])) {
     _pageID = [decoder decodeObjectOfClass:[NSString class] forKey:kMediaTemplatePageIDKey];
     _mediaType = [[decoder decodeObjectForKey:kMediaTemplateMediaTypeKey] unsignedIntegerValue];
     _attachmentID = [decoder decodeObjectOfClass:[NSString class] forKey:kMediaTemplateAttachmentIDKey];
@@ -206,8 +203,7 @@ static NSArray<NSDictionary<NSString *, id> *> *_SerializableMediaTemplateConten
 
 - (id)copyWithZone:(NSZone *)zone
 {
-  FBSDKShareMessengerMediaTemplateContent *copy =
-   [[FBSDKShareMessengerMediaTemplateContent alloc] initWithAttachmentID:@""];
+  FBSDKShareMessengerMediaTemplateContent *copy = [[FBSDKShareMessengerMediaTemplateContent alloc] init];
   copy->_pageID = [_pageID copy];
   copy->_mediaType = _mediaType;
   copy->_attachmentID = [_attachmentID copy];

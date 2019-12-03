@@ -18,8 +18,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  NS_ENUM (NSUInteger, FBSDKLikeObjectType)
   Specifies the type of object referenced by the objectID for likes.
@@ -32,12 +30,9 @@ typedef NS_ENUM(NSUInteger, FBSDKLikeObjectType)
   FBSDKLikeObjectTypeOpenGraph,
   /** The objectID refers to an Page object. */
   FBSDKLikeObjectTypePage,
-} NS_SWIFT_NAME(LikeObjectType);
+};
 
 /**
   Converts an FBLikeControlObjectType to an NSString.
  */
-FOUNDATION_EXPORT NSString *NSStringFromFBSDKLikeObjectType(FBSDKLikeObjectType objectType)
-NS_REFINED_FOR_SWIFT;
-
-NS_ASSUME_NONNULL_END
+FOUNDATION_EXPORT NSString *NSStringFromFBSDKLikeObjectType(FBSDKLikeObjectType objectType);

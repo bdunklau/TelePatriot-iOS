@@ -29,7 +29,7 @@ target 'TelePatriot' do
 #     pod 'FacebookShare'
 
     # maybe this...
-    pod 'FBSDKCoreKit'
+#    pod 'FBSDKCoreKit'
     pod 'FBSDKShareKit'
     pod 'FBSDKLoginKit'
 
@@ -42,7 +42,7 @@ target 'TelePatriot' do
 #    pod 'FBSDKMessengerShareKit'
 #    pod 'FBSDKMarketingKit'
 
-#    pod 'FBSDKCoreKit', '~> 4.44'
+    pod 'FBSDKCoreKit', '~> 4.44'
 
     pod 'TwilioVideo', '~> 2.4.0'
     

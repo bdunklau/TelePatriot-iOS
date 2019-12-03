@@ -18,11 +18,7 @@
 
 #import "FBSDKLikeDialog.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareConstants.h"
 #import "FBSDKShareDefines.h"
 
@@ -65,9 +61,9 @@
 {
   NSError *error;
   if (![self canLike]) {
-    error = [FBSDKError errorWithDomain:FBSDKShareErrorDomain
-                                   code:FBSDKShareErrorDialogNotAvailable
-                                message:@"Like dialog is not available."];
+    error = [NSError fbErrorWithDomain:FBSDKShareErrorDomain
+                                  code:FBSDKShareErrorDialogNotAvailable
+                               message:@"Like dialog is not available."];
     [_delegate likeDialog:self didFailWithError:error];
     return NO;
   }
@@ -77,10 +73,10 @@
   }
 
   NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-  [FBSDKBasicUtility dictionary:parameters setObject:self.objectID forKey:@"object_id"];
-  [FBSDKBasicUtility dictionary:parameters
-                      setObject:NSStringFromFBSDKLikeObjectType(self.objectType)
-                         forKey:@"object_type"];
+  [FBSDKInternalUtility dictionary:parameters setObject:self.objectID forKey:@"object_id"];
+  [FBSDKInternalUtility dictionary:parameters
+                         setObject:NSStringFromFBSDKLikeObjectType(self.objectType)
+                            forKey:@"object_type"];
   FBSDKBridgeAPIRequest * webRequest = [FBSDKBridgeAPIRequest bridgeAPIRequestWithProtocolType:FBSDKBridgeAPIProtocolTypeWeb
                                                                                         scheme:FBSDK_SHARE_JS_DIALOG_SCHEME
                                                                                     methodName:FBSDK_LIKE_METHOD_NAME
@@ -128,9 +124,9 @@
 {
   if (!self.objectID.length) {
     if (errorRef != NULL) {
-      *errorRef = [FBSDKError requiredArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                         name:@"objectID"
-                                                      message:nil];
+      *errorRef = [NSError fbRequiredArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                        name:@"objectID"
+                                                     message:nil];
     }
     return NO;
   }

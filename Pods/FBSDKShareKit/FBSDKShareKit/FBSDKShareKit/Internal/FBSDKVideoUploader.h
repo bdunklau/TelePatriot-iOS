@@ -18,14 +18,10 @@
 
 #import <Foundation/Foundation.h>
 
-#if defined BUCK || defined FBSDKCOCOAPODS
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#else
-@import FBSDKCoreKit;
-#endif
 
-#import "FBSDKShareVideo.h"
-#import "FBSDKSharing.h"
+#import <FBSDKShareKit/FBSDKShareVideo.h>
+#import <FBSDKShareKit/FBSDKSharing.h>
 
 @protocol FBSDKVideoUploaderDelegate;
 
@@ -35,7 +31,6 @@
 
  see https://developers.facebook.com/docs/graph-api/video-uploads
  */
-NS_SWIFT_NAME(VideoUploader)
 @interface FBSDKVideoUploader : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -85,7 +80,6 @@ NS_DESIGNATED_INITIALIZER;
 
  The delegate passes video chunk to `FBSDKVideoUploader` object in `NSData` format and is notified with the results of the uploader.
  */
-NS_SWIFT_NAME(VideoUploaderDelegate)
 @protocol FBSDKVideoUploaderDelegate <NSObject>
 
 /**
@@ -101,8 +95,7 @@ NS_SWIFT_NAME(VideoUploaderDelegate)
  @param videoUploader The `FBSDKVideoUploader` object which is performing the upload process
  @param results The result from successful upload
  */
-- (void)videoUploader:(FBSDKVideoUploader *)videoUploader
-didCompleteWithResults:(NSDictionary<NSString *, id> *)results;
+- (void)videoUploader:(FBSDKVideoUploader *)videoUploader didCompleteWithResults:(NSDictionary *)results;
 
 /**
   Notify the delegate that upload process fails.

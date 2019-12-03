@@ -18,22 +18,14 @@
 
 #import <Foundation/Foundation.h>
 
-#if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#else
-@import FBSDKCoreKit;
-#endif
-
-#import "FBSDKSharingValidation.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import <FBSDKCoreKit/FBSDKCopying.h>
+#import <FBSDKShareKit/FBSDKSharingValidation.h>
 
 @class FBSDKHashtag;
 
 /**
   A base interface for content to be shared.
  */
-NS_SWIFT_NAME(SharingContent)
 @protocol FBSDKSharingContent <FBSDKCopying, FBSDKSharingValidation, NSSecureCoding>
 
 /**
@@ -49,7 +41,7 @@ NS_SWIFT_NAME(SharingContent)
   Hashtag for the content being shared.
  @return The hashtag for the content being shared.
  */
-@property (nonatomic, copy, nullable) FBSDKHashtag *hashtag;
+@property (nonatomic, copy) FBSDKHashtag *hashtag;
 
 /**
   List of IDs for taggable people to tag with this content.
@@ -57,31 +49,31 @@ NS_SWIFT_NAME(SharingContent)
  (https://developers.facebook.com/docs/graph-api/reference/user/taggable_friends)
  @return Array of IDs for people to tag (NSString)
  */
-@property (nonatomic, copy) NSArray<NSString *> *peopleIDs;
+@property (nonatomic, copy) NSArray *peopleIDs;
 
 /**
   The ID for a place to tag with this content.
  @return The ID for the place to tag
  */
-@property (nonatomic, copy, nullable) NSString *placeID;
+@property (nonatomic, copy) NSString *placeID;
 
 /**
   A value to be added to the referrer URL when a person follows a link from this shared content on feed.
  @return The ref for the content.
  */
-@property (nonatomic, copy, nullable) NSString *ref;
+@property (nonatomic, copy) NSString *ref;
 
 /**
  For shares into Messenger, this pageID will be used to map the app to page and attach attribution to the share.
- @return The ID of the Facebook page this share is associated with.
+ @return The ID of the Facebok page this share is associated with.
  */
-@property (nonatomic, copy, nullable) NSString *pageID;
+@property (nonatomic, copy) NSString *pageID;
 
 /**
  A unique identifier for a share involving this content, useful for tracking purposes.
  @return A unique string identifying this share data.
  */
-@property (nonatomic, copy, readonly, nullable) NSString *shareUUID;
+@property (nonatomic, copy, readonly) NSString *shareUUID;
 
 /**
  Adds content to an existing dictionary as key/value pairs and returns the
@@ -91,9 +83,16 @@ NS_SWIFT_NAME(SharingContent)
  @return A new dictionary with the modified contents
  */
 - (NSDictionary<NSString *, id> *)addParameters:(NSDictionary<NSString *, id> *)existingParameters
-                                  bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
-NS_SWIFT_NAME(addParameters(_:options:));
+                                  bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions;
+
+/**
+ Adds content to a dictionary as key/value pairs.
+ @param parameters A mutable dictionary that may be appended with key/value pairs of content.
+ @param bridgeOptions The options for bridging
+ */
+
+- (void)addToParameters:(NSMutableDictionary<NSString *, id> *)parameters
+          bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
+DEPRECATED_MSG_ATTRIBUTE("`addToParameters` is deprecated. Use `addParameters`");
 
 @end
-
-NS_ASSUME_NONNULL_END

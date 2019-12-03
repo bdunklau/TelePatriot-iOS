@@ -18,11 +18,7 @@
 
 #import "FBSDKShareVideo.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKShareConstants.h"
 #import "FBSDKSharePhoto.h"
 #import "FBSDKShareUtility.h"
@@ -152,10 +148,10 @@ NSString *const kFBSDKShareVideoURLKey = @"videoURL";
     }
   }
   if ((errorRef != NULL) && !*errorRef) {
-    *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                      name:@"data"
-                                                     value:data
-                                                   message:@"Cannot share video data."];
+    *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                     name:@"data"
+                                                    value:data
+                                                  message:@"Cannot share video data."];
   }
   return NO;
 }
@@ -173,10 +169,10 @@ NSString *const kFBSDKShareVideoURLKey = @"videoURL";
       }
     } else {
       if (errorRef != NULL) {
-        *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                          name:@"videoAsset"
-                                                         value:videoAsset
-                                                       message:@"Must refer to a video file."];
+        *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                         name:@"videoAsset"
+                                                        value:videoAsset
+                                                      message:@"Must refer to a video file."];
       }
       return NO;
     }
@@ -198,10 +194,10 @@ NSString *const kFBSDKShareVideoURLKey = @"videoURL";
     }
   }
   if ((errorRef != NULL) && !*errorRef) {
-    *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                      name:kFBSDKShareVideoURLKey
-                                                     value:videoURL
-                                                   message:@"Must refer to an asset file."];
+    *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                     name:kFBSDKShareVideoURLKey
+                                                    value:videoURL
+                                                  message:@"Must refer to an asset file."];
   }
   return NO;
 }
@@ -218,10 +214,10 @@ NSString *const kFBSDKShareVideoURLKey = @"videoURL";
     return [self _validateVideoURL:_videoURL withOptions:bridgeOptions error:errorRef];
   } else {
     if ((errorRef != NULL) && !*errorRef) {
-      *errorRef = [FBSDKError invalidArgumentErrorWithDomain:FBSDKShareErrorDomain
-                                                        name:@"video"
-                                                       value:self
-                                                     message:@"Must have an asset, data, or videoURL value."];
+      *errorRef = [NSError fbInvalidArgumentErrorWithDomain:FBSDKShareErrorDomain
+                                                       name:@"video"
+                                                      value:self
+                                                    message:@"Must have an asset, data, or videoURL value."];
     }
     return NO;
   }

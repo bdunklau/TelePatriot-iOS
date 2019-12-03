@@ -18,11 +18,7 @@
 
 #import "FBSDKShareOpenGraphContent.h"
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKHashtag.h"
 #import "FBSDKSharePhoto.h"
 #import "FBSDKShareUtility.h"
@@ -37,10 +33,7 @@
 #define FBSDK_SHARE_OPEN_GRAPH_CONTENT_PAGE_ID_KEY @"pageID"
 #define FBSDK_SHARE_OPEN_GRAPH_CONTENT_UUID_KEY @"uuid"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKShareOpenGraphContent
-
 
 #pragma mark - Properties
 
@@ -75,19 +68,25 @@
 
 #pragma mark - FBSDKSharingContent
 
+- (void)addToParameters:(NSMutableDictionary<NSString *, id> *)parameters
+          bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
+{
+  [parameters addEntriesFromDictionary:[self addParameters:parameters bridgeOptions:bridgeOptions]];
+}
+
 - (NSDictionary<NSString *, id> *)addParameters:(NSDictionary<NSString *, id> *)existingParameters
                                   bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
 {
   NSMutableDictionary<NSString *, id> *updatedParameters = [NSMutableDictionary dictionaryWithDictionary:existingParameters];
 
   NSString *previewPropertyName = [FBSDKShareUtility getOpenGraphNameAndNamespaceFromFullName:_previewPropertyName namespace:nil];
-  [FBSDKBasicUtility dictionary:updatedParameters
-                      setObject:previewPropertyName
-                         forKey:@"previewPropertyName"];
-  [FBSDKBasicUtility dictionary:updatedParameters setObject:_action.actionType forKey:@"actionType"];
-  [FBSDKBasicUtility dictionary:updatedParameters
-                      setObject:[FBSDKShareUtility convertOpenGraphValueContainer:_action requireNamespace:NO]
-                         forKey:@"action"];
+  [FBSDKInternalUtility dictionary:updatedParameters
+                         setObject:previewPropertyName
+                            forKey:@"previewPropertyName"];
+  [FBSDKInternalUtility dictionary:updatedParameters setObject:_action.actionType forKey:@"actionType"];
+  [FBSDKInternalUtility dictionary:updatedParameters
+                         setObject:[FBSDKShareUtility convertOpenGraphValueContainer:_action requireNamespace:NO]
+                            forKey:@"action"];
 
   return updatedParameters;
 }
@@ -124,7 +123,7 @@
   if (self == object) {
     return YES;
   }
-  if (![object isKindOfClass:NSClassFromString(@"FBSDKShareOpenGraphContent")]) {
+  if (![object isKindOfClass:[FBSDKShareOpenGraphContent class]]) {
     return NO;
   }
   return [self isEqualToShareOpenGraphContent:(FBSDKShareOpenGraphContent *)object];
@@ -200,4 +199,3 @@
 }
 
 @end
-#pragma clang diagnostic pop

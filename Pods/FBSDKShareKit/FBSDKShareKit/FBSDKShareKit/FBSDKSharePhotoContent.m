@@ -20,11 +20,7 @@
 
 #import <Photos/Photos.h>
 
-#ifdef FBSDKCOCOAPODS
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
-#else
 #import "FBSDKCoreKit+Internal.h"
-#endif
 #import "FBSDKHashtag.h"
 #import "FBSDKSharePhoto.h"
 #import "FBSDKShareUtility.h"
@@ -81,6 +77,12 @@
 
 #pragma mark - FBSDKSharingContent
 
+- (void)addToParameters:(NSMutableDictionary<NSString *, id> *)parameters
+          bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
+{
+  [parameters addEntriesFromDictionary:[self addParameters:parameters bridgeOptions:bridgeOptions]];
+}
+
 - (NSDictionary<NSString *, id> *)addParameters:(NSDictionary<NSString *, id> *)existingParameters
                                   bridgeOptions:(FBSDKShareBridgeOptions)bridgeOptions
 {
@@ -118,9 +120,9 @@
     }
   }
   if (images.count > 0) {
-    [FBSDKBasicUtility dictionary:updatedParameters
-                        setObject:images
-                           forKey:@"photos"];
+    [FBSDKInternalUtility dictionary:updatedParameters
+                           setObject:images
+                              forKey:@"photos"];
   }
 
   return updatedParameters;

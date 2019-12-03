@@ -18,18 +18,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSDKShareConstants.h"
-#import "FBSDKSharingContent.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import <FBSDKShareKit/FBSDKSharingContent.h>
 
 @class FBSDKShareMessengerGenericTemplateElement;
 
-DEPRECATED_FOR_MESSENGER
 typedef NS_ENUM(NSUInteger, FBSDKShareMessengerGenericTemplateImageAspectRatio) {
   FBSDKShareMessengerGenericTemplateImageAspectRatioHorizontal = 0,
   FBSDKShareMessengerGenericTemplateImageAspectRatioSquare
-} NS_SWIFT_NAME(ShareMessengerGenericTemplateImageAspectRatio);
+};
 
 /**
  A model for sharing a generic template element to Messenger. This wrapper element allows
@@ -37,8 +33,6 @@ typedef NS_ENUM(NSUInteger, FBSDKShareMessengerGenericTemplateImageAspectRatio) 
  See https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic
  for more details.
  */
-DEPRECATED_FOR_MESSENGER
-NS_SWIFT_NAME(ShareMessengerGenericTemplateContent)
 @interface FBSDKShareMessengerGenericTemplateContent : NSObject <FBSDKSharingContent>
 
 /**
@@ -59,5 +53,3 @@ NS_SWIFT_NAME(ShareMessengerGenericTemplateContent)
 @property (nonatomic, copy) FBSDKShareMessengerGenericTemplateElement *element;
 
 @end
-
-NS_ASSUME_NONNULL_END

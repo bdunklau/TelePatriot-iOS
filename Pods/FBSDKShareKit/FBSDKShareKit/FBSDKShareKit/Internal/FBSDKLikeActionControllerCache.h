@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_SWIFT_NAME(LikeActionControllerCache)
 @interface FBSDKLikeActionControllerCache : NSObject <NSSecureCoding>
 
 - (instancetype)init NS_UNAVAILABLE;

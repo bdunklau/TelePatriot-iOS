@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_SWIFT_NAME(GameRequestFrictionlessRecipientCache)
 @interface FBSDKGameRequestFrictionlessRecipientCache : NSObject
 
 - (BOOL)recipientsAreFrictionless:(id)recipients;

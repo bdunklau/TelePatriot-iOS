@@ -26,13 +26,18 @@
   NSError *_error;
 }
 
-@property (nonatomic, strong, nullable) id<FBSDKGraphErrorRecoveryProcessorDelegate>delegate;
+@property (nonatomic, strong) id<FBSDKGraphErrorRecoveryProcessorDelegate>delegate;
 
 @end
 
 @implementation FBSDKGraphErrorRecoveryProcessor
 
-- (BOOL)processError:(NSError *)error request:(FBSDKGraphRequest *)request delegate:(id<FBSDKGraphErrorRecoveryProcessorDelegate>)delegate
+- (void)dealloc
+{
+
+}
+
+- (BOOL)processError:(NSError *)error request:(FBSDKGraphRequest *)request delegate:(id<FBSDKGraphErrorRecoveryProcessorDelegate>) delegate
 {
   self.delegate = delegate;
   if ([self.delegate respondsToSelector:@selector(processorWillProcessError:error:)]) {

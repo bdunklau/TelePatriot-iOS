@@ -19,11 +19,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "FBSDKLikeObjectType.h"
+#import <FBSDKShareKit/FBSDKLikeObjectType.h>
 
 @protocol FBSDKLikeDialogDelegate;
 
-NS_SWIFT_NAME(LikeDialog)
 @interface FBSDKLikeDialog : NSObject
 
 + (instancetype)likeWithObjectID:(NSString *)objectID
@@ -42,10 +41,9 @@ NS_SWIFT_NAME(LikeDialog)
 
 @end
 
-NS_SWIFT_NAME(LikeDialogDelegate)
 @protocol FBSDKLikeDialogDelegate <NSObject>
 
-- (void)likeDialog:(FBSDKLikeDialog *)likeDialog didCompleteWithResults:(NSDictionary<NSString *, id> *)results;
+- (void)likeDialog:(FBSDKLikeDialog *)likeDialog didCompleteWithResults:(NSDictionary *)results;
 - (void)likeDialog:(FBSDKLikeDialog *)likeDialog didFailWithError:(NSError *)error;
 
 @end
