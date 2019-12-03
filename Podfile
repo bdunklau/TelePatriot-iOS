@@ -16,33 +16,24 @@ target 'TelePatriot' do
     pod 'Firebase/Auth'
     pod 'IQKeyboardManagerSwift' #, '6.5.4'
     pod 'FirebaseUI', '~> 5.0'
-    
-    # source:  https://github.com/firebase/FirebaseUI-iOS/blob/master/FirebaseAuthUI/README.md
-    # pod 'FirebaseUI/Auth', '~> 5.0'
-    # pod 'FirebaseUI/Google', '~> 5.0'
-    # pod 'FirebaseUI/Facebook'
-    # pod 'FirebaseUI/Twitter', '~> 5.0'
-    # pod 'FirebaseUI/Phone', '~> 5.2.2'
+    pod 'FirebaseInstanceID'
     
 #     pod 'FacebookCore'
 #     pod 'FacebookLogin'
 #     pod 'FacebookShare'
 
-    # maybe this...
-#    pod 'FBSDKCoreKit'
+    pod 'FBSDKCoreKit'
+    pod 'FBSDKCoreKit', '~> 4.44' # HAD TO ADD THIS
     pod 'FBSDKShareKit'
     pod 'FBSDKLoginKit'
-
-    pod 'FirebaseInstanceID'
     
-#    pod 'FacebookSDK'
-#    pod 'FacebookSDK/LoginKit'
-#    pod 'FacebookSDK/ShareKit'
-#    pod 'FacebookSDK/PlacesKit'
-#    pod 'FBSDKMessengerShareKit'
+#    pod 'FacebookSDK'           ADDING THIS STUFF DIDN'T WORK
+#    pod 'FacebookSDK/LoginKit'  ADDING THIS STUFF DIDN'T WORK
+#    pod 'FacebookSDK/ShareKit'  ADDING THIS STUFF DIDN'T WORK
+#    pod 'FacebookSDK/PlacesKit' ADDING THIS STUFF DIDN'T WORK
+#    pod 'FBSDKMessengerShareKit'ADDING THIS STUFF DIDN'T WORK
 #    pod 'FBSDKMarketingKit'
 
-    pod 'FBSDKCoreKit', '~> 4.44'
 
     pod 'TwilioVideo', '~> 2.4.0'
     
