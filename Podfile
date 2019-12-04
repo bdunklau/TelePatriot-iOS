@@ -17,16 +17,9 @@ target 'TelePatriot' do
     pod 'FirebaseUI', '~> 5.0'
     pod 'FirebaseInstanceID'
     
-    #   pod 'FBSDKCoreKit'            # HAD TO COMMENT THIS OUT
-    pod 'FBSDKCoreKit', '~> 4.44' # HAD TO ADD THIS
+    pod 'FBSDKCoreKit'
     pod 'FBSDKShareKit'
     pod 'FBSDKLoginKit'
-    
-    #    pod 'FacebookSDK'            ADDING THIS STUFF DIDN'T WORK
-    #    pod 'FacebookSDK/LoginKit'   ADDING THIS STUFF DIDN'T WORK
-    #    pod 'FacebookSDK/ShareKit'   ADDING THIS STUFF DIDN'T WORK
-    #    pod 'FacebookSDK/PlacesKit'  ADDING THIS STUFF DIDN'T WORK
-    #    pod 'FBSDKMessengerShareKit' ADDING THIS STUFF DIDN'T WORK
 
     pod 'TwilioVideo', '~> 2.4.0'
     
