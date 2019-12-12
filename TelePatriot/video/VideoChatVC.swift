@@ -205,9 +205,9 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        inviteLinks()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        inviteLinks()
+    }
     
     func loadPortraitView() {
         
@@ -1015,10 +1015,10 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
         }
         else {
             // means the remote camera is not visible and there's no invitation extended yet
-            let ivl = self.isViewLoaded
-            let ibp = self.isBeingPresented
-            let hack = TPUser.sharedInstance.isAllowed() || (ivl && ibp)
-            if hack, // hack bug fix - keeps app from crashing when invitation is revoked and the user is actually on the limbo screen
+//            let ivl = self.isViewLoaded
+//            let ibp = self.isBeingPresented
+//            let hack = TPUser.sharedInstance.isAllowed() || (ivl && ibp)
+            if  // hack, // hack bug fix - keeps app from crashing when invitation is revoked and the user is actually on the limbo screen
                 let _ = remote_camera_view,
                 let landscapeView = landscapeView
             {
