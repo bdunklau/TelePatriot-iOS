@@ -70,11 +70,20 @@ class InviteSomeoneVC: BaseViewController {
     
     
     @objc private func cancel(_ sender: UIButton) {
+        if UIDevice.current.orientation.isPortrait {
+            alertToRotatePhone()
+            return
+        }
         dismiss(animated: true, completion: nil)
     }
     
     
     @objc private func inviteByName(_ sender: UIButton) {
+        if UIDevice.current.orientation.isPortrait {
+            alertToRotatePhone()
+            return
+        }
+        
         if let vc = getAppDelegate().searchUsersVC {
             dismiss(animated: true, completion: nil)
             vc.modalPresentationStyle = .popover
@@ -84,11 +93,38 @@ class InviteSomeoneVC: BaseViewController {
     }
     
     
+    private func alertToRotatePhone() {
+        // hack - pop up an alert telling the user the phone has to be in landscape mode
+        // and quit early
+        let alert = UIAlertController(title: title, message: "Your phone must be in landscape orientation", preferredStyle: UIAlertController.Style.alert)
+        let ok = UIAlertAction(title: "Rotate Your Phone", style: .default, handler: { action in
+            switch action.style {
+            case .default:
+                return
+            case .cancel:
+                return
+            case .destructive:
+                return
+            }
+        })
+        
+        alert.addAction(ok)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     @objc private func inviteByTextMessage(_ sender: UIButton) {
+        if UIDevice.current.orientation.isPortrait {
+            alertToRotatePhone()
+            return
+        }
+        
         if let vc = getAppDelegate().inviteByTextMessageVC {
             dismiss(animated: true, completion: nil)
             vc.modalPresentationStyle = .popover
             vc.inviteByTextMessageDelegate = self
+            videoChatVC?.view.addSubview(vc.view) // maybe this will prevent crashing
             videoChatVC?.present(vc, animated: true, completion:nil)
         }
     }

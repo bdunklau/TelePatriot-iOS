@@ -166,25 +166,16 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     }()
     
     
+    var alreadyQueried : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let hack = false
-        if hack {
-            if let landscapeView = landscapeView {
-                landscapeView.removeFromSuperview()
+        if UIDevice.current.orientation.isLandscape {
+            if !alreadyQueried {
+                alreadyQueried = true
+                queryCurrentVideoNode()
             }
-            if let portraitView = portraitView {
-                portraitView.removeFromSuperview()
-            }
-            landscapeView = nil
-            portraitView = nil
-            queryCurrentVideoNode()
-            loadLandscapeView()
-            view.addSubview(landscapeView!)
-        }
-        else if UIDevice.current.orientation.isLandscape {
-            queryCurrentVideoNode()
             
             if landscapeView == nil {
                 loadLandscapeView()
@@ -728,7 +719,13 @@ class VideoChatVC: BaseViewController, TVICameraCapturerDelegate, TVIVideoViewDe
     
     func rotated() {
         print("rotated():  phone orientation was just rotated")
-        viewDidLoad() // checks device orientation and only loads if in landscape mode
+        print("rotated(): self.isViewLoaded = \(self.isViewLoaded)")
+        print("rotated(): isBeingPresented = \(self.isBeingPresented)")
+        print("rotated(): isMovingToParent = \(self.isMovingToParent)")
+        print("rotated(): isMovingFromParent = \(self.isMovingFromParent)")
+//        if(self.isBeingPresented) {
+            viewDidLoad() // checks device orientation and only loads if in landscape mode
+//        }
     }
     
     private func showSpinner() {

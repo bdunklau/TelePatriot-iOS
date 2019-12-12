@@ -98,6 +98,12 @@ class InviteByTextMessageVC: BaseViewController {
     
     
     @objc private func sendTextMessage(_ sender: UIButton) {
+        if UIDevice.current.orientation.isPortrait {
+            alertToRotatePhone()
+            return
+        }
+        
+        
         // get name and phone number
         // construct the [String:Any] and pass back to the caller through the delegate
         guard let name = nameField.text,
@@ -115,7 +121,33 @@ class InviteByTextMessageVC: BaseViewController {
     
     
     @objc private func cancel(_ sender: UIButton) {
+        if UIDevice.current.orientation.isPortrait {
+            alertToRotatePhone()
+            return
+        }
+        
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    private func alertToRotatePhone() {
+        // hack - pop up an alert telling the user the phone has to be in landscape mode
+        // and quit early
+        let alert = UIAlertController(title: title, message: "Your phone must be in landscape orientation", preferredStyle: UIAlertController.Style.alert)
+        let ok = UIAlertAction(title: "Rotate Your Phone", style: .default, handler: { action in
+            switch action.style {
+            case .default:
+                return
+            case .cancel:
+                return
+            case .destructive:
+                return
+            }
+        })
+        
+        alert.addAction(ok)
+        
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
